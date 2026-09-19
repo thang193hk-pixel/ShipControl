@@ -70,6 +70,7 @@ cursor.execute('''
         task_id TEXT UNIQUE,
         task_name TEXT,
         task_cost_code TEXT,
+        block TEXT,
         description TEXT,
         initial_by TEXT,
         initial_date TEXT,
@@ -103,18 +104,24 @@ cursor.execute('''
 ''')
 conn.commit()
 
-# --- XỬ LÝ NÂNG CẤP BẢNG CŨ (MIGRATION): TỰ ĐỘNG THÊM CỘT is_deleted NẾU THIẾU ---
+# --- XỬ LÝ NÂNG CẤP BẢNG CỦ (MIGRATION): TỰ ĐỘNG THÊM CỘT NẾU THIẾU ---
+try:
+    cursor.execute("ALTER TABLE tasks ADD COLUMN block TEXT")
+    conn.commit()
+except sqlite3.OperationalError:
+    pass
+
 try:
     cursor.execute("ALTER TABLE custom_task_names ADD COLUMN is_deleted INTEGER DEFAULT 0")
     conn.commit()
 except sqlite3.OperationalError:
-    pass  # Cột đã tồn tại
+    pass
 
 try:
     cursor.execute("ALTER TABLE custom_cost_codes ADD COLUMN is_deleted INTEGER DEFAULT 0")
     conn.commit()
 except sqlite3.OperationalError:
-    pass  # Cột đã tồn tại
+    pass
 
 # --- TIÊU ĐỀ & MENU ---
 st.markdown("<div class='main-title'>🚢 SHIPCONTROL - QUẢN LÝ CÔNG VIỆC TÀU</div>", unsafe_allow_html=True)
@@ -132,7 +139,7 @@ menu = st.sidebar.radio("", [
 # --- 1. DANH SÁCH CÔNG VIỆC ---
 if menu == "📋 Bảng Công Việc":
     st.subheader("📋 Bảng Quản Lý Tiến Độ Công Việc")
-    df = pd.read_sql_query("SELECT task_id, task_name, task_cost_code, description, initial_by, initial_date, area, deck, frame, in_charge_by, plan_start_date, plan_finish_date, progress, remark FROM tasks WHERE is_deleted = 0", conn)
+    df = pd.read_sql_query("SELECT task_id, task_name, task_cost_code, block, description, initial_by, initial_date, area, deck, frame, in_charge_by, plan_start_date, plan_finish_date, progress, remark FROM tasks WHERE is_deleted = 0", conn)
     
     if df.empty:
         st.info("Chưa có dữ liệu công việc nào trong hệ thống.")
@@ -147,7 +154,7 @@ if menu == "📋 Bảng Công Việc":
         if selected_task_id:
             task_detail = pd.read_sql_query("SELECT * FROM tasks WHERE task_id = ? AND is_deleted = 0", conn, params=(selected_task_id,)).iloc[0]
             st.markdown(f"### **Task Name:** {task_detail['task_name']}")
-            st.write(f"**Mã chi phí (Cost Code):** `{task_detail['task_cost_code']}`")
+            st.write(f"**Mã chi phí (Cost Code):** `{task_detail['task_cost_code']}` | **Block:** `{task_detail['block']}`")
             st.write(f"**Khu vực (Area):** {task_detail['area']} | **Boong (Deck):** {task_detail['deck']} | **Khung (Frame):** {task_detail['frame']}")
             st.write(f"**Người phụ trách:** {task_detail['in_charge_by']}")
             st.write(f"**Mô tả:** {task_detail['description']}")
@@ -159,7 +166,6 @@ elif menu == "⚙️ Quản Lý Danh Mục (Task Name & Cost Code)":
     st.subheader("⚙️ Quản Lý Danh Mục Task Name & Cost Code")
     col_a, col_b = st.columns(2)
     
-    # DANH MỤC 1: TASK NAME
     with col_a:
         st.markdown("### 🛠️ Danh Mục Tên Công Việc (Task Name)")
         tab_add_task, tab_del_task = st.tabs(["➕ Thêm Task Name mới", "🗑️ Đưa vào Thùng rác"])
@@ -196,7 +202,6 @@ elif menu == "⚙️ Quản Lý Danh Mục (Task Name & Cost Code)":
 
         st.dataframe(pd.read_sql_query("SELECT id, name AS 'Task Name Hiện Có' FROM custom_task_names WHERE is_deleted = 0", conn), use_container_width=True)
 
-    # DANH MỤC 2: COST CODE
     with col_b:
         st.markdown("### 🏷️ Danh Mục Mã Chi Phí (Cost Code)")
         tab_add_cc, tab_del_cc = st.tabs(["➕ Thêm Cost Code mới", "🗑️ Đưa vào Thùng rác"])
@@ -233,7 +238,7 @@ elif menu == "⚙️ Quản Lý Danh Mục (Task Name & Cost Code)":
 
         st.dataframe(pd.read_sql_query("SELECT id, code AS 'Cost Code Hiện Có' FROM custom_cost_codes WHERE is_deleted = 0", conn), use_container_width=True)
 
-# --- 3. THÊM CÔNG VIỆC MỚI ---
+# --- 3. THÊM CÔNG VIỆC MỚI (ĐÃ BỔ SUNG THƯ MỤC/TRƯỜNG BLOCK) ---
 elif menu == "➕ Thêm Công Việc":
     st.subheader("➕ Thêm Công Việc Mới")
     task_name_list = pd.read_sql_query("SELECT name FROM custom_task_names WHERE is_deleted = 0", conn)['name'].tolist()
@@ -248,6 +253,7 @@ elif menu == "➕ Thêm Công Việc":
                 task_id = st.text_input("Task ID *")
                 selected_task_name = st.selectbox("Chọn Task Name *", task_name_list)
                 selected_cost_code = st.selectbox("Chọn Cost Code *", cost_code_list)
+                block = st.text_input("Block (Ví dụ: 170151)")
             with col2:
                 initial_by = st.text_input("Initial By")
                 initial_date = st.date_input("Initial Date", datetime.now())
@@ -267,19 +273,19 @@ elif menu == "➕ Thêm Công Việc":
                 try:
                     cursor.execute('''
                         INSERT INTO tasks (
-                            task_id, task_name, task_cost_code, description, initial_by, 
+                            task_id, task_name, task_cost_code, block, description, initial_by, 
                             initial_date, area, deck, frame, in_charge_by, 
                             plan_start_date, plan_finish_date, progress, remark, image_path, is_deleted
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', 0)
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', 0)
                     ''', (
-                        task_id, selected_task_name, selected_cost_code, description, initial_by,
+                        task_id, selected_task_name, selected_cost_code, block, description, initial_by,
                         str(initial_date), area, deck, frame, in_charge_by,
                         str(plan_start_date), str(plan_finish_date), progress, remark
                     ))
                     conn.commit()
                     st.success("Đã thêm công việc thành công!")
-                except:
-                    st.error("Task ID này đã tồn tại!")
+                except Exception as e:
+                    st.error(f"Lỗi: Task ID này đã tồn tại hoặc dữ liệu không hợp lệ!")
 
 # --- 4. CHỈNH SỬA / XÓA ---
 elif menu == "✏️ Chỉnh Sửa / Xóa":
@@ -302,6 +308,7 @@ elif menu == "✏️ Chỉnh Sửa / Xóa":
                     st.text_input("Task ID", value=task['task_id'], disabled=True)
                     new_task_name = st.selectbox("Task Name", task_name_list) if task_name_list else st.text_input("Task Name", value=task['task_name'])
                     new_task_cost_code = st.selectbox("Cost Code", cost_code_list) if cost_code_list else st.text_input("Cost Code", value=task['task_cost_code'])
+                    new_block = st.text_input("Block", value=task['block'] or "")
                     new_initial_by = st.text_input("Initial By", value=task['initial_by'] or "")
                     new_initial_date = st.date_input("Initial Date", datetime.now())
                 with col2:
@@ -319,12 +326,12 @@ elif menu == "✏️ Chỉnh Sửa / Xóa":
                 if st.form_submit_button("💾 CẬP NHẬT"):
                     cursor.execute('''
                         UPDATE tasks SET 
-                            task_name = ?, task_cost_code = ?, description = ?, initial_by = ?,
+                            task_name = ?, task_cost_code = ?, block = ?, description = ?, initial_by = ?,
                             initial_date = ?, area = ?, deck = ?, frame = ?, in_charge_by = ?,
                             plan_start_date = ?, plan_finish_date = ?, progress = ?, remark = ?
                         WHERE task_id = ?
                     ''', (
-                        new_task_name, new_task_cost_code, new_description, new_initial_by,
+                        new_task_name, new_task_cost_code, new_block, new_description, new_initial_by,
                         str(new_initial_date), new_area, new_deck, new_frame, new_in_charge_by,
                         str(new_plan_start_date), str(new_plan_finish_date), new_progress, new_remark,
                         selected_id
@@ -346,9 +353,8 @@ elif menu == "🗑️ Thùng Rác (Khôi Phục)":
     
     tab1, tab2, tab3 = st.tabs(["📋 Khôi phục Công Việc", "🛠️ Khôi phục Task Name", "🏷️ Khôi phục Cost Code"])
     
-    # KHÔI PHỤC TASK
     with tab1:
-        df_deleted_tasks = pd.read_sql_query("SELECT task_id, task_name, area, in_charge_by FROM tasks WHERE is_deleted = 1", conn)
+        df_deleted_tasks = pd.read_sql_query("SELECT task_id, task_name, block, area, in_charge_by FROM tasks WHERE is_deleted = 1", conn)
         if df_deleted_tasks.empty:
             st.info("Không có Công việc nào trong thùng rác.")
         else:
@@ -360,7 +366,6 @@ elif menu == "🗑️ Thùng Rác (Khôi Phục)":
                 st.success(f"Đã khôi phục thành công Task ID: {restore_task_id}!")
                 st.rerun()
 
-    # KHÔI PHỤC TASK NAME
     with tab2:
         df_deleted_tn = pd.read_sql_query("SELECT id, name FROM custom_task_names WHERE is_deleted = 1", conn)
         if df_deleted_tn.empty:
@@ -374,7 +379,6 @@ elif menu == "🗑️ Thùng Rác (Khôi Phục)":
                 st.success(f"Đã khôi phục thành công Task Name: {restore_tn}!")
                 st.rerun()
 
-    # KHÔI PHỤC COST CODE
     with tab3:
         df_deleted_cc = pd.read_sql_query("SELECT id, code FROM custom_cost_codes WHERE is_deleted = 1", conn)
         if df_deleted_cc.empty:
