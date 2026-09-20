@@ -211,10 +211,11 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# KẾT NỐI CSDL SQLITE
+# 2. KẾT NỐI VÀ CẤU HÌNH CƠ SỞ DỮ LIỆU SQLITE
 conn = sqlite3.connect("ship_control.db", check_same_thread=False)
 cursor = conn.cursor()
 
+# Tạo bảng người dùng nếu chưa có
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -224,6 +225,18 @@ cursor.execute('''
     )
 ''')
 
+# Tạo bảng danh mục workshop
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS custom_cost_codes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        code TEXT UNIQUE,
+        name TEXT,
+        description TEXT,
+        is_deleted INTEGER DEFAULT 0
+    )
+''')
+
+# Tạo bảng công việc
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS tasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -247,15 +260,34 @@ cursor.execute('''
     )
 ''')
 
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS custom_cost_codes (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        code TEXT UNIQUE,
-        name TEXT,
-        description TEXT,
-        is_deleted INTEGER DEFAULT 0
-    )
-''')
+# --- MIGRATION: TỰ ĐỘNG THÊM CỘT NẾU DATABASE CŨ TRÊN CLOUD BỊ THIẾU CỘT ---
+tasks_schema_updates = {
+    "task_cost_code": "TEXT",
+    "block": "TEXT",
+    "description": "TEXT",
+    "initial_by": "TEXT",
+    "initial_date": "TEXT",
+    "area": "TEXT",
+    "deck": "TEXT",
+    "frame": "TEXT",
+    "in_charge_by": "TEXT",
+    "plan_start_date": "TEXT",
+    "plan_finish_date": "TEXT",
+    "progress": "INTEGER DEFAULT 0",
+    "remark": "TEXT",
+    "image_path": "TEXT",
+    "is_deleted": "INTEGER DEFAULT 0"
+}
+
+cursor.execute("PRAGMA table_info(tasks)")
+existing_cols = [col[1] for col in cursor.fetchall()]
+
+for col_name, col_type in tasks_schema_updates.items():
+    if col_name not in existing_cols:
+        try:
+            cursor.execute(f"ALTER TABLE tasks ADD COLUMN {col_name} {col_type}")
+        except Exception:
+            pass
 
 conn.commit()
 
@@ -266,7 +298,7 @@ def hash_password(password):
 st.markdown("<div class='main-title'>🚢 SHIPCONTROL - QUẢN LÝ CÔNG VIỆC TÀU</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 🔐 HỆ THỐNG XÁC THỰC
+# 🔐 HỆ THỐNG XÁC THỰC (ĐĂNG NHẬP / ĐĂNG KÝ)
 # ==========================================
 if not st.session_state["logged_in"]:
     st.sidebar.markdown("<div class='sidebar-header'>🔐 Xác Thực</div>", unsafe_allow_html=True)
@@ -335,7 +367,7 @@ if not st.session_state["logged_in"]:
                             st.error("Tên đăng nhập này đã tồn tại, vui lòng chọn tên khác!")
 
 # ==========================================
-# 🚢 GIAO DIỆN CHÍNH
+# 🚢 GIAO DIỆN CHÍNH KHI ĐÃ ĐĂNG NHẬP
 # ==========================================
 else:
     st.sidebar.markdown("<div class='sidebar-header'>☸️ Control Menu</div>", unsafe_allow_html=True)
@@ -378,7 +410,9 @@ else:
         st.session_state["user_info"] = None
         st.rerun()
 
+    # ----------------------------------------------------
     # 1. BẢNG CÔNG VIỆC
+    # ----------------------------------------------------
     if menu == "🧰 Bảng Công Việc":
         st.markdown("<div class='big-table-title'>📋 Bảng Quản Lý Tiến Độ Công Việc</div>", unsafe_allow_html=True)
         
@@ -407,7 +441,9 @@ else:
         else:
             st.dataframe(df, use_container_width=True, height=500)
 
+    # ----------------------------------------------------
     # 2. QUẢN LÝ DANH MỤC
+    # ----------------------------------------------------
     elif menu == "⚙️ Quản Lý Danh Mục":
         st.markdown("<div class='big-table-title'>⚙️ Quản Lý Danh Mục Workshop / Cost Code</div>", unsafe_allow_html=True)
         
@@ -443,7 +479,9 @@ else:
         else:
             st.dataframe(df_ws, use_container_width=True)
 
-    # 3. THÊM CÔNG VIỆC MỚI (ĐÃ CẬP NHẬT ĐẦY ĐỦ CÁC TRƯỜNG THEO FILE EXCEL)
+    # ----------------------------------------------------
+    # 3. THÊM CÔNG VIỆC MỚI (ĐẦY ĐỦ TRƯỜNG EXCEL)
+    # ----------------------------------------------------
     elif menu == "➕ Thêm Công Việc":
         st.markdown("<div class='big-table-title'>➕ Thêm Công Việc Mới</div>", unsafe_allow_html=True)
         
@@ -534,7 +572,9 @@ else:
                         conn.commit()
                         st.success(f"Đã lưu thành công công việc **{task_id} - {task_name_input}**!")
 
+    # ----------------------------------------------------
     # 4. CHỈNH SỬA / XÓA TẠM
+    # ----------------------------------------------------
     elif menu == "✏️ Chỉnh Sửa/Xóa":
         st.markdown("<div class='big-table-title'>✏️ Chỉnh Sửa & Xóa Công Việc</div>", unsafe_allow_html=True)
         
@@ -554,7 +594,9 @@ else:
                     st.success("Đã chuyển công việc vào Thùng Rác thành công!")
                     st.rerun()
 
+    # ----------------------------------------------------
     # 5. THÙNG RÁC VÀ KHÔI PHỤC
+    # ----------------------------------------------------
     elif menu == "🗑️ Thùng Rác":
         st.markdown("<div class='big-table-title'>🗑️ Thùng Rác & Khôi Phục Dữ Liệu</div>", unsafe_allow_html=True)
         
@@ -588,7 +630,9 @@ else:
                     st.warning("Đã xóa vĩnh viễn công việc khỏi hệ thống!")
                     st.rerun()
 
+    # ----------------------------------------------------
     # 6. BÁO CÁO & THỐNG KÊ
+    # ----------------------------------------------------
     elif menu == "📊 Báo Cáo & Khai Báo":
         st.markdown("<div class='big-table-title'>📊 Báo Cáo & Thống Kê Tiến Độ</div>", unsafe_allow_html=True)
         
