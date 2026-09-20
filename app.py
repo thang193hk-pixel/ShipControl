@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import sqlite3
-import os
+import hashlib
 from datetime import datetime
 
 # 1. Cấu hình trang web
@@ -12,58 +12,211 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. TÙY CHỈNH CSS GIAO DIỆN LỚN
-st.markdown("""
+# --- KHỞI TẠO STATE THEME, AUTH & MENU ---
+if "theme_mode" not in st.session_state:
+    st.session_state["theme_mode"] = "Light"
+
+if "logged_in" not in st.session_state:
+    st.session_state["logged_in"] = False
+
+if "user_info" not in st.session_state:
+    st.session_state["user_info"] = None
+
+if "auth_tab" not in st.session_state:
+    st.session_state["auth_tab"] = "login"
+
+if "current_menu" not in st.session_state:
+    st.session_state["current_menu"] = "🧰 Bảng Công Việc"
+
+# --- CÔNG TẮC CHUYỂN THEME TRÊN ĐỈNH SIDEBAR ---
+st.sidebar.markdown("<div style='padding-top: 10px;'></div>", unsafe_allow_html=True)
+dark_mode_on = st.sidebar.toggle("🌙 Chế độ Tối (Dark)", value=(st.session_state["theme_mode"] == "Dark"), key="dark_toggle")
+st.session_state["theme_mode"] = "Dark" if dark_mode_on else "Light"
+
+is_dark = st.session_state["theme_mode"] == "Dark"
+
+main_bg = "#0f172a" if is_dark else "#f8f9fa"
+text_color = "#f8fafc" if is_dark else "#0f172a"
+input_bg = "#1e293b" if is_dark else "#ffffff"
+input_text = "#ffffff" if is_dark else "#0f172a"
+border_color = "#334155" if is_dark else "#cbd5e1"
+
+st.markdown(f"""
     <style>
-    .main { background-color: #f8f9fa; }
+    /* Nền ứng dụng chính */
+    .stApp, .main {{
+        background-color: {main_bg} !important;
+        color: {text_color} !important;
+    }}
     
-    section[data-testid="stSidebar"] {
-        background-color: #1a252f !important;
-        width: 320px !important;
-    }
+    /* Sidebar */
+    section[data-testid="stSidebar"] {{
+        background-color: #0284c7 !important;
+        width: 330px !important;
+    }}
     
-    section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2 {
-        font-size: 1.8rem !important;
-        font-weight: bold !important;
-        color: #ffffff !important;
-    }
+    .sidebar-header {{
+        font-size: 2rem;
+        font-weight: 800;
+        color: #facc15;
+        text-align: center;
+        padding: 10px 0;
+        margin-bottom: 10px;
+    }}
 
-    div[data-testid="stRadio"] label {
-        font-size: 1.35rem !important;
-        font-weight: 600 !important;
-        padding: 10px 5px !important;
-        color: #ffffff !important;
-    }
+    .made-by-minh {{
+        background-color: #facc15;
+        color: #0369a1;
+        font-size: 1.5rem;
+        font-weight: 900;
+        font-style: italic;
+        text-align: center;
+        padding: 10px;
+        border-radius: 12px;
+        margin-top: 15px;
+    }}
 
-    .stButton > button {
-        font-size: 1.2rem !important;
-        font-weight: bold !important;
-        padding: 12px 28px !important;
-        border-radius: 10px !important;
+    .user-card {{
+        background-color: rgba(255, 255, 255, 0.15);
+        padding: 12px;
+        border-radius: 12px;
+        margin-top: 15px;
+        text-align: center;
+        color: white;
+    }}
+
+    /* ======================================================== */
+    /* 🔥 TẠO NÚT BẤM HÌNH CHỮ NHẬT TO CẢ 2 NƠI (SIDEBAR & AUTH) */
+    /* ======================================================== */
+    div.stButton > button {{
         width: 100% !important;
-        box-shadow: 0px 4px 8px rgba(0,0,0,0.15) !important;
-    }
+        min-height: 55px !important;
+        border-radius: 10px !important;
+        transition: all 0.2s ease !important;
+        margin-bottom: 8px !important;
+    }}
 
-    input, textarea, select, div[data-baseweb="select"] { font-size: 1.1rem !important; }
-    label { font-size: 1.1rem !important; font-weight: bold !important; }
+    /* NÚT PRIMARY -> XANH LÁ, CHỮ TRẮNG */
+    div.stButton > button[kind="primary"],
+    div.stButton > button[data-testid="baseButton-primary"] {{
+        background-color: #22c55e !important;
+        background-image: none !important;
+        border: 2px solid #16a34a !important;
+        box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3) !important;
+    }}
+    
+    div.stButton > button[kind="primary"] *,
+    div.stButton > button[data-testid="baseButton-primary"] * {{
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        font-size: 1.2rem !important;
+        font-weight: 900 !important;
+        opacity: 1 !important;
+    }}
 
-    .main-title {
-        font-size: 2.5rem;
-        color: #0F4C81;
+    /* NÚT SECONDARY -> XÁM SÁNG, CHỮ ĐEN TUYỀN */
+    div.stButton > button[kind="secondary"],
+    div.stButton > button[data-testid="baseButton-secondary"] {{
+        background-color: #e2e8f0 !important;
+        background-image: none !important;
+        border: 2px solid #cbd5e1 !important;
+    }}
+    
+    div.stButton > button[kind="secondary"] *,
+    div.stButton > button[data-testid="baseButton-secondary"] * {{
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        font-size: 1.2rem !important;
+        font-weight: 900 !important;
+        opacity: 1 !important;
+    }}
+
+    /* ======================================================== */
+    /* 🔥 CSS PHÓNG TO BẢNG DỮ LIỆU (ST.DATAFRAME) & TIÊU ĐỀ    */
+    /* ======================================================== */
+    .big-table-title {{
+        font-size: 1.8rem !important;
+        font-weight: 800 !important;
+        color: {text_color} !important;
+        margin-top: 10px !important;
+        margin-bottom: 15px !important;
+    }}
+
+    /* Chữ tiêu đề cột của bảng */
+    div[data-testid="stDataFrame"] th, 
+    div[data-testid="stTable"] th {{
+        font-size: 1.15rem !important;
+        font-weight: 800 !important;
+        padding: 12px 8px !important;
+    }}
+
+    /* Chữ nội dung trong dòng của bảng */
+    div[data-testid="stDataFrame"] td, 
+    div[data-testid="stTable"] td,
+    div[data-testid="stDataFrame"] [role="gridcell"] {{
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        padding: 10px 8px !important;
+    }}
+
+    /* Ô NHẬP LIỆU */
+    input, textarea, select, div[data-baseweb="select"] > div {{
+        background-color: {input_bg} !important;
+        color: {input_text} !important;
+        border: 1px solid {border_color} !important;
+        border-radius: 8px !important;
+        font-size: 1.1rem !important;
+    }}
+
+    .stTextInput label, .stTextArea label, .stSelectbox label {{
+        color: {text_color} !important;
+        font-weight: 700 !important;
+        font-size: 1.1rem !important;
+    }}
+
+    /* NÚT SUBMIT FORM */
+    div[data-testid="stFormSubmitButton"] > button {{
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 16px 24px !important;
+        width: 100% !important;
+        min-height: 55px !important;
+    }}
+
+    div[data-testid="stFormSubmitButton"] > button *,
+    div[data-testid="stFormSubmitButton"] > button p {{
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        font-size: 1.25rem !important;
+        font-weight: 900 !important;
+    }}
+
+    .main-title {{
+        font-size: 2.3rem;
+        color: {text_color} !important;
         font-weight: 800;
         text-align: center;
         padding: 10px 0;
-        border-bottom: 4px solid #0F4C81;
+        border-bottom: 3px solid #22c55e;
         margin-bottom: 25px;
-    }
+    }}
     </style>
 """, unsafe_allow_html=True)
 
-# Kết nối CSDL SQLite
+# KẾT NỐI CSDL SQLITE
 conn = sqlite3.connect("ship_control.db", check_same_thread=False)
 cursor = conn.cursor()
 
-# Tạo bảng lưu trữ dữ liệu nếu chưa tồn tại
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        password TEXT,
+        fullname TEXT
+    )
+''')
+
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS tasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -96,251 +249,161 @@ cursor.execute('''
 ''')
 conn.commit()
 
-# Nâng cấp cấu trúc bảng nếu thiếu cột
-try:
-    cursor.execute("ALTER TABLE tasks ADD COLUMN block TEXT")
-    conn.commit()
-except sqlite3.OperationalError:
-    pass
+def hash_password(password):
+    return hashlib.sha256(str.encode(password)).hexdigest()
 
-try:
-    cursor.execute("ALTER TABLE custom_cost_codes ADD COLUMN is_deleted INTEGER DEFAULT 0")
-    conn.commit()
-except sqlite3.OperationalError:
-    pass
-
-# --- TIÊU ĐỀ & MENU ---
+# --- TIÊU ĐỀ TRANG ---
 st.markdown("<div class='main-title'>🚢 SHIPCONTROL - QUẢN LÝ CÔNG VIỆC TÀU</div>", unsafe_allow_html=True)
 
-st.sidebar.markdown("## 🧭 MENU CHÍNH")
-menu = st.sidebar.radio("", [
-    "📋 Bảng Công Việc", 
-    "⚙️ Quản Lý Danh Mục (Cost Code)",
-    "➕ Thêm Công Việc", 
-    "✏️ Chỉnh Sửa / Xóa",
-    "🗑️ Thùng Rác (Khôi Phục)",
-    "📊 Báo Cáo & Thống Kê"
-])
+# ==========================================
+# 🔐 HỆ THỐNG XÁC THỰC
+# ==========================================
+if not st.session_state["logged_in"]:
+    st.sidebar.markdown("<div class='sidebar-header'>🔐 Xác Thực</div>", unsafe_allow_html=True)
+    st.sidebar.info("Vui lòng đăng nhập hoặc đăng ký để tiếp tục.")
+    st.sidebar.markdown("<div class='made-by-minh'>Made By Minh</div>", unsafe_allow_html=True)
 
-# --- 1. DANH SÁCH CÔNG VIỆC ---
-if menu == "📋 Bảng Công Việc":
-    st.subheader("📋 Bảng Quản Lý Tiến Độ Công Việc")
-    df = pd.read_sql_query("SELECT task_id, task_name, task_cost_code, block, description, initial_by, initial_date, area, deck, frame, in_charge_by, plan_start_date, plan_finish_date, progress, remark FROM tasks WHERE is_deleted = 0", conn)
+    col_space1, col_center, col_space2 = st.columns([1, 2, 1])
     
-    if df.empty:
-        st.info("Chưa có dữ liệu công việc nào trong hệ thống.")
-    else:
-        st.dataframe(df, use_container_width=True)
-        st.markdown("---")
-        st.subheader("🔍 Chi Tiết Công Việc")
-        all_tasks = pd.read_sql_query("SELECT task_id, task_name FROM tasks WHERE is_deleted = 0", conn)
-        task_ids = all_tasks['task_id'].tolist()
-        selected_task_id = st.selectbox("Chọn Task ID để xem:", task_ids)
+    with col_center:
+        is_login = st.session_state["auth_tab"] == "login"
         
-        if selected_task_id:
-            task_detail = pd.read_sql_query("SELECT * FROM tasks WHERE task_id = ? AND is_deleted = 0", conn, params=(selected_task_id,)).iloc[0]
-            st.markdown(f"### **Task Name:** {task_detail['task_name']}")
-            st.write(f"**Mã chi phí (Cost Code):** `{task_detail['task_cost_code']}` | **Block:** `{task_detail['block']}`")
-            st.write(f"**Khu vực (Area):** {task_detail['area']} | **Boong (Deck):** {task_detail['deck']} | **Khung (Frame):** {task_detail['frame']}")
-            st.write(f"**Người phụ trách:** {task_detail['in_charge_by']}")
-            st.write(f"**Mô tả:** {task_detail['description']}")
-            st.write(f"**Ghi chú:** {task_detail['remark']}")
-            st.progress(int(task_detail['progress']) / 100, text=f"Hoàn thành: {task_detail['progress']}%")
+        t_col1, t_col2 = st.columns(2)
+        
+        with t_col1:
+            if st.button("🔑 Đăng Nhập", type="primary" if is_login else "secondary", use_container_width=True, key="btn_auth_tab_login"):
+                st.session_state["auth_tab"] = "login"
+                st.rerun()
+                
+        with t_col2:
+            if st.button("📝 Đăng Ký Tài Khoản", type="primary" if not is_login else "secondary", use_container_width=True, key="btn_auth_tab_reg"):
+                st.session_state["auth_tab"] = "register"
+                st.rerun()
 
-# --- 2. QUẢN LÝ DANH MỤC COST CODE ---
-elif menu == "⚙️ Quản Lý Danh Mục (Cost Code)":
-    st.subheader("🏷️ Quản Lý Danh Mục Mã Chi Phí (Cost Code)")
+        st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
+
+        if st.session_state["auth_tab"] == "login":
+            with st.form("form_login_system"):
+                login_user = st.text_input("Tên tài khoản (Username):")
+                login_pass = st.text_input("Mật khẩu (Password):", type="password")
+                btn_login = st.form_submit_button("🚀 ĐĂNG NHẬP")
+
+                if btn_login:
+                    if not login_user or not login_pass:
+                        st.error("Vui lòng nhập đầy đủ Username và Mật khẩu!")
+                    else:
+                        hashed_p = hash_password(login_pass)
+                        user = cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (login_user, hashed_p)).fetchone()
+                        if user:
+                            st.session_state["logged_in"] = True
+                            st.session_state["user_info"] = {"username": user[1], "fullname": user[3]}
+                            st.success(f"Chào mừng {user[3]} đã quay trở lại!")
+                            st.rerun()
+                        else:
+                            st.error("Sai tên tài khoản hoặc mật khẩu!")
+
+        else:
+            with st.form("form_register_system"):
+                reg_fullname = st.text_input("Họ và Tên:")
+                reg_user = st.text_input("Tên đăng nhập mới (Username):")
+                reg_pass = st.text_input("Mật khẩu mới:", type="password")
+                reg_confirm = st.text_input("Xác nhận lại mật khẩu:", type="password")
+                btn_register = st.form_submit_button("✨ ĐĂNG KÝ NGAY")
+
+                if btn_register:
+                    if not reg_fullname or not reg_user or not reg_pass:
+                        st.error("Vui lòng điền đầy đủ các thông tin!")
+                    elif reg_pass != reg_confirm:
+                        st.error("Mật khẩu xác nhận không trùng khớp!")
+                    else:
+                        try:
+                            cursor.execute("INSERT INTO users (username, password, fullname) VALUES (?, ?, ?)", 
+                                           (reg_user, hash_password(reg_pass), reg_fullname))
+                            conn.commit()
+                            st.success("Đăng ký tài khoản thành công! Bạn có thể chọn Tab Đăng Nhập phía trên.")
+                        except sqlite3.IntegrityError:
+                            st.error("Tên đăng nhập này đã tồn tại, vui lòng chọn tên khác!")
+
+# ==========================================
+# 🚢 GIAO DIỆN CHÍNH
+# ==========================================
+else:
+    st.sidebar.markdown("<div class='sidebar-header'>☸️ Control Menu</div>", unsafe_allow_html=True)
+
+    menu_options = [
+        "🧰 Bảng Công Việc", 
+        "⚙️ Quản Lý Danh Mục",
+        "➕ Thêm Công Việc", 
+        "✏️ Chỉnh Sửa/Xóa",
+        "🗑️ Thùng Rác",
+        "📊 Báo Cáo & Khai Báo"
+    ]
+
+    for item in menu_options:
+        is_selected = (st.session_state["current_menu"] == item)
+        if st.sidebar.button(
+            item, 
+            type="primary" if is_selected else "secondary", 
+            use_container_width=True, 
+            key=f"btn_menu_{item}"
+        ):
+            st.session_state["current_menu"] = item
+            st.rerun()
+
+    menu = st.session_state["current_menu"]
+    user_data = st.session_state["user_info"]
     
-    tab_add_cc, tab_del_cc = st.tabs(["➕ Thêm Cost Code mới", "🗑️ Đưa vào Thùng rác"])
-    
-    with tab_add_cc:
+    st.sidebar.markdown(f"""
+        <div class='user-card'>
+            👋 <b>WELCOME</b><br>
+            <span style='font-size: 1.1rem; font-weight: 800;'>{user_data['fullname']}</span><br>
+            <small>@{user_data['username']}</small>
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.sidebar.markdown("<div class='made-by-minh'>Made By Minh</div>", unsafe_allow_html=True)
+
+    if st.sidebar.button("🚪 Đăng Xuất", type="secondary", key="btn_logout_bottom"):
+        st.session_state["logged_in"] = False
+        st.session_state["user_info"] = None
+        st.rerun()
+
+    if menu == "🧰 Bảng Công Việc":
+        # TIÊU ĐỀ ĐƯỢC LÀM TO NỔI BẬT
+        st.markdown("<div class='big-table-title'>📋 Bảng Quản Lý Tiến Độ Công Việc</div>", unsafe_allow_html=True)
+        
+        df = pd.read_sql_query("SELECT task_id, task_name, task_cost_code, block, description, initial_by, initial_date, area, deck, frame, in_charge_by, plan_start_date, plan_finish_date, progress, remark FROM tasks WHERE is_deleted = 0", conn)
+        
+        if df.empty:
+            st.info("Chưa có dữ liệu công việc nào trong hệ thống.")
+        else:
+            # BẢNG ĐƯỢC ÉP KÍCH THƯỚC CHỮ TO RÕ NỔI BẬT DƯỚI CSS
+            st.dataframe(df, use_container_width=True, height=450)
+
+    elif menu == "⚙️ Quản Lý Danh Mục":
+        st.markdown("<div class='big-table-title'>🏷️ Quản Lý Danh Mục Mã Chi Phí (Cost Code)</div>", unsafe_allow_html=True)
         with st.form("add_cost_code_form", clear_on_submit=True):
-            new_cost_code_input = st.text_input("Nhập Cost Code mới (Ví dụ: EW04_170151_BC):")
-            submit_cost_code = st.form_submit_button("➕ Thêm Cost Code")
+            new_cost_code_input = st.text_input("Nhập Cost Code mới:")
+            submit_cost_code = st.form_submit_button("✨ THÊM COST CODE MỚI")
             if submit_cost_code and new_cost_code_input.strip():
                 code_clean = new_cost_code_input.strip()
-                existing = pd.read_sql_query("SELECT * FROM custom_cost_codes WHERE code = ?", conn, params=(code_clean,))
-                if not existing.empty:
-                    cursor.execute("UPDATE custom_cost_codes SET is_deleted = 0 WHERE code = ?", (code_clean,))
-                    conn.commit()
-                    st.success(f"Đã kích hoạt lại Cost Code: '{code_clean}'!")
-                    st.rerun()
-                else:
-                    cursor.execute("INSERT INTO custom_cost_codes (code, is_deleted) VALUES (?, 0)", (code_clean,))
-                    conn.commit()
-                    st.success(f"Đã thêm Cost Code: '{code_clean}'!")
-                    st.rerun()
-
-    with tab_del_cc:
-        cost_codes_list = pd.read_sql_query("SELECT code FROM custom_cost_codes WHERE is_deleted = 0", conn)['code'].tolist()
-        if cost_codes_list:
-            selected_del_cc = st.selectbox("Chọn Cost Code cần xóa tạm:", cost_codes_list)
-            if st.button("🗑️ Đưa vào Thùng rác", type="primary", key="btn_del_cc"):
-                cursor.execute("UPDATE custom_cost_codes SET is_deleted = 1 WHERE code = ?", (selected_del_cc,))
+                cursor.execute("INSERT OR REPLACE INTO custom_cost_codes (code, is_deleted) VALUES (?, 0)", (code_clean,))
                 conn.commit()
-                st.success("Đã chuyển Cost Code vào Thùng rác!")
+                st.success(f"Đã thêm Cost Code: '{code_clean}'!")
                 st.rerun()
+
+    elif menu == "➕ Thêm Công Việc":
+        st.markdown("<div class='big-table-title'>➕ Thêm Công Việc Mới</div>", unsafe_allow_html=True)
+        cost_code_list = pd.read_sql_query("SELECT code FROM custom_cost_codes WHERE is_deleted = 0", conn)['code'].tolist()
+        if not cost_code_list:
+            st.warning("⚠️ Vui lòng vào 'Quản Lý Danh Mục' để tạo Cost Code trước.")
         else:
-            st.info("Danh mục Cost Code đang trống.")
-
-    st.dataframe(pd.read_sql_query("SELECT id, code AS 'Cost Code Hiện Có' FROM custom_cost_codes WHERE is_deleted = 0", conn), use_container_width=True)
-
-# --- 3. THÊM CÔNG VIỆC MỚI (NHẬP TRỰC TIẾP TASK NAME) ---
-elif menu == "➕ Thêm Công Việc":
-    st.subheader("➕ Thêm Công Việc Mới")
-    cost_code_list = pd.read_sql_query("SELECT code FROM custom_cost_codes WHERE is_deleted = 0", conn)['code'].tolist()
-    
-    if not cost_code_list:
-        st.warning("⚠️ Vui lòng vào menu **'⚙️ Quản Lý Danh Mục (Cost Code)'** để tạo ít nhất 1 mã Cost Code trước.")
-    else:
-        with st.form("add_task_form", clear_on_submit=True):
-            col1, col2, col3 = st.columns(3)
-            with col1:
+            with st.form("add_task_form", clear_on_submit=True):
                 task_id = st.text_input("Task ID *")
-                task_name_input = st.text_input("Task Name (Nhập trực tiếp) *")
+                task_name_input = st.text_input("Task Name *")
                 selected_cost_code = st.selectbox("Chọn Cost Code *", cost_code_list)
-                block = st.text_input("Block (Ví dụ: 170151)")
-            with col2:
-                initial_by = st.text_input("Initial By")
-                initial_date = st.date_input("Initial Date", datetime.now())
-                area = st.text_input("Area")
-                deck = st.text_input("Deck")
-                frame = st.text_input("Frame")
-            with col3:
-                in_charge_by = st.text_input("In Charge By")
-                progress = st.slider("Progress (%)", 0, 100, 0)
-                plan_start_date = st.date_input("Plan Start Date", datetime.now())
-                plan_finish_date = st.date_input("Plan Finish Date", datetime.now())
-                description = st.text_area("Description")
-                remark = st.text_area("Remark")
-
-            submitted = st.form_submit_button("💾 LƯU CÔNG VIỆC MỚI")
-            if submitted:
-                if not task_id or not task_name_input.strip():
-                    st.error("Vui lòng điền đầy đủ Task ID và Task Name!")
-                else:
-                    try:
-                        cursor.execute('''
-                            INSERT INTO tasks (
-                                task_id, task_name, task_cost_code, block, description, initial_by, 
-                                initial_date, area, deck, frame, in_charge_by, 
-                                plan_start_date, plan_finish_date, progress, remark, image_path, is_deleted
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', 0)
-                        ''', (
-                            task_id, task_name_input.strip(), selected_cost_code, block, description, initial_by,
-                            str(initial_date), area, deck, frame, in_charge_by,
-                            str(plan_start_date), str(plan_finish_date), progress, remark
-                        ))
-                        conn.commit()
-                        st.success(f"Đã thêm công việc '{task_name_input}' thành công!")
-                    except Exception as e:
-                        st.error("Lỗi: Task ID này đã tồn tại trong hệ thống!")
-
-# --- 4. CHỈNH SỬA / XÓA ---
-elif menu == "✏️ Chỉnh Sửa / Xóa":
-    st.subheader("✏️ Quản Lý & Chỉnh Sửa Công Việc")
-    df_tasks = pd.read_sql_query("SELECT task_id, task_name FROM tasks WHERE is_deleted = 0", conn)
-    cost_code_list = pd.read_sql_query("SELECT code FROM custom_cost_codes WHERE is_deleted = 0", conn)['code'].tolist()
-    
-    if df_tasks.empty:
-        st.info("Chưa có công việc nào.")
-    else:
-        selected_id = st.selectbox("Chọn Task ID:", df_tasks['task_id'].tolist())
-        task = pd.read_sql_query("SELECT * FROM tasks WHERE task_id = ? AND is_deleted = 0", conn, params=(selected_id,)).iloc[0]
-        tab_edit, tab_delete = st.tabs(["✏️ Chỉnh sửa", "🗑️ Xóa"])
-        
-        with tab_edit:
-            with st.form("edit_task_form"):
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.text_input("Task ID", value=task['task_id'], disabled=True)
-                    new_task_name = st.text_input("Task Name", value=task['task_name'] or "")
-                    
-                    # Chọn Cost Code từ danh mục
-                    current_cc_idx = cost_code_list.index(task['task_cost_code']) if task['task_cost_code'] in cost_code_list else 0
-                    new_task_cost_code = st.selectbox("Cost Code", cost_code_list, index=current_cc_idx) if cost_code_list else st.text_input("Cost Code", value=task['task_cost_code'])
-                    
-                    new_block = st.text_input("Block", value=task['block'] or "")
-                    new_initial_by = st.text_input("Initial By", value=task['initial_by'] or "")
-                    new_initial_date = st.date_input("Initial Date", datetime.now())
-                with col2:
-                    new_area = st.text_input("Area", value=task['area'] or "")
-                    new_deck = st.text_input("Deck", value=task['deck'] or "")
-                    new_frame = st.text_input("Frame", value=task['frame'] or "")
-                    new_in_charge_by = st.text_input("In Charge By", value=task['in_charge_by'] or "")
-                    new_progress = st.slider("Progress (%)", 0, 100, int(task['progress'] or 0))
-                with col3:
-                    new_plan_start_date = st.date_input("Plan Start", datetime.now())
-                    new_plan_finish_date = st.date_input("Plan Finish", datetime.now())
-                    new_description = st.text_area("Description", value=task['description'] or "")
-                    new_remark = st.text_area("Remark", value=task['remark'] or "")
-
-                if st.form_submit_button("💾 CẬP NHẬT"):
-                    cursor.execute('''
-                        UPDATE tasks SET 
-                            task_name = ?, task_cost_code = ?, block = ?, description = ?, initial_by = ?,
-                            initial_date = ?, area = ?, deck = ?, frame = ?, in_charge_by = ?,
-                            plan_start_date = ?, plan_finish_date = ?, progress = ?, remark = ?
-                        WHERE task_id = ?
-                    ''', (
-                        new_task_name, new_task_cost_code, new_block, new_description, new_initial_by,
-                        str(new_initial_date), new_area, new_deck, new_frame, new_in_charge_by,
-                        str(new_plan_start_date), str(new_plan_finish_date), new_progress, new_remark,
-                        selected_id
-                    ))
+                submitted = st.form_submit_button("💾 LƯU CÔNG VIỆC MỚI")
+                if submitted and task_id and task_name_input:
+                    cursor.execute("INSERT INTO tasks (task_id, task_name, task_cost_code, is_deleted) VALUES (?, ?, ?, 0)", (task_id, task_name_input, selected_cost_code))
                     conn.commit()
-                    st.success("Đã cập nhật!")
-                    st.rerun()
-
-        with tab_delete:
-            if st.button("🗑️ CHUYỂN VÀO THÙNG RÁC", type="primary"):
-                cursor.execute("UPDATE tasks SET is_deleted = 1 WHERE task_id = ?", (selected_id,))
-                conn.commit()
-                st.success("Đã xóa tạm!")
-                st.rerun()
-
-# --- 5. THÙNG RÁC (KHÔI PHỤC) ---
-elif menu == "🗑️ Thùng Rác (Khôi Phục)":
-    st.subheader("🗑️ Khôi Phục Dữ Liệu Đã Xóa")
-    
-    tab1, tab2 = st.tabs(["📋 Khôi phục Công Việc", "🏷️ Khôi phục Cost Code"])
-    
-    with tab1:
-        df_deleted_tasks = pd.read_sql_query("SELECT task_id, task_name, block, area, in_charge_by FROM tasks WHERE is_deleted = 1", conn)
-        if df_deleted_tasks.empty:
-            st.info("Không có Công việc nào trong thùng rác.")
-        else:
-            st.dataframe(df_deleted_tasks, use_container_width=True)
-            restore_task_id = st.selectbox("Chọn Task ID cần khôi phục:", df_deleted_tasks['task_id'].tolist())
-            if st.button("🔄 Khôi Phục Công Việc Này", type="primary"):
-                cursor.execute("UPDATE tasks SET is_deleted = 0 WHERE task_id = ?", (restore_task_id,))
-                conn.commit()
-                st.success(f"Đã khôi phục thành công Task ID: {restore_task_id}!")
-                st.rerun()
-
-    with tab2:
-        df_deleted_cc = pd.read_sql_query("SELECT id, code FROM custom_cost_codes WHERE is_deleted = 1", conn)
-        if df_deleted_cc.empty:
-            st.info("Không có Cost Code nào trong thùng rác.")
-        else:
-            st.dataframe(df_deleted_cc, use_container_width=True)
-            restore_cc = st.selectbox("Chọn Cost Code cần khôi phục:", df_deleted_cc['code'].tolist())
-            if st.button("🔄 Khôi Phục Cost Code Này", type="primary"):
-                cursor.execute("UPDATE custom_cost_codes SET is_deleted = 0 WHERE code = ?", (restore_cc,))
-                conn.commit()
-                st.success(f"Đã khôi phục thành công Cost Code: {restore_cc}!")
-                st.rerun()
-
-# --- 6. BÁO CÁO & THỐNG KÊ ---
-elif menu == "📊 Báo Cáo & Thống Kê":
-    st.subheader("📊 Báo Cáo Tiến Độ")
-    df = pd.read_sql_query("SELECT * FROM tasks WHERE is_deleted = 0", conn)
-    
-    if not df.empty:
-        c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Tổng Công Việc", len(df))
-        c2.metric("Đã Hoàn Thành", len(df[df['progress'] == 100]))
-        c3.metric("Đang Thực Hiện", len(df[(df['progress'] > 0) & (df['progress'] < 100)]))
-        c4.metric("Chưa Bắt Đầu", len(df[df['progress'] == 0]))
-    else:
-        st.info("Chưa có dữ liệu thống kê.")
+                    st.success("Đã thêm thành công!")
