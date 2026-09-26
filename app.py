@@ -125,6 +125,7 @@ except sqlite3.OperationalError:
 #   tasks.assigned_leader_id : WOS Manager giao việc cho Team Leader / Foreman nào
 #   tasks.assigned_worker_id : Team Leader / Foreman giao việc cho Worker nào
 for _sql in ["ALTER TABLE users ADD COLUMN leader_id INTEGER",
+             "ALTER TABLE users ADD COLUMN team_name TEXT",
              "ALTER TABLE tasks ADD COLUMN assigned_leader_id INTEGER",
              "ALTER TABLE tasks ADD COLUMN assigned_worker_id INTEGER"]:
     try:
@@ -133,6 +134,13 @@ for _sql in ["ALTER TABLE users ADD COLUMN leader_id INTEGER",
         pass
 
 LEADER_ROLES = ["Team Leader", "Foreman"]
+
+def remove_worker_from_team(worker_id, leader_id):
+    """Đưa Worker ra khỏi team và bỏ giao các việc của team đó cho Worker này."""
+    cursor.execute("UPDATE users SET leader_id = NULL WHERE id = ? AND leader_id = ?", (worker_id, leader_id))
+    cursor.execute("UPDATE tasks SET assigned_worker_id = NULL WHERE assigned_worker_id = ? AND assigned_leader_id = ?",
+                   (worker_id, leader_id))
+    conn.commit()
 
 # 🏭 DANH SÁCH WORKSHOP / PHÒNG BAN MẶC ĐỊNH (theo bảng Excel)
 DEFAULT_WORKSHOPS = [
@@ -667,6 +675,7 @@ else:
             "🧰 Bảng Công Việc", 
             "⚙️ Quản Lý Danh Mục",
             "➕ Thêm Công Việc", 
+            "👥 Team Của Tôi",
             "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
             "📊 Báo Cáo & Khai Báo",
@@ -676,6 +685,7 @@ else:
         menu_options = [
             "🧰 Bảng Công Việc", 
             "➕ Thêm Công Việc",
+            "👥 Team Của Tôi",
             "📋 Giao Việc",
             "📊 Báo Cáo & Khai Báo",
             "🔑 Đổi Mật Khẩu"
@@ -683,6 +693,7 @@ else:
     else:
         menu_options = [
             "🧰 Bảng Công Việc",
+            "👥 Team Của Tôi",
             "📊 Báo Cáo & Khai Báo",
             "🔑 Đổi Mật Khẩu"
         ]
@@ -756,6 +767,7 @@ else:
                 t.deck AS 'Deck', 
                 t.frame AS 'Frame', 
                 t.in_charge_by AS 'In Charge By', 
+                l.team_name AS 'Team',
                 l.fullname AS 'Leader / Foreman',
                 w.fullname AS 'Worker',
                 t.plan_start_date AS 'Plan Start Date', 
@@ -1018,12 +1030,10 @@ else:
                 "SELECT id, username, fullname FROM users WHERE is_deleted = 0 AND role = 'Worker' AND leader_id = ? ORDER BY fullname",
                 conn, params=(my_id,))
 
-            st.markdown("### 👷 Team Của Tôi")
+            my_team_name = cursor.execute("SELECT team_name FROM users WHERE id = ?", (my_id,)).fetchone()[0]
+            st.markdown(f"### 👷 Team: {html.escape(my_team_name) if my_team_name else '(chưa đặt tên)'} – {len(team_df)} Worker")
             if team_df.empty:
-                st.info("Team của bạn chưa có Worker nào. Nhờ WOS Manager thêm Worker vào team ở mục 👥 Quản Lý Phân Quyền.")
-            else:
-                st.dataframe(team_df.rename(columns={'username': 'Username', 'fullname': 'Họ và Tên'}).drop(columns=['id']),
-                             use_container_width=True)
+                st.info("Team của bạn chưa có Worker nào. Vào 👥 Team Của Tôi để tạo team và thêm Worker.")
 
             st.markdown("---")
             st.markdown("### 📌 Giao Việc Cho Worker")
@@ -1058,6 +1068,132 @@ else:
                                    (sel_worker, sel_task, my_id))
                     conn.commit()
                     st.success(f"Đã giao công việc cho **{worker_opts[sel_worker]}**!")
+                    st.rerun()
+
+    # 3C. TEAM CỦA TÔI
+    #    - Team Leader / Foreman: đặt tên team, thêm Worker CÙNG WORKSHOP (chưa thuộc team nào), xóa khỏi team
+    #    - Worker: xem team của mình và có thể rời team
+    elif menu == "👥 Team Của Tôi" and current_role in ["Team Leader", "Foreman", "Worker"]:
+        st.markdown("<div class='big-table-title'>👥 Team Của Tôi</div>", unsafe_allow_html=True)
+        my_id = user_data['id']
+        my_ws = user_data.get("workshop")
+
+        if current_role in LEADER_ROLES:
+            my_team_name = cursor.execute("SELECT team_name FROM users WHERE id = ?", (my_id,)).fetchone()[0]
+
+            if not my_ws:
+                st.warning("⚠️ Tài khoản của bạn chưa được gán Workshop. Nhờ WOS Manager gán Workshop trước khi lập team.")
+            elif not my_team_name:
+                # Bước 1: tạo team (đặt tên)
+                st.info("Bạn chưa có team. Hãy đặt tên để tạo team.")
+                with st.form("create_team_form"):
+                    new_team_name = st.text_input("Tên Team *", placeholder="Ví dụ: Team Hàn Block 170")
+                    if st.form_submit_button("➕ TẠO TEAM"):
+                        if not new_team_name.strip():
+                            st.error("Vui lòng nhập tên team!")
+                        elif len(new_team_name.strip()) > 60:
+                            st.error("Tên team tối đa 60 ký tự!")
+                        else:
+                            cursor.execute("UPDATE users SET team_name = ? WHERE id = ?", (new_team_name.strip(), my_id))
+                            conn.commit()
+                            st.success(f"Đã tạo team **{new_team_name.strip()}**!")
+                            st.rerun()
+            else:
+                st.markdown(f"### 🏷️ {html.escape(my_team_name)}")
+                st.caption(f"🏭 Workshop: {my_ws}")
+
+                with st.expander("✏️ Đổi tên team"):
+                    with st.form("rename_team_form"):
+                        renamed = st.text_input("Tên team mới:", value=my_team_name)
+                        if st.form_submit_button("💾 LƯU TÊN"):
+                            if not renamed.strip() or len(renamed.strip()) > 60:
+                                st.error("Tên team không hợp lệ (1–60 ký tự)!")
+                            else:
+                                cursor.execute("UPDATE users SET team_name = ? WHERE id = ?", (renamed.strip(), my_id))
+                                conn.commit()
+                                st.success("Đã đổi tên team!")
+                                st.rerun()
+
+                team_df = pd.read_sql_query(
+                    "SELECT id, username, fullname FROM users WHERE is_deleted = 0 AND role = 'Worker' AND leader_id = ? ORDER BY fullname",
+                    conn, params=(my_id,))
+
+                st.markdown("#### 👷 Thành Viên")
+                if team_df.empty:
+                    st.info("Team chưa có Worker nào.")
+                else:
+                    st.dataframe(team_df.rename(columns={'username': 'Username', 'fullname': 'Họ và Tên'}).drop(columns=['id']),
+                                 use_container_width=True)
+
+                st.markdown("---")
+                col_add, col_remove = st.columns(2)
+
+                with col_add:
+                    st.markdown("#### ➕ Thêm Worker")
+                    # Chỉ lấy Worker cùng workshop và chưa thuộc team nào
+                    free_workers = pd.read_sql_query("""
+                        SELECT id, username, fullname FROM users
+                        WHERE is_deleted = 0 AND role = 'Worker' AND workshop = ? AND leader_id IS NULL
+                        ORDER BY fullname
+                    """, conn, params=(my_ws,))
+                    if free_workers.empty:
+                        st.caption(f"Không còn Worker nào trong workshop {my_ws} chưa có team.")
+                    else:
+                        fw_opts = {int(r['id']): f"{r['fullname']} (@{r['username']})" for _, r in free_workers.iterrows()}
+                        to_add = st.multiselect("Chọn Worker (cùng workshop, chưa có team):", list(fw_opts.keys()),
+                                                format_func=lambda k: fw_opts[k])
+                        if st.button("➕ THÊM VÀO TEAM", type="primary", key="btn_add_team_members"):
+                            if not to_add:
+                                st.error("Hãy chọn ít nhất 1 Worker!")
+                            else:
+                                for wid in to_add:
+                                    # Kiểm tra lại phía server: đúng workshop và vẫn chưa có team
+                                    cursor.execute("""UPDATE users SET leader_id = ?
+                                                      WHERE id = ? AND role = 'Worker' AND workshop = ? AND leader_id IS NULL AND is_deleted = 0""",
+                                                   (my_id, wid, my_ws))
+                                conn.commit()
+                                st.success(f"Đã thêm {len(to_add)} Worker vào team!")
+                                st.rerun()
+
+                with col_remove:
+                    st.markdown("#### ➖ Xóa Khỏi Team")
+                    if team_df.empty:
+                        st.caption("Chưa có thành viên để xóa.")
+                    else:
+                        tm_opts = {int(r['id']): f"{r['fullname']} (@{r['username']})" for _, r in team_df.iterrows()}
+                        to_remove = st.selectbox("Chọn Worker:", list(tm_opts.keys()), format_func=lambda k: tm_opts[k])
+                        if st.button("➖ XÓA KHỎI TEAM", type="secondary", key="btn_remove_team_member"):
+                            remove_worker_from_team(to_remove, my_id)
+                            st.success("Đã xóa Worker khỏi team. Các việc của team giao cho người này đã được bỏ giao.")
+                            st.rerun()
+
+        else:
+            # WORKER
+            my_leader = cursor.execute("""
+                SELECT l.id, l.fullname, l.role, l.team_name FROM users me
+                JOIN users l ON l.id = me.leader_id
+                WHERE me.id = ? AND l.is_deleted = 0
+            """, (my_id,)).fetchone()
+
+            if not my_leader:
+                st.info("Bạn chưa thuộc team nào. Team Leader / Foreman trong workshop của bạn có thể thêm bạn vào team.")
+            else:
+                leader_id, leader_name, leader_role, team_name = my_leader
+                st.markdown(f"### 🏷️ {html.escape(team_name) if team_name else '(Team chưa đặt tên)'}")
+                st.markdown(f"**Trưởng team:** {html.escape(leader_name)} ({leader_role})")
+
+                mates = pd.read_sql_query(
+                    "SELECT username, fullname FROM users WHERE is_deleted = 0 AND role = 'Worker' AND leader_id = ? ORDER BY fullname",
+                    conn, params=(leader_id,))
+                st.dataframe(mates.rename(columns={'username': 'Username', 'fullname': 'Họ và Tên'}), use_container_width=True)
+
+                st.markdown("---")
+                st.markdown("#### 🚪 Rời Team")
+                st.caption("Khi rời team, các công việc của team đang giao cho bạn sẽ trở về trạng thái chưa giao.")
+                confirm_leave = st.checkbox("Tôi chắc chắn muốn rời team này")
+                if st.button("🚪 RỜI TEAM", type="secondary", key="btn_leave_team", disabled=not confirm_leave):
+                    remove_worker_from_team(my_id, leader_id)
+                    st.success("Bạn đã rời team.")
                     st.rerun()
 
     # 4. CHỈNH SỬA / XÓA TẠM
@@ -1129,7 +1265,8 @@ else:
         ws_label = {row['code']: f"{row['code']} - {row['name']}" for _, row in ws_df.iterrows()}
 
         all_users = pd.read_sql_query("""
-            SELECT u.id, u.username, u.fullname, u.role, u.workshop, u.leader_id, l.fullname AS leader_name
+            SELECT u.id, u.username, u.fullname, u.role, u.workshop, u.leader_id, u.team_name,
+                   COALESCE(l.team_name || ' (' || l.fullname || ')', l.fullname) AS leader_name
             FROM users u LEFT JOIN users l ON l.id = u.leader_id
             WHERE u.is_deleted = 0
         """, conn)
@@ -1150,7 +1287,7 @@ else:
         show_df = show_df.rename(columns={'username': 'Username', 'fullname': 'Họ và Tên',
                                           'role': 'Vai Trò (Role)', 'workshop': 'Workshop',
                                           'leader_name': 'Team của'})
-        st.dataframe(show_df.drop(columns=['id', 'leader_id']), use_container_width=True)
+        st.dataframe(show_df.drop(columns=['id', 'leader_id', 'team_name']), use_container_width=True)
 
         st.markdown("---")
         st.markdown("### 🔄 Thay Đổi Quyền Hạn Cho Tài Khoản")
@@ -1200,7 +1337,7 @@ else:
                     leaders_in_ws = all_users[(all_users['role'].isin(LEADER_ROLES)) & (all_users['workshop'] == new_ws)]
                     leader_opts = {None: "— Chưa xếp team —"}
                     for _, r in leaders_in_ws.iterrows():
-                        leader_opts[int(r['id'])] = f"{r['fullname']} ({r['role']})"
+                        leader_opts[int(r['id'])] = f"{r['team_name'] + ' – ' if r['team_name'] else ''}{r['fullname']} ({r['role']})"
                     cur_ld = None if pd.isna(target_row['leader_id']) else int(target_row['leader_id'])
                     ld_keys = list(leader_opts.keys())
                     new_leader = st.selectbox("Thuộc team của (Team Leader / Foreman):", ld_keys,
@@ -1212,8 +1349,9 @@ else:
                 if st.button("💾 LƯU THAY ĐỔI ROLE", type="primary", key="btn_save_role"):
                     cursor.execute("UPDATE users SET role = ?, workshop = ?, leader_id = ? WHERE id = ?",
                                    (new_role, new_ws, new_leader, target_user_id))
-                    if new_role not in LEADER_ROLES:
-                        # Không còn là Leader: giải tán team và trả công việc về trạng thái chưa giao
+                    if new_role not in LEADER_ROLES or new_ws != target_row['workshop']:
+                        # Không còn là Leader (hoặc đổi workshop): giải tán team và trả công việc về trạng thái chưa giao
+                        cursor.execute("UPDATE users SET team_name = NULL WHERE id = ?", (target_user_id,))
                         cursor.execute("UPDATE users SET leader_id = NULL WHERE leader_id = ?", (target_user_id,))
                         cursor.execute("UPDATE tasks SET assigned_leader_id = NULL, assigned_worker_id = NULL WHERE assigned_leader_id = ?",
                                        (target_user_id,))
