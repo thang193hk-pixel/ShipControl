@@ -198,6 +198,13 @@ if not admin_exists:
     cursor.execute("INSERT INTO users (username, password, fullname, role, is_deleted) VALUES (?, ?, ?, ?, 0)",
                    ('admin', hash_password(initial_admin_pw), 'WOS Manager System', 'WOS Manager'))
 
+# 🆘 KHÔI PHỤC TÀI KHOẢN ADMIN: đặt RESET_ADMIN_PASSWORD trong Secrets để đặt lại mật khẩu admin.
+# Sau khi đăng nhập được, hãy XÓA dòng RESET_ADMIN_PASSWORD khỏi Secrets.
+reset_admin_pw = get_secret("RESET_ADMIN_PASSWORD")
+if reset_admin_pw:
+    cursor.execute("UPDATE users SET password = ?, role = 'WOS Manager', is_deleted = 0 WHERE username = 'admin'",
+                   (hash_password(str(reset_admin_pw)),))
+
 conn.commit()
 
 
