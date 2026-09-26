@@ -114,6 +114,33 @@ for col_name, col_type in tasks_schema_updates.items():
             pass
 
 
+# 🏭 CỘT WORKSHOP CHO NGƯỜI DÙNG (mỗi tài khoản thuộc 1 workshop / phòng ban)
+try:
+    cursor.execute("ALTER TABLE users ADD COLUMN workshop TEXT")
+except sqlite3.OperationalError:
+    pass
+
+# 🏭 DANH SÁCH WORKSHOP / PHÒNG BAN MẶC ĐỊNH (theo bảng Excel)
+DEFAULT_WORKSHOPS = [
+    ("WOS_01", "Fabrication WS"),
+    ("WOS_02", "Hull WS 02"),
+    ("WOS_03", "Hull WS 03"),
+    ("WOS_04", "Outfitting WS"),
+    ("WOS_05", "Piping WS"),
+    ("WOS_06", "Painting WS"),
+    ("DEP_01", "Technical Dept"),
+    ("DEP_02", "QA QC Department"),
+    ("DEP_03", "Safety Department"),
+    ("DEP_04", "Planing Department"),
+    ("DEP_05", "Project Department"),
+    ("DEP_06", "Finance Department"),
+    ("DEP_07", "HR Department"),
+    ("DEP_08", "Security Department"),
+]
+for ws_code, ws_name in DEFAULT_WORKSHOPS:
+    cursor.execute("INSERT OR IGNORE INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
+                   (ws_code, ws_name))
+
 # 🔐 BẢNG PHIÊN ĐĂNG NHẬP (cookie chỉ chứa token ngẫu nhiên, không chứa username)
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS sessions (
@@ -167,7 +194,7 @@ def create_session(user_id):
 
 def get_user_by_session(token):
     row = cursor.execute("""
-        SELECT u.id, u.username, u.fullname, u.role
+        SELECT u.id, u.username, u.fullname, u.role, u.workshop
         FROM sessions s JOIN users u ON u.id = s.user_id
         WHERE s.token = ? AND s.expires_at > ? AND u.is_deleted = 0
     """, (token, datetime.now().isoformat())).fetchone()
@@ -196,13 +223,16 @@ if not admin_exists:
         print("Hãy đăng nhập và đổi mật khẩu ngay, hoặc đặt ADMIN_PASSWORD trong Secrets.")
         print("=" * 60)
     cursor.execute("INSERT INTO users (username, password, fullname, role, is_deleted) VALUES (?, ?, ?, ?, 0)",
-                   ('admin', hash_password(initial_admin_pw), 'WOS Manager System', 'WOS Manager'))
+                   ('admin', hash_password(initial_admin_pw), 'System Admin', 'Admin'))
+
+# Tài khoản 'admin' luôn là Admin hệ thống (chỉ cấp quyền WOS Manager + workshop)
+cursor.execute("UPDATE users SET role = 'Admin' WHERE username = 'admin'")
 
 # 🆘 KHÔI PHỤC TÀI KHOẢN ADMIN: đặt RESET_ADMIN_PASSWORD trong Secrets để đặt lại mật khẩu admin.
 # Sau khi đăng nhập được, hãy XÓA dòng RESET_ADMIN_PASSWORD khỏi Secrets.
 reset_admin_pw = get_secret("RESET_ADMIN_PASSWORD")
 if reset_admin_pw:
-    cursor.execute("UPDATE users SET password = ?, role = 'WOS Manager', is_deleted = 0 WHERE username = 'admin'",
+    cursor.execute("UPDATE users SET password = ?, role = 'Admin', is_deleted = 0 WHERE username = 'admin'",
                    (hash_password(str(reset_admin_pw)),))
 
 conn.commit()
@@ -230,7 +260,7 @@ def send_new_user_email(target_username, target_fullname):
         <p><b>Họ và Tên:</b> {safe_name}</p>
         <p><b>Tên đăng nhập (Username):</b> {safe_user}</p>
         <hr>
-        <p>Đăng nhập bằng tài khoản <b>WOS Manager</b>, vào mục <b>👥 Quản Lý Phân Quyền</b> để cấp Role.</p>
+        <p>Đăng nhập bằng tài khoản <b>Admin</b> hoặc <b>WOS Manager</b>, vào mục <b>👥 Quản Lý Phân Quyền</b> để cấp Role.</p>
         <a href="{APP_URL}" style="display: inline-block; background-color: #16a34a; color: white; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold;">👉 Mở ShipControl</a>
     </div>
     """
@@ -414,6 +444,23 @@ st.markdown(f"""
         font-size: 1.1rem !important;
     }}
 
+    /* Chữ của nút chọn Role (radio), nhãn các ô nhập và số liệu báo cáo: luôn cùng màu chữ chính */
+    .stRadio label, .stRadio label p, .stRadio div[role="radiogroup"] *,
+    .stNumberInput label, .stNumberInput label p,
+    .stCheckbox label, .stCheckbox label p,
+    .stMain [data-testid="stWidgetLabel"], .stMain [data-testid="stWidgetLabel"] p,
+    .main [data-testid="stWidgetLabel"], .main [data-testid="stWidgetLabel"] p,
+    [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] *,
+    [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {{
+        color: {text_color} !important;
+        -webkit-text-fill-color: {text_color} !important;
+        opacity: 1 !important;
+    }}
+    .stRadio div[role="radiogroup"] p {{
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+    }}
+
     .stTextInput label, .stTextArea label, .stSelectbox label, .stDateInput label, .stSlider label {{
         color: {text_color} !important;
         font-weight: 700 !important;
@@ -465,12 +512,12 @@ if not st.session_state["logged_in"] and saved_token:
     if user_db and user_db[3] and user_db[3] != 'Pending':
         st.session_state["logged_in"] = True
         st.session_state["session_token"] = saved_token
-        st.session_state["user_info"] = {"id": user_db[0], "username": user_db[1], "fullname": user_db[2], "role": user_db[3]}
+        st.session_state["user_info"] = {"id": user_db[0], "username": user_db[1], "fullname": user_db[2], "role": user_db[3], "workshop": user_db[4]}
         st.rerun()
 
 # Nếu đang đăng nhập, kiểm tra lại mỗi lần tải trang: tài khoản bị khóa hoặc đổi Role sẽ có hiệu lực ngay
 if st.session_state["logged_in"]:
-    fresh = cursor.execute("SELECT fullname, role FROM users WHERE id = ? AND is_deleted = 0",
+    fresh = cursor.execute("SELECT fullname, role, workshop FROM users WHERE id = ? AND is_deleted = 0",
                            (st.session_state["user_info"]["id"],)).fetchone()
     if not fresh or not fresh[1] or fresh[1] == 'Pending':
         tok = st.session_state.get("session_token")
@@ -481,6 +528,7 @@ if st.session_state["logged_in"]:
         st.rerun()
     st.session_state["user_info"]["fullname"] = fresh[0]
     st.session_state["user_info"]["role"] = fresh[1]
+    st.session_state["user_info"]["workshop"] = fresh[2]
 
 # ==========================================
 # 🔐 HỆ THỐNG XÁC THỰC
@@ -518,7 +566,7 @@ if not st.session_state["logged_in"]:
                     if not login_user or not login_pass:
                         st.error("Vui lòng nhập đầy đủ Username và Mật khẩu!")
                     else:
-                        user = cursor.execute("SELECT * FROM users WHERE username = ? AND is_deleted = 0", (login_user.strip(),)).fetchone()
+                        user = cursor.execute("SELECT id, username, password, fullname, role, workshop FROM users WHERE username = ? AND is_deleted = 0", (login_user.strip(),)).fetchone()
                         if user and not verify_password(login_pass, user[2]):
                             user = None
                         if user:
@@ -529,10 +577,10 @@ if not st.session_state["logged_in"]:
                             user_role = user[4] if len(user) > 4 and user[4] else 'Pending'
                             
                             if user_role == 'Pending':
-                                st.warning("⏳ Tài khoản của bạn đang chờ WOS Manager cấp Role. Vui lòng quay lại sau!")
+                                st.warning("⏳ Tài khoản của bạn đang chờ Admin / WOS Manager cấp Role. Vui lòng quay lại sau!")
                             else:
                                 st.session_state["logged_in"] = True
-                                st.session_state["user_info"] = {"id": user[0], "username": user[1], "fullname": user[3], "role": user_role}
+                                st.session_state["user_info"] = {"id": user[0], "username": user[1], "fullname": user[3], "role": user_role, "workshop": user[5]}
                                 
                                 token = create_session(user[0])
                                 st.session_state["session_token"] = token
@@ -585,7 +633,10 @@ else:
 
     st.sidebar.markdown("<div class='sidebar-header'>☸️ Control Menu</div>", unsafe_allow_html=True)
 
-    if current_role == "WOS Manager":
+    is_admin = current_role == "Admin"
+    is_manager_up = current_role in ["Admin", "WOS Manager"]
+
+    if is_manager_up:
         menu_options = [
             "🧰 Bảng Công Việc", 
             "⚙️ Quản Lý Danh Mục",
@@ -633,6 +684,7 @@ else:
     menu = st.session_state["current_menu"]
     
     role_icons = {
+        "Admin": "🛡️ Admin",
         "WOS Manager": "👑 WOS Manager",
         "Foreman": "👔 Foreman",
         "Team Leader": "🧢 Team Leader",
@@ -645,6 +697,7 @@ else:
             👋 <b>WELCOME</b><br>
             <span style='font-size: 1.1rem; font-weight: 800;'>{html.escape(str(user_data['fullname']))}</span><br>
             <small>@{html.escape(str(user_data['username']))} | <b>{html.escape(role_badge)}</b></small>
+            {"<br><small>🏭 " + html.escape(str(user_data.get('workshop'))) + "</small>" if user_data.get('workshop') else ""}
         </div>
     """, unsafe_allow_html=True)
 
@@ -721,7 +774,7 @@ else:
                     st.rerun()
 
     # 2. QUẢN LÝ DANH MỤC
-    elif menu == "⚙️ Quản Lý Danh Mục" and current_role in ["Foreman", "WOS Manager"]:
+    elif menu == "⚙️ Quản Lý Danh Mục" and current_role in ["Foreman", "WOS Manager", "Admin"]:
         st.markdown("<div class='big-table-title'>⚙️ Quản Lý Danh Mục Workshop / Cost Code</div>", unsafe_allow_html=True)
         
         with st.form("add_cost_code_form", clear_on_submit=True):
@@ -773,7 +826,7 @@ else:
                 st.rerun()
 
     # 3. THÊM CÔNG VIỆC MỚI
-    elif menu == "➕ Thêm Công Việc" and current_role in ["Team Leader", "Foreman", "WOS Manager"]:
+    elif menu == "➕ Thêm Công Việc" and current_role in ["Team Leader", "Foreman", "WOS Manager", "Admin"]:
         st.markdown("<div class='big-table-title'>➕ Thêm Công Việc Mới</div>", unsafe_allow_html=True)
         
         cost_codes_df = pd.read_sql_query("SELECT code, name FROM custom_cost_codes WHERE is_deleted = 0", conn)
@@ -852,7 +905,7 @@ else:
                         st.success(f"Đã lưu thành công công việc **{task_id} - {task_name_input}**!")
 
     # 4. CHỈNH SỬA / XÓA TẠM
-    elif menu == "✏️ Chỉnh Sửa/Xóa" and current_role in ["Foreman", "WOS Manager"]:
+    elif menu == "✏️ Chỉnh Sửa/Xóa" and current_role in ["Foreman", "WOS Manager", "Admin"]:
         st.markdown("<div class='big-table-title'>✏️ Chỉnh Sửa & Xóa Quản Lý</div>", unsafe_allow_html=True)
         
         btn_col1, btn_col2, btn_col_space = st.columns([1.5, 2, 2.5])
@@ -888,7 +941,11 @@ else:
         else:
             users_df = pd.read_sql_query("SELECT id, username, fullname, role FROM users WHERE is_deleted = 0", conn)
             users_df = users_df[users_df['id'] != user_data['id']]
-            if current_role != "WOS Manager":
+            users_df = users_df[users_df['role'] != "Admin"]
+            if current_role == "WOS Manager":
+                # WOS Manager không được khóa WOS Manager khác
+                users_df = users_df[users_df['role'] != "WOS Manager"]
+            elif current_role != "Admin":
                 # Foreman chỉ được khóa Worker, Team Leader và tài khoản đang chờ duyệt
                 users_df = users_df[users_df['role'].isin(["Worker", "Team Leader", "Pending"])]
             
@@ -906,30 +963,82 @@ else:
                     st.success("Đã khóa/chuyển tài khoản vào Thùng Rác thành công!")
                     st.rerun()
 
-    # 5. QUẢN LÝ PHÂN QUYỀN ROLES (CHỈ WOS MANAGER)
-    elif menu == "👥 Quản Lý Phân Quyền" and current_role == "WOS Manager":
+    # 5. QUẢN LÝ PHÂN QUYỀN
+    #    - Admin: CHỈ cấp role WOS Manager và chọn workshop cho Manager
+    #    - WOS Manager: cấp Worker / Team Leader / Foreman trong workshop của mình
+    elif menu == "👥 Quản Lý Phân Quyền" and is_manager_up:
         st.markdown("<div class='big-table-title'>👥 Quản Lý & Cấp Quyền Tài Khoản (Role List)</div>", unsafe_allow_html=True)
-        
-        users_df = pd.read_sql_query("SELECT id, username AS 'Username', fullname AS 'Họ và Tên', role AS 'Vai Trò (Role)' FROM users WHERE is_deleted = 0", conn)
-        st.dataframe(users_df, use_container_width=True)
-        
+
+        ws_df = pd.read_sql_query("SELECT code, name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
+        ws_label = {row['code']: f"{row['code']} - {row['name']}" for _, row in ws_df.iterrows()}
+
+        all_users = pd.read_sql_query("SELECT id, username, fullname, role, workshop FROM users WHERE is_deleted = 0", conn)
+        all_users = all_users[(all_users['id'] != user_data['id']) & (all_users['role'] != "Admin")]
+
+        if is_admin:
+            visible_users = all_users
+            st.info("🛡️ Admin chỉ cấp quyền **WOS Manager** và chọn **Workshop** mà Manager đó phụ trách. "
+                    "Các role Worker / Team Leader / Foreman do WOS Manager của từng workshop cấp.")
+        else:
+            my_ws = user_data.get("workshop")
+            if not my_ws:
+                st.warning("⚠️ Tài khoản của bạn chưa được gán Workshop. Hãy nhờ Admin gán Workshop trước.")
+                st.stop()
+            st.info(f"👑 Bạn quản lý workshop **{ws_label.get(my_ws, my_ws)}**. "
+                    "Bạn có thể cấp Worker / Team Leader / Foreman cho người trong workshop này và người đang chờ duyệt.")
+            visible_users = all_users[
+                (all_users['role'] != "WOS Manager") &
+                ((all_users['workshop'] == my_ws) | (all_users['role'] == "Pending"))
+            ]
+
+        show_df = visible_users.copy()
+        show_df['workshop'] = show_df['workshop'].map(lambda c: ws_label.get(c, c) if c else "—")
+        show_df = show_df.rename(columns={'username': 'Username', 'fullname': 'Họ và Tên',
+                                          'role': 'Vai Trò (Role)', 'workshop': 'Workshop'})
+        st.dataframe(show_df.drop(columns=['id']), use_container_width=True)
+
         st.markdown("---")
         st.markdown("### 🔄 Thay Đổi Quyền Hạn Cho Tài Khoản")
-        
-        user_roles_list = [f"{row['id']} | @{row['Username']} - {row['Họ và Tên']} (Hiện tại: {row['Vai Trò (Role)']})" for _, row in users_df.iterrows()]
-        target_role_user = st.selectbox("Chọn tài khoản cần chuyển đổi Role:", user_roles_list)
-        target_user_id = int(target_role_user.split(" | ")[0])
-        
-        new_role = st.radio("Chọn Role Mới:", ["Worker", "Team Leader", "Foreman", "WOS Manager"], horizontal=True)
-        
-        if st.button("💾 LƯU THAY ĐỔI ROLE", type="primary", key="btn_save_role"):
-            cursor.execute("UPDATE users SET role = ? WHERE id = ?", (new_role, target_user_id))
-            conn.commit()
-            st.success(f"Đã chuyển đổi Role thành **{new_role}** thành công!")
-            st.rerun()
+
+        if visible_users.empty:
+            st.info("Không có tài khoản nào để cấp quyền.")
+        else:
+            user_roles_list = [f"{row['id']} | @{row['username']} - {row['fullname']} (Hiện tại: {row['role']})"
+                               for _, row in visible_users.iterrows()]
+            target_role_user = st.selectbox("Chọn tài khoản cần chuyển đổi Role:", user_roles_list)
+            target_user_id = int(target_role_user.split(" | ")[0])
+
+            if is_admin:
+                if ws_df.empty:
+                    st.warning("⚠️ Chưa có Workshop nào. Vào ⚙️ Quản Lý Danh Mục để thêm trước.")
+                else:
+                    action = st.radio("Chọn thao tác:", ["👑 Cấp quyền WOS Manager", "⛔ Thu hồi quyền (về Pending)"], horizontal=True)
+                    chosen_ws = None
+                    if action.startswith("👑"):
+                        chosen_ws = st.selectbox("Workshop mà Manager này phụ trách:", list(ws_label.keys()),
+                                                 format_func=lambda c: ws_label[c])
+                    if st.button("💾 LƯU THAY ĐỔI", type="primary", key="btn_save_role_admin"):
+                        if chosen_ws:
+                            cursor.execute("UPDATE users SET role = 'WOS Manager', workshop = ? WHERE id = ?", (chosen_ws, target_user_id))
+                            msg = f"Đã cấp **WOS Manager** cho workshop **{ws_label[chosen_ws]}**!"
+                        else:
+                            cursor.execute("UPDATE users SET role = 'Pending' WHERE id = ?", (target_user_id,))
+                            msg = "Đã thu hồi quyền, tài khoản trở về trạng thái Pending."
+                        conn.commit()
+                        delete_user_sessions(target_user_id)
+                        st.success(msg)
+                        st.rerun()
+            else:
+                new_role = st.radio("Chọn Role Mới:", ["Worker", "Team Leader", "Foreman", "Pending"], horizontal=True)
+                if st.button("💾 LƯU THAY ĐỔI ROLE", type="primary", key="btn_save_role"):
+                    cursor.execute("UPDATE users SET role = ?, workshop = ? WHERE id = ?",
+                                   (new_role, user_data.get("workshop"), target_user_id))
+                    conn.commit()
+                    st.success(f"Đã chuyển đổi Role thành **{new_role}** trong workshop **{ws_label.get(user_data.get('workshop'), '')}**!")
+                    st.rerun()
 
     # 6. THÙNG RÁC TỔNG HỢP (CHỈ WOS MANAGER)
-    elif menu == "🗑️ Thùng Rác" and current_role == "WOS Manager":
+    elif menu == "🗑️ Thùng Rác" and is_manager_up:
         st.markdown("<div class='big-table-title'>🗑️ Thùng Rác & Khôi Phục Tổng Hợp</div>", unsafe_allow_html=True)
         
         t_col1, t_col2, t_col3, t_space = st.columns([1.5, 1.5, 1.5, 1.5])
