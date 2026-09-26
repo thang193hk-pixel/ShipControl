@@ -120,6 +120,20 @@ try:
 except sqlite3.OperationalError:
     pass
 
+# 👥 TEAM & GIAO VIỆC
+#   users.leader_id          : Worker thuộc team của Team Leader / Foreman nào
+#   tasks.assigned_leader_id : WOS Manager giao việc cho Team Leader / Foreman nào
+#   tasks.assigned_worker_id : Team Leader / Foreman giao việc cho Worker nào
+for _sql in ["ALTER TABLE users ADD COLUMN leader_id INTEGER",
+             "ALTER TABLE tasks ADD COLUMN assigned_leader_id INTEGER",
+             "ALTER TABLE tasks ADD COLUMN assigned_worker_id INTEGER"]:
+    try:
+        cursor.execute(_sql)
+    except sqlite3.OperationalError:
+        pass
+
+LEADER_ROLES = ["Team Leader", "Foreman"]
+
 # 🏭 DANH SÁCH WORKSHOP / PHÒNG BAN MẶC ĐỊNH (theo bảng Excel)
 DEFAULT_WORKSHOPS = [
     ("WOS_01", "Fabrication WS"),
@@ -641,6 +655,7 @@ else:
             "🧰 Bảng Công Việc", 
             "⚙️ Quản Lý Danh Mục",
             "➕ Thêm Công Việc", 
+            "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
             "👥 Quản Lý Phân Quyền",
             "🗑️ Thùng Rác",
@@ -652,6 +667,7 @@ else:
             "🧰 Bảng Công Việc", 
             "⚙️ Quản Lý Danh Mục",
             "➕ Thêm Công Việc", 
+            "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
             "📊 Báo Cáo & Khai Báo",
             "🔑 Đổi Mật Khẩu"
@@ -660,6 +676,7 @@ else:
         menu_options = [
             "🧰 Bảng Công Việc", 
             "➕ Thêm Công Việc",
+            "📋 Giao Việc",
             "📊 Báo Cáo & Khai Báo",
             "🔑 Đổi Mật Khẩu"
         ]
@@ -725,53 +742,79 @@ else:
         
         df = pd.read_sql_query("""
             SELECT 
-                task_id AS 'Task ID', 
-                task_name AS 'Task Name', 
-                task_cost_code AS 'WS Cost Code', 
-                description AS 'Description',
-                initial_by AS 'Initial By', 
-                initial_date AS 'Initial Date', 
-                block AS 'Block', 
-                area AS 'Area', 
-                deck AS 'Deck', 
-                frame AS 'Frame', 
-                in_charge_by AS 'In Charge By', 
-                plan_start_date AS 'Plan Start Date', 
-                plan_finish_date AS 'Plan Finish Date', 
-                progress AS 'Progress (%)', 
-                remark AS 'Remark' 
-            FROM tasks WHERE is_deleted = 0
+                t.id AS _id,
+                t.assigned_leader_id AS _leader_id,
+                t.assigned_worker_id AS _worker_id,
+                t.task_id AS 'Task ID', 
+                t.task_name AS 'Task Name', 
+                t.task_cost_code AS 'WS Cost Code', 
+                t.description AS 'Description',
+                t.initial_by AS 'Initial By', 
+                t.initial_date AS 'Initial Date', 
+                t.block AS 'Block', 
+                t.area AS 'Area', 
+                t.deck AS 'Deck', 
+                t.frame AS 'Frame', 
+                t.in_charge_by AS 'In Charge By', 
+                l.fullname AS 'Leader / Foreman',
+                w.fullname AS 'Worker',
+                t.plan_start_date AS 'Plan Start Date', 
+                t.plan_finish_date AS 'Plan Finish Date', 
+                t.progress AS 'Progress (%)', 
+                t.remark AS 'Remark' 
+            FROM tasks t
+            LEFT JOIN users l ON l.id = t.assigned_leader_id
+            LEFT JOIN users w ON w.id = t.assigned_worker_id
+            WHERE t.is_deleted = 0
         """, conn)
+
+        my_id = user_data['id']
+        if current_role == "Worker":
+            df = df[df['_worker_id'] == my_id]
+            st.caption("👷 Đây là các công việc được giao cho bạn.")
+        elif current_role in LEADER_ROLES:
+            only_team = st.toggle("Chỉ xem công việc của team tôi", value=True)
+            if only_team:
+                df = df[df['_leader_id'] == my_id]
         
         if df.empty:
-            st.info("Chưa có dữ liệu công việc nào trong hệ thống.")
+            st.info("Chưa có công việc nào để hiển thị.")
         else:
-            st.dataframe(df, use_container_width=True, height=400)
+            st.dataframe(df.drop(columns=['_id', '_leader_id', '_worker_id']), use_container_width=True, height=400)
             
             st.markdown("---")
             st.markdown("### ⚡ Cập Nhật Tiến Độ Công Việc Nhanh")
-            
-            tasks_list_df = pd.read_sql_query("SELECT id, task_id, task_name, progress, remark FROM tasks WHERE is_deleted = 0", conn)
-            options_tasks = [f"{row['id']} | {row['task_id']} - {row['task_name']} (Hiện tại: {row['progress']}%)" for _, row in tasks_list_df.iterrows()]
-            
-            selected_update_task = st.selectbox("Chọn công việc cần cập nhật tiến độ:", options_tasks)
-            selected_task_id = int(selected_update_task.split(" | ")[0])
-            
-            curr_task = cursor.execute("SELECT progress, remark FROM tasks WHERE id = ?", (selected_task_id,)).fetchone()
-            
-            with st.form("quick_update_progress_form"):
-                u_col1, u_col2 = st.columns([1, 2])
-                with u_col1:
-                    new_progress = st.number_input("Mức Tiến Độ Mới (%)", min_value=0, max_value=100, value=int(curr_task[0]), step=5)
-                with u_col2:
-                    new_remark = st.text_input("Ghi Chú Thi Công (Remark):", value=curr_task[1] if curr_task[1] else "")
+
+            # Ai được cập nhật việc nào: Worker = việc của mình, Leader = việc của team, Manager = tất cả
+            if current_role == "Worker":
+                upd_df = df
+            elif current_role in LEADER_ROLES:
+                upd_df = df[df['_leader_id'] == my_id]
+            else:
+                upd_df = df
+
+            if upd_df.empty:
+                st.info("Bạn chưa có công việc nào để cập nhật tiến độ.")
+            else:
+                options_tasks = [f"{row['_id']} | {row['Task ID']} - {row['Task Name']} (Hiện tại: {row['Progress (%)']}%)" for _, row in upd_df.iterrows()]
+                selected_update_task = st.selectbox("Chọn công việc cần cập nhật tiến độ:", options_tasks)
+                selected_task_id = int(selected_update_task.split(" | ")[0])
                 
-                btn_update_p = st.form_submit_button("🚀 CẬP NHẬT TIẾN ĐỘ")
-                if btn_update_p:
-                    cursor.execute("UPDATE tasks SET progress = ?, remark = ? WHERE id = ?", (new_progress, new_remark.strip(), selected_task_id))
-                    conn.commit()
-                    st.success("Đã cập nhật tiến độ công việc thành công!")
-                    st.rerun()
+                curr_task = cursor.execute("SELECT progress, remark FROM tasks WHERE id = ?", (selected_task_id,)).fetchone()
+                
+                with st.form("quick_update_progress_form"):
+                    u_col1, u_col2 = st.columns([1, 2])
+                    with u_col1:
+                        new_progress = st.number_input("Mức Tiến Độ Mới (%)", min_value=0, max_value=100, value=int(curr_task[0] or 0), step=5)
+                    with u_col2:
+                        new_remark = st.text_input("Ghi Chú Thi Công (Remark):", value=curr_task[1] if curr_task[1] else "")
+                    
+                    btn_update_p = st.form_submit_button("🚀 CẬP NHẬT TIẾN ĐỘ")
+                    if btn_update_p:
+                        cursor.execute("UPDATE tasks SET progress = ?, remark = ? WHERE id = ?", (new_progress, new_remark.strip(), selected_task_id))
+                        conn.commit()
+                        st.success("Đã cập nhật tiến độ công việc thành công!")
+                        st.rerun()
 
     # 2. QUẢN LÝ DANH MỤC
     elif menu == "⚙️ Quản Lý Danh Mục" and current_role in ["Foreman", "WOS Manager", "Admin"]:
@@ -875,6 +918,20 @@ else:
 
                 remark = st.text_input("Remark (Ghi chú):")
 
+                # Giao việc ngay khi tạo
+                new_task_leader_id = None
+                if current_role in LEADER_ROLES:
+                    new_task_leader_id = user_data['id']
+                    st.caption("📌 Công việc này sẽ thuộc team của bạn. Vào 📋 Giao Việc để giao cho Worker.")
+                else:
+                    leaders_df_add = pd.read_sql_query(
+                        "SELECT id, fullname, role, workshop FROM users WHERE is_deleted = 0 AND role IN ('Team Leader', 'Foreman') ORDER BY fullname", conn)
+                    leader_opts_add = {None: "— Chưa giao —"}
+                    for _, r in leaders_df_add.iterrows():
+                        leader_opts_add[int(r['id'])] = f"{r['fullname']} ({r['role']}{', ' + r['workshop'] if r['workshop'] else ''})"
+                    new_task_leader_id = st.selectbox("Giao cho Team Leader / Foreman:", list(leader_opts_add.keys()),
+                                                      format_func=lambda k: leader_opts_add[k])
+
                 st.markdown("<br>", unsafe_allow_html=True)
                 submitted = st.form_submit_button("💾 LƯU CÔNG VIỆC MỚI")
                 
@@ -892,17 +949,116 @@ else:
                                 task_id, task_name, task_cost_code, description,
                                 initial_by, initial_date, block, area, deck, frame,
                                 in_charge_by, plan_start_date, plan_finish_date,
-                                progress, remark, is_deleted
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
+                                progress, remark, assigned_leader_id, is_deleted
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
                         """, (
                             task_id.strip(), task_name_input.strip(), ws_code_only,
                             description.strip(), initial_by.strip(), str(initial_date),
                             block.strip(), area.strip(), deck.strip(), frame.strip(),
                             in_charge_by.strip(), str(plan_start), str(plan_finish),
-                            int(progress_val), remark.strip()
+                            int(progress_val), remark.strip(), new_task_leader_id
                         ))
                         conn.commit()
                         st.success(f"Đã lưu thành công công việc **{task_id} - {task_name_input}**!")
+
+    # 3B. GIAO VIỆC
+    #    - WOS Manager / Admin: giao công việc cho Team Leader / Foreman
+    #    - Team Leader / Foreman: giao công việc của team mình cho Worker trong team
+    elif menu == "📋 Giao Việc" and current_role in ["Team Leader", "Foreman", "WOS Manager", "Admin"]:
+        st.markdown("<div class='big-table-title'>📋 Giao Việc</div>", unsafe_allow_html=True)
+
+        if is_manager_up:
+            st.info("👑 Chọn công việc và giao cho một **Team Leader** hoặc **Foreman**. Họ sẽ giao tiếp cho Worker trong team.")
+            tasks_df = pd.read_sql_query("""
+                SELECT t.id, t.task_id, t.task_name, t.task_cost_code, t.assigned_leader_id, l.fullname AS leader_name
+                FROM tasks t LEFT JOIN users l ON l.id = t.assigned_leader_id
+                WHERE t.is_deleted = 0 ORDER BY t.id DESC
+            """, conn)
+            leaders_df = pd.read_sql_query(
+                "SELECT id, fullname, role, workshop FROM users WHERE is_deleted = 0 AND role IN ('Team Leader', 'Foreman') ORDER BY fullname", conn)
+
+            if tasks_df.empty:
+                st.info("Chưa có công việc nào. Vào ➕ Thêm Công Việc để tạo.")
+            elif leaders_df.empty:
+                st.warning("Chưa có Team Leader / Foreman nào. Vào 👥 Quản Lý Phân Quyền để cấp role trước.")
+            else:
+                show_unassigned = st.toggle("Chỉ hiện công việc chưa giao", value=False)
+                if show_unassigned:
+                    tasks_df = tasks_df[tasks_df['assigned_leader_id'].isna()]
+                if tasks_df.empty:
+                    st.success("Tất cả công việc đã được giao!")
+                else:
+                    task_opts = {int(r['id']): f"{r['task_id']} - {r['task_name']} ({r['task_cost_code']}) → "
+                                               f"{r['leader_name'] if r['leader_name'] else 'Chưa giao'}"
+                                 for _, r in tasks_df.iterrows()}
+                    sel_task = st.selectbox("Chọn công việc:", list(task_opts.keys()), format_func=lambda k: task_opts[k])
+
+                    leader_opts = {None: "— Chưa giao —"}
+                    for _, r in leaders_df.iterrows():
+                        leader_opts[int(r['id'])] = f"{r['fullname']} ({r['role']}{', ' + r['workshop'] if r['workshop'] else ''})"
+                    cur_leader = tasks_df.loc[tasks_df['id'] == sel_task, 'assigned_leader_id'].iloc[0]
+                    cur_leader = None if pd.isna(cur_leader) else int(cur_leader)
+                    keys = list(leader_opts.keys())
+                    sel_leader = st.selectbox("Giao cho Team Leader / Foreman:", keys,
+                                              index=keys.index(cur_leader) if cur_leader in keys else 0,
+                                              format_func=lambda k: leader_opts[k])
+
+                    if st.button("💾 LƯU GIAO VIỆC", type="primary", key="btn_assign_leader"):
+                        if sel_leader != cur_leader:
+                            # Đổi người phụ trách thì bỏ Worker cũ (vì Worker thuộc team cũ)
+                            cursor.execute("UPDATE tasks SET assigned_leader_id = ?, assigned_worker_id = NULL WHERE id = ?",
+                                           (sel_leader, sel_task))
+                            conn.commit()
+                        st.success(f"Đã giao công việc cho **{leader_opts[sel_leader]}**!")
+                        st.rerun()
+
+        else:
+            my_id = user_data['id']
+            team_df = pd.read_sql_query(
+                "SELECT id, username, fullname FROM users WHERE is_deleted = 0 AND role = 'Worker' AND leader_id = ? ORDER BY fullname",
+                conn, params=(my_id,))
+
+            st.markdown("### 👷 Team Của Tôi")
+            if team_df.empty:
+                st.info("Team của bạn chưa có Worker nào. Nhờ WOS Manager thêm Worker vào team ở mục 👥 Quản Lý Phân Quyền.")
+            else:
+                st.dataframe(team_df.rename(columns={'username': 'Username', 'fullname': 'Họ và Tên'}).drop(columns=['id']),
+                             use_container_width=True)
+
+            st.markdown("---")
+            st.markdown("### 📌 Giao Việc Cho Worker")
+            my_tasks = pd.read_sql_query("""
+                SELECT t.id, t.task_id, t.task_name, t.progress, t.assigned_worker_id, w.fullname AS worker_name
+                FROM tasks t LEFT JOIN users w ON w.id = t.assigned_worker_id
+                WHERE t.is_deleted = 0 AND t.assigned_leader_id = ? ORDER BY t.id DESC
+            """, conn, params=(my_id,))
+
+            if my_tasks.empty:
+                st.info("Bạn chưa được giao công việc nào.")
+            elif team_df.empty:
+                st.warning("Cần có Worker trong team trước khi giao việc.")
+            else:
+                task_opts = {int(r['id']): f"{r['task_id']} - {r['task_name']} ({r['progress']}%) → "
+                                           f"{r['worker_name'] if r['worker_name'] else 'Chưa giao'}"
+                             for _, r in my_tasks.iterrows()}
+                sel_task = st.selectbox("Chọn công việc:", list(task_opts.keys()), format_func=lambda k: task_opts[k])
+
+                worker_opts = {None: "— Chưa giao —"}
+                for _, r in team_df.iterrows():
+                    worker_opts[int(r['id'])] = f"{r['fullname']} (@{r['username']})"
+                cur_worker = my_tasks.loc[my_tasks['id'] == sel_task, 'assigned_worker_id'].iloc[0]
+                cur_worker = None if pd.isna(cur_worker) else int(cur_worker)
+                keys = list(worker_opts.keys())
+                sel_worker = st.selectbox("Giao cho Worker:", keys,
+                                          index=keys.index(cur_worker) if cur_worker in keys else 0,
+                                          format_func=lambda k: worker_opts[k])
+
+                if st.button("💾 LƯU GIAO VIỆC", type="primary", key="btn_assign_worker"):
+                    cursor.execute("UPDATE tasks SET assigned_worker_id = ? WHERE id = ? AND assigned_leader_id = ?",
+                                   (sel_worker, sel_task, my_id))
+                    conn.commit()
+                    st.success(f"Đã giao công việc cho **{worker_opts[sel_worker]}**!")
+                    st.rerun()
 
     # 4. CHỈNH SỬA / XÓA TẠM
     elif menu == "✏️ Chỉnh Sửa/Xóa" and current_role in ["Foreman", "WOS Manager", "Admin"]:
@@ -972,30 +1128,29 @@ else:
         ws_df = pd.read_sql_query("SELECT code, name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
         ws_label = {row['code']: f"{row['code']} - {row['name']}" for _, row in ws_df.iterrows()}
 
-        all_users = pd.read_sql_query("SELECT id, username, fullname, role, workshop FROM users WHERE is_deleted = 0", conn)
+        all_users = pd.read_sql_query("""
+            SELECT u.id, u.username, u.fullname, u.role, u.workshop, u.leader_id, l.fullname AS leader_name
+            FROM users u LEFT JOIN users l ON l.id = u.leader_id
+            WHERE u.is_deleted = 0
+        """, conn)
         all_users = all_users[(all_users['id'] != user_data['id']) & (all_users['role'] != "Admin")]
 
         if is_admin:
             visible_users = all_users
             st.info("🛡️ Admin chỉ cấp quyền **WOS Manager** và chọn **Workshop** mà Manager đó phụ trách. "
-                    "Các role Worker / Team Leader / Foreman do WOS Manager của từng workshop cấp.")
+                    "Các role Worker / Team Leader / Foreman do WOS Manager cấp.")
         else:
-            my_ws = user_data.get("workshop")
-            if not my_ws:
-                st.warning("⚠️ Tài khoản của bạn chưa được gán Workshop. Hãy nhờ Admin gán Workshop trước.")
-                st.stop()
-            st.info(f"👑 Bạn quản lý workshop **{ws_label.get(my_ws, my_ws)}**. "
-                    "Bạn có thể cấp Worker / Team Leader / Foreman cho người trong workshop này và người đang chờ duyệt.")
-            visible_users = all_users[
-                (all_users['role'] != "WOS Manager") &
-                ((all_users['workshop'] == my_ws) | (all_users['role'] == "Pending"))
-            ]
+            st.info("👑 Bạn có thể cấp **Worker / Team Leader / Foreman**, chọn **Workshop**, "
+                    "và xếp Worker vào **team** của một Team Leader / Foreman.")
+            visible_users = all_users[all_users['role'] != "WOS Manager"]
 
         show_df = visible_users.copy()
         show_df['workshop'] = show_df['workshop'].map(lambda c: ws_label.get(c, c) if c else "—")
+        show_df['leader_name'] = show_df['leader_name'].fillna("—")
         show_df = show_df.rename(columns={'username': 'Username', 'fullname': 'Họ và Tên',
-                                          'role': 'Vai Trò (Role)', 'workshop': 'Workshop'})
-        st.dataframe(show_df.drop(columns=['id']), use_container_width=True)
+                                          'role': 'Vai Trò (Role)', 'workshop': 'Workshop',
+                                          'leader_name': 'Team của'})
+        st.dataframe(show_df.drop(columns=['id', 'leader_id']), use_container_width=True)
 
         st.markdown("---")
         st.markdown("### 🔄 Thay Đổi Quyền Hạn Cho Tài Khoản")
@@ -1029,12 +1184,48 @@ else:
                         st.success(msg)
                         st.rerun()
             else:
-                new_role = st.radio("Chọn Role Mới:", ["Worker", "Team Leader", "Foreman", "Pending"], horizontal=True)
+                target_row = visible_users[visible_users['id'] == target_user_id].iloc[0]
+                role_choices = ["Worker", "Team Leader", "Foreman", "Pending"]
+                cur_role = target_row['role'] if target_row['role'] in role_choices else "Worker"
+                new_role = st.radio("Chọn Role Mới:", role_choices, index=role_choices.index(cur_role), horizontal=True)
+
+                ws_keys = list(ws_label.keys())
+                default_ws = target_row['workshop'] if target_row['workshop'] in ws_keys else user_data.get("workshop")
+                new_ws = st.selectbox("Workshop:", ws_keys,
+                                      index=ws_keys.index(default_ws) if default_ws in ws_keys else 0,
+                                      format_func=lambda c: ws_label[c]) if ws_keys else None
+
+                new_leader = None
+                if new_role == "Worker":
+                    leaders_in_ws = all_users[(all_users['role'].isin(LEADER_ROLES)) & (all_users['workshop'] == new_ws)]
+                    leader_opts = {None: "— Chưa xếp team —"}
+                    for _, r in leaders_in_ws.iterrows():
+                        leader_opts[int(r['id'])] = f"{r['fullname']} ({r['role']})"
+                    cur_ld = None if pd.isna(target_row['leader_id']) else int(target_row['leader_id'])
+                    ld_keys = list(leader_opts.keys())
+                    new_leader = st.selectbox("Thuộc team của (Team Leader / Foreman):", ld_keys,
+                                              index=ld_keys.index(cur_ld) if cur_ld in ld_keys else 0,
+                                              format_func=lambda k: leader_opts[k])
+                    if len(leader_opts) == 1:
+                        st.caption("Workshop này chưa có Team Leader / Foreman nào.")
+
                 if st.button("💾 LƯU THAY ĐỔI ROLE", type="primary", key="btn_save_role"):
-                    cursor.execute("UPDATE users SET role = ?, workshop = ? WHERE id = ?",
-                                   (new_role, user_data.get("workshop"), target_user_id))
+                    cursor.execute("UPDATE users SET role = ?, workshop = ?, leader_id = ? WHERE id = ?",
+                                   (new_role, new_ws, new_leader, target_user_id))
+                    if new_role not in LEADER_ROLES:
+                        # Không còn là Leader: giải tán team và trả công việc về trạng thái chưa giao
+                        cursor.execute("UPDATE users SET leader_id = NULL WHERE leader_id = ?", (target_user_id,))
+                        cursor.execute("UPDATE tasks SET assigned_leader_id = NULL, assigned_worker_id = NULL WHERE assigned_leader_id = ?",
+                                       (target_user_id,))
+                    if new_role != "Worker":
+                        cursor.execute("UPDATE tasks SET assigned_worker_id = NULL WHERE assigned_worker_id = ?", (target_user_id,))
+                    else:
+                        # Worker đổi team: bỏ các việc không thuộc team mới
+                        cursor.execute("""UPDATE tasks SET assigned_worker_id = NULL
+                                          WHERE assigned_worker_id = ? AND (assigned_leader_id IS NULL OR assigned_leader_id != ?)""",
+                                       (target_user_id, new_leader if new_leader else -1))
                     conn.commit()
-                    st.success(f"Đã chuyển đổi Role thành **{new_role}** trong workshop **{ws_label.get(user_data.get('workshop'), '')}**!")
+                    st.success(f"Đã cập nhật: **{new_role}** – workshop **{ws_label.get(new_ws, '')}**!")
                     st.rerun()
 
     # 6. THÙNG RÁC TỔNG HỢP (CHỈ WOS MANAGER)
