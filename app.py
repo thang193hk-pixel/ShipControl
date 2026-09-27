@@ -616,8 +616,8 @@ VI_EN = {
     "🚪 Đăng Xuất": "🚪 Log Out",
     "⚙️ Cài đặt": "⚙️ Settings",
     ">Tài khoản<": ">Account<",
-    "🔒 Tài khoản của bạn vừa được đăng nhập trên một thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. ":
-        "🔒 Your account was just signed in on another device, so you have been signed out here. ",
+    "🔒 Tài khoản của bạn vừa được mở ở một tab hoặc thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. ":
+        "🔒 Your account was just opened in another tab or on another device, so you have been signed out here. ",
     "Nếu đó không phải bạn, hãy đăng nhập lại và đổi mật khẩu ngay.":
         "If that wasn't you, sign in again and change your password right away.",
     ">Vai trò<": ">Role<",
@@ -1859,11 +1859,16 @@ if all_cookies is None:
 
 saved_token = all_cookies.get(SESSION_COOKIE)
 
-if not st.session_state["logged_in"] and saved_token:
+# Tab vừa bị đăng xuất vì tài khoản được mở ở nơi khác thì KHÔNG tự đăng nhập lại
+# (nếu không, 2 tab sẽ đá nhau qua lại).
+if not st.session_state["logged_in"] and saved_token and not st.session_state.get("_kicked"):
     user_db = get_user_by_session(saved_token)
     if user_db and user_db[3] and user_db[3] != 'Pending':
+        # Chỉ 1 tab được dùng: tab mới mở nhận phiên MỚI, phiên cũ bị xóa → tab cũ tự đăng xuất
+        new_token = create_session(user_db[0])
+        st.session_state["_pending_session_cookie"] = new_token
         st.session_state["logged_in"] = True
-        st.session_state["session_token"] = saved_token
+        st.session_state["session_token"] = new_token
         st.session_state["user_info"] = {"id": user_db[0], "username": user_db[1], "fullname": user_db[2], "role": user_db[3], "workshop": user_db[4]}
         st.rerun()
 
@@ -1944,7 +1949,7 @@ if not st.session_state["logged_in"]:
     st.sidebar.markdown("<div class='sidebar-header'>🔐 Xác Thực</div>", unsafe_allow_html=True)
     st.sidebar.info("Vui lòng đăng nhập hoặc đăng ký để tiếp tục.")
     if st.session_state.get("_kicked"):
-        st.warning("🔒 Tài khoản của bạn vừa được đăng nhập trên một thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. "
+        st.warning("🔒 Tài khoản của bạn vừa được mở ở một tab hoặc thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. "
                    "Nếu đó không phải bạn, hãy đăng nhập lại và đổi mật khẩu ngay.")
     st.sidebar.markdown("<div class='made-by-minh'>Made By Minh</div>", unsafe_allow_html=True)
 
