@@ -1890,7 +1890,8 @@ if st.session_state["logged_in"]:
     # 🔒 Tài khoản đã được đăng nhập ở nơi khác → phiên này hết hiệu lực → đăng xuất
     def _kick_if_signed_in_elsewhere():
         tok = st.session_state.get("session_token")
-        if st.session_state.get("logged_in") and tok and not session_is_valid(tok):
+        # Không có mã phiên (tab đăng nhập từ bản app cũ) cũng coi là hết hiệu lực → bắt đăng nhập lại
+        if st.session_state.get("logged_in") and (not tok or not session_is_valid(tok)):
             st.session_state["logged_in"] = False
             st.session_state["user_info"] = None
             st.session_state["session_token"] = None
