@@ -615,6 +615,84 @@ st.markdown(f"""
         text-align: center !important;
     }}
 
+    /* ================= HIỆU ỨNG LƯỚT KHI BẤM =================
+       Một vệt sáng lướt từ trái sang phải ngay khi thả tay khỏi nút. */
+    div.stButton > button,
+    div.stDownloadButton > button,
+    div[data-testid="stFormSubmitButton"] > button {{
+        position: relative !important;
+        overflow: hidden !important;
+        isolation: isolate;
+    }}
+    div.stButton > button::after,
+    div.stDownloadButton > button::after,
+    div[data-testid="stFormSubmitButton"] > button::after {{
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 130%;
+        width: 60%;
+        background: linear-gradient(100deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.55) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+        transform: skewX(-20deg);
+        pointer-events: none;
+        z-index: 1;
+        transition: left 0.7s cubic-bezier(0.45, 0, 0.35, 1);
+    }}
+    /* Đang nhấn: vệt sáng nhảy về bên trái (không animation), thả tay ra thì lướt sang phải */
+    div.stButton > button:active::after,
+    div.stDownloadButton > button:active::after,
+    div[data-testid="stFormSubmitButton"] > button:active::after {{
+        left: -70%;
+        transition: none;
+    }}
+    /* Nút trên nền trắng: vệt sáng màu xanh nhạt để nhìn thấy được */
+    div.stButton > button[kind="secondary"]::after {{
+        background: linear-gradient(100deg,
+                    rgba(2, 132, 199, 0) 0%,
+                    rgba(2, 132, 199, 0.22) 50%,
+                    rgba(2, 132, 199, 0) 100%);
+    }}
+    section[data-testid="stSidebar"] div.stButton > button[kind="secondary"]::after {{
+        background: linear-gradient(100deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.45) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+    }}
+
+    /* Mục menu vừa được chọn: nền vàng lướt vào từ trái */
+    section[data-testid="stSidebar"] div.stButton > button[kind="primary"] {{
+        animation: menuSlideIn 0.35s ease-out;
+    }}
+    @keyframes menuSlideIn {{
+        from {{ background-position: 100% 0; transform: translateX(-6px); }}
+        to   {{ background-position: 0 0;    transform: translateX(0); }}
+    }}
+
+    /* Nội dung trang lướt nhẹ vào khi chuyển trang */
+    .big-table-title {{
+        animation: titleSlideIn 0.4s ease-out;
+    }}
+    @keyframes titleSlideIn {{
+        from {{ opacity: 0; transform: translateX(-16px); }}
+        to   {{ opacity: 1; transform: translateX(0); }}
+    }}
+
+    @media (prefers-reduced-motion: reduce) {{
+        div.stButton > button::after,
+        div.stDownloadButton > button::after,
+        div[data-testid="stFormSubmitButton"] > button::after {{
+            display: none;
+        }}
+        section[data-testid="stSidebar"] div.stButton > button[kind="primary"],
+        .big-table-title {{
+            animation: none !important;
+        }}
+    }}
+
     @media (prefers-reduced-motion: reduce) {{
         div.stButton > button, div.stDownloadButton > button,
         div[data-testid="stFormSubmitButton"] > button {{
