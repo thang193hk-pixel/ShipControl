@@ -373,6 +373,43 @@ div[data-testid="stDateInputField"] input {
     opacity: 1 !important;
 }
 
+/* ---------- ⚙️ Nút Cài đặt trên thanh bên ---------- */
+section[data-testid="stSidebar"] [data-testid="stPopover"] button {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 12px !important;
+    min-height: 44px !important;
+    box-shadow: none !important;
+    transition: background 0.15s ease !important;
+}
+section[data-testid="stSidebar"] [data-testid="stPopover"] button:hover {
+    background: rgba(255, 255, 255, 0.24) !important;
+}
+section[data-testid="stSidebar"] [data-testid="stPopover"] button * {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 1.02rem !important;
+}
+/* Bảng cài đặt bật ra */
+div[data-testid="stPopoverBody"] {
+    background: __SURFACE__ !important;
+    border: 1px solid __SURFACE_BORDER__ !important;
+    border-radius: 16px !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.25) !important;
+    padding: 18px !important;
+    min-width: 260px !important;
+}
+div[data-testid="stPopoverBody"] * {
+    color: __INPUT_TEXT__ !important;
+    -webkit-text-fill-color: __INPUT_TEXT__ !important;
+}
+div[data-testid="stPopoverBody"] [data-testid="stWidgetLabel"] p {
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+}
+
 /* ---------- Nút mở / đóng thanh bên (») và («) ---------- */
 [data-testid="stExpandSidebarButton"],
 [data-testid="stSidebarCollapsedControl"] button {
@@ -481,6 +518,375 @@ BG_CSS_TEMPLATE = r'''
     to   { opacity: 1; }
 }
 '''
+
+
+# ==========================================
+# 🌐 BỘ DỊCH GIAO DIỆN (Tiếng Việt → English)
+# ==========================================
+VI_EN = {
+    # --- Tiêu đề & menu ---
+    "🚢 SHIPCONTROL - QUẢN LÝ CÔNG VIỆC TÀU": "🚢 SHIPCONTROL - SHIP WORK MANAGEMENT",
+    "🔐 Xác Thực": "🔐 Sign In",
+    "Vui lòng đăng nhập hoặc đăng ký để tiếp tục.": "Please sign in or register to continue.",
+    "🧰 Bảng Công Việc": "🧰 Task Board",
+    "➕ Thêm Công Việc": "➕ Add Task",
+    "📋 Giao Việc": "📋 Assign Tasks",
+    "👥 Team Của Tôi": "👥 My Team",
+    "✏️ Chỉnh Sửa/Xóa": "✏️ Edit / Delete",
+    "👥 Quản Lý Phân Quyền": "👥 Roles & Permissions",
+    "🗑️ Thùng Rác": "🗑️ Trash",
+    "📊 Báo Cáo & Khai Báo": "📊 Reports",
+    "🔑 Đổi Mật Khẩu": "🔑 Change Password",
+    "🚪 Đăng Xuất": "🚪 Log Out",
+    "⚙️ Cài đặt": "⚙️ Settings",
+    "🌙 Chế độ Tối (Dark)": "🌙 Dark mode",
+    "🌐 Ngôn ngữ": "🌐 Language",
+
+    # --- Tiêu đề trang ---
+    "📋 Bảng Quản Lý Tiến Độ Công Việc": "📋 Task Progress Board",
+    "➕ Thêm Công Việc Mới": "➕ Add New Task",
+    "✏️ Chỉnh Sửa & Xóa Quản Lý": "✏️ Edit & Delete",
+    "👥 Quản Lý & Cấp Quyền Tài Khoản (Role List)": "👥 Accounts & Roles (Role List)",
+    "📊 Báo Cáo & Thống Kê Tiến Độ": "📊 Progress Reports & Statistics",
+    "🗑️ Thùng Rác & Khôi Phục Tổng Hợp": "🗑️ Trash & Restore",
+    "### ⚡ Cập Nhật Tiến Độ Công Việc Nhanh": "### ⚡ Quick Progress Update",
+    "### 🏭 Thống Kê Theo Workshop": "### 🏭 Statistics by Workshop",
+    "### 📈 Phân Bố Tiến Độ Công Việc": "### 📈 Task Progress Distribution",
+    "### 📌 Giao Việc Cho Worker": "### 📌 Assign Tasks to Workers",
+    "### 📥 Tải Báo Cáo Dữ Liệu": "### 📥 Download Report Data",
+    "### 🔄 Thay Đổi Quyền Hạn Cho Tài Khoản": "### 🔄 Change Account Role",
+    "#### ➕ Thêm Worker": "#### ➕ Add Workers",
+    "#### ➖ Xóa Khỏi Team": "#### ➖ Remove from Team",
+    "#### 👷 Thành Viên": "#### 👷 Members",
+    "#### 🚪 Rời Team": "#### 🚪 Leave Team",
+
+    # --- Đăng nhập / đăng ký ---
+    "🔑 Đăng Nhập": "🔑 Sign In",
+    "📝 Đăng Ký Tài Khoản": "📝 Register",
+    "Tên tài khoản (Username):": "Username:",
+    "Mật khẩu (Password):": "Password:",
+    "🚀 ĐĂNG NHẬP": "🚀 SIGN IN",
+    "✨ ĐĂNG KÝ NGAY": "✨ REGISTER NOW",
+    "Họ và Tên:": "Full name:",
+    "Tên đăng nhập mới (Username):": "New username:",
+    "Xác nhận lại mật khẩu:": "Confirm password:",
+    "Vui lòng nhập đầy đủ Username và Mật khẩu!": "Please enter both username and password!",
+    "Sai tên tài khoản, mật khẩu hoặc tài khoản đã bị khóa/xóa!": "Wrong username or password, or the account is locked/deleted!",
+    "⏳ Tài khoản của bạn đang chờ Admin / WOS Manager cấp Role. Vui lòng quay lại sau!": "⏳ Your account is waiting for an Admin / WOS Manager to assign a role. Please come back later!",
+    "Chào mừng ": "Welcome ",
+    ") đã quay trở lại!": ") is back!",
+    "Vui lòng điền đầy đủ các thông tin!": "Please fill in all fields!",
+    "Mật khẩu phải có ít nhất 8 ký tự!": "Password must be at least 8 characters!",
+    "Username hoặc Họ tên quá dài!": "Username or full name is too long!",
+    "Mật khẩu xác nhận không trùng khớp!": "Passwords do not match!",
+    "Tên đăng nhập này đã tồn tại, vui lòng chọn tên khác!": "This username already exists, please choose another!",
+    "🎉 Đăng ký thành công! Tài khoản đang chờ WOS Manager phê duyệt Role.": "🎉 Registered! Your account is waiting for a WOS Manager to approve a role.",
+
+    # --- Bảng công việc ---
+    "👷 Đây là các công việc được giao cho bạn.": "👷 These are the tasks assigned to you.",
+    "Chỉ xem công việc của team tôi": "Show only my team's tasks",
+    "Chưa có công việc nào để hiển thị.": "No tasks to show yet.",
+    "Bạn chưa có công việc nào để cập nhật tiến độ.": "You have no tasks to update.",
+    "Chọn công việc cần cập nhật tiến độ:": "Choose a task to update:",
+    "Mức Tiến Độ Mới (%)": "New progress (%)",
+    "Ghi Chú Thi Công (Remark):": "Work note (Remark):",
+    "🚀 CẬP NHẬT TIẾN ĐỘ": "🚀 UPDATE PROGRESS",
+    "Đã cập nhật tiến độ công việc thành công!": "Task progress updated!",
+    " (Hiện tại: ": " (Current: ",
+
+    # --- Thêm công việc ---
+    "⚙️ Thêm / Xóa trong danh sách Block và WS Cost Code": "⚙️ Add / Remove Blocks and WS Cost Codes",
+    "Block mới (Ví dụ: 170150):": "New block (e.g. 170150):",
+    "➕ THÊM BLOCK": "➕ ADD BLOCK",
+    "Vui lòng nhập tên Block!": "Please enter a block name!",
+    "Đã thêm Block **": "Added block **",
+    "Chọn Block để xóa:": "Block to delete:",
+    "🗑️ XÓA BLOCK": "🗑️ DELETE BLOCK",
+    "Đã xóa Block **": "Deleted block **",
+    "Danh sách Block đang trống.": "The block list is empty.",
+    "Mã (Ví dụ: WOS_07):": "Code (e.g. WOS_07):",
+    "Tên Workshop / Phòng ban:": "Workshop / department name:",
+    "➕ THÊM COST CODE": "➕ ADD COST CODE",
+    "Vui lòng nhập cả Mã và Tên!": "Please enter both code and name!",
+    "Chọn Cost Code để xóa:": "Cost code to delete:",
+    "🗑️ XÓA COST CODE": "🗑️ DELETE COST CODE",
+    "Danh sách Cost Code đang trống.": "The cost code list is empty.",
+    "Không thể xóa: còn **": "Can't delete: **",
+    "** tài khoản thuộc workshop này. Hãy chuyển họ sang workshop khác ở 👥 Quản Lý Phân Quyền trước.":
+        "** account(s) still belong to this workshop. Move them to another workshop in 👥 Roles & Permissions first.",
+    "** khỏi danh sách. Công việc cũ vẫn giữ nguyên.": "** from the list. Existing tasks are kept.",
+    "** đã có trong danh sách!": "** is already in the list!",
+    "Mã **": "Code **",
+    "Đã thêm **": "Added **",
+    "Đã xóa **": "Deleted **",
+    "Description (Mô tả công việc):": "Description:",
+    "Initial By (Người khởi tạo):": "Initial By:",
+    "Initial Date (Ngày tạo):": "Initial Date:",
+    "In Charge By (Người phụ trách):": "In Charge By:",
+    "Remark (Ghi chú):": "Remark:",
+    "— Không chọn —": "— None —",
+    "📌 Công việc này sẽ thuộc team của bạn. Vào 📋 Giao Việc để giao cho Worker.":
+        "📌 This task will belong to your team. Go to 📋 Assign Tasks to give it to a worker.",
+    "💾 LƯU CÔNG VIỆC MỚI": "💾 SAVE NEW TASK",
+    "Vui lòng điền đầy đủ thông tin bắt buộc: Task ID và Task Name!": "Please fill in the required fields: Task ID and Task Name!",
+    "Plan Finish Date không được trước Plan Start Date!": "Plan Finish Date can't be before Plan Start Date!",
+    "** đã tồn tại (có thể đang trong Thùng Rác). Vui lòng dùng ID khác!": "** already exists (it may be in the Trash). Please use another ID!",
+    "Đã lưu thành công công việc **": "Saved task **",
+    "⚠️ CHƯA CÓ WS COST CODE: Foreman / WOS Manager hãy thêm Cost Code ở mục ⚙️ phía trên trước khi thêm công việc!":
+        "⚠️ NO WS COST CODE YET: a Foreman / WOS Manager must add one in the ⚙️ section above before adding tasks!",
+
+    # --- Giao việc ---
+    "👑 Chọn công việc và giao cho một **Team Leader** hoặc **Foreman**. Họ sẽ giao tiếp cho Worker trong team.":
+        "👑 Choose a task and assign it to a **Team Leader** or **Foreman**. They will pass it on to workers in their team.",
+    "Chưa có công việc nào. Vào ➕ Thêm Công Việc để tạo.": "No tasks yet. Go to ➕ Add Task to create one.",
+    "Chưa có Team Leader / Foreman nào. Vào 👥 Quản Lý Phân Quyền để cấp role trước.":
+        "No Team Leaders / Foremen yet. Assign roles in 👥 Roles & Permissions first.",
+    "Chỉ hiện công việc chưa giao": "Show only unassigned tasks",
+    "Tất cả công việc đã được giao!": "All tasks have been assigned!",
+    "Chọn công việc:": "Choose a task:",
+    "Giao cho Team Leader / Foreman:": "Assign to Team Leader / Foreman:",
+    "Giao cho Worker:": "Assign to worker:",
+    "— Chưa giao —": "— Unassigned —",
+    "Chưa giao": "Unassigned",
+    "💾 LƯU GIAO VIỆC": "💾 SAVE ASSIGNMENT",
+    "Đã giao công việc cho **": "Task assigned to **",
+    "Team của bạn chưa có Worker nào. Vào 👥 Team Của Tôi để tạo team và thêm Worker.":
+        "Your team has no workers yet. Go to 👥 My Team to create a team and add workers.",
+    "Bạn chưa được giao công việc nào.": "You haven't been given any tasks yet.",
+    "Cần có Worker trong team trước khi giao việc.": "You need workers in your team before assigning tasks.",
+    "(chưa đặt tên)": "(unnamed)",
+
+    # --- Team ---
+    "⚠️ Tài khoản của bạn chưa được gán Workshop. Nhờ WOS Manager gán Workshop trước khi lập team.":
+        "⚠️ Your account has no workshop yet. Ask a WOS Manager to assign one before creating a team.",
+    "Bạn chưa có team. Hãy đặt tên để tạo team.": "You don't have a team yet. Give it a name to create one.",
+    "Tên Team *": "Team name *",
+    "Ví dụ: Team Hàn Block 170": "e.g. Welding Team Block 170",
+    "➕ TẠO TEAM": "➕ CREATE TEAM",
+    "Vui lòng nhập tên team!": "Please enter a team name!",
+    "Tên team tối đa 60 ký tự!": "Team name can be at most 60 characters!",
+    "Đã tạo team **": "Created team **",
+    "✏️ Đổi tên team": "✏️ Rename team",
+    "Tên team mới:": "New team name:",
+    "💾 LƯU TÊN": "💾 SAVE NAME",
+    "Tên team không hợp lệ (1–60 ký tự)!": "Invalid team name (1–60 characters)!",
+    "Đã đổi tên team!": "Team renamed!",
+    "🗑️ Xóa team": "🗑️ Delete team",
+    "Khi xóa team: tất cả Worker sẽ rời team, và các công việc đang giao cho họ sẽ trở về trạng thái chưa giao. Công việc vẫn thuộc về bạn, bạn có thể tạo team mới sau.":
+        "Deleting the team: all workers leave the team and their tasks become unassigned. The tasks stay with you, and you can create a new team later.",
+    "Tôi chắc chắn muốn xóa team này": "I'm sure I want to delete this team",
+    "🗑️ XÓA TEAM": "🗑️ DELETE TEAM",
+    "Đã xóa team.": "Team deleted.",
+    "Team chưa có Worker nào.": "The team has no workers yet.",
+    "Không còn Worker nào trong workshop ": "No workers left in workshop ",
+    " chưa có team.": " without a team.",
+    "Chọn Worker (cùng workshop, chưa có team):": "Choose workers (same workshop, no team yet):",
+    "➕ THÊM VÀO TEAM": "➕ ADD TO TEAM",
+    "Hãy chọn ít nhất 1 Worker!": "Choose at least 1 worker!",
+    " Worker vào team!": " worker(s) to the team!",
+    "Đã thêm ": "Added ",
+    "Chưa có thành viên để xóa.": "No members to remove.",
+    "Chọn Worker:": "Choose a worker:",
+    "➖ XÓA KHỎI TEAM": "➖ REMOVE FROM TEAM",
+    "Đã xóa Worker khỏi team. Các việc của team giao cho người này đã được bỏ giao.":
+        "Worker removed from the team. Their team tasks are now unassigned.",
+    "Bạn chưa thuộc team nào. Team Leader / Foreman trong workshop của bạn có thể thêm bạn vào team.":
+        "You're not in a team yet. A Team Leader / Foreman in your workshop can add you.",
+    "(Team chưa đặt tên)": "(Unnamed team)",
+    "**Trưởng team:** ": "**Team leader:** ",
+    "Khi rời team, các công việc của team đang giao cho bạn sẽ trở về trạng thái chưa giao.":
+        "When you leave, the team tasks assigned to you become unassigned.",
+    "Tôi chắc chắn muốn rời team này": "I'm sure I want to leave this team",
+    "🚪 RỜI TEAM": "🚪 LEAVE TEAM",
+    "Bạn đã rời team.": "You left the team.",
+
+    # --- Chỉnh sửa / xóa ---
+    "🧰 Xóa Tạm Công Việc": "🧰 Move Tasks to Trash",
+    "👤 Xóa Tạm Tài Khoản Người Dùng": "👤 Lock User Accounts",
+    "Hiện không có công việc nào để chỉnh sửa hoặc xóa.": "There are no tasks to edit or delete.",
+    "Chọn công việc cần chuyển vào Thùng Rác:": "Task to move to Trash:",
+    "🗑️ Chuyển Công Việc Vào Thùng Rác": "🗑️ Move Task to Trash",
+    "Đã chuyển công việc vào Thùng Rác thành công!": "Task moved to Trash!",
+    "Không có tài khoản khác khả dụng để xóa.": "No other accounts available to delete.",
+    "Chọn tài khoản muốn khóa/xóa tạm:": "Account to lock:",
+    "🗑️ Khóa/Xóa Tạm Tài Khoản Này": "🗑️ Lock This Account",
+    "Đã khóa/chuyển tài khoản vào Thùng Rác thành công!": "Account locked and moved to Trash!",
+
+    # --- Phân quyền ---
+    "🛡️ Admin chỉ cấp quyền **WOS Manager** và chọn **Workshop** mà Manager đó phụ trách. Các role Worker / Team Leader / Foreman do WOS Manager cấp.":
+        "🛡️ The Admin only grants the **WOS Manager** role and chooses the **Workshop** that manager runs. Worker / Team Leader / Foreman roles are given by WOS Managers.",
+    "👑 Bạn có thể cấp **Worker / Team Leader / Foreman**, chọn **Workshop**, và xếp Worker vào **team** của một Team Leader / Foreman.":
+        "👑 You can give **Worker / Team Leader / Foreman** roles, choose the **Workshop**, and put workers into a Team Leader / Foreman's **team**.",
+    "Không có tài khoản nào để cấp quyền.": "No accounts to assign roles to.",
+    "Chọn tài khoản cần chuyển đổi Role:": "Account to change:",
+    "Chọn thao tác:": "Action:",
+    "👑 Cấp quyền WOS Manager": "👑 Make WOS Manager",
+    "⛔ Thu hồi quyền (về Pending)": "⛔ Revoke role (back to Pending)",
+    "Workshop mà Manager này phụ trách:": "Workshop this manager runs:",
+    "⚠️ Chưa có Workshop nào. Vào ➕ Thêm Công Việc → ⚙️ Thêm / Xóa trong danh sách để thêm.":
+        "⚠️ No workshops yet. Add them in ➕ Add Task → ⚙️ Add / Remove.",
+    "💾 LƯU THAY ĐỔI ROLE": "💾 SAVE ROLE",
+    "💾 LƯU THAY ĐỔI": "💾 SAVE CHANGES",
+    "Đã cấp **WOS Manager** cho workshop **": "Made **WOS Manager** of workshop **",
+    "Đã thu hồi quyền, tài khoản trở về trạng thái Pending.": "Role revoked, the account is back to Pending.",
+    "Chọn Role Mới:": "New role:",
+    "Thuộc team của (Team Leader / Foreman):": "Team of (Team Leader / Foreman):",
+    "— Chưa xếp team —": "— No team —",
+    "Workshop này chưa có Team Leader / Foreman nào.": "This workshop has no Team Leader / Foreman yet.",
+    "Đã cập nhật: **": "Updated: **",
+    "Họ và Tên": "Full name",
+    "Vai Trò (Role)": "Role",
+    "Team của": "Team of",
+
+    # --- Thùng rác ---
+    "🧰 Thùng Rác Công Việc": "🧰 Task Trash",
+    "👤 Thùng Rác Tài Khoản": "👤 Account Trash",
+    "Thùng rác công việc đang trống.": "The task trash is empty.",
+    "Thùng rác tài khoản đang trống.": "The account trash is empty.",
+    "Chọn công việc để xử lý:": "Choose a task:",
+    "♻️ KHÔI PHỤC CÔNG VIỆC": "♻️ RESTORE TASK",
+    "💥 XÓA VĨNH VIỄN CÔNG VIỆC": "💥 DELETE TASK FOREVER",
+    "Đã khôi phục công việc!": "Task restored!",
+    "Đã xóa vĩnh viễn công việc!": "Task permanently deleted!",
+    "Chọn tài khoản để xử lý:": "Choose an account:",
+    "♻️ MỞ KHÓA / KHÔI PHỤC TÀI KHOẢN": "♻️ UNLOCK / RESTORE ACCOUNT",
+    "💥 XÓA VĨNH VIỄN TÀI KHOẢN": "💥 DELETE ACCOUNT FOREVER",
+    "Đã khôi phục tài khoản người dùng!": "Account restored!",
+    "Đã xóa vĩnh viễn tài khoản khỏi cơ sở dữ liệu!": "Account permanently deleted from the database!",
+
+    # --- Báo cáo ---
+    "Chưa có dữ liệu công việc để tạo báo cáo. Vui lòng thêm công việc trước!": "No task data for a report yet. Please add tasks first!",
+    "Tổng Số Công Việc": "Total tasks",
+    "Tổng Công Việc": "Total tasks",
+    "Tiến Độ Trung Bình (%)": "Average progress (%)",
+    "Tiến Độ Trung Bình": "Average progress",
+    "Đã Hoàn Thành (100%)": "Completed (100%)",
+    "Đang Thực Hiện": "In progress",
+    "Số Lượng Công Việc": "Number of tasks",
+    "Trạng Thái": "Status",
+    "📥 Tải Báo Cáo Bảng Công Việc (File CSV/Excel)": "📥 Download Task Report (CSV/Excel)",
+
+    # --- Đổi mật khẩu ---
+    "Mật khẩu hiện tại:": "Current password:",
+    "Mật khẩu mới (ít nhất 8 ký tự):": "New password (at least 8 characters):",
+    "Nhập lại mật khẩu mới:": "Repeat new password:",
+    "💾 ĐỔI MẬT KHẨU": "💾 CHANGE PASSWORD",
+    "Mật khẩu hiện tại không đúng!": "Current password is wrong!",
+    "Mật khẩu mới phải có ít nhất 8 ký tự!": "New password must be at least 8 characters!",
+    "Không được dùng lại mật khẩu mặc định!": "You can't reuse the default password!",
+    "✅ Đã đổi mật khẩu thành công! Các thiết bị khác đã bị đăng xuất.": "✅ Password changed! Other devices have been logged out.",
+    "⚠️ Tài khoản này vẫn dùng mật khẩu mặc định 'admin123'. Vào mục 🔑 Đổi Mật Khẩu và đổi NGAY!":
+        "⚠️ This account still uses the default password 'admin123'. Go to 🔑 Change Password and change it NOW!",
+    # --- Biểu đồ ---
+    "Chưa bắt đầu (0%)": "Not started (0%)",
+    "Đang làm (1-50%)": "In progress (1-50%)",
+    "Sắp xong (51-99%)": "Almost done (51-99%)",
+    "Hoàn thành (100%)": "Done (100%)",
+    "Số Lượng": "Count",
+    "Mật khẩu mới:": "New password:",
+}
+
+
+import re as _re
+import functools as _functools
+from streamlit.delta_generator import DeltaGenerator as _DG
+
+_VI_EN_RX = _re.compile("|".join(_re.escape(k) for k in sorted(VI_EN, key=len, reverse=True)))
+LANG_COOKIE = "shipcontrol_lang"
+
+
+def ui_lang():
+    return st.session_state.get("ui_lang", "vi")
+
+
+def tr(text):
+    """Dịch một đoạn chữ sang tiếng Anh khi người dùng chọn English (giữ nguyên nếu là Tiếng Việt)."""
+    if not isinstance(text, str) or not text or ui_lang() != "en":
+        return text
+    if text.lstrip().startswith("<style"):
+        return text
+    return _VI_EN_RX.sub(lambda m: VI_EN[m.group(0)], text)
+
+
+def _tr_data(data):
+    if ui_lang() == "en" and isinstance(data, pd.DataFrame):
+        return data.rename(columns=lambda c: tr(c) if isinstance(c, str) else c)
+    return data
+
+
+def _install_translator():
+    """Tự động dịch chữ hiển thị của các thành phần Streamlit.
+    Chỉ đổi phần HIỂN THỊ; giá trị trả về và logic của app giữ nguyên tiếng Việt."""
+    if getattr(_DG, "_shipcontrol_i18n", False):
+        return
+
+    def text_first(fn):
+        @_functools.wraps(fn)
+        def wrapper(self, *args, **kwargs):
+            if ui_lang() == "en":
+                if args and isinstance(args[0], str):
+                    args = (tr(args[0]),) + args[1:]
+                for k in ("label", "body", "placeholder", "help"):
+                    if isinstance(kwargs.get(k), str):
+                        kwargs[k] = tr(kwargs[k])
+            return fn(self, *args, **kwargs)
+        return wrapper
+
+    def with_options(fn):
+        @_functools.wraps(fn)
+        def wrapper(self, *args, **kwargs):
+            if ui_lang() == "en":
+                if args and isinstance(args[0], str):
+                    args = (tr(args[0]),) + args[1:]
+                for k in ("label", "placeholder", "help"):
+                    if isinstance(kwargs.get(k), str):
+                        kwargs[k] = tr(kwargs[k])
+                _ff = kwargs.get("format_func") or str
+                kwargs["format_func"] = lambda o, _ff=_ff: tr(_ff(o))
+            return fn(self, *args, **kwargs)
+        return wrapper
+
+    def data_first(fn):
+        @_functools.wraps(fn)
+        def wrapper(self, *args, **kwargs):
+            if args:
+                args = (_tr_data(args[0]),) + args[1:]
+            elif "data" in kwargs:
+                kwargs["data"] = _tr_data(kwargs["data"])
+            return fn(self, *args, **kwargs)
+        return wrapper
+
+    def tabs_first(fn):
+        @_functools.wraps(fn)
+        def wrapper(self, tabs, *args, **kwargs):
+            return fn(self, [tr(t) for t in tabs], *args, **kwargs)
+        return wrapper
+
+    groups = {
+        text_first: ["markdown", "caption", "info", "success", "warning", "error", "title", "header",
+                     "subheader", "text", "button", "form_submit_button", "download_button", "text_input",
+                     "text_area", "number_input", "date_input", "time_input", "checkbox", "toggle",
+                     "expander", "popover", "metric", "slider"],
+        with_options: ["selectbox", "radio", "multiselect", "select_slider"],
+        data_first: ["dataframe", "table"],
+        tabs_first: ["tabs"],
+    }
+    for wrap, names in groups.items():
+        for name in names:
+            if hasattr(_DG, name):
+                setattr(_DG, name, wrap(getattr(_DG, name)))
+    _DG._shipcontrol_i18n = True
+
+
+_install_translator()
+# st.button, st.markdown... được gắn sẵn vào khung chính lúc import → gắn lại để dùng bản đã dịch
+for _name in ["markdown", "caption", "info", "success", "warning", "error", "title", "header", "subheader",
+              "text", "button", "form_submit_button", "download_button", "text_input", "text_area",
+              "number_input", "date_input", "time_input", "checkbox", "toggle", "expander", "popover",
+              "metric", "slider", "selectbox", "radio", "multiselect", "select_slider", "dataframe",
+              "table", "tabs"]:
+    if hasattr(st, _name) and hasattr(st._main, _name):
+        setattr(st, _name, getattr(st._main, _name))
 
 
 def get_secret(key, default=None):
@@ -815,9 +1221,11 @@ if "edit_sub_tab" not in st.session_state:
 if "trash_sub_tab" not in st.session_state:
     st.session_state["trash_sub_tab"] = "task"
 
-# --- CÔNG TẮC CHUYỂN THEME ---
+# --- ⚙️ NÚT CÀI ĐẶT (Chế độ Tối + Ngôn ngữ) ---
+# Chỗ đặt nút được giữ sẵn ở đầu thanh bên; nút thật được vẽ sau khi đọc cookie (để nhớ ngôn ngữ đã chọn).
 st.sidebar.markdown("<div style='padding-top: 10px;'></div>", unsafe_allow_html=True)
-dark_mode_on = st.sidebar.toggle("🌙 Chế độ Tối (Dark)", value=(st.session_state["theme_mode"] == "Dark"), key="dark_toggle")
+_settings_slot = st.sidebar.container()
+dark_mode_on = st.session_state.get("dark_toggle", st.session_state["theme_mode"] == "Dark")
 st.session_state["theme_mode"] = "Dark" if dark_mode_on else "Light"
 
 is_dark = st.session_state["theme_mode"] == "Dark"
@@ -1383,6 +1791,31 @@ if st.session_state["logged_in"]:
     st.session_state["user_info"]["fullname"] = fresh[0]
     st.session_state["user_info"]["role"] = fresh[1]
     st.session_state["user_info"]["workshop"] = fresh[2]
+
+# 🌐 Nhớ ngôn ngữ đã chọn (lưu trong cookie của trình duyệt)
+#    Cookie có thể đến chậm hơn lần chạy đầu, nên cứ khi nào cookie có mà chưa áp dụng thì áp dụng.
+_lang_cookie = all_cookies.get(LANG_COOKIE)
+if (_lang_cookie in ("vi", "en") and not st.session_state.get("_lang_restored")
+        and not st.session_state.get("_lang_changed")):
+    st.session_state["_lang_restored"] = True
+    if _lang_cookie != ui_lang():
+        st.session_state["ui_lang"] = _lang_cookie
+        st.rerun()
+
+def _on_lang_change():
+    st.session_state["_lang_changed"] = True
+
+with _settings_slot:
+    with st.popover("⚙️ Cài đặt", use_container_width=True):
+        st.toggle("🌙 Chế độ Tối (Dark)", value=is_dark, key="dark_toggle")
+        st.radio("🌐 Ngôn ngữ", ["vi", "en"], key="ui_lang", horizontal=True, on_change=_on_lang_change,
+                 format_func=lambda c: {"vi": "🇻🇳 Tiếng Việt", "en": "🇬🇧 English"}[c])
+# Chỉ ghi cookie khi người dùng tự đổi ngôn ngữ
+if st.session_state.get("_lang_changed") and _lang_cookie != ui_lang():
+    try:
+        cookie_manager.set(LANG_COOKIE, ui_lang(), max_age=365 * 24 * 3600, key="set_lang_cookie")
+    except Exception:
+        pass
 
 # ==========================================
 # 🔐 HỆ THỐNG XÁC THỰC
@@ -2345,14 +2778,15 @@ else:
             
             with col_chart1:
                 st.markdown("### 📈 Phân Bố Tiến Độ Công Việc")
-                progress_bins = pd.cut(df_all['progress'], bins=[-1, 0, 50, 99, 100], labels=['Chưa bắt đầu (0%)', 'Đang làm (1-50%)', 'Sắp xong (51-99%)', 'Hoàn thành (100%)'])
+                progress_bins = pd.cut(df_all['progress'], bins=[-1, 0, 50, 99, 100], labels=[tr('Chưa bắt đầu (0%)'), tr('Đang làm (1-50%)'), tr('Sắp xong (51-99%)'), tr('Hoàn thành (100%)')])
                 progress_dist = progress_bins.value_counts().reset_index()
-                progress_dist.columns = ['Trạng Thái', 'Số Lượng']
+                _c_status, _c_count = tr('Trạng Thái'), tr('Số Lượng')
+                progress_dist.columns = [_c_status, _c_count]
                 
                 chart = alt.Chart(progress_dist).mark_bar(color='#3b82f6').encode(
-                    x=alt.X('Trạng Thái:N', axis=alt.Axis(labelAngle=0, labelFontSize=12, title="Trạng Thái")),
-                    y=alt.Y('Số Lượng:Q', axis=alt.Axis(title="Số Lượng Công Việc", tickMinStep=1, format='d')),
-                    tooltip=['Trạng Thái', 'Số Lượng']
+                    x=alt.X(f'{_c_status}:N', axis=alt.Axis(labelAngle=0, labelFontSize=12, title=_c_status)),
+                    y=alt.Y(f'{_c_count}:Q', axis=alt.Axis(title=tr("Số Lượng Công Việc"), tickMinStep=1, format='d')),
+                    tooltip=[_c_status, _c_count]
                 ).properties(height=350)
                 
                 st.altair_chart(chart, use_container_width=True)
