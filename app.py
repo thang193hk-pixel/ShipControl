@@ -23,9 +23,15 @@ html, body, .stApp, .stApp p, .stApp label, .stApp input, .stApp textarea, .stAp
     font-family: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;
 }
 
-/* ---------- Nền ---------- */
-.stApp, .main {
+/* ---------- Nền: ảnh tàu, mỗi trang một ảnh ---------- */
+.stApp, div[data-testid="stAppViewContainer"] {
     background: __APP_BG__ !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+}
+.main, .stMain, section[data-testid="stMain"], div[data-testid="stAppViewContainer"] > .main {
+    background: transparent !important;
 }
 header[data-testid="stHeader"] {
     background: transparent !important;
@@ -663,13 +669,37 @@ for _k in range(7):   # thời điểm bắt đầu: 7 giá trị khác nhau (5 
     _shine_rules.append(f"{_sel} {{ animation-delay: -{_rng.uniform(0, 4.4):.2f}s; }}")
 shine_css = "\n    ".join(_shine_rules)
 
+# 🚢 ẢNH NỀN TÀU: mỗi trang một ảnh (ảnh miễn phí từ Unsplash, giấy phép Unsplash License)
+def _ship_photo(photo_id):
+    return f"https://images.unsplash.com/{photo_id}?auto=format&fit=crop&w=1920&q=70"
+
+SHIP_BACKGROUNDS = {
+    "login":                   _ship_photo("photo-1605745341075-1b7460b99df8"),
+    "🧰 Bảng Công Việc":       _ship_photo("photo-1605745341112-85968b19335b"),
+    "➕ Thêm Công Việc":       _ship_photo("photo-1634638022845-1ab614a94128"),
+    "📋 Giao Việc":            _ship_photo("photo-1585713181935-d5f622cc2415"),
+    "👥 Team Của Tôi":         _ship_photo("photo-1604506522146-316c8bedd874"),
+    "✏️ Chỉnh Sửa/Xóa":        _ship_photo("photo-1670121180530-cfcba4438038"),
+    "👥 Quản Lý Phân Quyền":   _ship_photo("photo-1691591765923-3bd6f12f4209"),
+    "🗑️ Thùng Rác":            _ship_photo("photo-1617952739760-1dcae19a1d93"),
+    "📊 Báo Cáo & Khai Báo":   _ship_photo("photo-1724597500306-a4cbb7d1324e"),
+    "🔑 Đổi Mật Khẩu":         _ship_photo("photo-1594110336951-5bc8c12d6b27"),
+}
+_bg_key = st.session_state.get("current_menu") if st.session_state.get("logged_in") else "login"
+page_bg_url = SHIP_BACKGROUNDS.get(_bg_key, SHIP_BACKGROUNDS["🧰 Bảng Công Việc"])
+
 # 🎨 GIAO DIỆN HIỆN ĐẠI: bảng màu theo chế độ Sáng / Tối
 _danger_keys = ["btn_del_block", "btn_del_cc", "btn_delete_team", "btn_leave_team", "btn_perm_del_task",
                 "btn_perm_del_user", "btn_remove_team_member", "btn_soft_delete_task", "btn_soft_delete_user"]
 _modern_tokens = {
-    "__APP_BG__": ("radial-gradient(1200px 600px at 100% -10%, rgba(14,165,233,0.14), transparent 60%), #0b1220"
-                   if is_dark else
-                   "radial-gradient(1200px 600px at 100% -10%, rgba(14,165,233,0.10), transparent 60%), #f4f7fb"),
+    "__APP_BG__": (
+        # Lớp phủ màu để chữ vẫn dễ đọc, ảnh tàu nhìn xuyên qua phía dưới
+        ("linear-gradient(180deg, rgba(8,15,30,0.58) 0%, rgba(8,15,30,0.78) 45%, rgba(8,15,30,0.88) 100%), "
+         if is_dark else
+         "linear-gradient(180deg, rgba(244,247,251,0.38) 0%, rgba(244,247,251,0.70) 40%, rgba(244,247,251,0.86) 100%), ")
+        + f"url('{page_bg_url}') center / cover no-repeat fixed, "
+        + ("#0b1220" if is_dark else "#f4f7fb")
+    ),
     "__SURFACE__": "#111a2e" if is_dark else "#ffffff",
     "__SURFACE_BORDER__": "#22304d" if is_dark else "#e3e8f0",
     "__INPUT_BG__": "#0a1222" if is_dark else "#fbfcfe",
