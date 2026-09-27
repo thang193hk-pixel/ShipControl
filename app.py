@@ -357,6 +357,10 @@ text_color = "#ffffff" if is_dark else "#000000"
 input_bg = "#1e293b" if is_dark else "#ffffff"
 input_text = "#ffffff" if is_dark else "#000000"
 border_color = "#334155" if is_dark else "#cbd5e1"
+sec_bg = "#1e293b" if is_dark else "#ffffff"
+sec_border = "#475569" if is_dark else "#cbd5e1"
+sec_text = "#f1f5f9" if is_dark else "#0f172a"
+danger_bg = "#1e293b" if is_dark else "#ffffff"
 
 st.markdown(f"""
     <style>
@@ -400,45 +404,223 @@ st.markdown(f"""
         color: white;
     }}
 
-    div.stButton > button {{
+    /* ================= NÚT BẤM =================
+       Nút to, dễ bấm trên điện thoại (kể cả khi đeo găng tay),
+       có "đế" phía dưới giống nút bấm vật lý: nhấn vào thì lún xuống. */
+    div.stButton > button,
+    div.stDownloadButton > button,
+    div[data-testid="stFormSubmitButton"] > button {{
         width: 100% !important;
-        min-height: 55px !important;
-        border-radius: 10px !important;
-        transition: all 0.2s ease !important;
+        min-height: 52px !important;
+        padding: 10px 18px !important;
+        border-radius: 12px !important;
         margin-bottom: 8px !important;
+        background-image: none !important;
+        transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+    }}
+    div.stButton > button *,
+    div.stDownloadButton > button *,
+    div[data-testid="stFormSubmitButton"] > button * {{
+        font-size: 1.1rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.01em !important;
+        opacity: 1 !important;
     }}
 
+    /* Nút chính (xanh lá): Lưu, Thêm, Đăng nhập... */
     div.stButton > button[kind="primary"],
-    div.stButton > button[data-testid="baseButton-primary"] {{
-        background-color: #22c55e !important;
-        background-image: none !important;
-        border: 2px solid #16a34a !important;
-        box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3) !important;
+    div.stButton > button[data-testid="baseButton-primary"],
+    div.stButton > button[data-testid="stBaseButton-primary"],
+    div[data-testid="stFormSubmitButton"] > button,
+    div.stDownloadButton > button {{
+        background-color: #16a34a !important;
+        border: 1px solid #15803d !important;
+        box-shadow: 0 4px 0 #166534, 0 6px 14px rgba(22, 101, 52, 0.25) !important;
     }}
-    
     div.stButton > button[kind="primary"] *,
-    div.stButton > button[data-testid="baseButton-primary"] * {{
+    div.stButton > button[data-testid="baseButton-primary"] *,
+    div.stButton > button[data-testid="stBaseButton-primary"] *,
+    div[data-testid="stFormSubmitButton"] > button *,
+    div.stDownloadButton > button * {{
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
-        font-size: 1.2rem !important;
-        font-weight: 900 !important;
-        opacity: 1 !important;
+    }}
+    div.stButton > button[kind="primary"]:hover:not(:disabled),
+    div[data-testid="stFormSubmitButton"] > button:hover:not(:disabled),
+    div.stDownloadButton > button:hover:not(:disabled) {{
+        background-color: #15803d !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 5px 0 #166534, 0 8px 18px rgba(22, 101, 52, 0.3) !important;
     }}
 
+    /* Nút phụ: nền sáng, viền rõ */
     div.stButton > button[kind="secondary"],
-    div.stButton > button[data-testid="baseButton-secondary"] {{
-        background-color: #e2e8f0 !important;
-        background-image: none !important;
-        border: 2px solid #cbd5e1 !important;
+    div.stButton > button[data-testid="baseButton-secondary"],
+    div.stButton > button[data-testid="stBaseButton-secondary"] {{
+        background-color: {sec_bg} !important;
+        border: 1px solid {sec_border} !important;
+        box-shadow: 0 4px 0 {sec_border} !important;
     }}
-    
     div.stButton > button[kind="secondary"] *,
-    div.stButton > button[data-testid="baseButton-secondary"] * {{
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        font-size: 1.2rem !important;
+    div.stButton > button[data-testid="baseButton-secondary"] *,
+    div.stButton > button[data-testid="stBaseButton-secondary"] * {{
+        color: {sec_text} !important;
+        -webkit-text-fill-color: {sec_text} !important;
+    }}
+    div.stButton > button[kind="secondary"]:hover:not(:disabled) {{
+        border-color: #0284c7 !important;
+        box-shadow: 0 4px 0 #0284c7 !important;
+        transform: translateY(-1px) !important;
+    }}
+
+    /* Nút xóa / rời team: đỏ, để không bấm nhầm */
+    div.st-key-btn_del_block div.stButton > button[kind],
+    div.st-key-btn_del_cc div.stButton > button[kind],
+    div.st-key-btn_delete_team div.stButton > button[kind],
+    div.st-key-btn_leave_team div.stButton > button[kind],
+    div.st-key-btn_perm_del_task div.stButton > button[kind],
+    div.st-key-btn_perm_del_user div.stButton > button[kind],
+    div.st-key-btn_remove_team_member div.stButton > button[kind],
+    div.st-key-btn_soft_delete_task div.stButton > button[kind],
+    div.st-key-btn_soft_delete_user div.stButton > button[kind] {{
+        background-color: {danger_bg} !important;
+        border: 1px solid #dc2626 !important;
+        box-shadow: 0 4px 0 #b91c1c !important;
+    }}
+    div.st-key-btn_del_block div.stButton > button[kind] *,
+    div.st-key-btn_del_cc div.stButton > button[kind] *,
+    div.st-key-btn_delete_team div.stButton > button[kind] *,
+    div.st-key-btn_leave_team div.stButton > button[kind] *,
+    div.st-key-btn_perm_del_task div.stButton > button[kind] *,
+    div.st-key-btn_perm_del_user div.stButton > button[kind] *,
+    div.st-key-btn_remove_team_member div.stButton > button[kind] *,
+    div.st-key-btn_soft_delete_task div.stButton > button[kind] *,
+    div.st-key-btn_soft_delete_user div.stButton > button[kind] * {{
+        color: #dc2626 !important;
+        -webkit-text-fill-color: #dc2626 !important;
+    }}
+    div.st-key-btn_del_block div.stButton > button[kind]:hover:not(:disabled),
+    div.st-key-btn_del_cc div.stButton > button[kind]:hover:not(:disabled),
+    div.st-key-btn_delete_team div.stButton > button[kind]:hover:not(:disabled),
+    div.st-key-btn_leave_team div.stButton > button[kind]:hover:not(:disabled),
+    div.st-key-btn_perm_del_task div.stButton > button[kind]:hover:not(:disabled),
+    div.st-key-btn_perm_del_user div.stButton > button[kind]:hover:not(:disabled),
+    div.st-key-btn_remove_team_member div.stButton > button[kind]:hover:not(:disabled),
+    div.st-key-btn_soft_delete_task div.stButton > button[kind]:hover:not(:disabled),
+    div.st-key-btn_soft_delete_user div.stButton > button[kind]:hover:not(:disabled) {{
+        background-color: #dc2626 !important;
+        box-shadow: 0 4px 0 #991b1b !important;
+    }}
+    div.st-key-btn_del_block div.stButton > button[kind]:hover:not(:disabled) *,
+    div.st-key-btn_del_cc div.stButton > button[kind]:hover:not(:disabled) *,
+    div.st-key-btn_delete_team div.stButton > button[kind]:hover:not(:disabled) *,
+    div.st-key-btn_leave_team div.stButton > button[kind]:hover:not(:disabled) *,
+    div.st-key-btn_perm_del_task div.stButton > button[kind]:hover:not(:disabled) *,
+    div.st-key-btn_perm_del_user div.stButton > button[kind]:hover:not(:disabled) *,
+    div.st-key-btn_remove_team_member div.stButton > button[kind]:hover:not(:disabled) *,
+    div.st-key-btn_soft_delete_task div.stButton > button[kind]:hover:not(:disabled) *,
+    div.st-key-btn_soft_delete_user div.stButton > button[kind]:hover:not(:disabled) * {{
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }}
+
+    /* Nhấn xuống: nút lún vào đế */
+    div.stButton > button:active:not(:disabled),
+    div.stDownloadButton > button:active:not(:disabled),
+    div[data-testid="stFormSubmitButton"] > button:active:not(:disabled) {{
+        transform: translateY(3px) !important;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25) !important;
+    }}
+
+    /* Nút bị khóa (chưa tick xác nhận...) */
+    div.stButton > button:disabled {{
+        opacity: 0.45 !important;
+        box-shadow: none !important;
+        cursor: not-allowed !important;
+    }}
+
+    /* Viền khi dùng bàn phím (Tab) */
+    div.stButton > button:focus-visible,
+    div.stDownloadButton > button:focus-visible,
+    div[data-testid="stFormSubmitButton"] > button:focus-visible {{
+        outline: 3px solid #facc15 !important;
+        outline-offset: 2px !important;
+    }}
+
+    /* ================= MENU BÊN TRÁI =================
+       Mục chưa chọn: trong suốt trên nền xanh. Mục đang chọn: vàng, giống nhãn "Made by Minh". */
+    section[data-testid="stSidebar"] div.stButton > button {{
+        min-height: 48px !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        margin-bottom: 4px !important;
+    }}
+    section[data-testid="stSidebar"] div.stButton > button > div,
+    section[data-testid="stSidebar"] div.stButton > button p {{
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: 100% !important;
+    }}
+    section[data-testid="stSidebar"] div.stButton > button[kind="secondary"],
+    section[data-testid="stSidebar"] div.stButton > button[data-testid="baseButton-secondary"],
+    section[data-testid="stSidebar"] div.stButton > button[data-testid="stBaseButton-secondary"] {{
+        background-color: rgba(255, 255, 255, 0.10) !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+        box-shadow: none !important;
+    }}
+    section[data-testid="stSidebar"] div.stButton > button[kind="secondary"] *,
+    section[data-testid="stSidebar"] div.stButton > button[data-testid="baseButton-secondary"] *,
+    section[data-testid="stSidebar"] div.stButton > button[data-testid="stBaseButton-secondary"] * {{
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+    }}
+    section[data-testid="stSidebar"] div.stButton > button[kind="secondary"]:hover:not(:disabled) {{
+        background-color: rgba(255, 255, 255, 0.22) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        box-shadow: none !important;
+        transform: translateX(3px) !important;
+    }}
+    section[data-testid="stSidebar"] div.stButton > button[kind="primary"],
+    section[data-testid="stSidebar"] div.stButton > button[data-testid="baseButton-primary"],
+    section[data-testid="stSidebar"] div.stButton > button[data-testid="stBaseButton-primary"] {{
+        background-color: #facc15 !important;
+        border: 1px solid #eab308 !important;
+        box-shadow: 0 4px 0 #a16207 !important;
+    }}
+    section[data-testid="stSidebar"] div.stButton > button[kind="primary"] *,
+    section[data-testid="stSidebar"] div.stButton > button[data-testid="baseButton-primary"] *,
+    section[data-testid="stSidebar"] div.stButton > button[data-testid="stBaseButton-primary"] * {{
+        color: #0c4a6e !important;
+        -webkit-text-fill-color: #0c4a6e !important;
+        font-size: 1.05rem !important;
         font-weight: 900 !important;
-        opacity: 1 !important;
+    }}
+    section[data-testid="stSidebar"] div.stButton > button[kind="primary"]:hover:not(:disabled) {{
+        background-color: #fde047 !important;
+        transform: none !important;
+        box-shadow: 0 4px 0 #a16207 !important;
+    }}
+    /* Nút Đăng Xuất: viền trắng, căn giữa */
+    section[data-testid="stSidebar"] div.st-key-btn_logout_bottom div.stButton > button[kind] {{
+        justify-content: center !important;
+        background-color: transparent !important;
+        border: 2px solid rgba(255, 255, 255, 0.7) !important;
+        margin-top: 12px !important;
+    }}
+    section[data-testid="stSidebar"] div.st-key-btn_logout_bottom div.stButton > button[kind] > div,
+    section[data-testid="stSidebar"] div.st-key-btn_logout_bottom div.stButton > button[kind] p {{
+        justify-content: center !important;
+        text-align: center !important;
+    }}
+
+    @media (prefers-reduced-motion: reduce) {{
+        div.stButton > button, div.stDownloadButton > button,
+        div[data-testid="stFormSubmitButton"] > button {{
+            transition: none !important;
+            transform: none !important;
+        }}
     }}
 
     .big-table-title {{
@@ -506,23 +688,6 @@ st.markdown(f"""
         color: {text_color} !important;
         font-weight: 700 !important;
         font-size: 1.1rem !important;
-    }}
-
-    div[data-testid="stFormSubmitButton"] > button {{
-        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 16px 24px !important;
-        width: 100% !important;
-        min-height: 55px !important;
-    }}
-
-    div[data-testid="stFormSubmitButton"] > button *,
-    div[data-testid="stFormSubmitButton"] > button p {{
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        font-size: 1.25rem !important;
-        font-weight: 900 !important;
     }}
 
     .main-title {{
@@ -752,7 +917,7 @@ else:
     if my_pw and verify_password("admin123", my_pw[0]):
         st.error("⚠️ Tài khoản này vẫn dùng mật khẩu mặc định 'admin123'. Vào mục 🔑 Đổi Mật Khẩu và đổi NGAY!")
 
-    if st.sidebar.button("🚪 Đăng Xuất", type="secondary", key="btn_logout_bottom"):
+    if st.sidebar.button("🚪 Đăng Xuất", type="secondary", key="btn_logout_bottom", use_container_width=True):
         tok = st.session_state.get("session_token")
         if tok:
             delete_session(tok)
@@ -911,7 +1076,7 @@ else:
                                 st.success(f"Đã thêm **{code_clean} - {name_clean}**!")
                                 st.rerun()
 
-                    cc_df = pd.read_sql_query("SELECT code, name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
+                    cc_df = pd.read_sql_query("SELECT code, COALESCE(name, '') AS name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
                     if not cc_df.empty:
                         cc_opts = {r['code']: f"{r['code']} - {r['name']}" for _, r in cc_df.iterrows()}
                         del_cc = st.selectbox("Chọn Cost Code để xóa:", list(cc_opts.keys()), format_func=lambda c: cc_opts[c], key="sb_del_cc")
@@ -928,7 +1093,7 @@ else:
                     else:
                         st.caption("Danh sách Cost Code đang trống.")
 
-        cost_codes_df = pd.read_sql_query("SELECT code, name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
+        cost_codes_df = pd.read_sql_query("SELECT code, COALESCE(name, '') AS name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
         block_options = ["— Không chọn —"] + [r[0] for r in cursor.execute("SELECT name FROM blocks WHERE is_deleted = 0 ORDER BY name").fetchall()]
         
         if cost_codes_df.empty:
@@ -1320,7 +1485,7 @@ else:
     elif menu == "👥 Quản Lý Phân Quyền" and is_manager_up:
         st.markdown("<div class='big-table-title'>👥 Quản Lý & Cấp Quyền Tài Khoản (Role List)</div>", unsafe_allow_html=True)
 
-        ws_df = pd.read_sql_query("SELECT code, name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
+        ws_df = pd.read_sql_query("SELECT code, COALESCE(name, '') AS name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
         ws_label = {row['code']: f"{row['code']} - {row['name']}" for _, row in ws_df.iterrows()}
 
         all_users = pd.read_sql_query("""
