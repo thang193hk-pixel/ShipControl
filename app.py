@@ -373,6 +373,78 @@ div[data-testid="stDateInputField"] input {
     opacity: 1 !important;
 }
 
+/* ---------- 🪪 Thẻ tài khoản dưới menu ---------- */
+.profile-card {
+    margin: 14px 0 12px 0;
+    padding: 14px 14px 10px 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+.profile-card * { color: #ffffff; }
+.pc-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 10px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+.pc-avatar {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #fde047, #facc15);
+    color: #0c4a6e !important;
+    font-weight: 800;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.35);
+}
+.pc-id { min-width: 0; }
+.pc-name {
+    font-weight: 800;
+    font-size: 1.05rem;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.pc-status { font-size: 0.8rem; color: #86efac !important; }
+.pc-status span { color: rgba(255, 255, 255, 0.75) !important; }
+.pc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
+    font-size: 0.9rem;
+}
+.pc-label { color: rgba(255, 255, 255, 0.70) !important; white-space: nowrap; }
+.pc-val {
+    font-weight: 700;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+.pc-role {
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(250, 204, 21, 0.18);
+    border: 1px solid rgba(250, 204, 21, 0.55);
+    color: #fde047 !important;
+    white-space: nowrap;
+}
+/* Menu gọn hơn một chút để thẻ tài khoản hiện ra mà không phải cuộn */
+section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
+    gap: 0.4rem !important;
+}
+
 /* ---------- ⚙️ Nút Cài đặt trên thanh bên ---------- */
 section[data-testid="stSidebar"] [data-testid="stPopover"] button {
     background: rgba(255, 255, 255, 0.12) !important;
@@ -539,6 +611,9 @@ VI_EN = {
     "🔑 Đổi Mật Khẩu": "🔑 Change Password",
     "🚪 Đăng Xuất": "🚪 Log Out",
     "⚙️ Cài đặt": "⚙️ Settings",
+    ">Tài khoản<": ">Account<",
+    ">Vai trò<": ">Role<",
+    ">Đang đăng nhập<": ">Signed in<",
     "🌙 Chế độ Tối (Dark)": "🌙 Dark mode",
     "🌐 Ngôn ngữ": "🌐 Language",
 
@@ -1985,14 +2060,22 @@ else:
     }
     role_badge = role_icons.get(current_role, f"👤 {current_role}")
 
-    st.sidebar.markdown(f"""
-        <div class='user-card'>
-            👋 <b>WELCOME</b><br>
-            <span style='font-size: 1.1rem; font-weight: 800;'>{html.escape(str(user_data['fullname']))}</span><br>
-            <small>@{html.escape(str(user_data['username']))} | <b>{html.escape(role_badge)}</b></small>
-            {"<br><small>🏭 " + html.escape(str(user_data.get('workshop'))) + "</small>" if user_data.get('workshop') else ""}
-        </div>
-    """, unsafe_allow_html=True)
+    # 🪪 THẺ TÀI KHOẢN: ngay dưới menu, cho biết đang đăng nhập bằng tài khoản nào và vai trò gì
+    _full = str(user_data.get('fullname') or user_data['username'])
+    _words = [w for w in _full.split() if w]
+    _initials = ((_words[0][0] + (_words[-1][0] if len(_words) > 1 else "")) if _words else "?").upper()
+    _ws_code = user_data.get('workshop')
+    _ws_row = ""
+    if _ws_code:
+        _ws_name = cursor.execute("SELECT name FROM custom_cost_codes WHERE code = ?", (_ws_code,)).fetchone()
+        _ws_text = f"{_ws_code} · {_ws_name[0]}" if _ws_name and _ws_name[0] else _ws_code
+        _ws_row = (f"<div class='pc-row'><span class='pc-label'>Workshop</span>"
+                   f"<span class='pc-val'>{html.escape(_ws_text)}</span></div>")
+    st.sidebar.markdown(f"""<div class='profile-card'>
+<div class='pc-top'><div class='pc-avatar'>{html.escape(_initials)}</div>
+<div class='pc-id'><div class='pc-name'>{html.escape(_full)}</div><div class='pc-status'>● <span>Đang đăng nhập</span></div></div></div>
+<div class='pc-row'><span class='pc-label'>Tài khoản</span><span class='pc-val'>@{html.escape(str(user_data['username']))}</span></div>
+<div class='pc-row'><span class='pc-label'>Vai trò</span><span class='pc-role'>{html.escape(role_badge)}</span></div>{_ws_row}</div>""", unsafe_allow_html=True)
 
     st.sidebar.markdown("<div class='made-by-minh'>Made By Minh</div>", unsafe_allow_html=True)
 
