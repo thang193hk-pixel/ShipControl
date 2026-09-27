@@ -40,7 +40,7 @@ html, body, .stApp, .stApp p, .stApp label, .stApp input, .stApp textarea, .stAp
     pointer-events: none;
 }
 div[data-testid="stAppViewContainer"] {
-    position: relative;
+    /* Giữ nguyên kiểu định vị gốc của Streamlit (để thanh bên và trang cuộn được), chỉ đưa lên trên lớp ảnh nền */
     z-index: 1;
     background: transparent !important;
 }
@@ -525,9 +525,13 @@ div[data-testid="stPopoverBody"] [data-testid="stWidgetLabel"] p {
     background: rgba(255, 255, 255, 0.28) !important;
 }
 /* Nút ⋮ và Deploy ở góc trên */
-header[data-testid="stHeader"] button * {
+header[data-testid="stHeader"] button {
     color: __INPUT_TEXT__ !important;
-    fill: __INPUT_TEXT__ !important;
+}
+/* Vệt sáng chỉ chạy trên mục menu đang chọn; mục thường nền trong suốt nên vệt sáng trông như vết lỗi */
+section[data-testid="stSidebar"] div.stButton > button[kind="secondary"]::after,
+section[data-testid="stSidebar"] [data-testid="stPopover"] button::after {
+    display: none !important;
 }
 
 /* ---------- Thông báo: mỗi loại một màu, chữ vừa phải ---------- */
