@@ -159,9 +159,14 @@ DEFAULT_WORKSHOPS = [
     ("DEP_07", "HR Department"),
     ("DEP_08", "Security Department"),
 ]
+# Danh sách trên là danh sách CHÍNH THỨC. Muốn thêm/sửa/xóa workshop thì sửa danh sách trên rồi upload lại app.py.
 for ws_code, ws_name in DEFAULT_WORKSHOPS:
     cursor.execute("INSERT OR IGNORE INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
                    (ws_code, ws_name))
+    cursor.execute("UPDATE custom_cost_codes SET name = ?, is_deleted = 0 WHERE code = ?", (ws_name, ws_code))
+_official_codes = [c for c, _ in DEFAULT_WORKSHOPS]
+cursor.execute(f"UPDATE custom_cost_codes SET is_deleted = 1 WHERE code NOT IN ({','.join('?' * len(_official_codes))})",
+               _official_codes)
 
 # 🔐 BẢNG PHIÊN ĐĂNG NHẬP (cookie chỉ chứa token ngẫu nhiên, không chứa username)
 cursor.execute('''
@@ -661,7 +666,6 @@ else:
     if is_manager_up:
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "⚙️ Quản Lý Danh Mục",
             "➕ Thêm Công Việc", 
             "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
@@ -673,7 +677,6 @@ else:
     elif current_role == "Foreman":
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "⚙️ Quản Lý Danh Mục",
             "➕ Thêm Công Việc", 
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -827,58 +830,6 @@ else:
                         conn.commit()
                         st.success("Đã cập nhật tiến độ công việc thành công!")
                         st.rerun()
-
-    # 2. QUẢN LÝ DANH MỤC
-    elif menu == "⚙️ Quản Lý Danh Mục" and current_role in ["Foreman", "WOS Manager", "Admin"]:
-        st.markdown("<div class='big-table-title'>⚙️ Quản Lý Danh Mục Workshop / Cost Code</div>", unsafe_allow_html=True)
-        
-        with st.form("add_cost_code_form", clear_on_submit=True):
-            col1, col2 = st.columns(2)
-            with col1:
-                ws_id = st.text_input("WS Cost Code (Ví dụ: EW): *")
-            with col2:
-                ws_name = st.text_input("Tên xưởng / Workshop Name: *")
-            
-            ws_desc = st.text_input("Mô tả chi tiết (Tùy chọn):")
-            submit_cost_code = st.form_submit_button("✨ THÊM WORKSHOP MỚI")
-            
-            if submit_cost_code:
-                if not ws_id.strip() or not ws_name.strip():
-                    st.error("Vui lòng điền đầy đủ WS Cost Code và Tên Workshop!")
-                else:
-                    code_clean = ws_id.strip()
-                    name_clean = ws_name.strip()
-                    desc_clean = ws_desc.strip()
-                    existing_ws = cursor.execute("SELECT is_deleted FROM custom_cost_codes WHERE code = ?", (code_clean,)).fetchone()
-                    if existing_ws and existing_ws[0] == 0:
-                        st.error(f"WS Cost Code **{code_clean}** đã tồn tại!")
-                    elif existing_ws:
-                        st.error(f"WS Cost Code **{code_clean}** đang nằm trong Thùng Rác. Hãy khôi phục thay vì tạo mới.")
-                    else:
-                        cursor.execute("INSERT INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, ?, 0)", 
-                                       (code_clean, name_clean, desc_clean))
-                        conn.commit()
-                        st.success(f"Đã thêm thành công: **{code_clean} - {name_clean}**")
-                        st.rerun()
-
-        st.markdown("---")
-        st.markdown("### 📋 Danh Sách Workshop Đang Hoạt Động")
-        df_ws = pd.read_sql_query("SELECT id, code AS 'WS Cost Code', name AS 'Workshop Name', description AS 'Mô Tả' FROM custom_cost_codes WHERE is_deleted = 0", conn)
-        if df_ws.empty:
-            st.info("Chưa có Workshop nào trong danh mục.")
-        else:
-            st.dataframe(df_ws.drop(columns=['id']), use_container_width=True)
-            
-            st.markdown("#### 🗑️ Xóa Tạm Workshop")
-            ws_del_options = [f"{row['id']} | {row['WS Cost Code']} - {row['Workshop Name']}" for _, row in df_ws.iterrows()]
-            ws_del_selected = st.selectbox("Chọn Workshop cần chuyển vào Thùng Rác:", ws_del_options)
-            ws_del_id = int(ws_del_selected.split(" | ")[0])
-            
-            if st.button("🗑️ Chuyển Workshop Vào Thùng Rác", type="secondary", key="btn_del_ws"):
-                cursor.execute("UPDATE custom_cost_codes SET is_deleted = 1 WHERE id = ?", (ws_del_id,))
-                conn.commit()
-                st.success("Đã chuyển Workshop vào Thùng Rác thành công!")
-                st.rerun()
 
     # 3. THÊM CÔNG VIỆC MỚI
     elif menu == "➕ Thêm Công Việc" and current_role in ["Team Leader", "Foreman", "WOS Manager", "Admin"]:
@@ -1314,7 +1265,7 @@ else:
 
             if is_admin:
                 if ws_df.empty:
-                    st.warning("⚠️ Chưa có Workshop nào. Vào ⚙️ Quản Lý Danh Mục để thêm trước.")
+                    st.warning("⚠️ Chưa có Workshop nào. Hãy thêm vào danh sách DEFAULT_WORKSHOPS trong app.py.")
                 else:
                     action = st.radio("Chọn thao tác:", ["👑 Cấp quyền WOS Manager", "⛔ Thu hồi quyền (về Pending)"], horizontal=True)
                     chosen_ws = None
@@ -1382,7 +1333,7 @@ else:
     elif menu == "🗑️ Thùng Rác" and is_manager_up:
         st.markdown("<div class='big-table-title'>🗑️ Thùng Rác & Khôi Phục Tổng Hợp</div>", unsafe_allow_html=True)
         
-        t_col1, t_col2, t_col3, t_space = st.columns([1.5, 1.5, 1.5, 1.5])
+        t_col1, t_col3, t_space = st.columns([1.5, 1.5, 3])
         
         is_t_task = st.session_state["trash_sub_tab"] == "task"
         is_t_ws = st.session_state["trash_sub_tab"] == "ws"
@@ -1393,11 +1344,6 @@ else:
                 st.session_state["trash_sub_tab"] = "task"
                 st.rerun()
                 
-        with t_col2:
-            if st.button("⚙️ Thùng Rác Workshop", type="primary" if is_t_ws else "secondary", key="btn_t_ws"):
-                st.session_state["trash_sub_tab"] = "ws"
-                st.rerun()
-
         with t_col3:
             if st.button("👤 Thùng Rác Tài Khoản", type="primary" if is_t_user else "secondary", key="btn_t_user"):
                 st.session_state["trash_sub_tab"] = "user"
@@ -1427,30 +1373,6 @@ else:
                         cursor.execute("DELETE FROM tasks WHERE id = ?", (res_task_id,))
                         conn.commit()
                         st.warning("Đã xóa vĩnh viễn công việc!")
-                        st.rerun()
-
-        elif st.session_state["trash_sub_tab"] == "ws":
-            deleted_ws = pd.read_sql_query("SELECT id, code AS 'WS Code', name AS 'Workshop Name' FROM custom_cost_codes WHERE is_deleted = 1", conn)
-            if deleted_ws.empty:
-                st.info("Thùng rác Workshop đang trống.")
-            else:
-                st.dataframe(deleted_ws, use_container_width=True)
-                ws_res_options = [f"{row['id']} | {row['WS Code']} - {row['Workshop Name']}" for _, row in deleted_ws.iterrows()]
-                restore_ws_target = st.selectbox("Chọn Workshop để xử lý:", ws_res_options, key="sb_res_ws")
-                res_ws_id = int(restore_ws_target.split(" | ")[0])
-                
-                col_w1, col_w2 = st.columns(2)
-                with col_w1:
-                    if st.button("♻️ KHÔI PHỤC WORKSHOP", type="primary", key="btn_res_ws"):
-                        cursor.execute("UPDATE custom_cost_codes SET is_deleted = 0 WHERE id = ?", (res_ws_id,))
-                        conn.commit()
-                        st.success("Đã khôi phục Workshop!")
-                        st.rerun()
-                with col_w2:
-                    if st.button("💥 XÓA VĨNH VIỄN WORKSHOP", type="secondary", key="btn_perm_del_ws"):
-                        cursor.execute("DELETE FROM custom_cost_codes WHERE id = ?", (res_ws_id,))
-                        conn.commit()
-                        st.warning("Đã xóa vĩnh viễn Workshop!")
                         st.rerun()
 
         else:
