@@ -1114,6 +1114,18 @@ else:
                                 st.success("Đã đổi tên team!")
                                 st.rerun()
 
+                with st.expander("🗑️ Xóa team"):
+                    st.warning("Khi xóa team: tất cả Worker sẽ rời team, và các công việc đang giao cho họ sẽ trở về "
+                               "trạng thái chưa giao. Công việc vẫn thuộc về bạn, bạn có thể tạo team mới sau.")
+                    confirm_delete_team = st.checkbox("Tôi chắc chắn muốn xóa team này", key="chk_delete_team")
+                    if st.button("🗑️ XÓA TEAM", type="secondary", key="btn_delete_team", disabled=not confirm_delete_team):
+                        cursor.execute("UPDATE tasks SET assigned_worker_id = NULL WHERE assigned_leader_id = ?", (my_id,))
+                        cursor.execute("UPDATE users SET leader_id = NULL WHERE leader_id = ?", (my_id,))
+                        cursor.execute("UPDATE users SET team_name = NULL WHERE id = ?", (my_id,))
+                        conn.commit()
+                        st.success("Đã xóa team.")
+                        st.rerun()
+
                 team_df = pd.read_sql_query(
                     "SELECT id, username, fullname FROM users WHERE is_deleted = 0 AND role = 'Worker' AND leader_id = ? ORDER BY fullname",
                     conn, params=(my_id,))
