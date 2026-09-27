@@ -13,6 +13,288 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
+MODERN_CSS_TEMPLATE = r'''
+/* ================================================================
+   🎨 GIAO DIỆN HIỆN ĐẠI (lớp phủ cuối cùng, ghi đè các kiểu cũ)
+   ================================================================ */
+
+html, body, .stApp, .stApp p, .stApp label, .stApp input, .stApp textarea, .stApp button,
+.stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp li, .stApp span:not([data-testid="stIconMaterial"]) {
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* ---------- Nền ---------- */
+.stApp, .main {
+    background: __APP_BG__ !important;
+}
+header[data-testid="stHeader"] {
+    background: transparent !important;
+}
+
+/* ---------- Thanh bên ---------- */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #0369a1 0%, #075985 55%, #0c4a6e 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 4px 0 24px rgba(12, 74, 110, 0.18) !important;
+}
+.sidebar-header {
+    font-size: 1.7rem !important;
+    letter-spacing: -0.02em !important;
+}
+.user-card {
+    background: rgba(255, 255, 255, 0.10) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 16px !important;
+    backdrop-filter: blur(6px);
+}
+.made-by-minh {
+    font-size: 1.25rem !important;
+    border-radius: 999px !important;
+    box-shadow: 0 6px 20px rgba(250, 204, 21, 0.35) !important;
+    letter-spacing: -0.01em !important;
+}
+
+/* Menu: mục thường phẳng, mục đang chọn là viên thuốc màu vàng phát sáng nhẹ */
+section[data-testid="stSidebar"] div.stButton > button[kind="secondary"] {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+}
+section[data-testid="stSidebar"] div.stButton > button[kind="secondary"]:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    transform: translateX(3px) !important;
+}
+section[data-testid="stSidebar"] div.stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, #fde047 0%, #facc15 100%) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 6px 18px rgba(250, 204, 21, 0.40) !important;
+}
+section[data-testid="stSidebar"] div.stButton > button[kind="primary"]:hover:not(:disabled) {
+    box-shadow: 0 8px 22px rgba(250, 204, 21, 0.50) !important;
+}
+section[data-testid="stSidebar"] div.st-key-btn_logout_bottom div.stButton > button[kind] {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    box-shadow: none !important;
+}
+section[data-testid="stSidebar"] div.st-key-btn_logout_bottom div.stButton > button[kind]:hover:not(:disabled) {
+    background: rgba(239, 68, 68, 0.85) !important;
+    border-color: transparent !important;
+    transform: none !important;
+}
+
+/* ---------- Nút trong trang: phẳng, bo tròn, bóng mềm ---------- */
+div.stButton > button,
+div.stDownloadButton > button,
+div[data-testid="stFormSubmitButton"] > button {
+    border-radius: 12px !important;
+    min-height: 48px !important;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
+}
+div.stButton > button *,
+div.stDownloadButton > button *,
+div[data-testid="stFormSubmitButton"] > button * {
+    font-size: 1.02rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+}
+.stMain div.stButton > button[kind="primary"],
+.main div.stButton > button[kind="primary"],
+div[data-testid="stFormSubmitButton"] > button,
+div.stDownloadButton > button {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.30) !important;
+}
+.stMain div.stButton > button[kind="primary"]:hover:not(:disabled),
+.main div.stButton > button[kind="primary"]:hover:not(:disabled),
+div[data-testid="stFormSubmitButton"] > button:hover:not(:disabled),
+div.stDownloadButton > button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+    box-shadow: 0 8px 22px rgba(22, 163, 74, 0.38) !important;
+    transform: translateY(-2px) !important;
+}
+.stMain div.stButton > button[kind="secondary"],
+.main div.stButton > button[kind="secondary"] {
+    background: __SURFACE__ !important;
+    border: 1px solid __SURFACE_BORDER__ !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08) !important;
+}
+.stMain div.stButton > button[kind="secondary"]:hover:not(:disabled),
+.main div.stButton > button[kind="secondary"]:hover:not(:disabled) {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.18) !important;
+    transform: translateY(-2px) !important;
+}
+div.stButton > button:active:not(:disabled),
+div.stDownloadButton > button:active:not(:disabled),
+div[data-testid="stFormSubmitButton"] > button:active:not(:disabled) {
+    transform: scale(0.97) !important;
+}
+/* Nút xóa: nền đỏ nhạt, chữ đỏ; rê chuột thì đỏ đậm */
+__DANGER_SEL__ {
+    background: __DANGER_SOFT__ !important;
+    border: 1px solid rgba(220, 38, 38, 0.35) !important;
+    box-shadow: none !important;
+}
+__DANGER_SEL_HOVER__ {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    border-color: transparent !important;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.30) !important;
+}
+
+/* ---------- Tiêu đề ---------- */
+.main-title {
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.03em !important;
+    border-bottom: none !important;
+    padding-bottom: 14px !important;
+    position: relative;
+}
+.main-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 120px;
+    height: 4px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: linear-gradient(90deg, #0ea5e9, #22c55e, #facc15);
+}
+.big-table-title {
+    font-size: 1.55rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+}
+.stApp h3 {
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
+}
+
+/* ---------- Thẻ (form, khung mở rộng, bảng) ---------- */
+div[data-testid="stForm"] {
+    background: __SURFACE__ !important;
+    border: 1px solid __SURFACE_BORDER__ !important;
+    border-radius: 18px !important;
+    padding: 22px !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06) !important;
+}
+div[data-testid="stExpander"] details {
+    background: __SURFACE__ !important;
+    border: 1px solid __SURFACE_BORDER__ !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
+    overflow: hidden;
+}
+div[data-testid="stExpander"] summary {
+    background: transparent !important;
+    padding: 14px 18px !important;
+}
+div[data-testid="stExpander"] summary:hover {
+    background: __HOVER_TINT__ !important;
+}
+div[data-testid="stDataFrame"] {
+    border-radius: 14px !important;
+    overflow: hidden;
+    border: 1px solid __SURFACE_BORDER__ !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
+}
+div[data-testid="stDataFrame"] th,
+div[data-testid="stTable"] th {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+}
+div[data-testid="stDataFrame"] td,
+div[data-testid="stTable"] td,
+div[data-testid="stDataFrame"] [role="gridcell"] {
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+}
+hr {
+    border-color: __SURFACE_BORDER__ !important;
+    opacity: 0.8;
+}
+
+/* ---------- Ô nhập liệu ---------- */
+input, textarea, div[data-baseweb="select"] > div {
+    border-radius: 12px !important;
+    border: 1px solid __SURFACE_BORDER__ !important;
+    font-size: 1rem !important;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+input:focus, textarea:focus, div[data-baseweb="select"] > div:focus-within {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18) !important;
+    outline: none !important;
+}
+div[data-baseweb="input"], div[data-baseweb="textarea"], div[data-baseweb="base-input"] {
+    border: none !important;
+    background: transparent !important;
+}
+div[data-baseweb="input"] > div, div[data-baseweb="textarea"] > div,
+div[data-baseweb="base-input"] > div {
+    border-color: transparent !important;
+    background: transparent !important;
+}
+div[data-baseweb="select"] > div > div {
+    background: transparent !important;
+}
+/* Khung bao quanh ô nhập của Streamlit: trong suốt, để chỉ còn viền của ô nhập */
+.stApp div:has(> input), .stApp div:has(> textarea),
+.stApp div:has(> div > input), .stApp div:has(> div > textarea) {
+    border-color: transparent !important;
+    background-color: transparent !important;
+}
+input, textarea, div[data-baseweb="select"] > div {
+    background-color: __INPUT_BG__ !important;
+    border: 1px solid __INPUT_BORDER__ !important;
+}
+
+/* ---------- Thông báo: mỗi loại một màu, chữ vừa phải ---------- */
+div[data-testid="stAlert"] {
+    border-radius: 14px !important;
+    border: 1px solid transparent !important;
+}
+div[data-testid="stAlert"] * {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+}
+div[data-testid="stAlert"]:has([data-testid="stAlertContentInfo"]) {
+    background: __INFO_BG__ !important; border-color: rgba(14, 165, 233, 0.35) !important;
+}
+div[data-testid="stAlert"]:has([data-testid="stAlertContentInfo"]) * {
+    color: __INFO_TX__ !important; -webkit-text-fill-color: __INFO_TX__ !important;
+}
+div[data-testid="stAlert"]:has([data-testid="stAlertContentSuccess"]) {
+    background: __OK_BG__ !important; border-color: rgba(34, 197, 94, 0.35) !important;
+}
+div[data-testid="stAlert"]:has([data-testid="stAlertContentSuccess"]) * {
+    color: __OK_TX__ !important; -webkit-text-fill-color: __OK_TX__ !important;
+}
+div[data-testid="stAlert"]:has([data-testid="stAlertContentWarning"]) {
+    background: __WARN_BG__ !important; border-color: rgba(234, 179, 8, 0.45) !important;
+}
+div[data-testid="stAlert"]:has([data-testid="stAlertContentWarning"]) * {
+    color: __WARN_TX__ !important; -webkit-text-fill-color: __WARN_TX__ !important;
+}
+div[data-testid="stAlert"]:has([data-testid="stAlertContentError"]) {
+    background: __ERR_BG__ !important; border-color: rgba(239, 68, 68, 0.40) !important;
+}
+div[data-testid="stAlert"]:has([data-testid="stAlertContentError"]) * {
+    color: __ERR_TX__ !important; -webkit-text-fill-color: __ERR_TX__ !important;
+}
+
+/* ---------- Thanh cuộn mảnh ---------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.35); border-radius: 999px; }
+::-webkit-scrollbar-track { background: transparent; }
+'''
+
+
 def get_secret(key, default=None):
     """Đọc cấu hình bí mật từ .streamlit/secrets.toml (hoặc Secrets trên Streamlit Cloud)."""
     try:
@@ -381,8 +663,37 @@ for _k in range(7):   # thời điểm bắt đầu: 7 giá trị khác nhau (5 
     _shine_rules.append(f"{_sel} {{ animation-delay: -{_rng.uniform(0, 4.4):.2f}s; }}")
 shine_css = "\n    ".join(_shine_rules)
 
+# 🎨 GIAO DIỆN HIỆN ĐẠI: bảng màu theo chế độ Sáng / Tối
+_danger_keys = ["btn_del_block", "btn_del_cc", "btn_delete_team", "btn_leave_team", "btn_perm_del_task",
+                "btn_perm_del_user", "btn_remove_team_member", "btn_soft_delete_task", "btn_soft_delete_user"]
+_modern_tokens = {
+    "__APP_BG__": ("radial-gradient(1200px 600px at 100% -10%, rgba(14,165,233,0.14), transparent 60%), #0b1220"
+                   if is_dark else
+                   "radial-gradient(1200px 600px at 100% -10%, rgba(14,165,233,0.10), transparent 60%), #f4f7fb"),
+    "__SURFACE__": "#111a2e" if is_dark else "#ffffff",
+    "__SURFACE_BORDER__": "#22304d" if is_dark else "#e3e8f0",
+    "__INPUT_BG__": "#0a1222" if is_dark else "#fbfcfe",
+    "__INPUT_BORDER__": "#33466b" if is_dark else "#d5dce8",
+    "__HOVER_TINT__": "rgba(255,255,255,0.04)" if is_dark else "#f8fafc",
+    "__DANGER_SOFT__": "rgba(239,68,68,0.10)" if is_dark else "#fef2f2",
+    "__INFO_BG__": "rgba(14,165,233,0.12)" if is_dark else "#f0f9ff",
+    "__INFO_TX__": "#7dd3fc" if is_dark else "#075985",
+    "__OK_BG__": "rgba(34,197,94,0.12)" if is_dark else "#f0fdf4",
+    "__OK_TX__": "#86efac" if is_dark else "#166534",
+    "__WARN_BG__": "rgba(234,179,8,0.12)" if is_dark else "#fefce8",
+    "__WARN_TX__": "#fde047" if is_dark else "#854d0e",
+    "__ERR_BG__": "rgba(239,68,68,0.12)" if is_dark else "#fef2f2",
+    "__ERR_TX__": "#fca5a5" if is_dark else "#991b1b",
+    "__DANGER_SEL_HOVER__": ",\n".join(f"div.st-key-{k} div.stButton > button[kind]:hover:not(:disabled)" for k in _danger_keys),
+    "__DANGER_SEL__": ",\n".join(f"div.st-key-{k} div.stButton > button[kind]" for k in _danger_keys),
+}
+modern_css = MODERN_CSS_TEMPLATE
+for _tok, _val in _modern_tokens.items():
+    modern_css = modern_css.replace(_tok, _val)
+
 st.markdown(f"""
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
     .stApp, .main {{
         background-color: {main_bg} !important;
         color: {text_color} !important;
@@ -814,6 +1125,8 @@ st.markdown(f"""
         border-bottom: 3px solid #22c55e;
         margin-bottom: 25px;
     }}
+
+    {modern_css}
     </style>
 """, unsafe_allow_html=True)
 
