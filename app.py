@@ -362,6 +362,25 @@ sec_border = "#475569" if is_dark else "#cbd5e1"
 sec_text = "#f1f5f9" if is_dark else "#0f172a"
 danger_bg = "#1e293b" if is_dark else "#ffffff"
 
+# ✨ VỆT SÁNG NGẪU NHIÊN: mỗi nút có nhịp riêng (2,4–4,4 giây) và bắt đầu lệch nhau,
+#    nên các nút không bao giờ sáng cùng lúc. Giá trị ngẫu nhiên được giữ cố định trong 1 phiên
+#    để vệt sáng không bị "giật" mỗi khi bấm nút.
+import random as _random
+if "shine_seed" not in st.session_state:
+    st.session_state["shine_seed"] = _random.randint(1, 10**9)
+_rng = _random.Random(st.session_state["shine_seed"])
+_shine_rules = []
+_CONTAINER = 'div[data-testid="stElementContainer"]'
+_BTN_AFTER = [" div.stButton > button::after", " div.stDownloadButton > button::after",
+              ' div[data-testid="stFormSubmitButton"] > button::after']
+for _k in range(5):   # nhịp lặp: 5 giá trị khác nhau
+    _sel = ", ".join(f"{_CONTAINER}:nth-child(5n+{_k}){b}" for b in _BTN_AFTER)
+    _shine_rules.append(f"{_sel} {{ animation-duration: {_rng.uniform(2.4, 4.4):.2f}s; }}")
+for _k in range(7):   # thời điểm bắt đầu: 7 giá trị khác nhau (5 x 7 = 35 tổ hợp)
+    _sel = ", ".join(f"{_CONTAINER}:nth-child(7n+{_k}){b}" for b in _BTN_AFTER)
+    _shine_rules.append(f"{_sel} {{ animation-delay: -{_rng.uniform(0, 4.4):.2f}s; }}")
+shine_css = "\n    ".join(_shine_rules)
+
 st.markdown(f"""
     <style>
     .stApp, .main {{
@@ -616,7 +635,7 @@ st.markdown(f"""
     }}
 
     /* ================= HIỆU ỨNG VỆT SÁNG TỰ ĐỘNG =================
-       Cứ mỗi 3 giây, một vệt sáng tự lướt qua nút từ trái sang phải. */
+       Vệt sáng tự lướt qua nút, mỗi nút một nhịp ngẫu nhiên (trung bình ~3 giây). */
     div.stButton > button,
     div.stDownloadButton > button,
     div[data-testid="stFormSubmitButton"] > button {{
@@ -648,6 +667,9 @@ st.markdown(f"""
         27%  {{ left: 130%; }}
         100% {{ left: 130%; }}
     }}
+    /* Nhịp và thời điểm ngẫu nhiên cho từng nút */
+    {shine_css}
+
     /* Nút đang bị khóa thì không có vệt sáng */
     div.stButton > button:disabled::after {{
         display: none;
