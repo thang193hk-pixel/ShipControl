@@ -615,8 +615,8 @@ st.markdown(f"""
         text-align: center !important;
     }}
 
-    /* ================= HIỆU ỨNG LƯỚT KHI BẤM =================
-       Một vệt sáng lướt từ trái sang phải ngay khi thả tay khỏi nút. */
+    /* ================= HIỆU ỨNG VỆT SÁNG TỰ ĐỘNG =================
+       Cứ mỗi 3 giây, một vệt sáng tự lướt qua nút từ trái sang phải. */
     div.stButton > button,
     div.stDownloadButton > button,
     div[data-testid="stFormSubmitButton"] > button {{
@@ -631,7 +631,7 @@ st.markdown(f"""
         position: absolute;
         top: 0;
         bottom: 0;
-        left: 130%;
+        left: -70%;
         width: 60%;
         background: linear-gradient(100deg,
                     rgba(255, 255, 255, 0) 0%,
@@ -640,14 +640,17 @@ st.markdown(f"""
         transform: skewX(-20deg);
         pointer-events: none;
         z-index: 1;
-        transition: left 0.7s cubic-bezier(0.45, 0, 0.35, 1);
+        animation: btnShine 3s cubic-bezier(0.45, 0, 0.35, 1) infinite;
     }}
-    /* Đang nhấn: vệt sáng nhảy về bên trái (không animation), thả tay ra thì lướt sang phải */
-    div.stButton > button:active::after,
-    div.stDownloadButton > button:active::after,
-    div[data-testid="stFormSubmitButton"] > button:active::after {{
-        left: -70%;
-        transition: none;
+    /* Lướt qua trong ~0,8 giây đầu, sau đó nghỉ đến hết 3 giây rồi lặp lại */
+    @keyframes btnShine {{
+        0%   {{ left: -70%; }}
+        27%  {{ left: 130%; }}
+        100% {{ left: 130%; }}
+    }}
+    /* Nút đang bị khóa thì không có vệt sáng */
+    div.stButton > button:disabled::after {{
+        display: none;
     }}
     /* Nút trên nền trắng: vệt sáng màu xanh nhạt để nhìn thấy được */
     div.stButton > button[kind="secondary"]::after {{
