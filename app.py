@@ -159,14 +159,28 @@ DEFAULT_WORKSHOPS = [
     ("DEP_07", "HR Department"),
     ("DEP_08", "Security Department"),
 ]
-# Danh sách trên là danh sách CHÍNH THỨC. Muốn thêm/sửa/xóa workshop thì sửa danh sách trên rồi upload lại app.py.
-for ws_code, ws_name in DEFAULT_WORKSHOPS:
-    cursor.execute("INSERT OR IGNORE INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
-                   (ws_code, ws_name))
-    cursor.execute("UPDATE custom_cost_codes SET name = ?, is_deleted = 0 WHERE code = ?", (ws_name, ws_code))
-_official_codes = [c for c, _ in DEFAULT_WORKSHOPS]
-cursor.execute(f"UPDATE custom_cost_codes SET is_deleted = 1 WHERE code NOT IN ({','.join('?' * len(_official_codes))})",
-               _official_codes)
+# Danh sách trên chỉ được tạo sẵn MỘT LẦN khi database còn mới.
+# Sau đó thêm / xóa WS Cost Code ngay trong trang ➕ Thêm Công Việc.
+cursor.execute("CREATE TABLE IF NOT EXISTS app_flags (name TEXT PRIMARY KEY)")
+if not cursor.execute("SELECT 1 FROM app_flags WHERE name = 'workshops_seeded'").fetchone():
+    for ws_code, ws_name in DEFAULT_WORKSHOPS:
+        cursor.execute("INSERT OR IGNORE INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
+                       (ws_code, ws_name))
+    cursor.execute("INSERT INTO app_flags (name) VALUES ('workshops_seeded')")
+
+# 🧱 DANH SÁCH BLOCK
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS blocks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT UNIQUE,
+        is_deleted INTEGER DEFAULT 0
+    )
+''')
+if not cursor.execute("SELECT 1 FROM app_flags WHERE name = 'blocks_seeded'").fetchone():
+    # Lấy các Block đã dùng trong công việc cũ làm danh sách ban đầu
+    for (b,) in cursor.execute("SELECT DISTINCT TRIM(block) FROM tasks WHERE block IS NOT NULL AND TRIM(block) != ''").fetchall():
+        cursor.execute("INSERT OR IGNORE INTO blocks (name, is_deleted) VALUES (?, 0)", (b,))
+    cursor.execute("INSERT INTO app_flags (name) VALUES ('blocks_seeded')")
 
 # 🔐 BẢNG PHIÊN ĐĂNG NHẬP (cookie chỉ chứa token ngẫu nhiên, không chứa username)
 cursor.execute('''
@@ -834,11 +848,91 @@ else:
     # 3. THÊM CÔNG VIỆC MỚI
     elif menu == "➕ Thêm Công Việc" and current_role in ["Team Leader", "Foreman", "WOS Manager", "Admin"]:
         st.markdown("<div class='big-table-title'>➕ Thêm Công Việc Mới</div>", unsafe_allow_html=True)
-        
-        cost_codes_df = pd.read_sql_query("SELECT code, name FROM custom_cost_codes WHERE is_deleted = 0", conn)
+
+        # ⚙️ Thêm / xóa trong danh sách Block và WS Cost Code (Foreman, WOS Manager, Admin)
+        if current_role in ["Foreman", "WOS Manager", "Admin"]:
+            with st.expander("⚙️ Thêm / Xóa trong danh sách Block và WS Cost Code"):
+                lc1, lc2 = st.columns(2)
+
+                with lc1:
+                    st.markdown("#### 🧱 Block")
+                    nb = st.text_input("Block mới (Ví dụ: 170150):", key="new_block_name")
+                    if st.button("➕ THÊM BLOCK", key="btn_add_block"):
+                        nb_clean = nb.strip().upper()
+                        if not nb_clean:
+                            st.error("Vui lòng nhập tên Block!")
+                        else:
+                            ex = cursor.execute("SELECT is_deleted FROM blocks WHERE name = ?", (nb_clean,)).fetchone()
+                            if ex and ex[0] == 0:
+                                st.error(f"Block **{nb_clean}** đã có trong danh sách!")
+                            else:
+                                if ex:
+                                    cursor.execute("UPDATE blocks SET is_deleted = 0 WHERE name = ?", (nb_clean,))
+                                else:
+                                    cursor.execute("INSERT INTO blocks (name, is_deleted) VALUES (?, 0)", (nb_clean,))
+                                conn.commit()
+                                st.success(f"Đã thêm Block **{nb_clean}**!")
+                                st.rerun()
+
+                    blk_list = [r[0] for r in cursor.execute("SELECT name FROM blocks WHERE is_deleted = 0 ORDER BY name").fetchall()]
+                    if blk_list:
+                        del_blk = st.selectbox("Chọn Block để xóa:", blk_list, key="sb_del_block")
+                        if st.button("🗑️ XÓA BLOCK", key="btn_del_block"):
+                            cursor.execute("UPDATE blocks SET is_deleted = 1 WHERE name = ?", (del_blk,))
+                            conn.commit()
+                            st.success(f"Đã xóa Block **{del_blk}** khỏi danh sách. Công việc cũ vẫn giữ nguyên.")
+                            st.rerun()
+                    else:
+                        st.caption("Danh sách Block đang trống.")
+
+                with lc2:
+                    st.markdown("#### 🏭 WS Cost Code")
+                    ncc1, ncc2 = st.columns([1, 2])
+                    with ncc1:
+                        nc_code = st.text_input("Mã (Ví dụ: WOS_07):", key="new_cc_code")
+                    with ncc2:
+                        nc_name = st.text_input("Tên Workshop / Phòng ban:", key="new_cc_name")
+                    if st.button("➕ THÊM COST CODE", key="btn_add_cc"):
+                        code_clean = nc_code.strip().upper()
+                        name_clean = nc_name.strip()
+                        if not code_clean or not name_clean:
+                            st.error("Vui lòng nhập cả Mã và Tên!")
+                        else:
+                            ex = cursor.execute("SELECT is_deleted FROM custom_cost_codes WHERE code = ?", (code_clean,)).fetchone()
+                            if ex and ex[0] == 0:
+                                st.error(f"Mã **{code_clean}** đã có trong danh sách!")
+                            else:
+                                if ex:
+                                    cursor.execute("UPDATE custom_cost_codes SET name = ?, is_deleted = 0 WHERE code = ?", (name_clean, code_clean))
+                                else:
+                                    cursor.execute("INSERT INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
+                                                   (code_clean, name_clean))
+                                conn.commit()
+                                st.success(f"Đã thêm **{code_clean} - {name_clean}**!")
+                                st.rerun()
+
+                    cc_df = pd.read_sql_query("SELECT code, name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
+                    if not cc_df.empty:
+                        cc_opts = {r['code']: f"{r['code']} - {r['name']}" for _, r in cc_df.iterrows()}
+                        del_cc = st.selectbox("Chọn Cost Code để xóa:", list(cc_opts.keys()), format_func=lambda c: cc_opts[c], key="sb_del_cc")
+                        if st.button("🗑️ XÓA COST CODE", key="btn_del_cc"):
+                            users_in_ws = cursor.execute("SELECT COUNT(*) FROM users WHERE workshop = ? AND is_deleted = 0", (del_cc,)).fetchone()[0]
+                            if users_in_ws > 0:
+                                st.error(f"Không thể xóa: còn **{users_in_ws}** tài khoản thuộc workshop này. "
+                                         "Hãy chuyển họ sang workshop khác ở 👥 Quản Lý Phân Quyền trước.")
+                            else:
+                                cursor.execute("UPDATE custom_cost_codes SET is_deleted = 1 WHERE code = ?", (del_cc,))
+                                conn.commit()
+                                st.success(f"Đã xóa **{cc_opts[del_cc]}** khỏi danh sách. Công việc cũ vẫn giữ nguyên.")
+                                st.rerun()
+                    else:
+                        st.caption("Danh sách Cost Code đang trống.")
+
+        cost_codes_df = pd.read_sql_query("SELECT code, name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
+        block_options = ["— Không chọn —"] + [r[0] for r in cursor.execute("SELECT name FROM blocks WHERE is_deleted = 0 ORDER BY name").fetchall()]
         
         if cost_codes_df.empty:
-            st.warning("⚠️ CHƯA CÓ DỮ LIỆU WORKSHOP: Vui lòng liên hệ Foreman/WOS Manager để tạo WS Cost Code trước khi thêm công việc!")
+            st.warning("⚠️ CHƯA CÓ WS COST CODE: Foreman / WOS Manager hãy thêm Cost Code ở mục ⚙️ phía trên trước khi thêm công việc!")
         else:
             options = [f"{row['code']} - {row['name']}" if row['name'] else row['code'] for _, row in cost_codes_df.iterrows()]
             
@@ -863,7 +957,9 @@ else:
 
                 c7, c8, c9, c10 = st.columns(4)
                 with c7:
-                    block = st.text_input("Block (Ví dụ: 170150):")
+                    block = st.selectbox("Block:", block_options)
+                    if block == "— Không chọn —":
+                        block = ""
                 with c8:
                     area = st.text_input("Area:")
                 with c9:
@@ -1265,7 +1361,7 @@ else:
 
             if is_admin:
                 if ws_df.empty:
-                    st.warning("⚠️ Chưa có Workshop nào. Hãy thêm vào danh sách DEFAULT_WORKSHOPS trong app.py.")
+                    st.warning("⚠️ Chưa có Workshop nào. Vào ➕ Thêm Công Việc → ⚙️ Thêm / Xóa trong danh sách để thêm.")
                 else:
                     action = st.radio("Chọn thao tác:", ["👑 Cấp quyền WOS Manager", "⛔ Thu hồi quyền (về Pending)"], horizontal=True)
                     chosen_ws = None
