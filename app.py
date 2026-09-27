@@ -672,12 +672,24 @@ st.markdown(f"""
         to   {{ background-position: 0 0;    transform: translateX(0); }}
     }}
 
-    /* Nội dung trang lướt nhẹ vào khi chuyển trang */
-    .big-table-title {{
-        animation: titleSlideIn 0.4s ease-out;
+    /* ================= CHUYỂN TRANG KIỂU LƯỚT =================
+       Chọn mục bên dưới trong menu: trang mới lướt vào từ bên phải.
+       Chọn mục bên trên: trang mới lướt vào từ bên trái. */
+    section[data-testid="stMain"], .stMain, .main {{
+        overflow-x: hidden !important;
     }}
-    @keyframes titleSlideIn {{
-        from {{ opacity: 0; transform: translateX(-16px); }}
+    div[class*="st-key-pgR_"] {{
+        animation: pageFromRight 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }}
+    div[class*="st-key-pgL_"] {{
+        animation: pageFromLeft 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }}
+    @keyframes pageFromRight {{
+        from {{ opacity: 0; transform: translateX(60%); }}
+        to   {{ opacity: 1; transform: translateX(0); }}
+    }}
+    @keyframes pageFromLeft {{
+        from {{ opacity: 0; transform: translateX(-60%); }}
         to   {{ opacity: 1; transform: translateX(0); }}
     }}
 
@@ -688,7 +700,7 @@ st.markdown(f"""
             display: none;
         }}
         section[data-testid="stSidebar"] div.stButton > button[kind="primary"],
-        .big-table-title {{
+        div[class*="st-key-pgR_"], div[class*="st-key-pgL_"] {{
             animation: none !important;
         }}
     }}
@@ -1006,6 +1018,16 @@ else:
         st.session_state["logged_in"] = False
         st.session_state["user_info"] = None
         st.rerun()
+
+    # 🎞️ KHUNG TRANG: mỗi lần đổi trang tạo khung mới để hiệu ứng lướt chạy lại.
+    #    Bấm nút trong cùng một trang thì khung giữ nguyên, không bị lướt lại.
+    page_idx = menu_options.index(menu) if menu in menu_options else 0
+    prev_idx = st.session_state.get("page_prev_idx")
+    if prev_idx != page_idx:
+        st.session_state["page_dir"] = "L" if (prev_idx is not None and page_idx < prev_idx) else "R"
+        st.session_state["page_prev_idx"] = page_idx
+    _page_frame = st.container(key=f"pg{st.session_state.get('page_dir', 'R')}_{page_idx}")
+    _page_frame.__enter__()
 
     # 1. BẢNG CÔNG VIỆC
     if menu == "🧰 Bảng Công Việc":
