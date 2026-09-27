@@ -23,12 +23,26 @@ html, body, .stApp, .stApp p, .stApp label, .stApp input, .stApp textarea, .stAp
     font-family: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;
 }
 
-/* ---------- Nền: ảnh tàu, mỗi trang một ảnh ---------- */
-.stApp, div[data-testid="stAppViewContainer"] {
-    background: __APP_BG__ !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-attachment: fixed !important;
+/* ---------- Nền: ảnh tàu, mỗi trang một ảnh ----------
+   Ảnh nằm trên một lớp cố định riêng (nhẹ hơn nhiều so với background-attachment: fixed),
+   mờ dần vào khi đổi trang, và tất cả ảnh được tải trước nên đổi trang không bị nháy. */
+.stApp {
+    background: __BASE_BG__ !important;
+}
+.stApp::after {
+    content: __PRELOAD__;
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+div[data-testid="stAppViewContainer"] {
+    position: relative;
+    z-index: 1;
+    background: transparent !important;
 }
 .main, .stMain, section[data-testid="stMain"], div[data-testid="stAppViewContainer"] > .main {
     background: transparent !important;
@@ -51,7 +65,6 @@ section[data-testid="stSidebar"] {
     background: rgba(255, 255, 255, 0.10) !important;
     border: 1px solid rgba(255, 255, 255, 0.16) !important;
     border-radius: 16px !important;
-    backdrop-filter: blur(6px);
 }
 .made-by-minh {
     font-size: 1.25rem !important;
@@ -298,6 +311,27 @@ div[data-testid="stAlert"]:has([data-testid="stAlertContentError"]) * {
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.35); border-radius: 999px; }
 ::-webkit-scrollbar-track { background: transparent; }
+'''
+
+# Phần CSS thay đổi theo từng trang (ảnh nền) được tách riêng và rất nhỏ,
+# để khi đổi trang trình duyệt không phải xử lý lại toàn bộ CSS lớn.
+BG_CSS_TEMPLATE = r'''
+.stApp::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: __APP_BG__;
+    background-size: cover;
+    background-position: center;
+    animation: __BG_ANIM__ 0.45s ease-out both;
+    will-change: opacity;
+}
+@keyframes __BG_ANIM__ {
+    from { opacity: 0.35; }
+    to   { opacity: 1; }
+}
 '''
 
 
@@ -671,7 +705,7 @@ shine_css = "\n    ".join(_shine_rules)
 
 # 🚢 ẢNH NỀN TÀU: mỗi trang một ảnh (ảnh miễn phí từ Unsplash, giấy phép Unsplash License)
 def _ship_photo(photo_id):
-    return f"https://images.unsplash.com/{photo_id}?auto=format&fit=crop&w=1920&q=70"
+    return f"https://images.unsplash.com/{photo_id}?auto=format&fit=crop&w=1600&q=65"
 
 SHIP_BACKGROUNDS = {
     "login":                   _ship_photo("photo-1605745341075-1b7460b99df8"),
@@ -697,9 +731,11 @@ _modern_tokens = {
         ("linear-gradient(180deg, rgba(8,15,30,0.58) 0%, rgba(8,15,30,0.78) 45%, rgba(8,15,30,0.88) 100%), "
          if is_dark else
          "linear-gradient(180deg, rgba(244,247,251,0.38) 0%, rgba(244,247,251,0.70) 40%, rgba(244,247,251,0.86) 100%), ")
-        + f"url('{page_bg_url}') center / cover no-repeat fixed, "
-        + ("#0b1220" if is_dark else "#f4f7fb")
+        + f"url('{page_bg_url}') center / cover no-repeat"
     ),
+    "__BASE_BG__": "#0b1220" if is_dark else "#f4f7fb",
+    "__BG_ANIM__": "bgFade_" + str(abs(hash(_bg_key)) % 100000),
+    "__PRELOAD__": " ".join(f"url('{u}')" for u in SHIP_BACKGROUNDS.values()),
     "__SURFACE__": "#111a2e" if is_dark else "#ffffff",
     "__SURFACE_BORDER__": "#22304d" if is_dark else "#e3e8f0",
     "__INPUT_BG__": "#0a1222" if is_dark else "#fbfcfe",
@@ -991,22 +1027,23 @@ st.markdown(f"""
         position: absolute;
         top: 0;
         bottom: 0;
-        left: -70%;
+        left: 0;
         width: 60%;
         background: linear-gradient(100deg,
                     rgba(255, 255, 255, 0) 0%,
                     rgba(255, 255, 255, 0.55) 50%,
                     rgba(255, 255, 255, 0) 100%);
-        transform: skewX(-20deg);
+        transform: translateX(-130%) skewX(-20deg);
+        will-change: transform;
         pointer-events: none;
         z-index: 1;
         animation: btnShine 3s cubic-bezier(0.45, 0, 0.35, 1) infinite;
     }}
     /* Lướt qua trong ~0,8 giây đầu, sau đó nghỉ đến hết 3 giây rồi lặp lại */
     @keyframes btnShine {{
-        0%   {{ left: -70%; }}
-        27%  {{ left: 130%; }}
-        100% {{ left: 130%; }}
+        0%   {{ transform: translateX(-130%) skewX(-20deg); }}
+        27%  {{ transform: translateX(260%) skewX(-20deg); }}
+        100% {{ transform: translateX(260%) skewX(-20deg); }}
     }}
     /* Nhịp và thời điểm ngẫu nhiên cho từng nút */
     {shine_css}
@@ -1031,7 +1068,7 @@ st.markdown(f"""
 
     /* Mục menu vừa được chọn: nền vàng lướt vào từ trái */
     section[data-testid="stSidebar"] div.stButton > button[kind="primary"] {{
-        animation: menuSlideIn 0.35s ease-out;
+        animation: menuSlideIn 0.2s ease-out;
     }}
     @keyframes menuSlideIn {{
         from {{ background-position: 100% 0; transform: translateX(-6px); }}
@@ -1045,17 +1082,19 @@ st.markdown(f"""
         overflow-x: hidden !important;
     }}
     div[class*="st-key-pgR_"] {{
-        animation: pageFromRight 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation: pageFromRight 0.26s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        will-change: transform, opacity;
     }}
     div[class*="st-key-pgL_"] {{
-        animation: pageFromLeft 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation: pageFromLeft 0.26s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        will-change: transform, opacity;
     }}
     @keyframes pageFromRight {{
-        from {{ opacity: 0; transform: translateX(60%); }}
+        from {{ opacity: 0; transform: translate3d(32px, 0, 0); }}
         to   {{ opacity: 1; transform: translateX(0); }}
     }}
     @keyframes pageFromLeft {{
-        from {{ opacity: 0; transform: translateX(-60%); }}
+        from {{ opacity: 0; transform: translate3d(-32px, 0, 0); }}
         to   {{ opacity: 1; transform: translateX(0); }}
     }}
 
@@ -1160,6 +1199,11 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
+_bg_css = BG_CSS_TEMPLATE
+for _tok in ("__APP_BG__", "__BG_ANIM__"):
+    _bg_css = _bg_css.replace(_tok, _modern_tokens[_tok])
+st.markdown(f"<style>{_bg_css}</style>", unsafe_allow_html=True)
+
 # --- TIÊU ĐỀ TRANG ---
 st.markdown("<div class='main-title'>🚢 SHIPCONTROL - QUẢN LÝ CÔNG VIỆC TÀU</div>", unsafe_allow_html=True)
 
@@ -1209,14 +1253,12 @@ if not st.session_state["logged_in"]:
         t_col1, t_col2 = st.columns(2)
         
         with t_col1:
-            if st.button("🔑 Đăng Nhập", type="primary" if is_login else "secondary", use_container_width=True, key="btn_auth_tab_login"):
-                st.session_state["auth_tab"] = "login"
-                st.rerun()
+            st.button("🔑 Đăng Nhập", type="primary" if is_login else "secondary", use_container_width=True, key="btn_auth_tab_login",
+                      on_click=lambda: st.session_state.update({"auth_tab": "login"}))
                 
         with t_col2:
-            if st.button("📝 Đăng Ký Tài Khoản", type="primary" if not is_login else "secondary", use_container_width=True, key="btn_auth_tab_reg"):
-                st.session_state["auth_tab"] = "register"
-                st.rerun()
+            st.button("📝 Đăng Ký Tài Khoản", type="primary" if not is_login else "secondary", use_container_width=True, key="btn_auth_tab_reg",
+                      on_click=lambda: st.session_state.update({"auth_tab": "register"}))
 
         st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
 
@@ -1338,16 +1380,20 @@ else:
             "🔑 Đổi Mật Khẩu"
         ]
 
+    def _go_to_page(target):
+        st.session_state["current_menu"] = target
+
     for item in menu_options:
         is_selected = (st.session_state["current_menu"] == item)
-        if st.sidebar.button(
+        # on_click đổi trang TRƯỚC khi app chạy lại → chỉ chạy 1 lần thay vì 2 lần
+        st.sidebar.button(
             item, 
             type="primary" if is_selected else "secondary", 
             use_container_width=True, 
-            key=f"btn_menu_{item}"
-        ):
-            st.session_state["current_menu"] = item
-            st.rerun()
+            key=f"btn_menu_{item}",
+            on_click=_go_to_page,
+            args=(item,),
+        )
 
     menu = st.session_state["current_menu"]
     
@@ -1372,7 +1418,11 @@ else:
     st.sidebar.markdown("<div class='made-by-minh'>Made By Minh</div>", unsafe_allow_html=True)
 
     my_pw = cursor.execute("SELECT password FROM users WHERE id = ?", (user_data['id'],)).fetchone()
-    if my_pw and verify_password("admin123", my_pw[0]):
+    # Kiểm tra mật khẩu mặc định rất tốn thời gian (băm 200.000 vòng), nên chỉ kiểm tra lại khi mật khẩu thay đổi
+    if my_pw and st.session_state.get("_pw_checked_hash") != my_pw[0]:
+        st.session_state["_pw_checked_hash"] = my_pw[0]
+        st.session_state["_pw_is_default"] = verify_password("admin123", my_pw[0])
+    if my_pw and st.session_state.get("_pw_is_default"):
         st.error("⚠️ Tài khoản này vẫn dùng mật khẩu mặc định 'admin123'. Vào mục 🔑 Đổi Mật Khẩu và đổi NGAY!")
 
     if st.sidebar.button("🚪 Đăng Xuất", type="secondary", key="btn_logout_bottom", use_container_width=True):
@@ -1896,14 +1946,10 @@ else:
         is_edit_task = st.session_state["edit_sub_tab"] == "task"
         
         with btn_col1:
-            if st.button("🧰 Xóa Tạm Công Việc", type="primary" if is_edit_task else "secondary", key="btn_sub_edit_task"):
-                st.session_state["edit_sub_tab"] = "task"
-                st.rerun()
+            st.button("🧰 Xóa Tạm Công Việc", type="primary" if is_edit_task else "secondary", key="btn_sub_edit_task", on_click=lambda: st.session_state.update({"edit_sub_tab": "task"}))
                 
         with btn_col2:
-            if st.button("👤 Xóa Tạm Tài Khoản Người Dùng", type="primary" if not is_edit_task else "secondary", key="btn_sub_edit_user"):
-                st.session_state["edit_sub_tab"] = "user"
-                st.rerun()
+            st.button("👤 Xóa Tạm Tài Khoản Người Dùng", type="primary" if not is_edit_task else "secondary", key="btn_sub_edit_user", on_click=lambda: st.session_state.update({"edit_sub_tab": "user"}))
 
         st.markdown("---")
 
@@ -2069,14 +2115,10 @@ else:
         is_t_user = st.session_state["trash_sub_tab"] == "user"
         
         with t_col1:
-            if st.button("🧰 Thùng Rác Công Việc", type="primary" if is_t_task else "secondary", key="btn_t_task"):
-                st.session_state["trash_sub_tab"] = "task"
-                st.rerun()
+            st.button("🧰 Thùng Rác Công Việc", type="primary" if is_t_task else "secondary", key="btn_t_task", on_click=lambda: st.session_state.update({"trash_sub_tab": "task"}))
                 
         with t_col3:
-            if st.button("👤 Thùng Rác Tài Khoản", type="primary" if is_t_user else "secondary", key="btn_t_user"):
-                st.session_state["trash_sub_tab"] = "user"
-                st.rerun()
+            st.button("👤 Thùng Rác Tài Khoản", type="primary" if is_t_user else "secondary", key="btn_t_user", on_click=lambda: st.session_state.update({"trash_sub_tab": "user"}))
 
         st.markdown("---")
 
