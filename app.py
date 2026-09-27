@@ -238,39 +238,187 @@ hr {
     opacity: 0.8;
 }
 
-/* ---------- Ô nhập liệu ---------- */
-input, textarea, div[data-baseweb="select"] > div {
+/* ---------- Ô nhập liệu ----------
+   Khung ngoài (data-baseweb="input") là "hộp" hiển thị: nền, viền, bo góc.
+   Bên trong (ô gõ chữ, nút con mắt) để trong suốt → không bị viền đôi, nút con mắt nằm gọn trong hộp. */
+:root {
+    color-scheme: __SCHEME__;
+}
+div[data-testid="stTextInputRootElement"],
+div[data-testid="stTextAreaRootElement"],
+div[data-testid="stNumberInputContainer"],
+div[data-testid="stDateInputField"],
+div[data-testid="stSelectbox"] div:has(> input),
+div[data-testid="stMultiSelect"] div:has(> input),
+div[data-baseweb="input"],
+div[data-baseweb="textarea"] {
+    background-color: __INPUT_BG__ !important;
+    border: 1.5px solid __INPUT_BORDER__ !important;
     border-radius: 12px !important;
-    border: 1px solid __SURFACE_BORDER__ !important;
-    font-size: 1rem !important;
     transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
 }
-input:focus, textarea:focus, div[data-baseweb="select"] > div:focus-within {
+div[data-testid="stTextInputRootElement"]:hover,
+div[data-testid="stTextAreaRootElement"]:hover,
+div[data-testid="stNumberInputContainer"]:hover,
+div[data-testid="stDateInputField"]:hover,
+div[data-testid="stSelectbox"] div:has(> input):hover,
+div[data-testid="stMultiSelect"] div:has(> input):hover,
+div[data-baseweb="input"]:hover,
+div[data-baseweb="textarea"]:hover {
+    border-color: __INPUT_BORDER_HOVER__ !important;
+}
+div[data-testid="stTextInputRootElement"]:focus-within,
+div[data-testid="stTextAreaRootElement"]:focus-within,
+div[data-testid="stNumberInputContainer"]:focus-within,
+div[data-testid="stDateInputField"]:focus-within,
+div[data-testid="stSelectbox"] div:has(> input):focus-within,
+div[data-testid="stMultiSelect"] div:has(> input):focus-within,
+div[data-baseweb="input"]:focus-within,
+div[data-baseweb="textarea"]:focus-within {
     border-color: #0ea5e9 !important;
     box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18) !important;
-    outline: none !important;
 }
-div[data-baseweb="input"], div[data-baseweb="textarea"], div[data-baseweb="base-input"] {
+div[data-testid="stTextInputRootElement"] *,
+div[data-testid="stTextAreaRootElement"] *,
+div[data-testid="stNumberInputContainer"] *,
+div[data-testid="stDateInputField"] *,
+div[data-testid="stSelectbox"] div:has(> input) *,
+div[data-testid="stMultiSelect"] div:has(> input) *,
+div[data-baseweb="input"] *,
+div[data-baseweb="textarea"] * {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+/* Ô nhập nằm trong ô khác (ví dụ ô số): không vẽ hộp lồng nhau */
+div[data-testid="stTextInputRootElement"] div[data-baseweb="input"],
+div[data-testid="stTextAreaRootElement"] div[data-baseweb="input"],
+div[data-testid="stNumberInputContainer"] div[data-baseweb="input"],
+div[data-testid="stDateInputField"] div[data-baseweb="input"] {
     border: none !important;
     background: transparent !important;
+    box-shadow: none !important;
 }
-div[data-baseweb="input"] > div, div[data-baseweb="textarea"] > div,
-div[data-baseweb="base-input"] > div {
-    border-color: transparent !important;
+.stApp input, .stApp textarea {
     background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: __INPUT_TEXT__ !important;
+    -webkit-text-fill-color: __INPUT_TEXT__ !important;
+    caret-color: #0ea5e9 !important;
+    font-size: 1.05rem !important;
+    font-weight: 500 !important;
 }
-div[data-baseweb="select"] > div > div {
+.stApp input::placeholder, .stApp textarea::placeholder {
+    color: __PLACEHOLDER__ !important;
+    -webkit-text-fill-color: __PLACEHOLDER__ !important;
+    opacity: 1 !important;
+}
+div[data-testid="stSelectbox"] div:has(> input) *,
+div[data-baseweb="select"] * {
+    color: __INPUT_TEXT__ !important;
+    -webkit-text-fill-color: __INPUT_TEXT__ !important;
+}
+/* Trình duyệt tự điền (autofill): giữ đúng màu nền và màu chữ của app */
+.stApp input:-webkit-autofill,
+.stApp input:-webkit-autofill:hover,
+.stApp input:-webkit-autofill:focus {
+    -webkit-text-fill-color: __INPUT_TEXT__ !important;
+    -webkit-box-shadow: 0 0 0 1000px __INPUT_BG__ inset !important;
+    box-shadow: 0 0 0 1000px __INPUT_BG__ inset !important;
+    transition: background-color 99999s ease-out 0s;
+}
+
+/* Biểu tượng trong ô nhập: con mắt (hiện mật khẩu), mũi tên chọn, nút +/- */
+div[data-testid="stTextInputRootElement"] button,
+div[data-baseweb="input"] button,
+div[data-testid="stNumberInputContainer"] button {
     background: transparent !important;
+    border: none !important;
+    color: __ICON__ !important;
+    opacity: 1 !important;
+    padding: 0 12px !important;
+    min-height: 0 !important;
 }
-/* Khung bao quanh ô nhập của Streamlit: trong suốt, để chỉ còn viền của ô nhập */
-.stApp div:has(> input), .stApp div:has(> textarea),
-.stApp div:has(> div > input), .stApp div:has(> div > textarea) {
-    border-color: transparent !important;
-    background-color: transparent !important;
+div[data-testid="stTextInputRootElement"] button svg,
+div[data-baseweb="input"] button svg,
+div[data-testid="stNumberInputContainer"] button svg,
+div[data-testid="stSelectbox"] svg,
+div[data-testid="stMultiSelect"] svg,
+div[data-baseweb="select"] svg {
+    color: __ICON__ !important;
+    fill: __ICON__ !important;
+    width: 22px !important;
+    height: 22px !important;
+    opacity: 1 !important;
 }
-input, textarea, div[data-baseweb="select"] > div {
-    background-color: __INPUT_BG__ !important;
-    border: 1px solid __INPUT_BORDER__ !important;
+div[data-testid="stTextInputRootElement"] button:hover svg,
+div[data-baseweb="input"] button:hover svg,
+div[data-testid="stNumberInputContainer"] button:hover svg {
+    color: #0ea5e9 !important;
+    fill: #0ea5e9 !important;
+}
+
+div[data-testid="stTextInputRootElement"] button span,
+div[data-testid="stTextInputRootElement"] button i {
+    font-size: 22px !important;
+    color: __ICON__ !important;
+    opacity: 1 !important;
+}
+div[data-testid="stDateInputField"] *,
+div[data-testid="stDateInputField"] input {
+    color: __INPUT_TEXT__ !important;
+    -webkit-text-fill-color: __INPUT_TEXT__ !important;
+    opacity: 1 !important;
+}
+
+/* ---------- Nút mở / đóng thanh bên (») và («) ---------- */
+[data-testid="stExpandSidebarButton"],
+[data-testid="stSidebarCollapsedControl"] button {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+    border-radius: 12px !important;
+    width: 44px !important;
+    height: 44px !important;
+    box-shadow: 0 6px 16px rgba(3, 105, 161, 0.35) !important;
+    opacity: 1 !important;
+}
+[data-testid="stExpandSidebarButton"] *,
+[data-testid="stSidebarCollapsedControl"] button * {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    font-size: 26px !important;
+    opacity: 1 !important;
+}
+[data-testid="stExpandSidebarButton"]:hover,
+[data-testid="stSidebarCollapsedControl"] button:hover {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+}
+[data-testid="stSidebarCollapseButton"] button {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border-radius: 10px !important;
+    width: 40px !important;
+    height: 40px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+[data-testid="stSidebarCollapseButton"] {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+[data-testid="stSidebarCollapseButton"] button * {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    font-size: 24px !important;
+    opacity: 1 !important;
+}
+[data-testid="stSidebarCollapseButton"] button:hover {
+    background: rgba(255, 255, 255, 0.28) !important;
+}
+/* Nút ⋮ và Deploy ở góc trên */
+header[data-testid="stHeader"] button * {
+    color: __INPUT_TEXT__ !important;
+    fill: __INPUT_TEXT__ !important;
 }
 
 /* ---------- Thông báo: mỗi loại một màu, chữ vừa phải ---------- */
@@ -740,6 +888,11 @@ _modern_tokens = {
     "__SURFACE_BORDER__": "#22304d" if is_dark else "#e3e8f0",
     "__INPUT_BG__": "#0a1222" if is_dark else "#fbfcfe",
     "__INPUT_BORDER__": "#33466b" if is_dark else "#d5dce8",
+    "__INPUT_BORDER_HOVER__": "#4a6190" if is_dark else "#aab6c8",
+    "__INPUT_TEXT__": "#f1f5f9" if is_dark else "#0f172a",
+    "__PLACEHOLDER__": "#7c8aa5" if is_dark else "#94a3b8",
+    "__ICON__": "#cbd5e1" if is_dark else "#475569",
+    "__SCHEME__": "dark" if is_dark else "light",
     "__HOVER_TINT__": "rgba(255,255,255,0.04)" if is_dark else "#f8fafc",
     "__DANGER_SOFT__": "rgba(239,68,68,0.10)" if is_dark else "#fef2f2",
     "__INFO_BG__": "rgba(14,165,233,0.12)" if is_dark else "#f0f9ff",
@@ -1154,13 +1307,6 @@ st.markdown(f"""
         font-weight: 800 !important;
     }}
 
-    input, textarea, select, div[data-baseweb="select"] > div {{
-        background-color: {input_bg} !important;
-        color: {input_text} !important;
-        border: 1px solid {border_color} !important;
-        border-radius: 8px !important;
-        font-size: 1.1rem !important;
-    }}
 
     /* Chữ của nút chọn Role (radio), nhãn các ô nhập và số liệu báo cáo: luôn cùng màu chữ chính */
     .stRadio label, .stRadio label p, .stRadio div[role="radiogroup"] *,

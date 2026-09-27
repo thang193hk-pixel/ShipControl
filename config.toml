@@ -1,0 +1,5 @@
+# ShipControl tự quản lý chế độ Sáng / Tối bằng nút gạt trong app,
+# nên Streamlit luôn dùng giao diện gốc "light" để màu sắc không bị lệch
+# khi máy tính / điện thoại của người dùng đang bật chế độ tối.
+[theme]
+base = "light"
