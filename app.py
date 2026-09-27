@@ -616,6 +616,10 @@ VI_EN = {
     "🚪 Đăng Xuất": "🚪 Log Out",
     "⚙️ Cài đặt": "⚙️ Settings",
     ">Tài khoản<": ">Account<",
+    "🔒 Tài khoản của bạn vừa được đăng nhập trên một thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. ":
+        "🔒 Your account was just signed in on another device, so you have been signed out here. ",
+    "Nếu đó không phải bạn, hãy đăng nhập lại và đổi mật khẩu ngay.":
+        "If that wasn't you, sign in again and change your password right away.",
     ">Vai trò<": ">Role<",
     ">Đang đăng nhập<": ">Signed in<",
     "🌙 Chế độ Tối (Dark)": "🌙 Dark mode",
@@ -1182,11 +1186,18 @@ LEGACY_DEFAULT_ADMIN_HASH = hashlib.sha256("admin123".encode()).hexdigest()
 # 🎫 HÀM QUẢN LÝ PHIÊN ĐĂNG NHẬP
 # ==========================================
 def create_session(user_id):
+    """Tạo phiên đăng nhập mới. Mỗi tài khoản chỉ được đăng nhập ở MỘT nơi:
+    đăng nhập ở máy mới thì phiên ở máy cũ bị xóa (máy cũ sẽ tự đăng xuất)."""
+    cursor.execute("DELETE FROM sessions WHERE user_id = ?", (user_id,))
     token = secrets.token_urlsafe(32)
     expires = (datetime.now() + timedelta(days=SESSION_DAYS)).isoformat()
     cursor.execute("INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)", (token, user_id, expires))
     conn.commit()
     return token
+
+def session_is_valid(token):
+    return cursor.execute("SELECT 1 FROM sessions WHERE token = ? AND expires_at > ?",
+                          (token, datetime.now().isoformat())).fetchone() is not None
 
 def get_user_by_session(token):
     row = cursor.execute("""
@@ -1871,6 +1882,25 @@ if st.session_state["logged_in"]:
     st.session_state["user_info"]["role"] = fresh[1]
     st.session_state["user_info"]["workshop"] = fresh[2]
 
+    # 🔒 Tài khoản đã được đăng nhập ở nơi khác → phiên này hết hiệu lực → đăng xuất
+    def _kick_if_signed_in_elsewhere():
+        tok = st.session_state.get("session_token")
+        if st.session_state.get("logged_in") and tok and not session_is_valid(tok):
+            st.session_state["logged_in"] = False
+            st.session_state["user_info"] = None
+            st.session_state["session_token"] = None
+            st.session_state["_kicked"] = True
+            st.rerun(scope="app")
+
+    _kick_if_signed_in_elsewhere()
+
+    # Kiểm tra lại mỗi 5 giây kể cả khi không bấm gì, để máy cũ tự đăng xuất ngay
+    @st.fragment(run_every=5)
+    def _session_watchdog():
+        _kick_if_signed_in_elsewhere()
+
+    _session_watchdog()
+
 # 🌐 Nhớ ngôn ngữ đã chọn (lưu trong cookie của trình duyệt)
 #    Cookie có thể đến chậm hơn lần chạy đầu, nên cứ khi nào cookie có mà chưa áp dụng thì áp dụng.
 _lang_cookie = all_cookies.get(LANG_COOKIE)
@@ -1889,6 +1919,17 @@ with _settings_slot:
         st.toggle("🌙 Chế độ Tối (Dark)", value=is_dark, key="dark_toggle")
         st.radio("🌐 Ngôn ngữ", ["vi", "en"], key="ui_lang", horizontal=True, on_change=_on_lang_change,
                  format_func=lambda c: {"vi": "🇻🇳 Tiếng Việt", "en": "🇬🇧 English"}[c])
+# 🍪 Lưu cookie đăng nhập (để lần sau mở lại vẫn đăng nhập). Ghi lại cho tới khi trình duyệt xác nhận đã lưu.
+_pending_cookie = st.session_state.get("_pending_session_cookie")
+if _pending_cookie:
+    if not st.session_state.get("logged_in") or all_cookies.get(SESSION_COOKIE) == _pending_cookie:
+        st.session_state.pop("_pending_session_cookie", None)
+    else:
+        try:
+            cookie_manager.set(SESSION_COOKIE, _pending_cookie, max_age=SESSION_DAYS * 24 * 3600, key="set_session_cookie")
+        except Exception:
+            pass
+
 # Chỉ ghi cookie khi người dùng tự đổi ngôn ngữ
 if st.session_state.get("_lang_changed") and _lang_cookie != ui_lang():
     try:
@@ -1902,6 +1943,9 @@ if st.session_state.get("_lang_changed") and _lang_cookie != ui_lang():
 if not st.session_state["logged_in"]:
     st.sidebar.markdown("<div class='sidebar-header'>🔐 Xác Thực</div>", unsafe_allow_html=True)
     st.sidebar.info("Vui lòng đăng nhập hoặc đăng ký để tiếp tục.")
+    if st.session_state.get("_kicked"):
+        st.warning("🔒 Tài khoản của bạn vừa được đăng nhập trên một thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. "
+                   "Nếu đó không phải bạn, hãy đăng nhập lại và đổi mật khẩu ngay.")
     st.sidebar.markdown("<div class='made-by-minh'>Made By Minh</div>", unsafe_allow_html=True)
 
     col_space1, col_center, col_space2 = st.columns([1, 2, 1])
@@ -1948,7 +1992,9 @@ if not st.session_state["logged_in"]:
                                 
                                 token = create_session(user[0])
                                 st.session_state["session_token"] = token
-                                cookie_manager.set(SESSION_COOKIE, token, max_age=SESSION_DAYS*24*3600)
+                                st.session_state["_kicked"] = False
+                                # Cookie được ghi ở lần chạy sau (ghi ngay rồi st.rerun thì trình duyệt không kịp lưu)
+                                st.session_state["_pending_session_cookie"] = token
                                 st.success(f"Chào mừng {user[3]} ({user_role}) đã quay trở lại!")
                                 st.rerun()
                         else:
