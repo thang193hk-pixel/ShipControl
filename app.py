@@ -445,6 +445,32 @@ section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
     gap: 0.4rem !important;
 }
 
+/* ---------- Công tắc bật/tắt (toggle): rõ ràng ở cả trạng thái Tắt và Bật ---------- */
+label:has(> span > input[role="switch"]) > div:not([data-testid]) {
+    background: __TOGGLE_OFF__ !important;
+    border: 2px solid __TOGGLE_OFF_BORDER__ !important;
+    box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.25) !important;
+    opacity: 1 !important;
+    transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+label:has(> span > input[role="switch"]) > div:not([data-testid]) > div {
+    background: #ffffff !important;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.45) !important;
+    opacity: 1 !important;
+}
+label:has(> span > input[role="switch"]:checked) > div:not([data-testid]) {
+    background: #0ea5e9 !important;
+    border-color: #0284c7 !important;
+}
+label:has(> span > input[role="switch"]:focus-visible) > div:not([data-testid]) {
+    outline: 3px solid rgba(14, 165, 233, 0.45) !important;
+    outline-offset: 2px !important;
+}
+label:has(> span > input[role="switch"]:disabled) {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
 /* ---------- ⚙️ Nút Cài đặt trên thanh bên ---------- */
 section[data-testid="stSidebar"] [data-testid="stPopover"] button {
     background: rgba(255, 255, 255, 0.12) !important;
@@ -1049,8 +1075,9 @@ html body .stMain div.stButton > button[kind="secondary"] {
     border-radius: 6px !important;
 }
 html body .stMain div.stButton > button[kind="secondary"] * { color: #a5f3fc !important; -webkit-text-fill-color: #a5f3fc !important; }
+html body div[data-testid="stPopoverBody"] { background: #070c1f !important; }
 html body div[data-testid="stForm"], html body div[data-testid="stExpander"] details,
-html body div[data-testid="stDataFrame"], html body div[data-testid="stPopoverBody"] {
+html body div[data-testid="stDataFrame"] {
     background: rgba(8,14,34,0.88) !important;
     border: 1px solid rgba(34,211,238,0.45) !important;
     border-radius: 8px !important;
@@ -1691,6 +1718,8 @@ _modern_tokens = {
     "__PLACEHOLDER__": "#7c8aa5" if is_dark else "#94a3b8",
     "__ICON__": "#cbd5e1" if is_dark else "#475569",
     "__SCHEME__": "dark" if is_dark else "light",
+    "__TOGGLE_OFF__": "#475569" if is_dark else "#94a3b8",
+    "__TOGGLE_OFF_BORDER__": "#64748b" if is_dark else "#64748b",
     "__HOVER_TINT__": "rgba(255,255,255,0.04)" if is_dark else "#f8fafc",
     "__DANGER_SOFT__": "rgba(239,68,68,0.10)" if is_dark else "#fef2f2",
     "__INFO_BG__": "rgba(14,165,233,0.12)" if is_dark else "#f0f9ff",
