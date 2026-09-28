@@ -641,6 +641,18 @@ VI_EN = {
     "🔑 Đổi Mật Khẩu": "🔑 Change Password",
     "🚪 Đăng Xuất": "🚪 Log Out",
     "⚙️ Cài đặt": "⚙️ Settings",
+    "🏭 Workshop: xem danh sách / thêm / xóa": "🏭 Workshops: view / add / delete",
+    "Chưa có Workshop nào. Hãy thêm Workshop đầu tiên bên dưới.": "No workshops yet. Add the first one below.",
+    "#### ➕ Thêm Workshop Mới": "#### ➕ Add New Workshop",
+    "Mã Workshop (Ví dụ: WOS_07):": "Workshop code (e.g. WOS_07):",
+    "➕ THÊM WORKSHOP": "➕ ADD WORKSHOP",
+    "Mã tối đa 20 ký tự, tên tối đa 80 ký tự!": "Code max 20 characters, name max 80 characters!",
+    "#### 🗑️ Xóa Workshop": "#### 🗑️ Delete Workshop",
+    "Chọn Workshop để xóa:": "Workshop to delete:",
+    "🗑️ XÓA WORKSHOP": "🗑️ DELETE WORKSHOP",
+    "Tên Workshop": "Workshop name",
+    "Số tài khoản": "Accounts",
+    "Số công việc": "Tasks",
     "🎨 Chủ đề": "🎨 Theme",
     "✨ Hiện đại (Modern)": "✨ Modern",
     "🚀 Tương lai (Futuristic)": "🚀 Futuristic",
@@ -1696,7 +1708,7 @@ _bg_key = st.session_state.get("current_menu") if st.session_state.get("logged_i
 page_bg_url = SHIP_BACKGROUNDS.get(_bg_key, SHIP_BACKGROUNDS["🧰 Bảng Công Việc"])
 
 # 🎨 GIAO DIỆN HIỆN ĐẠI: bảng màu theo chế độ Sáng / Tối
-_danger_keys = ["btn_del_block", "btn_del_cc", "btn_delete_team", "btn_leave_team", "btn_perm_del_task",
+_danger_keys = ["btn_del_block", "btn_del_cc", "btn_role_del_ws", "btn_delete_team", "btn_leave_team", "btn_perm_del_task",
                 "btn_perm_del_user", "btn_remove_team_member", "btn_soft_delete_task", "btn_soft_delete_user"]
 _modern_tokens = {
     "__APP_BG__": (
@@ -3102,6 +3114,62 @@ else:
                                           'role': 'Vai Trò (Role)', 'workshop': 'Workshop',
                                           'leader_name': 'Team của'})
         st.dataframe(show_df.drop(columns=['id', 'leader_id', 'team_name']), use_container_width=True)
+
+        # 🏭 QUẢN LÝ WORKSHOP ngay tại trang phân quyền (thêm workshop mới rồi chọn luôn cho tài khoản)
+        with st.expander("🏭 Workshop: xem danh sách / thêm / xóa", expanded=ws_df.empty):
+            ws_stats = pd.read_sql_query("""
+                SELECT c.code AS 'Mã', COALESCE(c.name, '') AS 'Tên Workshop',
+                       (SELECT COUNT(*) FROM users u WHERE u.workshop = c.code AND u.is_deleted = 0) AS 'Số tài khoản',
+                       (SELECT COUNT(*) FROM tasks t WHERE t.task_cost_code = c.code AND t.is_deleted = 0) AS 'Số công việc'
+                FROM custom_cost_codes c WHERE c.is_deleted = 0 ORDER BY c.code
+            """, conn)
+            if ws_stats.empty:
+                st.info("Chưa có Workshop nào. Hãy thêm Workshop đầu tiên bên dưới.")
+            else:
+                st.dataframe(ws_stats, use_container_width=True, hide_index=True)
+
+            st.markdown("#### ➕ Thêm Workshop Mới")
+            wa1, wa2 = st.columns([1, 2])
+            with wa1:
+                new_ws_code = st.text_input("Mã Workshop (Ví dụ: WOS_07):", key="role_new_ws_code")
+            with wa2:
+                new_ws_name = st.text_input("Tên Workshop / Phòng ban:", key="role_new_ws_name")
+            if st.button("➕ THÊM WORKSHOP", type="primary", key="btn_role_add_ws"):
+                code_clean = new_ws_code.strip().upper().replace(" ", "_")
+                name_clean = new_ws_name.strip()
+                if not code_clean or not name_clean:
+                    st.error("Vui lòng nhập cả Mã và Tên!")
+                elif len(code_clean) > 20 or len(name_clean) > 80:
+                    st.error("Mã tối đa 20 ký tự, tên tối đa 80 ký tự!")
+                else:
+                    ex = cursor.execute("SELECT is_deleted FROM custom_cost_codes WHERE code = ?", (code_clean,)).fetchone()
+                    if ex and ex[0] == 0:
+                        st.error(f"Mã **{code_clean}** đã có trong danh sách!")
+                    else:
+                        if ex:
+                            cursor.execute("UPDATE custom_cost_codes SET name = ?, is_deleted = 0 WHERE code = ?", (name_clean, code_clean))
+                        else:
+                            cursor.execute("INSERT INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
+                                           (code_clean, name_clean))
+                        conn.commit()
+                        st.success(f"Đã thêm **{code_clean} - {name_clean}**!")
+                        st.rerun()
+
+            if not ws_stats.empty:
+                st.markdown("#### 🗑️ Xóa Workshop")
+                del_opts = {r['Mã']: f"{r['Mã']} - {r['Tên Workshop']}" for _, r in ws_stats.iterrows()}
+                del_ws = st.selectbox("Chọn Workshop để xóa:", list(del_opts.keys()),
+                                      format_func=lambda c: del_opts[c], key="role_del_ws")
+                if st.button("🗑️ XÓA WORKSHOP", key="btn_role_del_ws"):
+                    users_in_ws = cursor.execute("SELECT COUNT(*) FROM users WHERE workshop = ? AND is_deleted = 0", (del_ws,)).fetchone()[0]
+                    if users_in_ws > 0:
+                        st.error(f"Không thể xóa: còn **{users_in_ws}** tài khoản thuộc workshop này. "
+                                 "Hãy chuyển họ sang workshop khác ở 👥 Quản Lý Phân Quyền trước.")
+                    else:
+                        cursor.execute("UPDATE custom_cost_codes SET is_deleted = 1 WHERE code = ?", (del_ws,))
+                        conn.commit()
+                        st.success(f"Đã xóa **{del_opts[del_ws]}** khỏi danh sách. Công việc cũ vẫn giữ nguyên.")
+                        st.rerun()
 
         st.markdown("---")
         st.markdown("### 🔄 Thay Đổi Quyền Hạn Cho Tài Khoản")
