@@ -641,6 +641,17 @@ VI_EN = {
     "🔑 Đổi Mật Khẩu": "🔑 Change Password",
     "🚪 Đăng Xuất": "🚪 Log Out",
     "⚙️ Cài đặt": "⚙️ Settings",
+    "📲 Thiết bị": "📲 Device",
+    "📲 Bạn đang dùng:": "📲 You are using:",
+    "💻 Máy tính": "💻 Computer",
+    "📱 Điện thoại": "📱 Phone",
+    "🎤 Bấm nút micro trong ô nhập chữ để nói thay vì gõ.": "🎤 Tap the microphone in a text box to speak instead of typing.",
+    "🎤 Chế độ điện thoại: bấm nút micro trong ô Tên tài khoản để nói thay vì gõ.":
+        "🎤 Phone mode: tap the microphone in the Username box to speak instead of typing.",
+    "Trình duyệt này chưa hỗ trợ nhập bằng giọng nói. Hãy dùng Chrome (Android) hoặc Safari (iPhone).":
+        "This browser doesn't support voice input yet. Please use Chrome (Android) or Safari (iPhone).",
+    "Chưa được phép dùng micro. Hãy cho phép micro cho trang web này trong cài đặt trình duyệt.":
+        "Microphone access is blocked. Please allow the microphone for this site in your browser settings.",
     "🏭 Workshop: xem danh sách / thêm / xóa": "🏭 Workshops: view / add / delete",
     "Chưa có Workshop nào. Hãy thêm Workshop đầu tiên bên dưới.": "No workshops yet. Add the first one below.",
     "#### ➕ Thêm Workshop Mới": "#### ➕ Add New Workshop",
@@ -1281,6 +1292,164 @@ def build_theme_css(theme, dark, bg_url):
     return css
 
 
+# ==========================================
+# 🎤 NHẬP BẰNG GIỌNG NÓI (chế độ Điện thoại)
+#    Gắn nút 🎤 vào mọi ô nhập chữ. Bấm → nói → chữ tự điền vào ô.
+#    Dùng Web Speech API của trình duyệt (miễn phí, không cần API key).
+# ==========================================
+import streamlit.components.v1 as _components
+
+_VOICE_JS = r"""
+<script>
+(function () {
+  const win = window.parent, doc = win.document;
+  const LANG = "__LANG__";
+  const MSG_NOSUPPORT = "__MSG_NOSUPPORT__";
+  const MSG_DENIED = "__MSG_DENIED__";
+  const SR = win.SpeechRecognition || win.webkitSpeechRecognition;
+
+  // Tắt bản cũ (nếu có) trước khi gắn bản mới
+  if (win.__scVoice && win.__scVoice.cleanup) { try { win.__scVoice.cleanup(); } catch (e) {} }
+  // Gỡ các nút cũ còn sót (của lần tải trước) để gắn lại nút mới hoạt động được
+  doc.querySelectorAll(".sc-mic").forEach((b) => b.remove());
+  doc.querySelectorAll("[data-sc-mic]").forEach((el) => el.removeAttribute("data-sc-mic"));
+
+  if (!doc.getElementById("sc-mic-style")) {
+    const st = doc.createElement("style");
+    st.id = "sc-mic-style";
+    st.textContent = `
+      html body div .sc-mic { position:absolute !important; right:6px !important; top:50% !important;
+        transform:translateY(-50%) !important; z-index:5 !important;
+        width:38px !important; height:38px !important; min-height:0 !important; border-radius:50% !important;
+        border:none !important; cursor:pointer; padding:0 !important; margin:0 !important;
+        background:linear-gradient(135deg,#0ea5e9,#0284c7) !important; background-color:#0284c7 !important;
+        color:#fff !important; font-size:18px !important; line-height:1 !important;
+        box-shadow:0 3px 10px rgba(2,132,199,.4) !important; display:flex !important;
+        align-items:center !important; justify-content:center !important; }
+      html body div .sc-mic.sc-area { top:auto !important; bottom:8px !important; transform:none !important; }
+      html body div .sc-mic.sc-rec { background:linear-gradient(135deg,#ef4444,#dc2626) !important;
+        background-color:#dc2626 !important; animation:scPulse 1s infinite; }
+      @keyframes scPulse { 0%{box-shadow:0 0 0 0 rgba(239,68,68,.6)} 100%{box-shadow:0 0 0 14px rgba(239,68,68,0)} }
+      .sc-has-mic input, .sc-has-mic textarea { padding-right:50px !important; }
+    `;
+    doc.head.appendChild(st);
+  }
+
+  let active = null;
+
+  function setValue(el, value) {
+    const proto = el.tagName === "TEXTAREA" ? win.HTMLTextAreaElement.prototype : win.HTMLInputElement.prototype;
+    Object.getOwnPropertyDescriptor(proto, "value").set.call(el, value);
+    el.dispatchEvent(new win.Event("input", { bubbles: true }));
+  }
+  function commit(el) {
+    // Báo cho Streamlit là đã nhập xong (giống như bấm ra ngoài ô)
+    el.dispatchEvent(new win.FocusEvent("focusout", { bubbles: true }));
+    el.dispatchEvent(new win.FocusEvent("blur"));
+  }
+
+  function listen(el, btn) {
+    if (!SR) { win.alert(MSG_NOSUPPORT); return; }
+    if (active) { active.stop(); return; }
+    const rec = new SR();
+    rec.lang = LANG; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+    const base = el.value ? el.value.replace(/\s+$/, "") + " " : "";
+    rec.onresult = (ev) => {
+      let text = "";
+      for (let i = 0; i < ev.results.length; i++) text += ev.results[i][0].transcript;
+      setValue(el, base + text.trim());
+    };
+    rec.onerror = (ev) => {
+      if (ev.error === "not-allowed" || ev.error === "service-not-allowed") win.alert(MSG_DENIED);
+    };
+    rec.onend = () => { btn.classList.remove("sc-rec"); btn.textContent = "🎤"; active = null; commit(el); };
+    active = rec;
+    btn.classList.add("sc-rec"); btn.textContent = "⏹";
+    try { rec.start(); } catch (e) { active = null; btn.classList.remove("sc-rec"); btn.textContent = "🎤"; }
+  }
+
+  function attach(el) {
+    if (el.dataset.scMic) return;
+    const wrap = el.closest('[data-testid="stTextInputRootElement"], [data-testid="stTextAreaRootElement"]');
+    if (!wrap) return;
+    if (el.type === "password") return;              // không gắn vào ô mật khẩu
+    el.dataset.scMic = "1";
+    wrap.style.position = "relative";
+    wrap.classList.add("sc-has-mic");
+    const btn = doc.createElement("button");
+    btn.type = "button";
+    btn.className = "sc-mic" + (el.tagName === "TEXTAREA" ? " sc-area" : "");
+    btn.textContent = "🎤";
+    btn.setAttribute("aria-label", "Voice input");
+    btn.addEventListener("mousedown", (e) => e.preventDefault());   // giữ nguyên con trỏ trong ô
+    btn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); listen(el, btn); });
+    wrap.appendChild(btn);
+  }
+
+  function scan() {
+    doc.querySelectorAll('[data-testid="stTextInputRootElement"] input, [data-testid="stTextAreaRootElement"] textarea')
+       .forEach(attach);
+  }
+
+  scan();
+  const obs = new win.MutationObserver(() => scan());
+  obs.observe(doc.body, { childList: true, subtree: true });
+
+  win.__scVoice = {
+    cleanup() {
+      obs.disconnect();
+      if (active) { try { active.abort(); } catch (e) {} }
+      doc.querySelectorAll(".sc-mic").forEach((b) => b.remove());
+      doc.querySelectorAll("[data-sc-mic]").forEach((el) => { delete el.dataset.scMic; });
+      doc.querySelectorAll(".sc-has-mic").forEach((w) => w.classList.remove("sc-has-mic"));
+    }
+  };
+})();
+</script>
+"""
+
+_VOICE_OFF_JS = r"""
+<script>
+(function () {
+  const win = window.parent, doc = win.document;
+  if (win.__scVoice && win.__scVoice.cleanup) { try { win.__scVoice.cleanup(); } catch (e) {} }
+  win.__scVoice = null;
+  // Tự dọn luôn (phòng khi bản cũ đã bị tắt trước): gỡ nút micro và các đánh dấu
+  doc.querySelectorAll(".sc-mic").forEach((b) => b.remove());
+  doc.querySelectorAll("[data-sc-mic]").forEach((el) => el.removeAttribute("data-sc-mic"));
+  doc.querySelectorAll(".sc-has-mic").forEach((w) => w.classList.remove("sc-has-mic"));
+})();
+</script>
+"""
+
+
+def render_voice_input(enabled):
+    """Bật (điện thoại) hoặc tắt (máy tính) nút micro trong các ô nhập chữ."""
+    if enabled:
+        js = (_VOICE_JS
+              .replace("__LANG__", "en-US" if ui_lang() == "en" else "vi-VN")
+              .replace("__MSG_NOSUPPORT__", tr("Trình duyệt này chưa hỗ trợ nhập bằng giọng nói. Hãy dùng Chrome (Android) hoặc Safari (iPhone).").replace('"', "'"))
+              .replace("__MSG_DENIED__", tr("Chưa được phép dùng micro. Hãy cho phép micro cho trang web này trong cài đặt trình duyệt.").replace('"', "'")))
+    else:
+        js = _VOICE_OFF_JS
+    with st.sidebar:
+        _components.html(js, height=0)
+
+
+DEVICE_OPTIONS = ["desktop", "mobile"]
+DEVICE_LABELS = {"desktop": "💻 Máy tính", "mobile": "📱 Điện thoại"}
+DEVICE_COOKIE = "shipcontrol_device"
+
+
+def _guess_device():
+    """Đoán thiết bị từ trình duyệt (người dùng vẫn đổi lại được)."""
+    try:
+        ua = st.context.headers.get("User-Agent", "") or ""
+    except Exception:
+        ua = ""
+    return "mobile" if any(k in ua for k in ("Mobi", "Android", "iPhone", "iPad")) else "desktop"
+
+
 def get_secret(key, default=None):
     """Đọc cấu hình bí mật từ .streamlit/secrets.toml (hoặc Secrets trên Streamlit Cloud)."""
     try:
@@ -1297,7 +1466,7 @@ st.set_page_config(
     page_title="ShipControl - Quản Lý Công Việc Tàu",
     page_icon="🚢",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="auto"
 )
 
 # KHỞI TẠO COOKIE MANAGER
@@ -2264,6 +2433,7 @@ if (_lang_cookie in ("vi", "en") and not st.session_state.get("_lang_restored")
         st.rerun()
 
 def _on_lang_change():
+    st.session_state["ui_lang"] = st.session_state["w_ui_lang"]
     st.session_state["_lang_changed"] = True
 
 # 🎨 Nhớ chủ đề đã chọn (cookie), cùng cách với ngôn ngữ
@@ -2277,18 +2447,58 @@ if (_theme_cookie in THEME_OPTIONS and not st.session_state.get("_theme_restored
         st.rerun()
 
 def _on_theme_change():
+    st.session_state["ui_theme"] = st.session_state["w_ui_theme"]
     st.session_state["_theme_changed"] = True
+
+# 📱 Thiết bị đang dùng (Máy tính / Điện thoại) — nhớ bằng cookie, lần đầu thì tự đoán
+_dev_cookie = all_cookies.get(DEVICE_COOKIE)
+if "device_mode" not in st.session_state:
+    st.session_state["device_mode"] = _dev_cookie if _dev_cookie in DEVICE_OPTIONS else _guess_device()
+if (_dev_cookie in DEVICE_OPTIONS and not st.session_state.get("_device_restored")
+        and not st.session_state.get("_device_changed")):
+    st.session_state["_device_restored"] = True
+    if _dev_cookie != st.session_state["device_mode"]:
+        st.session_state["device_mode"] = _dev_cookie
+        st.rerun()
+
+def _on_device_change():
+    st.session_state["device_mode"] = st.session_state["w_device_mode"]
+    st.session_state["_device_changed"] = True
+
+def _on_login_device_change():
+    st.session_state["device_mode"] = st.session_state["device_mode_login"]
+    st.session_state["_device_changed"] = True
+
+# Các nút chọn dùng khóa riêng (w_...), còn giá trị thật lưu ở ui_theme / ui_lang / device_mode.
+# Mỗi lần chạy gán lại giá trị cho nút chọn, để nút luôn hiển thị đúng (không bị lệch hay bị reset).
+st.session_state.setdefault("ui_lang", "vi")
+st.session_state.setdefault("ui_theme", "modern")
+st.session_state["w_ui_lang"] = st.session_state["ui_lang"]
+st.session_state["w_ui_theme"] = st.session_state["ui_theme"]
+st.session_state["w_device_mode"] = st.session_state["device_mode"]
 
 with _settings_slot:
     with st.popover("⚙️ Cài đặt", use_container_width=True):
-        st.radio("🎨 Chủ đề", THEME_OPTIONS, key="ui_theme", on_change=_on_theme_change,
+        st.radio("🎨 Chủ đề", THEME_OPTIONS, key="w_ui_theme", on_change=_on_theme_change,
                  format_func=lambda t: THEME_LABELS[t])
         st.toggle("🌙 Chế độ Tối (Dark)", value=(st.session_state["theme_mode"] == "Dark"), key="dark_toggle",
                   disabled=(ui_theme == "futuristic"))
         if ui_theme == "futuristic":
             st.caption("Chủ đề Tương lai luôn dùng nền tối.")
-        st.radio("🌐 Ngôn ngữ", ["vi", "en"], key="ui_lang", horizontal=True, on_change=_on_lang_change,
+        st.radio("🌐 Ngôn ngữ", ["vi", "en"], key="w_ui_lang", horizontal=True, on_change=_on_lang_change,
                  format_func=lambda c: {"vi": "🇻🇳 Tiếng Việt", "en": "🇬🇧 English"}[c])
+        st.radio("📲 Thiết bị", DEVICE_OPTIONS, key="w_device_mode", horizontal=True, on_change=_on_device_change,
+                 format_func=lambda d: DEVICE_LABELS[d])
+        if st.session_state["device_mode"] == "mobile":
+            st.caption("🎤 Bấm nút micro trong ô nhập chữ để nói thay vì gõ.")
+
+# 🎤 Nút micro trong ô nhập chữ (chỉ ở chế độ Điện thoại)
+render_voice_input(st.session_state["device_mode"] == "mobile")
+if st.session_state.get("_device_changed") and _dev_cookie != st.session_state["device_mode"]:
+    try:
+        cookie_manager.set(DEVICE_COOKIE, st.session_state["device_mode"], max_age=365 * 24 * 3600, key="set_device_cookie")
+    except Exception:
+        pass
 # 🍪 Lưu cookie đăng nhập (để lần sau mở lại vẫn đăng nhập). Ghi lại cho tới khi trình duyệt xác nhận đã lưu.
 _pending_cookie = st.session_state.get("_pending_session_cookie")
 if _pending_cookie:
@@ -2339,6 +2549,13 @@ if not st.session_state["logged_in"]:
                       on_click=lambda: st.session_state.update({"auth_tab": "register"}))
 
         st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
+
+        # 📲 Chọn thiết bị ngay khi đăng nhập (Điện thoại → có nút 🎤 nói để nhập chữ)
+        st.session_state["device_mode_login"] = st.session_state["device_mode"]
+        st.radio("📲 Bạn đang dùng:", DEVICE_OPTIONS, key="device_mode_login", horizontal=True,
+                 on_change=_on_login_device_change, format_func=lambda d: DEVICE_LABELS[d])
+        if st.session_state["device_mode"] == "mobile":
+            st.caption("🎤 Chế độ điện thoại: bấm nút micro trong ô Tên tài khoản để nói thay vì gõ.")
 
         if st.session_state["auth_tab"] == "login":
             with st.form("form_login_system"):
