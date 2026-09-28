@@ -1267,8 +1267,18 @@ SESSION_COOKIE = "shipcontrol_session"
 SESSION_DAYS = 30
 
 # 2. KẾT NỐI CƠ SỞ DỮ LIỆU SQLITE & AUTO-MIGRATION
-conn = sqlite3.connect("ship_control.db", check_same_thread=False)
+# 🗄️ KẾT NỐI DATABASE
+#   - isolation_level=None (tự lưu từng lệnh): không còn "giao dịch treo" khi một lượt chạy bị ngắt giữa chừng
+#     (đây là nguyên nhân lỗi "database is locked" khi nhiều người / nhiều tab dùng cùng lúc)
+#   - timeout 30s + WAL: nhiều người đọc/ghi cùng lúc thì chờ nhau thay vì báo lỗi
+conn = sqlite3.connect("ship_control.db", check_same_thread=False, timeout=30, isolation_level=None)
 cursor = conn.cursor()
+try:
+    cursor.execute("PRAGMA journal_mode=WAL")
+    cursor.execute("PRAGMA busy_timeout=30000")
+    cursor.execute("PRAGMA synchronous=NORMAL")
+except sqlite3.OperationalError:
+    pass
 
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
@@ -1485,8 +1495,11 @@ def delete_user_sessions(user_id):
     cursor.execute("DELETE FROM sessions WHERE user_id = ?", (user_id,))
     conn.commit()
 
-# Dọn các phiên đã hết hạn
-cursor.execute("DELETE FROM sessions WHERE expires_at <= ?", (datetime.now().isoformat(),))
+# Dọn các phiên đã hết hạn (việc dọn dẹp, lỡ database đang bận thì bỏ qua, lần sau dọn)
+try:
+    cursor.execute("DELETE FROM sessions WHERE expires_at <= ?", (datetime.now().isoformat(),))
+except sqlite3.OperationalError:
+    pass
 
 
 # TẠO TÀI KHOẢN WOS MANAGER MẶC ĐỊNH (mật khẩu lấy từ Secrets, KHÔNG hardcode)
@@ -1503,14 +1516,27 @@ if not admin_exists:
                    ('admin', hash_password(initial_admin_pw), 'System Admin', 'Admin'))
 
 # Tài khoản 'admin' luôn là Admin hệ thống (chỉ cấp quyền WOS Manager + workshop)
-cursor.execute("UPDATE users SET role = 'Admin' WHERE username = 'admin'")
+if cursor.execute("SELECT 1 FROM users WHERE username = 'admin' AND (role IS NULL OR role != 'Admin')").fetchone():
+    cursor.execute("UPDATE users SET role = 'Admin' WHERE username = 'admin'")
 
 # 🆘 KHÔI PHỤC TÀI KHOẢN ADMIN: đặt RESET_ADMIN_PASSWORD trong Secrets để đặt lại mật khẩu admin.
 # Sau khi đăng nhập được, hãy XÓA dòng RESET_ADMIN_PASSWORD khỏi Secrets.
 reset_admin_pw = get_secret("RESET_ADMIN_PASSWORD")
+
+@st.cache_resource(show_spinner=False)
+def _apply_admin_reset(pw):
+    """Chỉ đặt lại mật khẩu admin MỘT LẦN mỗi khi app khởi động (không phải mỗi lần bấm nút)."""
+    c = sqlite3.connect("ship_control.db", timeout=30, isolation_level=None)
+    c.execute("UPDATE users SET password = ?, role = 'Admin', is_deleted = 0 WHERE username = 'admin'",
+              (hash_password(str(pw)),))
+    c.close()
+    return True
+
 if reset_admin_pw:
-    cursor.execute("UPDATE users SET password = ?, role = 'Admin', is_deleted = 0 WHERE username = 'admin'",
-                   (hash_password(str(reset_admin_pw)),))
+    try:
+        _apply_admin_reset(str(reset_admin_pw))
+    except sqlite3.OperationalError:
+        pass
 
 conn.commit()
 
