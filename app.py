@@ -471,6 +471,96 @@ label:has(> span > input[role="switch"]:disabled) {
     cursor: not-allowed !important;
 }
 
+/* ---------- 📲 Chọn thiết bị: 2 ô lớn thay cho nút tròn nhỏ ---------- */
+.st-key-device_mode_login,
+.st-key-w_device_mode {
+    width: 100% !important;
+}
+.st-key-device_mode_login [data-testid="stRadioGroup"],
+.st-key-w_device_mode [data-testid="stRadioGroup"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+.st-key-device_mode_login [data-testid="stRadioGroup"] > div,
+.st-key-w_device_mode [data-testid="stRadioGroup"] > div {
+    width: 100% !important;
+    margin: 0 !important;
+}
+.st-key-device_mode_login label[data-testid="stRadioOption"],
+.st-key-w_device_mode label[data-testid="stRadioOption"] {
+    position: relative;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 64px !important;
+    padding: 12px 10px !important;
+    margin: 0 !important;
+    border-radius: 16px !important;
+    border: 2px solid __INPUT_BORDER__ !important;
+    background: __SURFACE__ !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+    cursor: pointer !important;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease !important;
+}
+.st-key-device_mode_login label[data-testid="stRadioOption"]:hover,
+.st-key-w_device_mode label[data-testid="stRadioOption"]:hover {
+    border-color: #0ea5e9 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.18) !important;
+}
+.st-key-device_mode_login label[data-testid="stRadioOption"][data-selected="true"],
+.st-key-w_device_mode label[data-testid="stRadioOption"][data-selected="true"] {
+    border-color: #0ea5e9 !important;
+    background: __SELECTED_BG__ !important;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18), 0 6px 16px rgba(14, 165, 233, 0.20) !important;
+}
+.st-key-device_mode_login label[data-testid="stRadioOption"][data-selected="true"]::after,
+.st-key-w_device_mode label[data-testid="stRadioOption"][data-selected="true"]::after {
+    content: "✓";
+    position: absolute;
+    top: -9px;
+    right: -9px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #0ea5e9;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);
+}
+/* Ẩn nút tròn nhỏ, chỉ giữ chữ */
+.st-key-device_mode_login label[data-testid="stRadioOption"] > div > div:first-child:not([data-testid]),
+.st-key-w_device_mode label[data-testid="stRadioOption"] > div > div:first-child:not([data-testid]) {
+    display: none !important;
+}
+.st-key-device_mode_login label[data-testid="stRadioOption"] p,
+.st-key-w_device_mode label[data-testid="stRadioOption"] p {
+    font-size: 1.2rem !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+}
+.st-key-device_mode_login label[data-testid="stRadioOption"]:has(input:focus-visible),
+.st-key-w_device_mode label[data-testid="stRadioOption"]:has(input:focus-visible) {
+    outline: 3px solid rgba(14, 165, 233, 0.5) !important;
+    outline-offset: 2px !important;
+}
+/* Trong bảng Cài đặt: nhỏ gọn hơn một chút */
+.st-key-w_device_mode label[data-testid="stRadioOption"] {
+    min-height: 50px !important;
+    border-radius: 12px !important;
+}
+.st-key-w_device_mode label[data-testid="stRadioOption"] p {
+    font-size: 1.02rem !important;
+}
+
 /* ---------- ⚙️ Nút Cài đặt trên thanh bên ---------- */
 section[data-testid="stSidebar"] [data-testid="stPopover"] button {
     background: rgba(255, 255, 255, 0.12) !important;
@@ -1899,6 +1989,7 @@ _modern_tokens = {
     "__PLACEHOLDER__": "#7c8aa5" if is_dark else "#94a3b8",
     "__ICON__": "#cbd5e1" if is_dark else "#475569",
     "__SCHEME__": "dark" if is_dark else "light",
+    "__SELECTED_BG__": "rgba(14,165,233,0.18)" if is_dark else "#e0f2fe",
     "__TOGGLE_OFF__": "#475569" if is_dark else "#94a3b8",
     "__TOGGLE_OFF_BORDER__": "#64748b" if is_dark else "#64748b",
     "__HOVER_TINT__": "rgba(255,255,255,0.04)" if is_dark else "#f8fafc",
