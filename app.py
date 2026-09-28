@@ -615,6 +615,12 @@ VI_EN = {
     "🔑 Đổi Mật Khẩu": "🔑 Change Password",
     "🚪 Đăng Xuất": "🚪 Log Out",
     "⚙️ Cài đặt": "⚙️ Settings",
+    "🎨 Chủ đề": "🎨 Theme",
+    "✨ Hiện đại (Modern)": "✨ Modern",
+    "🚀 Tương lai (Futuristic)": "🚀 Futuristic",
+    "🎈 Vui nhộn (Playful)": "🎈 Playful",
+    "📜 Cổ điển (Old times)": "📜 Old times",
+    "Chủ đề Tương lai luôn dùng nền tối.": "The Futuristic theme is always dark.",
     ">Tài khoản<": ">Account<",
     "🔒 Tài khoản của bạn vừa được mở ở một tab hoặc thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. ":
         "🔒 Your account was just opened in another tab or on another device, so you have been signed out here. ",
@@ -972,6 +978,270 @@ for _name in ["markdown", "caption", "info", "success", "warning", "error", "tit
         setattr(st, _name, getattr(st._main, _name))
 
 
+# ==========================================
+# 🎨 CHỦ ĐỀ GIAO DIỆN (Futuristic / Playful / Modern / Old times)
+#    Mỗi chủ đề là một lớp CSS phủ lên giao diện Modern.
+#    Dùng "html body ..." để luôn ưu tiên hơn các kiểu gốc.
+# ==========================================
+THEME_OPTIONS = ["modern", "futuristic", "playful", "oldtimes"]
+THEME_LABELS = {
+    "modern": "✨ Hiện đại (Modern)",
+    "futuristic": "🚀 Tương lai (Futuristic)",
+    "playful": "🎈 Vui nhộn (Playful)",
+    "oldtimes": "📜 Cổ điển (Old times)",
+}
+
+_THEME_FUTURISTIC = r'''
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&display=swap');
+html body .stApp, html body .stApp p, html body .stApp label, html body .stApp input, html body .stApp textarea,
+html body .stApp button, html body .stApp h1, html body .stApp h2, html body .stApp h3, html body .stApp li,
+html body .stApp span:not([data-testid="stIconMaterial"]) {
+    font-family: 'Exo 2', system-ui, sans-serif !important;
+}
+html body .stApp { background: #03060f !important; }
+html body .stApp::before {
+    background:
+        linear-gradient(rgba(34,211,238,0.07) 1px, transparent 1px) 0 0 / 44px 44px,
+        linear-gradient(90deg, rgba(34,211,238,0.07) 1px, transparent 1px) 0 0 / 44px 44px,
+        radial-gradient(900px 500px at 85% 0%, rgba(232,121,249,0.18), transparent 60%),
+        linear-gradient(180deg, rgba(3,6,15,0.70) 0%, rgba(3,6,15,0.90) 50%, rgba(3,6,15,0.96) 100%),
+        url('__BG_URL__') center / cover no-repeat !important;
+}
+html body section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #050816 0%, #0a1030 100%) !important;
+    border-right: 1px solid rgba(34,211,238,0.45) !important;
+    box-shadow: 0 0 30px rgba(34,211,238,0.18) !important;
+}
+html body .sidebar-header, html body .main-title, html body .big-table-title {
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: #67e8f9 !important;
+    text-shadow: 0 0 12px rgba(34,211,238,0.65) !important;
+}
+html body .main-title::after { background: linear-gradient(90deg, #22d3ee, #e879f9) !important; box-shadow: 0 0 14px #22d3ee; }
+html body section[data-testid="stSidebar"] div.stButton > button[kind="primary"] {
+    background: rgba(34,211,238,0.10) !important;
+    border: 1px solid #22d3ee !important;
+    border-radius: 6px !important;
+    box-shadow: 0 0 16px rgba(34,211,238,0.55), inset 0 0 12px rgba(34,211,238,0.25) !important;
+}
+html body section[data-testid="stSidebar"] div.stButton > button[kind="primary"] * { color: #a5f3fc !important; -webkit-text-fill-color: #a5f3fc !important; }
+html body section[data-testid="stSidebar"] div.stButton > button[kind="secondary"] { border-radius: 6px !important; }
+html body section[data-testid="stSidebar"] div.stButton > button[kind="secondary"]:hover:not(:disabled) {
+    background: rgba(232,121,249,0.10) !important; border-color: rgba(232,121,249,0.6) !important;
+}
+html body .stMain div.stButton > button[kind="primary"],
+html body div[data-testid="stFormSubmitButton"] > button,
+html body div.stDownloadButton > button {
+    background: linear-gradient(90deg, #06b6d4, #a855f7) !important;
+    border: 1px solid #67e8f9 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 0 18px rgba(34,211,238,0.45) !important;
+    text-transform: uppercase;
+}
+html body .stMain div.stButton > button[kind="primary"]:hover:not(:disabled),
+html body div[data-testid="stFormSubmitButton"] > button:hover:not(:disabled) {
+    box-shadow: 0 0 28px rgba(232,121,249,0.7) !important;
+}
+html body .stMain div.stButton > button[kind="secondary"] {
+    background: rgba(8,16,40,0.85) !important;
+    border: 1px solid rgba(34,211,238,0.6) !important;
+    border-radius: 6px !important;
+}
+html body .stMain div.stButton > button[kind="secondary"] * { color: #a5f3fc !important; -webkit-text-fill-color: #a5f3fc !important; }
+html body div[data-testid="stForm"], html body div[data-testid="stExpander"] details,
+html body div[data-testid="stDataFrame"], html body div[data-testid="stPopoverBody"] {
+    background: rgba(8,14,34,0.88) !important;
+    border: 1px solid rgba(34,211,238,0.45) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 22px rgba(34,211,238,0.15), inset 0 0 20px rgba(34,211,238,0.05) !important;
+}
+html body .profile-card { border-color: rgba(34,211,238,0.5) !important; border-radius: 8px !important; box-shadow: 0 0 16px rgba(34,211,238,0.2); }
+html body .pc-avatar { background: linear-gradient(135deg, #22d3ee, #a855f7) !important; color: #fff !important; }
+html body .made-by-minh { background: linear-gradient(90deg, #22d3ee, #e879f9) !important; border-radius: 6px !important; }
+'''
+
+_THEME_PLAYFUL = r'''
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap');
+html body .stApp, html body .stApp p, html body .stApp label, html body .stApp input, html body .stApp textarea,
+html body .stApp button, html body .stApp h1, html body .stApp h2, html body .stApp h3, html body .stApp li,
+html body .stApp span:not([data-testid="stIconMaterial"]) {
+    font-family: 'Baloo 2', 'Comic Sans MS', system-ui, sans-serif !important;
+}
+html body .stApp::before {
+    background:
+        radial-gradient(circle at 12% 18%, rgba(251,191,36,__DOT__) 0 70px, transparent 71px),
+        radial-gradient(circle at 88% 12%, rgba(244,114,182,__DOT__) 0 90px, transparent 91px),
+        radial-gradient(circle at 80% 85%, rgba(52,211,153,__DOT__) 0 80px, transparent 81px),
+        __PLAY_OVERLAY__,
+        url('__BG_URL__') center / cover no-repeat !important;
+}
+html body section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #ec4899 0%, #a855f7 55%, #6366f1 100%) !important;
+}
+html body .sidebar-header { color: #fef08a !important; transform: rotate(-2deg); }
+html body .main-title { color: __PLAY_TITLE__ !important; }
+html body .main-title::after {
+    height: 8px !important; width: 180px !important;
+    background: repeating-linear-gradient(90deg, #f472b6 0 20px, #facc15 20px 40px, #34d399 40px 60px, #60a5fa 60px 80px) !important;
+}
+html body .big-table-title { color: #db2777 !important; }
+html body section[data-testid="stSidebar"] div.stButton > button { border-radius: 999px !important; }
+html body section[data-testid="stSidebar"] div.stButton > button[kind="primary"] {
+    background: #ffffff !important;
+    box-shadow: 4px 4px 0 #facc15 !important;
+    transform: rotate(-1deg);
+}
+html body section[data-testid="stSidebar"] div.stButton > button[kind="primary"] * { color: #a21caf !important; -webkit-text-fill-color: #a21caf !important; }
+html body section[data-testid="stSidebar"] div.stButton > button[kind="secondary"]:hover:not(:disabled) {
+    transform: scale(1.04) rotate(-1deg) !important;
+}
+html body div.stButton > button, html body div[data-testid="stFormSubmitButton"] > button, html body div.stDownloadButton > button {
+    border-radius: 999px !important;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease !important;
+}
+html body .stMain div.stButton > button[kind="primary"],
+html body div[data-testid="stFormSubmitButton"] > button,
+html body div.stDownloadButton > button {
+    background: linear-gradient(135deg, #fb923c, #ec4899) !important;
+    border: 3px solid #1e1b4b !important;
+    box-shadow: 5px 5px 0 #1e1b4b !important;
+}
+html body .stMain div.stButton > button[kind="primary"]:hover:not(:disabled),
+html body div[data-testid="stFormSubmitButton"] > button:hover:not(:disabled) {
+    transform: translate(-2px, -2px) rotate(-1deg) scale(1.03) !important;
+    box-shadow: 7px 7px 0 #1e1b4b !important;
+}
+html body .stMain div.stButton > button[kind="secondary"] {
+    border: 3px solid #1e1b4b !important;
+    box-shadow: 4px 4px 0 #a855f7 !important;
+}
+html body div.stButton > button:active:not(:disabled),
+html body div[data-testid="stFormSubmitButton"] > button:active:not(:disabled) {
+    transform: translate(3px, 3px) !important; box-shadow: 1px 1px 0 #1e1b4b !important;
+}
+html body div[data-testid="stForm"], html body div[data-testid="stExpander"] details,
+html body div[data-testid="stDataFrame"], html body div[data-testid="stPopoverBody"] {
+    border: 3px solid #1e1b4b !important;
+    border-radius: 24px !important;
+    box-shadow: 8px 8px 0 #f472b6 !important;
+}
+html body div[data-testid="stAlert"] { border: 3px solid #1e1b4b !important; border-radius: 20px !important; }
+html body .profile-card { border-radius: 24px !important; border: 3px solid rgba(255,255,255,0.6) !important; }
+html body .pc-avatar { background: #fef08a !important; color: #a21caf !important; transform: rotate(-6deg); }
+html body .made-by-minh { transform: rotate(-2deg); box-shadow: 4px 4px 0 #1e1b4b !important; }
+'''
+
+_THEME_OLDTIMES = r'''
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap');
+html body .stApp, html body .stApp p, html body .stApp label, html body .stApp input, html body .stApp textarea,
+html body .stApp button, html body .stApp li, html body .stApp span:not([data-testid="stIconMaterial"]) {
+    font-family: 'Lora', Georgia, 'Times New Roman', serif !important;
+}
+html body .stApp h1, html body .stApp h2, html body .stApp h3, html body .main-title,
+html body .big-table-title, html body .sidebar-header {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    letter-spacing: 0.01em !important;
+}
+html body .stApp { background: __OLD_PAPER__ !important; }
+html body .stApp::before {
+    filter: sepia(0.85) contrast(0.95) brightness(__OLD_BRIGHT__);
+    background:
+        repeating-linear-gradient(0deg, rgba(120,90,50,0.035) 0 2px, transparent 2px 4px),
+        __OLD_OVERLAY__,
+        url('__BG_URL__') center / cover no-repeat !important;
+}
+html body section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #3b2716 0%, #4e3420 60%, #2e1e10 100%) !important;
+    border-right: 4px double #c9a227 !important;
+}
+html body .sidebar-header { color: #e6c35c !important; }
+html body .main-title, html body .big-table-title, html body .stApp h3 { color: __OLD_INK__ !important; }
+html body .main-title { border-bottom: 3px double __OLD_INK__ !important; }
+html body .main-title::after { display: none !important; }
+html body .stMain [data-testid="stWidgetLabel"] p, html body .stMain p { color: __OLD_INK__ !important; -webkit-text-fill-color: __OLD_INK__ !important; }
+html body section[data-testid="stSidebar"] div.stButton > button { border-radius: 3px !important; }
+html body section[data-testid="stSidebar"] div.stButton > button[kind="primary"] {
+    background: linear-gradient(180deg, #e6c35c, #c9a227) !important;
+    border: 1px solid #8a6d12 !important;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35), 0 2px 0 #6b520c !important;
+}
+html body section[data-testid="stSidebar"] div.stButton > button[kind="primary"] * { color: #2e1e10 !important; -webkit-text-fill-color: #2e1e10 !important; }
+html body section[data-testid="stSidebar"] div.stButton > button[kind="secondary"] * { color: #f3e6c4 !important; -webkit-text-fill-color: #f3e6c4 !important; }
+html body div.stButton > button, html body div[data-testid="stFormSubmitButton"] > button, html body div.stDownloadButton > button {
+    border-radius: 3px !important;
+}
+html body .stMain div.stButton > button[kind="primary"],
+html body div[data-testid="stFormSubmitButton"] > button,
+html body div.stDownloadButton > button {
+    background: linear-gradient(180deg, #6b4a2b, #4e3420) !important;
+    border: 3px double #c9a227 !important;
+    box-shadow: 0 3px 0 #2e1e10 !important;
+}
+html body .stMain div.stButton > button[kind="primary"] *,
+html body div[data-testid="stFormSubmitButton"] > button * { color: #f3e6c4 !important; -webkit-text-fill-color: #f3e6c4 !important; }
+html body .stMain div.stButton > button[kind="secondary"] {
+    background: __OLD_CARD__ !important;
+    border: 2px solid #8b6b3d !important;
+    box-shadow: 0 2px 0 #8b6b3d !important;
+}
+html body .stMain div.stButton > button[kind="secondary"] * { color: __OLD_INK__ !important; -webkit-text-fill-color: __OLD_INK__ !important; }
+html body div[data-testid="stForm"], html body div[data-testid="stExpander"] details,
+html body div[data-testid="stDataFrame"], html body div[data-testid="stPopoverBody"] {
+    background: __OLD_CARD__ !important;
+    border: 3px double #8b6b3d !important;
+    border-radius: 4px !important;
+    box-shadow: 0 6px 18px rgba(62,44,28,0.25) !important;
+}
+html body div[data-testid="stTextInputRootElement"], html body div[data-testid="stTextAreaRootElement"],
+html body div[data-testid="stNumberInputContainer"], html body div[data-testid="stDateInputField"],
+html body div[data-testid="stSelectbox"] div:has(> input) {
+    background-color: __OLD_INPUT__ !important;
+    border: 1px solid #8b6b3d !important;
+    border-radius: 3px !important;
+}
+html body .stApp input, html body .stApp textarea, html body div[data-testid="stSelectbox"] div:has(> input) * {
+    color: __OLD_INK__ !important; -webkit-text-fill-color: __OLD_INK__ !important;
+}
+html body .profile-card { border: 1px solid #c9a227 !important; border-radius: 4px !important; }
+html body .pc-avatar { background: #c9a227 !important; color: #2e1e10 !important; border: 2px solid #f3e6c4; }
+html body .made-by-minh { border-radius: 3px !important; background: linear-gradient(180deg, #e6c35c, #c9a227) !important; }
+'''
+
+
+def build_theme_css(theme, dark, bg_url):
+    if theme == "futuristic":
+        css = _THEME_FUTURISTIC
+        tokens = {}
+    elif theme == "playful":
+        css = _THEME_PLAYFUL
+        tokens = {
+            "__DOT__": "0.22" if dark else "0.35",
+            "__PLAY_OVERLAY__": ("linear-gradient(180deg, rgba(30,27,75,0.72) 0%, rgba(30,27,75,0.88) 50%, rgba(30,27,75,0.94) 100%)"
+                                 if dark else
+                                 "linear-gradient(180deg, rgba(255,247,237,0.45) 0%, rgba(255,247,237,0.78) 45%, rgba(253,242,248,0.9) 100%)"),
+            "__PLAY_TITLE__": "#fde68a" if dark else "#7c3aed",
+        }
+    elif theme == "oldtimes":
+        css = _THEME_OLDTIMES
+        tokens = {
+            "__OLD_PAPER__": "#1f160d" if dark else "#efe4c8",
+            "__OLD_OVERLAY__": ("linear-gradient(180deg, rgba(31,22,13,0.70) 0%, rgba(31,22,13,0.88) 50%, rgba(31,22,13,0.94) 100%)"
+                                if dark else
+                                "linear-gradient(180deg, rgba(244,236,216,0.45) 0%, rgba(244,236,216,0.78) 45%, rgba(244,236,216,0.9) 100%)"),
+            "__OLD_BRIGHT__": "0.9" if dark else "1",
+            "__OLD_INK__": "#f3e6c4" if dark else "#3e2c1c",
+            "__OLD_CARD__": "#2b1f13" if dark else "#fbf5e6",
+            "__OLD_INPUT__": "#1f160d" if dark else "#fffaf0",
+        }
+    else:
+        return ""
+    tokens["__BG_URL__"] = bg_url
+    for k, v in tokens.items():
+        css = css.replace(k, v)
+    return css
+
+
 def get_secret(key, default=None):
     """Đọc cấu hình bí mật từ .streamlit/secrets.toml (hoặc Secrets trên Streamlit Cloud)."""
     try:
@@ -1318,7 +1588,11 @@ _settings_slot = st.sidebar.container()
 dark_mode_on = st.session_state.get("dark_toggle", st.session_state["theme_mode"] == "Dark")
 st.session_state["theme_mode"] = "Dark" if dark_mode_on else "Light"
 
-is_dark = st.session_state["theme_mode"] == "Dark"
+ui_theme = st.session_state.get("ui_theme", "modern")
+if ui_theme not in THEME_OPTIONS:
+    ui_theme = "modern"
+# Chủ đề Tương lai luôn dùng nền tối
+is_dark = st.session_state["theme_mode"] == "Dark" or ui_theme == "futuristic"
 
 main_bg = "#0f172a" if is_dark else "#f8f9fa"
 text_color = "#ffffff" if is_dark else "#000000"
@@ -1848,6 +2122,11 @@ for _tok in ("__APP_BG__", "__BG_ANIM__"):
     _bg_css = _bg_css.replace(_tok, _modern_tokens[_tok])
 st.markdown(f"<style>{_bg_css}</style>", unsafe_allow_html=True)
 
+# 🎨 Lớp CSS của chủ đề đang chọn (Modern thì không cần thêm gì)
+_theme_css = build_theme_css(ui_theme, is_dark, page_bg_url)
+if _theme_css:
+    st.markdown(f"<style>{_theme_css}</style>", unsafe_allow_html=True)
+
 # --- TIÊU ĐỀ TRANG ---
 st.markdown("<div class='main-title'>🚢 SHIPCONTROL - QUẢN LÝ CÔNG VIỆC TÀU</div>", unsafe_allow_html=True)
 
@@ -1920,9 +2199,27 @@ if (_lang_cookie in ("vi", "en") and not st.session_state.get("_lang_restored")
 def _on_lang_change():
     st.session_state["_lang_changed"] = True
 
+# 🎨 Nhớ chủ đề đã chọn (cookie), cùng cách với ngôn ngữ
+THEME_COOKIE = "shipcontrol_theme"
+_theme_cookie = all_cookies.get(THEME_COOKIE)
+if (_theme_cookie in THEME_OPTIONS and not st.session_state.get("_theme_restored")
+        and not st.session_state.get("_theme_changed")):
+    st.session_state["_theme_restored"] = True
+    if _theme_cookie != st.session_state.get("ui_theme", "modern"):
+        st.session_state["ui_theme"] = _theme_cookie
+        st.rerun()
+
+def _on_theme_change():
+    st.session_state["_theme_changed"] = True
+
 with _settings_slot:
     with st.popover("⚙️ Cài đặt", use_container_width=True):
-        st.toggle("🌙 Chế độ Tối (Dark)", value=is_dark, key="dark_toggle")
+        st.radio("🎨 Chủ đề", THEME_OPTIONS, key="ui_theme", on_change=_on_theme_change,
+                 format_func=lambda t: THEME_LABELS[t])
+        st.toggle("🌙 Chế độ Tối (Dark)", value=(st.session_state["theme_mode"] == "Dark"), key="dark_toggle",
+                  disabled=(ui_theme == "futuristic"))
+        if ui_theme == "futuristic":
+            st.caption("Chủ đề Tương lai luôn dùng nền tối.")
         st.radio("🌐 Ngôn ngữ", ["vi", "en"], key="ui_lang", horizontal=True, on_change=_on_lang_change,
                  format_func=lambda c: {"vi": "🇻🇳 Tiếng Việt", "en": "🇬🇧 English"}[c])
 # 🍪 Lưu cookie đăng nhập (để lần sau mở lại vẫn đăng nhập). Ghi lại cho tới khi trình duyệt xác nhận đã lưu.
@@ -1935,6 +2232,12 @@ if _pending_cookie:
             cookie_manager.set(SESSION_COOKIE, _pending_cookie, max_age=SESSION_DAYS * 24 * 3600, key="set_session_cookie")
         except Exception:
             pass
+
+if st.session_state.get("_theme_changed") and _theme_cookie != st.session_state.get("ui_theme"):
+    try:
+        cookie_manager.set(THEME_COOKIE, st.session_state.get("ui_theme"), max_age=365 * 24 * 3600, key="set_theme_cookie")
+    except Exception:
+        pass
 
 # Chỉ ghi cookie khi người dùng tự đổi ngôn ngữ
 if st.session_state.get("_lang_changed") and _lang_cookie != ui_lang():
