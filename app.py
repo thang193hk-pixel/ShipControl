@@ -565,8 +565,11 @@ label:has(> span > input[role="switch"]:disabled) {
 section[data-testid="stSidebar"] [data-testid="stPopover"] button {
     background: rgba(255, 255, 255, 0.12) !important;
     border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    border-radius: 12px !important;
-    min-height: 44px !important;
+    border-radius: 999px !important;
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 0 14px !important;
+    width: auto !important;
     box-shadow: none !important;
     transition: background 0.15s ease !important;
 }
@@ -577,8 +580,8 @@ section[data-testid="stSidebar"] [data-testid="stPopover"] button * {
     color: #ffffff !important;
     fill: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
-    font-weight: 700 !important;
-    font-size: 1.02rem !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
 }
 /* Bảng cài đặt bật ra */
 div[data-testid="stPopoverBody"] {
@@ -2569,7 +2572,7 @@ st.session_state["w_ui_theme"] = st.session_state["ui_theme"]
 st.session_state["w_device_mode"] = st.session_state["device_mode"]
 
 with _settings_slot:
-    with st.popover("⚙️ Cài đặt", use_container_width=True):
+    with st.popover("⚙️ Cài đặt", use_container_width=False):
         st.radio("🎨 Chủ đề", THEME_OPTIONS, key="w_ui_theme", on_change=_on_theme_change,
                  format_func=lambda t: THEME_LABELS[t])
         st.toggle("🌙 Chế độ Tối (Dark)", value=(st.session_state["theme_mode"] == "Dark"), key="dark_toggle",
