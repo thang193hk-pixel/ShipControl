@@ -471,6 +471,36 @@ label:has(> span > input[role="switch"]:disabled) {
     cursor: not-allowed !important;
 }
 
+/* ---------- 🌐 Nút ngôn ngữ: ô vuông xanh, quả địa cầu trắng + mũi tên ---------- */
+section[data-testid="stSidebar"] .st-key-pop_lang [data-testid="stPopover"] button,
+section[data-testid="stSidebar"] .st-key-pop_lang button {
+    background: #4f8ef7 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    min-height: 34px !important;
+    height: 34px !important;
+    min-width: 0 !important;
+    width: auto !important;
+    padding: 0 8px 0 10px !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35) !important;
+    gap: 2px !important;
+}
+section[data-testid="stSidebar"] .st-key-pop_lang [data-testid="stPopover"] button:hover,
+section[data-testid="stSidebar"] .st-key-pop_lang button:hover {
+    background: #3b7cf0 !important;
+}
+section[data-testid="stSidebar"] .st-key-pop_lang button * {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+section[data-testid="stSidebar"] .st-key-pop_lang [data-testid="stIconMaterial"] {
+    font-size: 22px !important;
+}
+section[data-testid="stSidebar"] .st-key-pop_lang button::after {
+    display: none !important;
+}
+
 /* ---------- 📲 Chọn thiết bị: 2 ô lớn thay cho nút tròn nhỏ ---------- */
 .st-key-device_mode_login,
 .st-key-w_device_mode {
@@ -2572,19 +2602,24 @@ st.session_state["w_ui_theme"] = st.session_state["ui_theme"]
 st.session_state["w_device_mode"] = st.session_state["device_mode"]
 
 with _settings_slot:
-    with st.popover("⚙️ Cài đặt", use_container_width=False):
-        st.radio("🎨 Chủ đề", THEME_OPTIONS, key="w_ui_theme", on_change=_on_theme_change,
-                 format_func=lambda t: THEME_LABELS[t])
-        st.toggle("🌙 Chế độ Tối (Dark)", value=(st.session_state["theme_mode"] == "Dark"), key="dark_toggle",
-                  disabled=(ui_theme == "futuristic"))
-        if ui_theme == "futuristic":
-            st.caption("Chủ đề Tương lai luôn dùng nền tối.")
-        st.radio("🌐 Ngôn ngữ", ["vi", "en"], key="w_ui_lang", horizontal=True, on_change=_on_lang_change,
-                 format_func=lambda c: {"vi": "🇻🇳 Tiếng Việt", "en": "🇬🇧 English"}[c])
-        st.radio("📲 Thiết bị", DEVICE_OPTIONS, key="w_device_mode", horizontal=True, on_change=_on_device_change,
-                 format_func=lambda d: DEVICE_LABELS[d])
-        if st.session_state["device_mode"] == "mobile":
-            st.caption("🎤 Bấm nút micro trong ô nhập chữ để nói thay vì gõ.")
+    # Hàng nút trên cùng: [⚙️ Cài đặt]  [🌐 ▾ Ngôn ngữ]
+    with st.container(horizontal=True, gap="small", vertical_alignment="center"):
+        with st.popover("⚙️ Cài đặt", key="pop_settings"):
+            st.radio("🎨 Chủ đề", THEME_OPTIONS, key="w_ui_theme", on_change=_on_theme_change,
+                     format_func=lambda t: THEME_LABELS[t])
+            st.toggle("🌙 Chế độ Tối (Dark)", value=(st.session_state["theme_mode"] == "Dark"), key="dark_toggle",
+                      disabled=(ui_theme == "futuristic"))
+            if ui_theme == "futuristic":
+                st.caption("Chủ đề Tương lai luôn dùng nền tối.")
+            st.radio("📲 Thiết bị", DEVICE_OPTIONS, key="w_device_mode", horizontal=True, on_change=_on_device_change,
+                     format_func=lambda d: DEVICE_LABELS[d])
+            if st.session_state["device_mode"] == "mobile":
+                st.caption("🎤 Bấm nút micro trong ô nhập chữ để nói thay vì gõ.")
+
+        # 🌐 Nút ngôn ngữ riêng: biểu tượng quả địa cầu + mũi tên
+        with st.popover("", icon=":material/language:", key="pop_lang", help="Ngôn ngữ / Language"):
+            st.radio("🌐 Ngôn ngữ", ["vi", "en"], key="w_ui_lang", on_change=_on_lang_change,
+                     format_func=lambda c: {"vi": "🇻🇳 Tiếng Việt", "en": "🇬🇧 English"}[c])
 
 # 🎤 Nút micro trong ô nhập chữ (chỉ ở chế độ Điện thoại)
 render_voice_input(st.session_state["device_mode"] == "mobile")
