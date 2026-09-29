@@ -471,6 +471,38 @@ label:has(> span > input[role="switch"]:disabled) {
     cursor: not-allowed !important;
 }
 
+/* ---------- 🌐 Chọn ngôn ngữ trong Cài đặt: nút xanh, chữ trắng, mũi tên trắng ---------- */
+html body .st-key-w_ui_lang {
+    width: auto !important;
+}
+html body .st-key-w_ui_lang div[data-testid="stSelectbox"] div:has(> input),
+html body .st-key-w_ui_lang div[data-baseweb="select"] > div {
+    background: #4f8ef7 !important;
+    background-color: #4f8ef7 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    min-height: 38px !important;
+    width: fit-content !important;
+    min-width: 170px !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35) !important;
+    cursor: pointer !important;
+}
+html body .st-key-w_ui_lang div[data-testid="stSelectbox"] div:has(> input):hover {
+    background: #3b7cf0 !important;
+    background-color: #3b7cf0 !important;
+}
+html body .st-key-w_ui_lang div[data-testid="stSelectbox"] div:has(> input) *,
+html body .st-key-w_ui_lang div[data-baseweb="select"] * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-weight: 700 !important;
+    caret-color: transparent !important;
+}
+html body .st-key-w_ui_lang div[data-testid="stSelectbox"] svg {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+}
+
 /* ---------- 🌐 Nút ngôn ngữ: ô vuông xanh, quả địa cầu trắng + mũi tên ---------- */
 section[data-testid="stSidebar"] .st-key-pop_lang [data-testid="stPopover"] button,
 section[data-testid="stSidebar"] .st-key-pop_lang button {
@@ -2611,15 +2643,14 @@ with _settings_slot:
                       disabled=(ui_theme == "futuristic"))
             if ui_theme == "futuristic":
                 st.caption("Chủ đề Tương lai luôn dùng nền tối.")
+            # 🌐 Ngôn ngữ: nút xanh có quả địa cầu + mũi tên, bấm để chọn
+            st.selectbox("🌐 Ngôn ngữ", ["vi", "en"], key="w_ui_lang", on_change=_on_lang_change,
+                         format_func=lambda c: {"vi": "🌐 Tiếng Việt", "en": "🌐 English"}[c])
             st.radio("📲 Thiết bị", DEVICE_OPTIONS, key="w_device_mode", horizontal=True, on_change=_on_device_change,
                      format_func=lambda d: DEVICE_LABELS[d])
             if st.session_state["device_mode"] == "mobile":
                 st.caption("🎤 Bấm nút micro trong ô nhập chữ để nói thay vì gõ.")
 
-        # 🌐 Nút ngôn ngữ riêng: biểu tượng quả địa cầu + mũi tên
-        with st.popover("", icon=":material/language:", key="pop_lang", help="Ngôn ngữ / Language"):
-            st.radio("🌐 Ngôn ngữ", ["vi", "en"], key="w_ui_lang", on_change=_on_lang_change,
-                     format_func=lambda c: {"vi": "🇻🇳 Tiếng Việt", "en": "🇬🇧 English"}[c])
 
 # 🎤 Nút micro trong ô nhập chữ (chỉ ở chế độ Điện thoại)
 render_voice_input(st.session_state["device_mode"] == "mobile")
