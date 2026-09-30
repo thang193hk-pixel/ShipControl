@@ -20,7 +20,19 @@ MODERN_CSS_TEMPLATE = r'''
 
 html, body, .stApp, .stApp p, .stApp label, .stApp input, .stApp textarea, .stApp button,
 .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp li, .stApp span:not([data-testid="stIconMaterial"]) {
-    font-family: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;
+    font-family: 'Twemoji Country Flags', 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* ---------- 🏳️ Cờ các nước: Windows không tự hiện emoji cờ (chỉ hiện chữ "VN"),
+   nên tải một phông chữ nhỏ CHỈ chứa hình cờ (các ký tự khác vẫn dùng phông bình thường) ---------- */
+@font-face {
+    font-family: 'Twemoji Country Flags';
+    unicode-range: U+1F1E6-1F1FF, U+1F3F4, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
+    src: url('https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiCountryFlags.woff2') format('woff2');
+    font-display: swap;
+}
+[data-baseweb="popover"] li, [data-baseweb="popover"] li *, [role="listbox"] [role="option"], [role="listbox"] [role="option"] * {
+    font-family: 'Twemoji Country Flags', 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;
 }
 
 /* ---------- Nền: ảnh tàu, mỗi trang một ảnh ----------
@@ -1858,7 +1870,7 @@ TRANSLATIONS = {
     "ko": dict(zip(_VI_KEYS, _KO_LIST)),
 }
 LANG_OPTIONS = ["vi", "en", "zh", "ja", "ko"]
-LANG_LABELS = {"vi": "🌐 Tiếng Việt", "en": "🌐 English", "zh": "🌐 中文", "ja": "🌐 日本語", "ko": "🌐 한국어"}
+LANG_LABELS = {"vi": "🇻🇳 Tiếng Việt", "en": "🇬🇧 English", "zh": "🇨🇳 中文", "ja": "🇯🇵 日本語", "ko": "🇰🇷 한국어"}
 SPEECH_LANG = {"vi": "vi-VN", "en": "en-US", "zh": "zh-CN", "ja": "ja-JP", "ko": "ko-KR"}
 
 
@@ -1984,7 +1996,7 @@ _THEME_FUTURISTIC = r'''
 html body .stApp, html body .stApp p, html body .stApp label, html body .stApp input, html body .stApp textarea,
 html body .stApp button, html body .stApp h1, html body .stApp h2, html body .stApp h3, html body .stApp li,
 html body .stApp span:not([data-testid="stIconMaterial"]) {
-    font-family: 'Exo 2', system-ui, sans-serif !important;
+    font-family: 'Twemoji Country Flags', 'Exo 2', system-ui, sans-serif !important;
 }
 html body .stApp { background: #03060f !important; }
 html body .stApp::before {
@@ -2055,7 +2067,7 @@ _THEME_PLAYFUL = r'''
 html body .stApp, html body .stApp p, html body .stApp label, html body .stApp input, html body .stApp textarea,
 html body .stApp button, html body .stApp h1, html body .stApp h2, html body .stApp h3, html body .stApp li,
 html body .stApp span:not([data-testid="stIconMaterial"]) {
-    font-family: 'Baloo 2', 'Comic Sans MS', system-ui, sans-serif !important;
+    font-family: 'Twemoji Country Flags', 'Baloo 2', 'Comic Sans MS', system-ui, sans-serif !important;
 }
 html body .stApp::before {
     background:
@@ -2125,11 +2137,11 @@ _THEME_OLDTIMES = r'''
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap');
 html body .stApp, html body .stApp p, html body .stApp label, html body .stApp input, html body .stApp textarea,
 html body .stApp button, html body .stApp li, html body .stApp span:not([data-testid="stIconMaterial"]) {
-    font-family: 'Lora', Georgia, 'Times New Roman', serif !important;
+    font-family: 'Twemoji Country Flags', 'Lora', Georgia, 'Times New Roman', serif !important;
 }
 html body .stApp h1, html body .stApp h2, html body .stApp h3, html body .main-title,
 html body .big-table-title, html body .sidebar-header {
-    font-family: 'Playfair Display', Georgia, serif !important;
+    font-family: 'Twemoji Country Flags', 'Playfair Display', Georgia, serif !important;
     letter-spacing: 0.01em !important;
 }
 html body .stApp { background: __OLD_PAPER__ !important; }
