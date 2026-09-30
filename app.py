@@ -768,6 +768,56 @@ div[data-testid="stAlert"]:has([data-testid="stAlertContentError"]) * {
     color: __ERR_TX__ !important; -webkit-text-fill-color: __ERR_TX__ !important;
 }
 
+/* ================================================================
+   🌊 MƯỢT MÀ HƠN
+   ================================================================ */
+html { scroll-behavior: smooth; }
+body, .stApp {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+/* Khi app đang xử lý, Streamlit làm mờ nội dung cũ (nhấp nháy) → giữ nguyên độ rõ */
+[data-stale="true"], .stale-element {
+    opacity: 1 !important;
+    filter: none !important;
+    transition: none !important;
+}
+/* Bỏ thanh màu nhấp nháy ở mép trên */
+[data-testid="stDecoration"] { display: none !important; }
+/* Thông báo, khung mở rộng, bảng cài đặt và danh sách chọn hiện ra nhẹ nhàng */
+div[data-testid="stAlert"] { animation: scFadeUp 0.28s ease-out both; }
+[data-testid="stExpanderDetails"] { animation: scFadeUp 0.25s ease-out both; }
+div[data-testid="stPopoverBody"] { animation: scPop 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) both; transform-origin: top left; }
+[data-baseweb="popover"] ul[role="listbox"] { animation: scPop 0.15s ease-out both; transform-origin: top center; }
+@keyframes scFadeUp {
+    from { opacity: 0; transform: translate3d(0, 6px, 0); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes scPop {
+    from { opacity: 0; transform: scale(0.96) translate3d(0, -4px, 0); }
+    to   { opacity: 1; transform: none; }
+}
+/* Đổi chủ đề / Sáng-Tối: màu chuyển dần thay vì đổi phụt */
+section[data-testid="stSidebar"], div[data-testid="stForm"], div[data-testid="stExpander"] details,
+div[data-testid="stAlert"], .profile-card, .main-title, .big-table-title, .stApp p, .stApp label {
+    transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+/* Nút chọn thiết bị, bảng, liên kết: chuyển trạng thái mượt */
+a, label[data-testid="stRadioOption"], div[data-testid="stDataFrame"] {
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+/* Cuộn thanh bên mượt, không kéo theo cả trang */
+section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    div[data-testid="stAlert"], [data-testid="stExpanderDetails"], div[data-testid="stPopoverBody"],
+    [data-baseweb="popover"] ul[role="listbox"] { animation: none !important; }
+}
+
 /* ---------- Thanh cuộn mảnh ---------- */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.35); border-radius: 999px; }
