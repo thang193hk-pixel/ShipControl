@@ -3489,7 +3489,6 @@ if not st.session_state["logged_in"]:
     if st.session_state.get("_kicked"):
         st.warning("🔒 Tài khoản của bạn vừa được mở ở một tab hoặc thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. "
                    "Nếu đó không phải bạn, hãy đăng nhập lại và đổi mật khẩu ngay.")
-    st.sidebar.markdown("<div class='made-by-minh'>Made By Minh</div>", unsafe_allow_html=True)
 
     col_space1, col_center, col_space2 = st.columns([1, 2, 1])
     
@@ -3677,7 +3676,6 @@ else:
 <div class='pc-row'><span class='pc-label'>Tài khoản</span><span class='pc-val'>@{html.escape(str(user_data['username']))}</span></div>
 <div class='pc-row'><span class='pc-label'>Vai trò</span><span class='pc-role'>{html.escape(role_badge)}</span></div>{_ws_row}</div>""", unsafe_allow_html=True)
 
-    st.sidebar.markdown("<div class='made-by-minh'>Made By Minh</div>", unsafe_allow_html=True)
 
     my_pw = cursor.execute("SELECT password FROM users WHERE id = ?", (user_data['id'],)).fetchone()
     # Kiểm tra mật khẩu mặc định rất tốn thời gian (băm 200.000 vòng), nên chỉ kiểm tra lại khi mật khẩu thay đổi
