@@ -1313,6 +1313,15 @@ VI_EN = {
     "⛔ KẾT THÚC": "⛔ END",
     "Chỉ Foreman và Team Leader mới tạo được cuộc họp. Bạn có thể vào họp khi có ID phòng và mật khẩu.": "Only Foremen and Team Leaders can create meetings. You can join with a room ID and password.",
     "Chọn người...": "Choose people...",
+    "👑 Quản trị nhóm": "👑 Group admin",
+    "🗑️ Xóa tin nhắn (quản trị)": "🗑️ Delete messages (admin)",
+    "Chưa có tin nhắn để xóa.": "No messages to delete.",
+    "Chọn tin nhắn để xóa": "Message to delete",
+    "🗑️ XÓA TIN NHẮN": "🗑️ DELETE MESSAGE",
+    "Đã xóa tin nhắn.": "Message deleted.",
+    "Tôi chắc chắn muốn xóa toàn bộ tin nhắn": "I'm sure I want to delete all messages",
+    "🧹 XÓA TOÀN BỘ TIN NHẮN": "🧹 DELETE ALL MESSAGES",
+    "Đã xóa toàn bộ tin nhắn.": "All messages deleted.",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -1627,6 +1636,15 @@ _ZH_LIST = [
     "⛔ 结束",
     "只有 Foreman 和 Team Leader 可以创建会议。有会议室 ID 和密码即可加入。",
     "选择成员...",
+    "👑 群管理员",
+    "🗑️ 删除消息（管理员）",
+    "没有可删除的消息。",
+    "选择要删除的消息",
+    "🗑️ 删除消息",
+    "消息已删除。",
+    "我确定要删除所有消息",
+    "🧹 删除所有消息",
+    "已删除所有消息。",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -1939,6 +1957,15 @@ _JA_LIST = [
     "⛔ 終了",
     "会議を作成できるのは Foreman と Team Leader だけです。会議室 ID とパスワードがあれば参加できます。",
     "メンバーを選択...",
+    "👑 グループ管理者",
+    "🗑️ メッセージ削除（管理者）",
+    "削除できるメッセージはありません。",
+    "削除するメッセージ",
+    "🗑️ メッセージを削除",
+    "メッセージを削除しました。",
+    "すべてのメッセージを削除します",
+    "🧹 すべてのメッセージを削除",
+    "すべてのメッセージを削除しました。",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2251,6 +2278,15 @@ _KO_LIST = [
     "⛔ 종료",
     "Foreman과 Team Leader만 회의를 만들 수 있습니다. 회의실 ID와 비밀번호가 있으면 참가할 수 있습니다.",
     "사람 선택...",
+    "👑 그룹 관리자",
+    "🗑️ 메시지 삭제 (관리자)",
+    "삭제할 메시지가 없습니다.",
+    "삭제할 메시지",
+    "🗑️ 메시지 삭제",
+    "메시지를 삭제했습니다.",
+    "모든 메시지를 삭제하겠습니다",
+    "🧹 모든 메시지 삭제",
+    "모든 메시지를 삭제했습니다.",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -2896,6 +2932,16 @@ MEETING_HOST_ROLES = ["Foreman", "Team Leader"]
 MEETING_SERVER = str(get_secret("MEETING_SERVER", "https://meet.jit.si")).rstrip("/")
 
 
+def is_chat_admin(conv, uid, role):
+    """Quản trị của cuộc trò chuyện: nhóm → người tạo nhóm; kênh chung → Admin / WOS Manager."""
+    if conv.startswith("group:"):
+        row = cursor.execute("SELECT created_by FROM chat_groups WHERE id = ?", (int(conv.split(":")[1]),)).fetchone()
+        return bool(row and row[0] == uid)
+    if conv == "general":
+        return role in ("Admin", "WOS Manager")
+    return False
+
+
 def post_chat_message(conv, sender_id, body):
     cursor.execute("INSERT INTO chat_messages (conv, sender_id, body, created_at) VALUES (?, ?, ?, ?)",
                    (conv, sender_id, str(body).strip()[:2000], datetime.now().isoformat(timespec="seconds")))
@@ -3457,7 +3503,7 @@ _bg_key = st.session_state.get("current_menu") if st.session_state.get("logged_i
 page_bg_url = SHIP_BACKGROUNDS.get(_bg_key, SHIP_BACKGROUNDS["🧰 Bảng Công Việc"])
 
 # 🎨 GIAO DIỆN HIỆN ĐẠI: bảng màu theo chế độ Sáng / Tối
-_danger_keys = ["btn_del_block", "btn_del_cc", "btn_role_del_ws", "btn_delete_team", "btn_leave_team", "btn_perm_del_task",
+_danger_keys = ["btn_del_block", "btn_del_cc", "btn_role_del_ws", "chat_del_msg_btn", "chat_clear_btn", "btn_delete_team", "btn_leave_team", "btn_perm_del_task",
                 "btn_perm_del_user", "btn_remove_team_member", "btn_soft_delete_task", "btn_soft_delete_user"]
 _modern_tokens = {
     "__APP_BG__": (
@@ -5309,6 +5355,9 @@ else:
                     is_owner = (group[2] == me)
                     members = group_members(gid)
                     st.markdown(f"### 💬 {html.escape(group[1])}")
+                    owner_row = next((m for m in members if m[0] == group[2]), None)
+                    if owner_row:
+                        st.caption("👑 Quản trị nhóm" + f": {owner_row[2] or owner_row[1]}")
                     st.caption(" · ".join(f"{CHAT_ROLE_ICONS.get(r, '👤')} {n or u}" for _, u, n, r in members))
                     with st.expander("⚙️ Thành viên nhóm"):
                         if is_owner:
@@ -5370,6 +5419,31 @@ else:
                     render_chat_messages(msgs, me)
                 if msgs:
                     mark_chat_read(me, conv, msgs[0][0])
+
+                # 🗑️ Chỉ QUẢN TRỊ của cuộc trò chuyện mới xóa được tin nhắn:
+                #    nhóm chat → người tạo nhóm; kênh chung → Admin / WOS Manager
+                if is_chat_admin(conv, me, current_role):
+                    with st.expander("🗑️ Xóa tin nhắn (quản trị)"):
+                        if not msgs:
+                            st.caption("Chưa có tin nhắn để xóa.")
+                        else:
+                            def _msg_label(mid):
+                                m = next(x for x in msgs if x[0] == mid)
+                                who = m[4] or m[5] or "?"
+                                body = (m[2] or "").replace("\n", " ")
+                                return f"{_chat_time(m[3])} · {who}: {body[:60]}{'…' if len(body) > 60 else ''}"
+                            del_id = st.selectbox("Chọn tin nhắn để xóa", [m[0] for m in msgs],
+                                                  format_func=_msg_label, key=f"chat_del_pick_{conv}")
+                            if st.button("🗑️ XÓA TIN NHẮN", key="chat_del_msg_btn"):
+                                cursor.execute("DELETE FROM chat_messages WHERE id = ? AND conv = ?", (del_id, conv))
+                                st.success("Đã xóa tin nhắn.")
+                                st.rerun()
+                            st.markdown("---")
+                            sure = st.checkbox("Tôi chắc chắn muốn xóa toàn bộ tin nhắn", key=f"chat_clear_ok_{conv}")
+                            if st.button("🧹 XÓA TOÀN BỘ TIN NHẮN", key="chat_clear_btn", disabled=not sure):
+                                cursor.execute("DELETE FROM chat_messages WHERE conv = ?", (conv,))
+                                st.success("Đã xóa toàn bộ tin nhắn.")
+                                st.rerun()
 
         _chat_room()
 
