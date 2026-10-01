@@ -768,6 +768,58 @@ div[data-testid="stAlert"]:has([data-testid="stAlertContentError"]) * {
     color: __ERR_TX__ !important; -webkit-text-fill-color: __ERR_TX__ !important;
 }
 
+/* ---------- 💬 Khung tin nhắn ---------- */
+.sc-chat {
+    height: 420px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;      /* tin mới nhất ở dưới, tự cuộn xuống cuối */
+    gap: 10px;
+    padding: 14px;
+    border-radius: 16px;
+    background: __SURFACE__;
+    border: 1px solid __SURFACE_BORDER__;
+    box-shadow: inset 0 1px 4px rgba(15, 23, 42, 0.05);
+    margin-bottom: 10px;
+}
+.sc-chat-empty { margin: auto; color: __PLACEHOLDER__; font-weight: 600; text-align: center; }
+.sc-msg { display: flex; flex-direction: column; max-width: 78%; }
+.sc-mine { align-self: flex-end; align-items: flex-end; }
+.sc-theirs { align-self: flex-start; align-items: flex-start; }
+.sc-meta { font-size: 0.75rem; color: __PLACEHOLDER__; margin: 0 6px 3px 6px; }
+.sc-bubble {
+    padding: 9px 14px;
+    border-radius: 18px;
+    font-size: 1rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    animation: scFadeUp 0.2s ease-out both;
+}
+.sc-mine .sc-bubble {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: #ffffff;
+    border-bottom-right-radius: 6px;
+}
+.sc-theirs .sc-bubble {
+    background: __BUBBLE_THEIRS__;
+    color: __INPUT_TEXT__;
+    border-bottom-left-radius: 6px;
+}
+[data-testid="stChatInput"] {
+    border-radius: 16px !important;
+}
+/* Danh sách người trong Tin nhắn: chữ căn trái, gọn hơn */
+div[class*="st-key-chat_open_"] div.stButton > button {
+    justify-content: flex-start !important;
+    min-height: 44px !important;
+    margin-bottom: 2px !important;
+}
+div[class*="st-key-chat_open_"] div.stButton > button > div,
+div[class*="st-key-chat_open_"] div.stButton > button p {
+    justify-content: flex-start !important;
+    text-align: left !important;
+}
+
 /* ================================================================
    🌊 MƯỢT MÀ HƠN
    ================================================================ */
@@ -1146,6 +1198,14 @@ VI_EN = {
     "Hoàn thành (100%)": "Done (100%)",
     "Số Lượng": "Count",
     "Mật khẩu mới:": "New password:",
+    "💬 Tin Nhắn": "💬 Messages",
+    "📢 Kênh chung": "📢 General chat",
+    "#### 👥 Mọi người": "#### 👥 People",
+    "🔎 Tìm tài khoản": "🔎 Find account",
+    "Không tìm thấy tài khoản.": "No account found.",
+    "Mọi người trong app đều thấy kênh này.": "Everyone in the app can see this channel.",
+    "Tin nhắn riêng với ": "Private chat with ",
+    "Nhập tin nhắn...": "Type a message...",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -1402,6 +1462,14 @@ _ZH_LIST = [
     "已完成 (100%)",
     "数量",
     "新密码：",
+    "💬 消息",
+    "📢 公共频道",
+    "#### 👥 成员",
+    "🔎 查找账号",
+    "未找到账号。",
+    "应用中的所有人都能看到此频道。",
+    "私聊：",
+    "输入消息...",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -1656,6 +1724,14 @@ _JA_LIST = [
     "完了 (100%)",
     "件数",
     "新しいパスワード：",
+    "💬 メッセージ",
+    "📢 全体チャット",
+    "#### 👥 メンバー",
+    "🔎 アカウント検索",
+    "アカウントが見つかりません。",
+    "アプリの全員がこのチャンネルを見られます。",
+    "個別チャット：",
+    "メッセージを入力...",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -1910,6 +1986,14 @@ _KO_LIST = [
     "완료 (100%)",
     "개수",
     "새 비밀번호:",
+    "💬 메시지",
+    "📢 전체 채팅",
+    "#### 👥 사람들",
+    "🔎 계정 찾기",
+    "계정을 찾을 수 없습니다.",
+    "앱의 모든 사람이 이 채널을 볼 수 있습니다.",
+    "개인 채팅: ",
+    "메시지를 입력하세요...",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -1956,8 +2040,9 @@ def _tr_data(data):
 def _install_translator():
     """Tự động dịch chữ hiển thị của các thành phần Streamlit.
     Chỉ đổi phần HIỂN THỊ; giá trị trả về và logic của app giữ nguyên tiếng Việt."""
-    if getattr(_DG, "_shipcontrol_i18n", False):
-        return
+    # Giữ bản gốc của markdown (không dịch) để hiện nội dung người dùng viết, ví dụ tin nhắn
+    if not hasattr(_DG, "_sc_orig_markdown"):
+        _DG._sc_orig_markdown = getattr(_DG.markdown, "__wrapped__", _DG.markdown)
 
     def text_first(fn):
         @_functools.wraps(fn)
@@ -2005,16 +2090,19 @@ def _install_translator():
         text_first: ["markdown", "caption", "info", "success", "warning", "error", "title", "header",
                      "subheader", "text", "button", "form_submit_button", "download_button", "text_input",
                      "text_area", "number_input", "date_input", "time_input", "checkbox", "toggle",
-                     "expander", "popover", "metric", "slider"],
+                     "expander", "popover", "metric", "slider", "chat_input"],
         with_options: ["selectbox", "radio", "multiselect", "select_slider"],
         data_first: ["dataframe", "table"],
         tabs_first: ["tabs"],
     }
     for wrap, names in groups.items():
         for name in names:
-            if hasattr(_DG, name):
-                setattr(_DG, name, wrap(getattr(_DG, name)))
-    _DG._shipcontrol_i18n = True
+            fn = getattr(_DG, name, None)
+            if fn is None or getattr(fn, "_sc_wrapped", False):
+                continue                      # đã gắn bộ dịch rồi (app chạy lại) → bỏ qua
+            wrapped = wrap(fn)
+            wrapped._sc_wrapped = True
+            setattr(_DG, name, wrapped)
 
 
 _install_translator()
@@ -2023,7 +2111,7 @@ for _name in ["markdown", "caption", "info", "success", "warning", "error", "tit
               "text", "button", "form_submit_button", "download_button", "text_input", "text_area",
               "number_input", "date_input", "time_input", "checkbox", "toggle", "expander", "popover",
               "metric", "slider", "selectbox", "radio", "multiselect", "select_slider", "dataframe",
-              "table", "tabs"]:
+              "table", "tabs", "chat_input"]:
     if hasattr(st, _name) and hasattr(st._main, _name):
         setattr(st, _name, getattr(st._main, _name))
 
@@ -2328,6 +2416,8 @@ _VOICE_JS = r"""
         box-shadow:0 3px 10px rgba(2,132,199,.4) !important; display:flex !important;
         align-items:center !important; justify-content:center !important; }
       html body div .sc-mic.sc-area { top:auto !important; bottom:8px !important; transform:none !important; }
+      html body div .sc-mic.sc-chatmic { right:52px !important; width:34px !important; height:34px !important; }
+      [data-testid="stChatInput"].sc-has-mic textarea { padding-right:96px !important; }
       html body div .sc-mic.sc-rec { background:linear-gradient(135deg,#ef4444,#dc2626) !important;
         background-color:#dc2626 !important; animation:scPulse 1s infinite; }
       @keyframes scPulse { 0%{box-shadow:0 0 0 0 rgba(239,68,68,.6)} 100%{box-shadow:0 0 0 14px rgba(239,68,68,0)} }
@@ -2371,7 +2461,7 @@ _VOICE_JS = r"""
 
   function attach(el) {
     if (el.dataset.scMic) return;
-    const wrap = el.closest('[data-testid="stTextInputRootElement"], [data-testid="stTextAreaRootElement"]');
+    const wrap = el.closest('[data-testid="stTextInputRootElement"], [data-testid="stTextAreaRootElement"], [data-testid="stChatInput"]');
     if (!wrap) return;
     if (el.type === "password") return;              // không gắn vào ô mật khẩu
     el.dataset.scMic = "1";
@@ -2379,7 +2469,8 @@ _VOICE_JS = r"""
     wrap.classList.add("sc-has-mic");
     const btn = doc.createElement("button");
     btn.type = "button";
-    btn.className = "sc-mic" + (el.tagName === "TEXTAREA" ? " sc-area" : "");
+    const isChat = !!el.closest('[data-testid="stChatInput"]');
+    btn.className = "sc-mic" + (isChat ? " sc-chatmic" : (el.tagName === "TEXTAREA" ? " sc-area" : ""));
     btn.textContent = "🎤";
     btn.setAttribute("aria-label", "Voice input");
     btn.addEventListener("mousedown", (e) => e.preventDefault());   // giữ nguyên con trỏ trong ô
@@ -2388,7 +2479,7 @@ _VOICE_JS = r"""
   }
 
   function scan() {
-    doc.querySelectorAll('[data-testid="stTextInputRootElement"] input, [data-testid="stTextAreaRootElement"] textarea')
+    doc.querySelectorAll('[data-testid="stTextInputRootElement"] input, [data-testid="stTextAreaRootElement"] textarea, [data-testid="stChatInput"] textarea')
        .forEach(attach);
   }
 
@@ -2449,6 +2540,82 @@ def _guess_device():
     except Exception:
         ua = ""
     return "mobile" if any(k in ua for k in ("Mobi", "Android", "iPhone", "iPad")) else "desktop"
+
+
+# ==========================================
+# 💬 TIN NHẮN (kênh chung + nhắn riêng)
+# ==========================================
+CHAT_MENU = "💬 Tin Nhắn"
+CHAT_ROLE_ICONS = {"Admin": "🛡️", "WOS Manager": "👑", "Foreman": "👔", "Team Leader": "🧢", "Worker": "👷"}
+_YOU_LABEL = {"vi": "Bạn", "en": "You", "zh": "我", "ja": "自分", "ko": "나"}
+_EMPTY_CHAT = {
+    "vi": "Chưa có tin nhắn nào. Hãy gửi lời chào đầu tiên! 👋",
+    "en": "No messages yet. Say hi! 👋",
+    "zh": "还没有消息。来打个招呼吧！👋",
+    "ja": "まだメッセージはありません。最初のあいさつを送りましょう！👋",
+    "ko": "아직 메시지가 없습니다. 먼저 인사해 보세요! 👋",
+}
+
+
+def dm_conv_id(a, b):
+    a, b = int(a), int(b)
+    return f"dm:{min(a, b)}:{max(a, b)}"
+
+
+def dm_other_id(conv, me):
+    _, a, b = conv.split(":")
+    return int(b) if int(a) == int(me) else int(a)
+
+
+def chat_unread_by_conv(me):
+    """Số tin chưa đọc theo từng cuộc trò chuyện (chỉ những cuộc mình được xem)."""
+    rows = cursor.execute("""
+        SELECT m.conv, COUNT(*) FROM chat_messages m
+        LEFT JOIN chat_reads r ON r.user_id = ? AND r.conv = m.conv
+        WHERE m.sender_id != ? AND m.id > COALESCE(r.last_read_id, 0)
+          AND (m.conv = 'general' OR m.conv LIKE ? OR m.conv LIKE ?)
+        GROUP BY m.conv
+    """, (me, me, f"dm:{me}:%", f"dm:%:{me}")).fetchall()
+    return {c: n for c, n in rows}
+
+
+def mark_chat_read(me, conv, last_id):
+    try:
+        cursor.execute("""
+            INSERT INTO chat_reads (user_id, conv, last_read_id) VALUES (?, ?, ?)
+            ON CONFLICT(user_id, conv) DO UPDATE SET last_read_id = MAX(last_read_id, excluded.last_read_id)
+        """, (me, conv, last_id))
+    except sqlite3.OperationalError:
+        pass
+
+
+def _chat_time(iso):
+    try:
+        t = datetime.fromisoformat(iso)
+    except Exception:
+        return ""
+    return t.strftime("%H:%M") if t.date() == datetime.now().date() else t.strftime("%d/%m %H:%M")
+
+
+def render_chat_messages(msgs, me):
+    """Vẽ khung tin nhắn (tin của mình bên phải màu xanh, của người khác bên trái).
+    Nội dung tin nhắn KHÔNG đi qua bộ dịch, để giữ đúng chữ người gửi viết."""
+    lang = ui_lang()
+    if not msgs:
+        inner = f"<div class='sc-chat-empty'>{html.escape(_EMPTY_CHAT.get(lang, _EMPTY_CHAT['vi']))}</div>"
+    else:
+        parts = []
+        for mid, sid, body, created, fname, uname, role in msgs:   # mới nhất trước (khung xếp ngược)
+            mine = (sid == me)
+            name = _YOU_LABEL.get(lang, "Bạn") if mine else (fname or uname or "?")
+            icon = "" if mine else CHAT_ROLE_ICONS.get(role, "👤") + " "
+            text = html.escape(body or "").replace("\n", "<br>")
+            parts.append(
+                f"<div class='sc-msg {'sc-mine' if mine else 'sc-theirs'}'>"
+                f"<div class='sc-meta'>{html.escape(icon + name)} · {_chat_time(created)}</div>"
+                f"<div class='sc-bubble'>{text}</div></div>")
+        inner = "".join(parts)
+    _DG._sc_orig_markdown(st._main, f"<div class='sc-chat'>{inner}</div>", unsafe_allow_html=True)
 
 
 def get_secret(key, default=None):
@@ -2629,6 +2796,26 @@ if not cursor.execute("SELECT 1 FROM app_flags WHERE name = 'blocks_seeded'").fe
     for (b,) in cursor.execute("SELECT DISTINCT TRIM(block) FROM tasks WHERE block IS NOT NULL AND TRIM(block) != ''").fetchall():
         cursor.execute("INSERT OR IGNORE INTO blocks (name, is_deleted) VALUES (?, 0)", (b,))
     cursor.execute("INSERT INTO app_flags (name) VALUES ('blocks_seeded')")
+
+# 💬 BẢNG TIN NHẮN
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS chat_messages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        conv TEXT NOT NULL,
+        sender_id INTEGER NOT NULL,
+        body TEXT NOT NULL,
+        created_at TEXT NOT NULL
+    )
+''')
+cursor.execute("CREATE INDEX IF NOT EXISTS idx_chat_conv ON chat_messages (conv, id)")
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS chat_reads (
+        user_id INTEGER NOT NULL,
+        conv TEXT NOT NULL,
+        last_read_id INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (user_id, conv)
+    )
+''')
 
 # 🔐 BẢNG PHIÊN ĐĂNG NHẬP (cookie chỉ chứa token ngẫu nhiên, không chứa username)
 cursor.execute('''
@@ -2900,6 +3087,7 @@ _modern_tokens = {
     "__PLACEHOLDER__": "#7c8aa5" if is_dark else "#94a3b8",
     "__ICON__": "#cbd5e1" if is_dark else "#475569",
     "__SCHEME__": "dark" if is_dark else "light",
+    "__BUBBLE_THEIRS__": "#1e293b" if is_dark else "#eef2f7",
     "__SELECTED_BG__": "rgba(14,165,233,0.18)" if is_dark else "#e0f2fe",
     "__TOGGLE_OFF__": "#475569" if is_dark else "#94a3b8",
     "__TOGGLE_OFF_BORDER__": "#64748b" if is_dark else "#64748b",
@@ -3648,6 +3836,7 @@ else:
     if is_manager_up:
         menu_options = [
             "🧰 Bảng Công Việc", 
+            "💬 Tin Nhắn",
             "➕ Thêm Công Việc", 
             "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
@@ -3659,6 +3848,7 @@ else:
     elif current_role == "Foreman":
         menu_options = [
             "🧰 Bảng Công Việc", 
+            "💬 Tin Nhắn",
             "➕ Thêm Công Việc", 
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -3669,6 +3859,7 @@ else:
     elif current_role == "Team Leader":
         menu_options = [
             "🧰 Bảng Công Việc", 
+            "💬 Tin Nhắn",
             "➕ Thêm Công Việc",
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -3678,6 +3869,7 @@ else:
     else:
         menu_options = [
             "🧰 Bảng Công Việc",
+            "💬 Tin Nhắn",
             "👥 Team Của Tôi",
             "📊 Báo Cáo & Khai Báo",
             "🔑 Đổi Mật Khẩu"
@@ -3686,11 +3878,17 @@ else:
     def _go_to_page(target):
         st.session_state["current_menu"] = target
 
+    try:
+        _chat_unread_total = sum(chat_unread_by_conv(user_data["id"]).values())
+    except sqlite3.OperationalError:
+        _chat_unread_total = 0
+
     for item in menu_options:
         is_selected = (st.session_state["current_menu"] == item)
+        _label = item + (f"  🔴 {_chat_unread_total}" if item == CHAT_MENU and _chat_unread_total else "")
         # on_click đổi trang TRƯỚC khi app chạy lại → chỉ chạy 1 lần thay vì 2 lần
         st.sidebar.button(
-            item, 
+            _label, 
             type="primary" if is_selected else "secondary", 
             use_container_width=True, 
             key=f"btn_menu_{item}",
@@ -4626,3 +4824,85 @@ else:
                                    (user_data['id'], st.session_state.get("session_token", "")))
                     conn.commit()
                     st.success("✅ Đã đổi mật khẩu thành công! Các thiết bị khác đã bị đăng xuất.")
+
+    # 9. 💬 TIN NHẮN: kênh chung cho mọi người + nhắn riêng (bấm vào tên tài khoản)
+    elif menu == CHAT_MENU:
+        st.markdown("<div class='big-table-title'>💬 Tin Nhắn</div>", unsafe_allow_html=True)
+        st.session_state.setdefault("chat_conv", "general")
+
+        def _open_conv(conv):
+            st.session_state["chat_conv"] = conv
+
+        @st.fragment(run_every=3)
+        def _chat_room():
+            me = user_data["id"]
+            conv = st.session_state.get("chat_conv", "general")
+            col_list, col_chat = st.columns([1, 2.2], gap="medium")
+
+            # ---------- Danh sách: Kênh chung + mọi tài khoản ----------
+            with col_list:
+                unread = chat_unread_by_conv(me)
+                unread.pop(conv, None)        # cuộc đang mở thì coi như đã đọc
+                g_badge = f"  🔴 {unread['general']}" if unread.get("general") else ""
+                st.button("📢 Kênh chung" + g_badge, key="chat_open_general", use_container_width=True,
+                          type="primary" if conv == "general" else "secondary",
+                          on_click=_open_conv, args=("general",))
+                st.markdown("#### 👥 Mọi người")
+                q = st.text_input("🔎 Tìm tài khoản", key="chat_search", label_visibility="collapsed",
+                                  placeholder="🔎 Tìm tài khoản")
+                people = cursor.execute("""
+                    SELECT id, username, fullname, role FROM users
+                    WHERE is_deleted = 0 AND id != ? AND role IS NOT NULL AND role != 'Pending'
+                    ORDER BY fullname COLLATE NOCASE
+                """, (me,)).fetchall()
+                if q.strip():
+                    ql = q.strip().lower()
+                    people = [p for p in people if ql in (p[1] or "").lower() or ql in (p[2] or "").lower()]
+                # Ai có tin nhắn chưa đọc thì đưa lên đầu
+                people.sort(key=lambda p: -unread.get(dm_conv_id(me, p[0]), 0))
+                with st.container(height=430, border=False):
+                    if not people:
+                        st.caption("Không tìm thấy tài khoản.")
+                    for pid, puser, pname, prole in people:
+                        c_id = dm_conv_id(me, pid)
+                        badge = f"  🔴 {unread[c_id]}" if unread.get(c_id) else ""
+                        icon = CHAT_ROLE_ICONS.get(prole, "👤")
+                        st.button(f"{icon} {pname or puser}{badge}", key=f"chat_open_{pid}", use_container_width=True,
+                                  type="primary" if conv == c_id else "secondary",
+                                  on_click=_open_conv, args=(c_id,))
+
+            # ---------- Khung trò chuyện ----------
+            with col_chat:
+                if conv == "general":
+                    st.markdown("### 📢 Kênh chung")
+                    st.caption("Mọi người trong app đều thấy kênh này.")
+                else:
+                    other_id = dm_other_id(conv, me)
+                    other = cursor.execute("SELECT username, fullname, role FROM users WHERE id = ? AND is_deleted = 0",
+                                           (other_id,)).fetchone()
+                    if not other:                      # tài khoản không còn → quay về kênh chung
+                        conv = "general"
+                        st.session_state["chat_conv"] = "general"
+                        st.markdown("### 📢 Kênh chung")
+                    else:
+                        st.markdown(f"### {CHAT_ROLE_ICONS.get(other[2], '👤')} {html.escape(other[1] or other[0])}")
+                        st.caption("Tin nhắn riêng với " + f"@{other[0]}")
+
+                # Chỗ hiện tin nhắn được giữ trước; ô nhập nằm dưới. Gửi xong thì tin mới hiện ngay.
+                msg_box = st.container()
+                new_msg = st.chat_input("Nhập tin nhắn...", key=f"chat_input_{conv}")
+                if new_msg and new_msg.strip():
+                    cursor.execute("INSERT INTO chat_messages (conv, sender_id, body, created_at) VALUES (?, ?, ?, ?)",
+                                   (conv, me, new_msg.strip()[:2000], datetime.now().isoformat(timespec="seconds")))
+
+                msgs = cursor.execute("""
+                    SELECT m.id, m.sender_id, m.body, m.created_at, u.fullname, u.username, u.role
+                    FROM chat_messages m LEFT JOIN users u ON u.id = m.sender_id
+                    WHERE m.conv = ? ORDER BY m.id DESC LIMIT 200
+                """, (conv,)).fetchall()
+                with msg_box:
+                    render_chat_messages(msgs, me)
+                if msgs:
+                    mark_chat_read(me, conv, msgs[0][0])
+
+        _chat_room()
