@@ -1322,6 +1322,9 @@ VI_EN = {
     "Tôi chắc chắn muốn xóa toàn bộ tin nhắn": "I'm sure I want to delete all messages",
     "🧹 XÓA TOÀN BỘ TIN NHẮN": "🧹 DELETE ALL MESSAGES",
     "Đã xóa toàn bộ tin nhắn.": "All messages deleted.",
+    "Mời người (họ sẽ thấy lời mời trong 🎥 Họp Online)": "Invite people (they'll see the invite in 🎥 Online Meetings)",
+    "### 📨 Lời mời họp của bạn": "### 📨 Your meeting invites",
+    "🎥 VÀO HỌP": "🎥 JOIN MEETING",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -1645,6 +1648,9 @@ _ZH_LIST = [
     "我确定要删除所有消息",
     "🧹 删除所有消息",
     "已删除所有消息。",
+    "邀请成员（他们会在 🎥 在线会议 中看到邀请）",
+    "### 📨 您的会议邀请",
+    "🎥 加入会议",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -1966,6 +1972,9 @@ _JA_LIST = [
     "すべてのメッセージを削除します",
     "🧹 すべてのメッセージを削除",
     "すべてのメッセージを削除しました。",
+    "参加者を招待（🎥 オンライン会議 に招待が表示されます）",
+    "### 📨 あなたへの会議の招待",
+    "🎥 会議に参加",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2287,6 +2296,9 @@ _KO_LIST = [
     "모든 메시지를 삭제하겠습니다",
     "🧹 모든 메시지 삭제",
     "모든 메시지를 삭제했습니다.",
+    "사람 초대 (🎥 온라인 회의에서 초대를 보게 됩니다)",
+    "### 📨 나의 회의 초대",
+    "🎥 회의 참가",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -2866,10 +2878,10 @@ def chat_unread_by_conv(me):
         SELECT m.conv, COUNT(*) FROM chat_messages m
         LEFT JOIN chat_reads r ON r.user_id = ? AND r.conv = m.conv
         WHERE m.sender_id != ? AND m.id > COALESCE(r.last_read_id, 0)
-          AND (m.conv = 'general' OR m.conv LIKE ? OR m.conv LIKE ?
+          AND (m.conv = 'general'
                OR m.conv IN (SELECT 'group:' || group_id FROM chat_group_members WHERE user_id = ?))
         GROUP BY m.conv
-    """, (me, me, f"dm:{me}:%", f"dm:%:{me}", me)).fetchall()
+    """, (me, me, me)).fetchall()
     return {c: n for c, n in rows}
 
 
@@ -3252,6 +3264,14 @@ cursor.execute('''
         start_at TEXT,
         created_at TEXT NOT NULL,
         is_active INTEGER DEFAULT 1
+    )
+''')
+
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS meeting_invites (
+        meeting_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        PRIMARY KEY (meeting_id, user_id)
     )
 ''')
 
@@ -5271,6 +5291,8 @@ else:
     elif menu == CHAT_MENU:
         st.markdown("<div class='big-table-title'>💬 Tin Nhắn</div>", unsafe_allow_html=True)
         st.session_state.setdefault("chat_conv", "general")
+        if str(st.session_state["chat_conv"]).startswith("dm:"):
+            st.session_state["chat_conv"] = "general"
 
         def _open_conv(conv):
             st.session_state["chat_conv"] = conv
@@ -5288,7 +5310,7 @@ else:
 
             col_list, col_chat = st.columns([1, 2.2], gap="medium")
 
-            # ---------- Cột trái: Kênh chung, Nhóm chat, Mọi người ----------
+            # ---------- Cột trái: Kênh chung + Nhóm chat (không còn nhắn riêng từng người) ----------
             with col_list:
                 # ➕ Tạo nhóm chat: đặt tên + chọn người
                 with st.expander("➕ Tạo nhóm chat"):
@@ -5323,25 +5345,6 @@ else:
                                   type="primary" if conv == c_id else "secondary",
                                   on_click=_open_conv, args=(c_id,))
 
-                st.markdown("#### 👥 Mọi người")
-                q = st.text_input("🔎 Tìm tài khoản", key="chat_search", label_visibility="collapsed",
-                                  placeholder="🔎 Tìm tài khoản")
-                people = list(all_people)
-                if q.strip():
-                    ql = q.strip().lower()
-                    people = [p for p in people if ql in (p[1] or "").lower() or ql in (p[2] or "").lower()]
-                # Ai có tin nhắn chưa đọc thì đưa lên đầu
-                people.sort(key=lambda p: -unread.get(dm_conv_id(me, p[0]), 0))
-                with st.container(height=380, border=False):
-                    if not people:
-                        st.caption("Không tìm thấy tài khoản.")
-                    for pid, puser, pname, prole in people:
-                        c_id = dm_conv_id(me, pid)
-                        badge = f"  🔴 {unread[c_id]}" if unread.get(c_id) else ""
-                        icon = CHAT_ROLE_ICONS.get(prole, "👤")
-                        st.button(f"{icon} {pname or puser}{badge}", key=f"chat_open_{pid}", use_container_width=True,
-                                  type="primary" if conv == c_id else "secondary",
-                                  on_click=_open_conv, args=(c_id,))
 
             # ---------- Cột phải: khung trò chuyện ----------
             with col_chat:
@@ -5392,17 +5395,11 @@ else:
                 elif conv == "general":
                     st.markdown("### 📢 Kênh chung")
                     st.caption("Mọi người trong app đều thấy kênh này.")
-                else:
-                    other_id = dm_other_id(conv, me)
-                    other = cursor.execute("SELECT username, fullname, role FROM users WHERE id = ? AND is_deleted = 0",
-                                           (other_id,)).fetchone()
-                    if not other:                      # tài khoản không còn → quay về kênh chung
-                        conv = "general"
-                        st.session_state["chat_conv"] = "general"
-                        st.markdown("### 📢 Kênh chung")
-                    else:
-                        st.markdown(f"### {CHAT_ROLE_ICONS.get(other[2], '👤')} {html.escape(other[1] or other[0])}")
-                        st.caption("Tin nhắn riêng với " + f"@{other[0]}")
+                else:                                  # nhắn riêng đã bỏ → quay về kênh chung
+                    conv = "general"
+                    st.session_state["chat_conv"] = "general"
+                    st.markdown("### 📢 Kênh chung")
+                    st.caption("Mọi người trong app đều thấy kênh này.")
 
                 # Chỗ hiện tin nhắn được giữ trước; ô nhập nằm dưới. Gửi xong thì tin mới hiện ngay.
                 msg_box = st.container()
@@ -5454,6 +5451,26 @@ else:
         can_host = current_role in MEETING_HOST_ROLES
         my_name = user_data.get("fullname") or user_data["username"]
 
+        # ---------- 📨 Lời mời họp (vào thẳng, không cần gõ mã) ----------
+        invites = cursor.execute("""
+            SELECT m.id, m.room_id, m.password, m.title, m.video_room, m.start_at, u.fullname, u.username
+            FROM meeting_invites i JOIN meetings m ON m.id = i.meeting_id
+            LEFT JOIN users u ON u.id = m.host_id
+            WHERE i.user_id = ? AND m.is_active = 1 ORDER BY m.start_at
+        """, (me,)).fetchall()
+        if invites:
+            st.markdown("### 📨 Lời mời họp của bạn")
+            for mid, rid, pw, ttl, vroom, start_at, hname, huser in invites:
+                with st.container(border=True):
+                    ic1, ic2 = st.columns([2, 1], vertical_alignment="center")
+                    with ic1:
+                        when = datetime.fromisoformat(start_at).strftime("%d/%m/%Y %H:%M") if start_at else ""
+                        st.markdown(f"**🎥 {html.escape(ttl)}**  \n🕒 {when} · " + "Chủ phòng" + f": {html.escape(hname or huser or '')}")
+                        st.markdown(meeting_code_card(rid, pw, compact=True), unsafe_allow_html=True)
+                    with ic2:
+                        st.link_button("🎥 VÀO HỌP", meeting_url(vroom, my_name), type="primary", use_container_width=True)
+            st.markdown("---")
+
         # ---------- 🔑 Vào cuộc họp ----------
         st.markdown("### 🔑 Vào cuộc họp")
         jc1, jc2, jc3 = st.columns([1.2, 1, 0.9], vertical_alignment="bottom")
@@ -5502,7 +5519,7 @@ else:
                     m_date = st.date_input("Ngày họp", value=date.today())
                 with mc2:
                     m_time = st.time_input("Giờ họp", value=(datetime.now() + timedelta(minutes=5)).time().replace(second=0, microsecond=0))
-                m_invite = st.multiselect("Mời người (gửi ID + mật khẩu qua 💬 Tin Nhắn)", list(p_label.keys()), placeholder="Chọn người...",
+                m_invite = st.multiselect("Mời người (họ sẽ thấy lời mời trong 🎥 Họp Online)", list(p_label.keys()), placeholder="Chọn người...",
                                           format_func=lambda i: p_label[i])
                 m_post_general = st.checkbox("📢 Thông báo vào Kênh chung", value=False)
                 if st.form_submit_button("🎥 TẠO CUỘC HỌP"):
@@ -5516,8 +5533,9 @@ else:
                                   + tr("🔢 ID phòng") + f": {format_room_id(room_id)}\n"
                                   + tr("🔑 Mật khẩu") + f": {password}\n"
                                   + tr("👉 Vào mục 🎥 Họp Online để tham gia."))
+                        new_mid = cursor.execute("SELECT id FROM meetings WHERE room_id = ?", (room_id,)).fetchone()[0]
                         for uid in m_invite:
-                            post_chat_message(dm_conv_id(me, uid), me, invite)
+                            cursor.execute("INSERT OR IGNORE INTO meeting_invites (meeting_id, user_id) VALUES (?, ?)", (new_mid, uid))
                         if m_post_general:
                             post_chat_message("general", me, invite)
                         st.session_state["meet_just_created"] = (room_id, password, m_title.strip()[:80])
