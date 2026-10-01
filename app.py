@@ -818,7 +818,64 @@ div[class*="st-key-chat_open_"] div.stButton > button > div,
 div[class*="st-key-chat_open_"] div.stButton > button p {
     justify-content: flex-start !important;
     text-align: left !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
 }
+
+/* ---------- Nút mở liên kết (Bắt đầu / Mở phòng họp): giống nút chính màu xanh ---------- */
+div[data-testid="stLinkButton"] a {
+    min-height: 48px !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    transition: transform 0.15s ease, box-shadow 0.2s ease !important;
+}
+div[data-testid="stLinkButton"] a[kind="primary"],
+div[data-testid="stLinkButton"] a[data-testid="stBaseLinkButton-primary"] {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.30) !important;
+}
+div[data-testid="stLinkButton"] a[kind="primary"] *,
+div[data-testid="stLinkButton"] a[data-testid="stBaseLinkButton-primary"] * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-weight: 700 !important;
+}
+div[data-testid="stLinkButton"] a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(22, 163, 74, 0.38) !important;
+}
+div[data-testid="stTimeInput"] div:has(> input),
+div[data-testid="stTimeInput"] div[data-baseweb="select"] > div {
+    background-color: __INPUT_BG__ !important;
+    border: 1.5px solid __INPUT_BORDER__ !important;
+    border-radius: 12px !important;
+}
+div[data-testid="stTimeInput"] input, div[data-testid="stTimeInput"] div[data-baseweb="select"] * {
+    color: __INPUT_TEXT__ !important;
+    -webkit-text-fill-color: __INPUT_TEXT__ !important;
+}
+
+/* ---------- 🎥 Thẻ ID + mật khẩu phòng họp ---------- */
+.sc-meet-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 6px 0 4px 0;
+}
+.sc-meet-card > div {
+    flex: 1 1 160px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: __SELECTED_BG__;
+    border: 2px dashed #0ea5e9;
+}
+.sc-meet-card span { display: block; font-size: 0.85rem; color: __PLACEHOLDER__; font-weight: 600; }
+.sc-meet-card b { display: block; font-size: 1.7rem; letter-spacing: 0.08em; color: __INPUT_TEXT__; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace !important; }
+.sc-meet-card.sc-compact > div { padding: 8px 12px; }
+.sc-meet-card.sc-compact b { font-size: 1.25rem; }
 
 /* ================================================================
    🌊 MƯỢT MÀ HƠN
@@ -1206,6 +1263,56 @@ VI_EN = {
     "Mọi người trong app đều thấy kênh này.": "Everyone in the app can see this channel.",
     "Tin nhắn riêng với ": "Private chat with ",
     "Nhập tin nhắn...": "Type a message...",
+    "➕ Tạo nhóm chat": "➕ Create group chat",
+    "Tên nhóm": "Group name",
+    "Ví dụ: Tổ hàn Block 170": "e.g. Welding crew Block 170",
+    "Thêm người vào nhóm": "Add people to the group",
+    "✨ TẠO NHÓM": "✨ CREATE GROUP",
+    "Vui lòng đặt tên nhóm!": "Please name the group!",
+    "Hãy chọn ít nhất 1 người!": "Choose at least 1 person!",
+    "Đã tạo nhóm **": "Created group **",
+    "#### 💬 Nhóm chat": "#### 💬 Group chats",
+    "⚙️ Thành viên nhóm": "⚙️ Group members",
+    "➕ THÊM VÀO NHÓM": "➕ ADD TO GROUP",
+    " người vào nhóm!": " people to the group!",
+    "Xóa khỏi nhóm": "Remove from group",
+    "➖ XÓA KHỎI NHÓM": "➖ REMOVE FROM GROUP",
+    "Đã xóa khỏi nhóm.": "Removed from the group.",
+    "🗑️ XÓA NHÓM": "🗑️ DELETE GROUP",
+    "Chỉ người tạo nhóm mới thêm / xóa được thành viên.": "Only the group creator can add / remove members.",
+    "🚪 RỜI NHÓM": "🚪 LEAVE GROUP",
+    "🎥 Họp Online": "🎥 Online Meetings",
+    "### 🔑 Vào cuộc họp": "### 🔑 Join a meeting",
+    "ID phòng họp": "Meeting room ID",
+    "Mật khẩu phòng": "Room password",
+    "🎥 VÀO PHÒNG": "🎥 JOIN",
+    "Bạn đã nhập sai quá nhiều lần. Hãy tải lại trang và thử lại sau.": "Too many wrong attempts. Reload the page and try again later.",
+    "Sai ID phòng hoặc mật khẩu, hoặc cuộc họp đã kết thúc!": "Wrong room ID or password, or the meeting has ended!",
+    "✅ Đúng mã phòng: **": "✅ Room found: **",
+    "Chủ phòng": "Host",
+    "🎥 MỞ PHÒNG HỌP (camera + micro)": "🎥 OPEN MEETING (camera + mic)",
+    "Phòng họp mở trong tab mới. Lần đầu, trình duyệt sẽ hỏi quyền dùng camera và micro — hãy bấm Cho phép.": "The meeting opens in a new tab. The first time, your browser will ask to use the camera and microphone — tap Allow.",
+    "### ➕ Tạo cuộc họp mới": "### ➕ Create a new meeting",
+    "Tên cuộc họp *": "Meeting name *",
+    "Ví dụ: Họp giao ca sáng": "e.g. Morning shift handover",
+    "Ngày họp": "Date",
+    "Giờ họp": "Time",
+    "Mời người (gửi ID + mật khẩu qua 💬 Tin Nhắn)": "Invite people (sends ID + password via 💬 Messages)",
+    "📢 Thông báo vào Kênh chung": "📢 Announce in General chat",
+    "🎥 TẠO CUỘC HỌP": "🎥 CREATE MEETING",
+    "Vui lòng nhập tên cuộc họp!": "Please enter a meeting name!",
+    "🎥 Mời họp": "🎥 Meeting invite",
+    "🕒 Thời gian": "🕒 Time",
+    "🔢 ID phòng": "🔢 Room ID",
+    "🔑 Mật khẩu": "🔑 Password",
+    "👉 Vào mục 🎥 Họp Online để tham gia.": "👉 Go to 🎥 Online Meetings to join.",
+    "🎉 Đã tạo cuộc họp **": "🎉 Created meeting **",
+    "### 📋 Cuộc họp của tôi": "### 📋 My meetings",
+    "Bạn chưa có cuộc họp nào.": "You have no meetings yet.",
+    "▶️ BẮT ĐẦU": "▶️ START",
+    "⛔ KẾT THÚC": "⛔ END",
+    "Chỉ Foreman và Team Leader mới tạo được cuộc họp. Bạn có thể vào họp khi có ID phòng và mật khẩu.": "Only Foremen and Team Leaders can create meetings. You can join with a room ID and password.",
+    "Chọn người...": "Choose people...",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -1470,6 +1577,56 @@ _ZH_LIST = [
     "应用中的所有人都能看到此频道。",
     "私聊：",
     "输入消息...",
+    "➕ 创建群聊",
+    "群名称",
+    "例如：170 分段焊接组",
+    "添加成员",
+    "✨ 创建群组",
+    "请为群组命名！",
+    "请至少选择 1 人！",
+    "已创建群组 **",
+    "#### 💬 群聊",
+    "⚙️ 群成员",
+    "➕ 加入群组",
+    " 人加入群组！",
+    "移出群组",
+    "➖ 移出群组",
+    "已移出群组。",
+    "🗑️ 删除群组",
+    "只有群主可以添加 / 移除成员。",
+    "🚪 退出群组",
+    "🎥 在线会议",
+    "### 🔑 加入会议",
+    "会议室 ID",
+    "会议密码",
+    "🎥 加入",
+    "输入错误次数过多。请刷新页面后再试。",
+    "会议室 ID 或密码错误，或会议已结束！",
+    "✅ 已找到会议：**",
+    "主持人",
+    "🎥 打开会议（摄像头 + 麦克风）",
+    "会议将在新标签页中打开。首次使用时，浏览器会请求摄像头和麦克风权限——请点击允许。",
+    "### ➕ 创建新会议",
+    "会议名称 *",
+    "例如：早班交接会",
+    "日期",
+    "时间",
+    "邀请成员（通过 💬 消息发送 ID 和密码）",
+    "📢 在公共频道通知",
+    "🎥 创建会议",
+    "请输入会议名称！",
+    "🎥 会议邀请",
+    "🕒 时间",
+    "🔢 会议室 ID",
+    "🔑 密码",
+    "👉 前往 🎥 在线会议 加入。",
+    "🎉 已创建会议 **",
+    "### 📋 我的会议",
+    "您还没有会议。",
+    "▶️ 开始",
+    "⛔ 结束",
+    "只有 Foreman 和 Team Leader 可以创建会议。有会议室 ID 和密码即可加入。",
+    "选择成员...",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -1732,6 +1889,56 @@ _JA_LIST = [
     "アプリの全員がこのチャンネルを見られます。",
     "個別チャット：",
     "メッセージを入力...",
+    "➕ グループチャットを作成",
+    "グループ名",
+    "例：ブロック170 溶接班",
+    "メンバーを追加",
+    "✨ グループを作成",
+    "グループ名を入力してください！",
+    "1人以上選んでください！",
+    "グループを作成しました **",
+    "#### 💬 グループチャット",
+    "⚙️ グループメンバー",
+    "➕ グループに追加",
+    " 人をグループに追加しました！",
+    "グループから外す",
+    "➖ グループから外す",
+    "グループから外しました。",
+    "🗑️ グループを削除",
+    "メンバーの追加 / 削除はグループ作成者だけができます。",
+    "🚪 グループを抜ける",
+    "🎥 オンライン会議",
+    "### 🔑 会議に参加",
+    "会議室 ID",
+    "会議パスワード",
+    "🎥 参加",
+    "入力ミスが多すぎます。ページを再読み込みして後でもう一度お試しください。",
+    "会議室 ID またはパスワードが違うか、会議は終了しています！",
+    "✅ 会議が見つかりました：**",
+    "主催者",
+    "🎥 会議を開く（カメラ + マイク）",
+    "会議は新しいタブで開きます。初回はブラウザがカメラとマイクの使用許可を求めるので「許可」をタップしてください。",
+    "### ➕ 新しい会議を作成",
+    "会議名 *",
+    "例：朝の引き継ぎ会議",
+    "日付",
+    "時刻",
+    "参加者を招待（💬 メッセージで ID とパスワードを送信）",
+    "📢 全体チャットでお知らせ",
+    "🎥 会議を作成",
+    "会議名を入力してください！",
+    "🎥 会議の招待",
+    "🕒 日時",
+    "🔢 会議室 ID",
+    "🔑 パスワード",
+    "👉 🎥 オンライン会議 から参加してください。",
+    "🎉 会議を作成しました **",
+    "### 📋 自分の会議",
+    "まだ会議はありません。",
+    "▶️ 開始",
+    "⛔ 終了",
+    "会議を作成できるのは Foreman と Team Leader だけです。会議室 ID とパスワードがあれば参加できます。",
+    "メンバーを選択...",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -1994,6 +2201,56 @@ _KO_LIST = [
     "앱의 모든 사람이 이 채널을 볼 수 있습니다.",
     "개인 채팅: ",
     "메시지를 입력하세요...",
+    "➕ 그룹 채팅 만들기",
+    "그룹 이름",
+    "예: 170블록 용접조",
+    "그룹에 사람 추가",
+    "✨ 그룹 만들기",
+    "그룹 이름을 입력하세요!",
+    "1명 이상 선택하세요!",
+    "그룹을 만들었습니다 **",
+    "#### 💬 그룹 채팅",
+    "⚙️ 그룹 멤버",
+    "➕ 그룹에 추가",
+    "명을 그룹에 추가했습니다!",
+    "그룹에서 제외",
+    "➖ 그룹에서 제외",
+    "그룹에서 제외했습니다.",
+    "🗑️ 그룹 삭제",
+    "그룹을 만든 사람만 멤버를 추가 / 제외할 수 있습니다.",
+    "🚪 그룹 나가기",
+    "🎥 온라인 회의",
+    "### 🔑 회의 참가",
+    "회의실 ID",
+    "회의실 비밀번호",
+    "🎥 참가",
+    "잘못 입력한 횟수가 너무 많습니다. 페이지를 새로고침하고 나중에 다시 시도하세요.",
+    "회의실 ID 또는 비밀번호가 틀렸거나 회의가 종료되었습니다!",
+    "✅ 회의를 찾았습니다: **",
+    "호스트",
+    "🎥 회의 열기 (카메라 + 마이크)",
+    "회의는 새 탭에서 열립니다. 처음에는 브라우저가 카메라와 마이크 사용 권한을 요청하니 허용을 누르세요.",
+    "### ➕ 새 회의 만들기",
+    "회의 이름 *",
+    "예: 아침 교대 회의",
+    "날짜",
+    "시간",
+    "사람 초대 (💬 메시지로 ID와 비밀번호 전송)",
+    "📢 전체 채팅에 알리기",
+    "🎥 회의 만들기",
+    "회의 이름을 입력하세요!",
+    "🎥 회의 초대",
+    "🕒 시간",
+    "🔢 회의실 ID",
+    "🔑 비밀번호",
+    "👉 🎥 온라인 회의에서 참가하세요.",
+    "🎉 회의를 만들었습니다 **",
+    "### 📋 내 회의",
+    "아직 회의가 없습니다.",
+    "▶️ 시작",
+    "⛔ 종료",
+    "Foreman과 Team Leader만 회의를 만들 수 있습니다. 회의실 ID와 비밀번호가 있으면 참가할 수 있습니다.",
+    "사람 선택...",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -2090,7 +2347,7 @@ def _install_translator():
         text_first: ["markdown", "caption", "info", "success", "warning", "error", "title", "header",
                      "subheader", "text", "button", "form_submit_button", "download_button", "text_input",
                      "text_area", "number_input", "date_input", "time_input", "checkbox", "toggle",
-                     "expander", "popover", "metric", "slider", "chat_input"],
+                     "expander", "popover", "metric", "slider", "chat_input", "link_button"],
         with_options: ["selectbox", "radio", "multiselect", "select_slider"],
         data_first: ["dataframe", "table"],
         tabs_first: ["tabs"],
@@ -2111,7 +2368,7 @@ for _name in ["markdown", "caption", "info", "success", "warning", "error", "tit
               "text", "button", "form_submit_button", "download_button", "text_input", "text_area",
               "number_input", "date_input", "time_input", "checkbox", "toggle", "expander", "popover",
               "metric", "slider", "selectbox", "radio", "multiselect", "select_slider", "dataframe",
-              "table", "tabs", "chat_input"]:
+              "table", "tabs", "chat_input", "link_button"]:
     if hasattr(st, _name) and hasattr(st._main, _name):
         setattr(st, _name, getattr(st._main, _name))
 
@@ -2573,9 +2830,10 @@ def chat_unread_by_conv(me):
         SELECT m.conv, COUNT(*) FROM chat_messages m
         LEFT JOIN chat_reads r ON r.user_id = ? AND r.conv = m.conv
         WHERE m.sender_id != ? AND m.id > COALESCE(r.last_read_id, 0)
-          AND (m.conv = 'general' OR m.conv LIKE ? OR m.conv LIKE ?)
+          AND (m.conv = 'general' OR m.conv LIKE ? OR m.conv LIKE ?
+               OR m.conv IN (SELECT 'group:' || group_id FROM chat_group_members WHERE user_id = ?))
         GROUP BY m.conv
-    """, (me, me, f"dm:{me}:%", f"dm:%:{me}")).fetchall()
+    """, (me, me, f"dm:{me}:%", f"dm:%:{me}", me)).fetchall()
     return {c: n for c, n in rows}
 
 
@@ -2628,6 +2886,110 @@ def get_secret(key, default=None):
 
 # 📍 1. ĐƯỜNG LINK TRANG WEB (đặt APP_URL trong Secrets)
 APP_URL = get_secret("APP_URL", "https://your-app.streamlit.app")
+
+# ==========================================
+# 💬 NHÓM CHAT + 🎥 HỌP ONLINE
+# ==========================================
+MEETING_MENU = "🎥 Họp Online"
+MEETING_HOST_ROLES = ["Foreman", "Team Leader"]
+# Máy chủ họp video (Jitsi Meet). Có thể đổi trong Secrets: MEETING_SERVER = "https://..."
+MEETING_SERVER = str(get_secret("MEETING_SERVER", "https://meet.jit.si")).rstrip("/")
+
+
+def post_chat_message(conv, sender_id, body):
+    cursor.execute("INSERT INTO chat_messages (conv, sender_id, body, created_at) VALUES (?, ?, ?, ?)",
+                   (conv, sender_id, str(body).strip()[:2000], datetime.now().isoformat(timespec="seconds")))
+
+
+def create_chat_group(name, owner_id, member_ids):
+    cursor.execute("INSERT INTO chat_groups (name, created_by, created_at) VALUES (?, ?, ?)",
+                   (name, owner_id, datetime.now().isoformat(timespec="seconds")))
+    gid = cursor.lastrowid
+    for uid in set([owner_id] + list(member_ids)):
+        cursor.execute("INSERT OR IGNORE INTO chat_group_members (group_id, user_id) VALUES (?, ?)", (gid, uid))
+    return gid
+
+
+def user_chat_groups(me):
+    return cursor.execute("""
+        SELECT g.id, g.name, g.created_by,
+               (SELECT COUNT(*) FROM chat_group_members x WHERE x.group_id = g.id) AS n
+        FROM chat_groups g JOIN chat_group_members m ON m.group_id = g.id
+        WHERE m.user_id = ? ORDER BY g.name COLLATE NOCASE
+    """, (me,)).fetchall()
+
+
+def is_group_member(gid, uid):
+    return cursor.execute("SELECT 1 FROM chat_group_members WHERE group_id = ? AND user_id = ?", (gid, uid)).fetchone() is not None
+
+
+def group_members(gid):
+    return cursor.execute("""
+        SELECT u.id, u.username, u.fullname, u.role FROM chat_group_members m
+        JOIN users u ON u.id = m.user_id WHERE m.group_id = ? AND u.is_deleted = 0
+        ORDER BY u.fullname COLLATE NOCASE
+    """, (gid,)).fetchall()
+
+
+def delete_chat_group(gid):
+    cursor.execute("DELETE FROM chat_group_members WHERE group_id = ?", (gid,))
+    cursor.execute("DELETE FROM chat_messages WHERE conv = ?", (f"group:{gid}",))
+    cursor.execute("DELETE FROM chat_reads WHERE conv = ?", (f"group:{gid}",))
+    cursor.execute("DELETE FROM chat_groups WHERE id = ?", (gid,))
+
+
+def leave_chat_group(gid, uid):
+    cursor.execute("DELETE FROM chat_group_members WHERE group_id = ? AND user_id = ?", (gid, uid))
+    left = cursor.execute("SELECT user_id FROM chat_group_members WHERE group_id = ? ORDER BY user_id LIMIT 1", (gid,)).fetchone()
+    if not left:
+        delete_chat_group(gid)                      # không còn ai → xóa nhóm
+    else:
+        owner = cursor.execute("SELECT created_by FROM chat_groups WHERE id = ?", (gid,)).fetchone()
+        if owner and owner[0] == uid:               # chủ nhóm rời → chuyển quyền cho người khác
+            cursor.execute("UPDATE chat_groups SET created_by = ? WHERE id = ?", (left[0], gid))
+
+
+def format_room_id(room_id):
+    d = "".join(ch for ch in str(room_id) if ch.isdigit())
+    return " ".join(d[i:i + 3] for i in range(0, len(d), 3))
+
+
+def create_meeting(title, host_id, start_at):
+    while True:
+        room_id = str(secrets.randbelow(900_000_000) + 100_000_000)          # 9 chữ số, giống Zoom
+        if not cursor.execute("SELECT 1 FROM meetings WHERE room_id = ?", (room_id,)).fetchone():
+            break
+    alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"                           # bỏ các ký tự dễ nhầm (0/O, 1/I)
+    password = "".join(secrets.choice(alphabet) for _ in range(6))
+    video_room = "ShipControl" + secrets.token_hex(10)                      # tên phòng video bí mật, không đoán được
+    cursor.execute("""INSERT INTO meetings (room_id, password, title, host_id, video_room, start_at, created_at, is_active)
+                      VALUES (?, ?, ?, ?, ?, ?, ?, 1)""",
+                   (room_id, password, title, host_id, video_room, start_at, datetime.now().isoformat(timespec="seconds")))
+    return room_id, password
+
+
+def find_meeting(room_input, password_input):
+    rid = "".join(ch for ch in str(room_input or "") if ch.isdigit())
+    pw = str(password_input or "").strip().upper()
+    if not rid or not pw:
+        return None
+    row = cursor.execute("SELECT id, password FROM meetings WHERE room_id = ? AND is_active = 1", (rid,)).fetchone()
+    if row and hmac.compare_digest(row[1].upper(), pw):
+        return row
+    return None
+
+
+def meeting_url(video_room, display_name):
+    from urllib.parse import quote
+    return f"{MEETING_SERVER}/{video_room}#userInfo.displayName=%22{quote(str(display_name))}%22"
+
+
+def meeting_code_card(room_id, password, compact=False):
+    lab_id, lab_pw = html.escape(tr("🔢 ID phòng")), html.escape(tr("🔑 Mật khẩu"))
+    return (f"<div class='sc-meet-card{' sc-compact' if compact else ''}'>"
+            f"<div><span>{lab_id}</span><b>{html.escape(format_room_id(room_id))}</b></div>"
+            f"<div><span>{lab_pw}</span><b>{html.escape(password)}</b></div></div>")
+
 
 # CẤU HÌNH GIAO DIỆN
 st.set_page_config(
@@ -2814,6 +3176,36 @@ cursor.execute('''
         conv TEXT NOT NULL,
         last_read_id INTEGER NOT NULL DEFAULT 0,
         PRIMARY KEY (user_id, conv)
+    )
+''')
+
+# 💬 NHÓM CHAT + 🎥 CUỘC HỌP
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS chat_groups (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        created_by INTEGER NOT NULL,
+        created_at TEXT NOT NULL
+    )
+''')
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS chat_group_members (
+        group_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        PRIMARY KEY (group_id, user_id)
+    )
+''')
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS meetings (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        room_id TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        title TEXT NOT NULL,
+        host_id INTEGER NOT NULL,
+        video_room TEXT NOT NULL,
+        start_at TEXT,
+        created_at TEXT NOT NULL,
+        is_active INTEGER DEFAULT 1
     )
 ''')
 
@@ -3837,6 +4229,7 @@ else:
         menu_options = [
             "🧰 Bảng Công Việc", 
             "💬 Tin Nhắn",
+            "🎥 Họp Online",
             "➕ Thêm Công Việc", 
             "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
@@ -3849,6 +4242,7 @@ else:
         menu_options = [
             "🧰 Bảng Công Việc", 
             "💬 Tin Nhắn",
+            "🎥 Họp Online",
             "➕ Thêm Công Việc", 
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -3860,6 +4254,7 @@ else:
         menu_options = [
             "🧰 Bảng Công Việc", 
             "💬 Tin Nhắn",
+            "🎥 Họp Online",
             "➕ Thêm Công Việc",
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -3870,6 +4265,7 @@ else:
         menu_options = [
             "🧰 Bảng Công Việc",
             "💬 Tin Nhắn",
+            "🎥 Họp Online",
             "👥 Team Của Tôi",
             "📊 Báo Cáo & Khai Báo",
             "🔑 Đổi Mật Khẩu"
@@ -4825,7 +5221,7 @@ else:
                     conn.commit()
                     st.success("✅ Đã đổi mật khẩu thành công! Các thiết bị khác đã bị đăng xuất.")
 
-    # 9. 💬 TIN NHẮN: kênh chung cho mọi người + nhắn riêng (bấm vào tên tài khoản)
+    # 9. 💬 TIN NHẮN: kênh chung + nhóm chat tự tạo + nhắn riêng (bấm vào tên tài khoản)
     elif menu == CHAT_MENU:
         st.markdown("<div class='big-table-title'>💬 Tin Nhắn</div>", unsafe_allow_html=True)
         st.session_state.setdefault("chat_conv", "general")
@@ -4837,30 +5233,60 @@ else:
         def _chat_room():
             me = user_data["id"]
             conv = st.session_state.get("chat_conv", "general")
+            all_people = cursor.execute("""
+                SELECT id, username, fullname, role FROM users
+                WHERE is_deleted = 0 AND id != ? AND role IS NOT NULL AND role != 'Pending'
+                ORDER BY fullname COLLATE NOCASE
+            """, (me,)).fetchall()
+            people_label = {p[0]: f"{CHAT_ROLE_ICONS.get(p[3], '👤')} {p[2] or p[1]} (@{p[1]})" for p in all_people}
+
             col_list, col_chat = st.columns([1, 2.2], gap="medium")
 
-            # ---------- Danh sách: Kênh chung + mọi tài khoản ----------
+            # ---------- Cột trái: Kênh chung, Nhóm chat, Mọi người ----------
             with col_list:
+                # ➕ Tạo nhóm chat: đặt tên + chọn người
+                with st.expander("➕ Tạo nhóm chat"):
+                    g_name = st.text_input("Tên nhóm", key="chat_new_group_name", placeholder="Ví dụ: Tổ hàn Block 170")
+                    g_members = st.multiselect("Thêm người vào nhóm", list(people_label.keys()), placeholder="Chọn người...",
+                                               format_func=lambda i: people_label[i], key="chat_new_group_members")
+                    if st.button("✨ TẠO NHÓM", key="chat_create_group", type="primary", use_container_width=True):
+                        if not g_name.strip():
+                            st.error("Vui lòng đặt tên nhóm!")
+                        elif not g_members:
+                            st.error("Hãy chọn ít nhất 1 người!")
+                        else:
+                            new_gid = create_chat_group(g_name.strip()[:60], me, g_members)
+                            conv = f"group:{new_gid}"
+                            st.session_state["chat_conv"] = conv
+                            st.success(f"Đã tạo nhóm **{g_name.strip()[:60]}**!")
+
                 unread = chat_unread_by_conv(me)
                 unread.pop(conv, None)        # cuộc đang mở thì coi như đã đọc
                 g_badge = f"  🔴 {unread['general']}" if unread.get("general") else ""
                 st.button("📢 Kênh chung" + g_badge, key="chat_open_general", use_container_width=True,
                           type="primary" if conv == "general" else "secondary",
                           on_click=_open_conv, args=("general",))
+
+                my_groups = user_chat_groups(me)
+                if my_groups:
+                    st.markdown("#### 💬 Nhóm chat")
+                    for gid, gname, gowner, gcount in my_groups:
+                        c_id = f"group:{gid}"
+                        badge = f"  🔴 {unread[c_id]}" if unread.get(c_id) else ""
+                        st.button(f"💬 {gname} · {gcount}{badge}", key=f"chat_open_g{gid}", use_container_width=True,
+                                  type="primary" if conv == c_id else "secondary",
+                                  on_click=_open_conv, args=(c_id,))
+
                 st.markdown("#### 👥 Mọi người")
                 q = st.text_input("🔎 Tìm tài khoản", key="chat_search", label_visibility="collapsed",
                                   placeholder="🔎 Tìm tài khoản")
-                people = cursor.execute("""
-                    SELECT id, username, fullname, role FROM users
-                    WHERE is_deleted = 0 AND id != ? AND role IS NOT NULL AND role != 'Pending'
-                    ORDER BY fullname COLLATE NOCASE
-                """, (me,)).fetchall()
+                people = list(all_people)
                 if q.strip():
                     ql = q.strip().lower()
                     people = [p for p in people if ql in (p[1] or "").lower() or ql in (p[2] or "").lower()]
                 # Ai có tin nhắn chưa đọc thì đưa lên đầu
                 people.sort(key=lambda p: -unread.get(dm_conv_id(me, p[0]), 0))
-                with st.container(height=430, border=False):
+                with st.container(height=380, border=False):
                     if not people:
                         st.caption("Không tìm thấy tài khoản.")
                     for pid, puser, pname, prole in people:
@@ -4871,9 +5297,50 @@ else:
                                   type="primary" if conv == c_id else "secondary",
                                   on_click=_open_conv, args=(c_id,))
 
-            # ---------- Khung trò chuyện ----------
+            # ---------- Cột phải: khung trò chuyện ----------
             with col_chat:
-                if conv == "general":
+                if conv.startswith("group:"):
+                    gid = int(conv.split(":")[1])
+                    group = cursor.execute("SELECT id, name, created_by FROM chat_groups WHERE id = ?", (gid,)).fetchone()
+                    if not group or not is_group_member(gid, me):
+                        conv = "general"
+                        st.session_state["chat_conv"] = "general"
+                if conv.startswith("group:"):
+                    is_owner = (group[2] == me)
+                    members = group_members(gid)
+                    st.markdown(f"### 💬 {html.escape(group[1])}")
+                    st.caption(" · ".join(f"{CHAT_ROLE_ICONS.get(r, '👤')} {n or u}" for _, u, n, r in members))
+                    with st.expander("⚙️ Thành viên nhóm"):
+                        if is_owner:
+                            outsiders = [p for p in all_people if p[0] not in {m[0] for m in members}]
+                            add_ids = st.multiselect("Thêm người vào nhóm", [p[0] for p in outsiders], placeholder="Chọn người...",
+                                                     format_func=lambda i: people_label[i], key=f"chat_add_{gid}")
+                            if st.button("➕ THÊM VÀO NHÓM", key=f"chat_add_btn_{gid}"):
+                                if add_ids:
+                                    for uid in add_ids:
+                                        cursor.execute("INSERT OR IGNORE INTO chat_group_members (group_id, user_id) VALUES (?, ?)", (gid, uid))
+                                    st.success(f"Đã thêm {len(add_ids)} người vào nhóm!")
+                            others = [m for m in members if m[0] != me]
+                            if others:
+                                rm_id = st.selectbox("Xóa khỏi nhóm", [m[0] for m in others],
+                                                     format_func=lambda i: next(f"{n or u} (@{u})" for x, u, n, r in others if x == i),
+                                                     key=f"chat_rm_{gid}")
+                                if st.button("➖ XÓA KHỎI NHÓM", key=f"chat_rm_btn_{gid}"):
+                                    cursor.execute("DELETE FROM chat_group_members WHERE group_id = ? AND user_id = ?", (gid, rm_id))
+                                    st.success("Đã xóa khỏi nhóm.")
+                            if st.button("🗑️ XÓA NHÓM", key=f"chat_del_group_{gid}"):
+                                delete_chat_group(gid)
+                                conv = "general"
+                                st.session_state["chat_conv"] = "general"
+                        else:
+                            st.caption("Chỉ người tạo nhóm mới thêm / xóa được thành viên.")
+                        if conv.startswith("group:") and st.button("🚪 RỜI NHÓM", key=f"chat_leave_{gid}"):
+                            leave_chat_group(gid, me)
+                            conv = "general"
+                            st.session_state["chat_conv"] = "general"
+                    if not conv.startswith("group:"):
+                        st.markdown("### 📢 Kênh chung")
+                elif conv == "general":
                     st.markdown("### 📢 Kênh chung")
                     st.caption("Mọi người trong app đều thấy kênh này.")
                 else:
@@ -4892,8 +5359,7 @@ else:
                 msg_box = st.container()
                 new_msg = st.chat_input("Nhập tin nhắn...", key=f"chat_input_{conv}")
                 if new_msg and new_msg.strip():
-                    cursor.execute("INSERT INTO chat_messages (conv, sender_id, body, created_at) VALUES (?, ?, ?, ?)",
-                                   (conv, me, new_msg.strip()[:2000], datetime.now().isoformat(timespec="seconds")))
+                    post_chat_message(conv, me, new_msg)
 
                 msgs = cursor.execute("""
                     SELECT m.id, m.sender_id, m.body, m.created_at, u.fullname, u.username, u.role
@@ -4906,3 +5372,104 @@ else:
                     mark_chat_read(me, conv, msgs[0][0])
 
         _chat_room()
+
+    # 10. 🎥 HỌP ONLINE: Foreman / Team Leader tạo phòng họp có ID + mật khẩu; ai cũng vào được nếu có mã
+    elif menu == MEETING_MENU:
+        st.markdown("<div class='big-table-title'>🎥 Họp Online</div>", unsafe_allow_html=True)
+        me = user_data["id"]
+        can_host = current_role in MEETING_HOST_ROLES
+        my_name = user_data.get("fullname") or user_data["username"]
+
+        # ---------- 🔑 Vào cuộc họp ----------
+        st.markdown("### 🔑 Vào cuộc họp")
+        jc1, jc2, jc3 = st.columns([1.2, 1, 0.9], vertical_alignment="bottom")
+        with jc1:
+            j_room = st.text_input("ID phòng họp", key="meet_join_room", placeholder="123 456 789")
+        with jc2:
+            j_pass = st.text_input("Mật khẩu phòng", key="meet_join_pass", type="password")
+        with jc3:
+            do_join = st.button("🎥 VÀO PHÒNG", key="meet_join_btn", type="primary", use_container_width=True)
+        if do_join:
+            st.session_state["meet_attempts"] = st.session_state.get("meet_attempts", 0) + 1
+            if st.session_state["meet_attempts"] > 15:
+                st.error("Bạn đã nhập sai quá nhiều lần. Hãy tải lại trang và thử lại sau.")
+            else:
+                mt = find_meeting(j_room, j_pass)
+                if mt:
+                    st.session_state["meet_joined"] = mt[0]
+                    st.session_state["meet_attempts"] = 0
+                else:
+                    st.session_state.pop("meet_joined", None)
+                    st.error("Sai ID phòng hoặc mật khẩu, hoặc cuộc họp đã kết thúc!")
+        joined = st.session_state.get("meet_joined")
+        if joined:
+            mt = cursor.execute("""SELECT m.title, m.video_room, m.start_at, u.fullname, u.username
+                                   FROM meetings m LEFT JOIN users u ON u.id = m.host_id
+                                   WHERE m.id = ? AND m.is_active = 1""", (joined,)).fetchone()
+            if mt:
+                st.success(f"✅ Đúng mã phòng: **{mt[0]}** · " + "Chủ phòng" + f": {mt[3] or mt[4]}")
+                st.link_button("🎥 MỞ PHÒNG HỌP (camera + micro)", meeting_url(mt[1], my_name), type="primary")
+                st.caption("Phòng họp mở trong tab mới. Lần đầu, trình duyệt sẽ hỏi quyền dùng camera và micro — hãy bấm Cho phép.")
+
+        # ---------- ➕ Tạo cuộc họp (Foreman / Team Leader) ----------
+        if can_host:
+            st.markdown("---")
+            st.markdown("### ➕ Tạo cuộc họp mới")
+            people = cursor.execute("""
+                SELECT id, username, fullname, role FROM users
+                WHERE is_deleted = 0 AND id != ? AND role IS NOT NULL AND role != 'Pending'
+                ORDER BY fullname COLLATE NOCASE
+            """, (me,)).fetchall()
+            p_label = {p[0]: f"{CHAT_ROLE_ICONS.get(p[3], '👤')} {p[2] or p[1]} (@{p[1]})" for p in people}
+            with st.form("meet_create_form", clear_on_submit=True):
+                m_title = st.text_input("Tên cuộc họp *", placeholder="Ví dụ: Họp giao ca sáng")
+                mc1, mc2 = st.columns(2)
+                with mc1:
+                    m_date = st.date_input("Ngày họp", value=date.today())
+                with mc2:
+                    m_time = st.time_input("Giờ họp", value=(datetime.now() + timedelta(minutes=5)).time().replace(second=0, microsecond=0))
+                m_invite = st.multiselect("Mời người (gửi ID + mật khẩu qua 💬 Tin Nhắn)", list(p_label.keys()), placeholder="Chọn người...",
+                                          format_func=lambda i: p_label[i])
+                m_post_general = st.checkbox("📢 Thông báo vào Kênh chung", value=False)
+                if st.form_submit_button("🎥 TẠO CUỘC HỌP"):
+                    if not m_title.strip():
+                        st.error("Vui lòng nhập tên cuộc họp!")
+                    else:
+                        start_at = datetime.combine(m_date, m_time).isoformat(timespec="minutes")
+                        room_id, password = create_meeting(m_title.strip()[:80], me, start_at)
+                        invite = (tr("🎥 Mời họp") + f": {m_title.strip()[:80]}\n"
+                                  + tr("🕒 Thời gian") + f": {datetime.fromisoformat(start_at).strftime('%d/%m/%Y %H:%M')}\n"
+                                  + tr("🔢 ID phòng") + f": {format_room_id(room_id)}\n"
+                                  + tr("🔑 Mật khẩu") + f": {password}\n"
+                                  + tr("👉 Vào mục 🎥 Họp Online để tham gia."))
+                        for uid in m_invite:
+                            post_chat_message(dm_conv_id(me, uid), me, invite)
+                        if m_post_general:
+                            post_chat_message("general", me, invite)
+                        st.session_state["meet_just_created"] = (room_id, password, m_title.strip()[:80])
+            if st.session_state.get("meet_just_created"):
+                rid, pw, ttl = st.session_state.pop("meet_just_created")
+                st.success(f"🎉 Đã tạo cuộc họp **{ttl}**!")
+                st.markdown(meeting_code_card(rid, pw), unsafe_allow_html=True)
+
+            # ---------- 📋 Cuộc họp của tôi ----------
+            st.markdown("---")
+            st.markdown("### 📋 Cuộc họp của tôi")
+            mine = cursor.execute("""SELECT id, room_id, password, title, video_room, start_at FROM meetings
+                                     WHERE host_id = ? AND is_active = 1 ORDER BY start_at DESC""", (me,)).fetchall()
+            if not mine:
+                st.info("Bạn chưa có cuộc họp nào.")
+            for mid, rid, pw, ttl, vroom, start_at in mine:
+                with st.container(border=True):
+                    cc1, cc2 = st.columns([2, 1], vertical_alignment="center")
+                    with cc1:
+                        when = datetime.fromisoformat(start_at).strftime("%d/%m/%Y %H:%M") if start_at else ""
+                        st.markdown(f"**🎥 {html.escape(ttl)}**  \n🕒 {when}")
+                        st.markdown(meeting_code_card(rid, pw, compact=True), unsafe_allow_html=True)
+                    with cc2:
+                        st.link_button("▶️ BẮT ĐẦU", meeting_url(vroom, my_name), type="primary", use_container_width=True)
+                        if st.button("⛔ KẾT THÚC", key=f"meet_end_{mid}", use_container_width=True):
+                            cursor.execute("UPDATE meetings SET is_active = 0 WHERE id = ? AND host_id = ?", (mid, me))
+                            st.rerun()
+        else:
+            st.caption("Chỉ Foreman và Team Leader mới tạo được cuộc họp. Bạn có thể vào họp khi có ID phòng và mật khẩu.")
