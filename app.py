@@ -858,6 +858,62 @@ div[data-testid="stTimeInput"] input, div[data-testid="stTimeInput"] div[data-ba
     -webkit-text-fill-color: __INPUT_TEXT__ !important;
 }
 
+/* ---------- Ô chọn nhiều người: tên đã chọn hiện chữ đen trên nền xanh nhạt ---------- */
+/* Hộp ngoài là khung nhập; vùng chứa tên bên trong trong suốt (không bị khung lồng khung) */
+html body div[data-testid="stMultiSelect"] div:has(> div[data-testid="stMultiSelectTagsContainer"]) {
+    background-color: __INPUT_BG__ !important;
+    border: 1.5px solid __INPUT_BORDER__ !important;
+    border-radius: 12px !important;
+}
+html body div[data-testid="stMultiSelect"] div:has(> div[data-testid="stMultiSelectTagsContainer"]):focus-within {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18) !important;
+}
+html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsContainer"] {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+/* Từng tên đã chọn */
+html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsContainer"] > span > span,
+html body div[data-testid="stMultiSelect"] [data-baseweb="tag"] {
+    background-color: __SELECTED_BG__ !important;
+    border: 1px solid #0ea5e9 !important;
+    border-radius: 14px !important;
+    padding: 4px 4px 4px 10px !important;
+}
+html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsContainer"] > span > span *,
+html body div[data-testid="stMultiSelect"] [data-baseweb="tag"] * {
+    color: __INPUT_TEXT__ !important;
+    -webkit-text-fill-color: __INPUT_TEXT__ !important;
+    background-color: transparent !important;
+    font-weight: 600 !important;
+}
+html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsContainer"] > span > span svg,
+html body div[data-testid="stMultiSelect"] [data-baseweb="tag"] svg {
+    fill: __INPUT_TEXT__ !important;
+    color: __INPUT_TEXT__ !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+/* Hiện đủ tên (xuống dòng nếu dài), không cắt thành "Minh ..." */
+html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsContainer"] > span > span {
+    max-width: 100% !important;
+    height: auto !important;
+}
+html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsContainer"] > span > span > span {
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    line-height: 1.3 !important;
+}
+/* Danh sách xổ xuống: chữ đen */
+[data-baseweb="popover"] li, [data-baseweb="popover"] li * {
+    color: __INPUT_TEXT__ !important;
+    -webkit-text-fill-color: __INPUT_TEXT__ !important;
+}
+
 /* ---------- 🎥 Thẻ ID + mật khẩu phòng họp ---------- */
 .sc-meet-card {
     display: flex;
