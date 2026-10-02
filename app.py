@@ -1337,7 +1337,7 @@ VI_EN = {
     "🗑️ XÓA NHÓM": "🗑️ DELETE GROUP",
     "Chỉ người tạo nhóm mới thêm / xóa được thành viên.": "Only the group creator can add / remove members.",
     "🚪 RỜI NHÓM": "🚪 LEAVE GROUP",
-    "🎥 Họp Online": "🎥 Online Meetings",
+    "🎥 Online Meeting": "🎥 Online Meetings",
     "### 🔑 Vào cuộc họp": "### 🔑 Join a meeting",
     "ID phòng họp": "Meeting room ID",
     "Mật khẩu phòng": "Room password",
@@ -1361,7 +1361,7 @@ VI_EN = {
     "🕒 Thời gian": "🕒 Time",
     "🔢 ID phòng": "🔢 Room ID",
     "🔑 Mật khẩu": "🔑 Password",
-    "👉 Vào mục 🎥 Họp Online để tham gia.": "👉 Go to 🎥 Online Meetings to join.",
+    "👉 Vào mục 🎥 Online Meeting để tham gia.": "👉 Go to 🎥 Online Meetings to join.",
     "🎉 Đã tạo cuộc họp **": "🎉 Created meeting **",
     "### 📋 Cuộc họp của tôi": "### 📋 My meetings",
     "Bạn chưa có cuộc họp nào.": "You have no meetings yet.",
@@ -1378,10 +1378,10 @@ VI_EN = {
     "Tôi chắc chắn muốn xóa toàn bộ tin nhắn": "I'm sure I want to delete all messages",
     "🧹 XÓA TOÀN BỘ TIN NHẮN": "🧹 DELETE ALL MESSAGES",
     "Đã xóa toàn bộ tin nhắn.": "All messages deleted.",
-    "Mời người (họ sẽ thấy lời mời trong 🎥 Họp Online)": "Invite people (they'll see the invite in 🎥 Online Meetings)",
+    "Mời người (họ sẽ thấy lời mời trong 🎥 Online Meeting)": "Invite people (they'll see the invite in 🎥 Online Meetings)",
     "### 📨 Lời mời họp của bạn": "### 📨 Your meeting invites",
     "🎥 VÀO HỌP": "🎥 JOIN MEETING",
-    "💬 Tin Nhắn & Họp": "💬 Messages & Meetings",
+    "💬 Tin Nhắn & Meeting": "💬 Messages & Meetings",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -2911,7 +2911,7 @@ def _guess_device():
 # 💬 TIN NHẮN (kênh chung + nhắn riêng)
 # ==========================================
 CHAT_MENU = "💬 Tin Nhắn"
-CONNECT_MENU = "💬 Tin Nhắn & Họp"      # 1 nút menu gộp Tin nhắn + Họp online
+CONNECT_MENU = "💬 Tin Nhắn & Meeting"      # 1 nút menu gộp Tin nhắn + Họp online
 CHAT_ROLE_ICONS = {"Admin": "🛡️", "WOS Manager": "👑", "Foreman": "👔", "Team Leader": "🧢", "Worker": "👷"}
 _YOU_LABEL = {"vi": "Bạn", "en": "You", "zh": "我", "ja": "自分", "ko": "나"}
 _EMPTY_CHAT = {
@@ -2999,7 +2999,7 @@ APP_URL = get_secret("APP_URL", "https://your-app.streamlit.app")
 # ==========================================
 # 💬 NHÓM CHAT + 🎥 HỌP ONLINE
 # ==========================================
-MEETING_MENU = "🎥 Họp Online"
+MEETING_MENU = "🎥 Online Meeting"
 MEETING_HOST_ROLES = ["Foreman", "Team Leader"]
 # Máy chủ họp video (Jitsi Meet). Có thể đổi trong Secrets: MEETING_SERVER = "https://..."
 MEETING_SERVER = str(get_secret("MEETING_SERVER", "https://meet.jit.si")).rstrip("/")
@@ -4349,6 +4349,8 @@ else:
 
     st.sidebar.markdown("<div class='sidebar-header'>☸️ Control Menu</div>", unsafe_allow_html=True)
 
+    if st.session_state.get("current_menu") in ("💬 Tin Nhắn & Họp", "🎥 Họp Online"):   # tên cũ
+        st.session_state["current_menu"] = CONNECT_MENU
     if st.session_state.get("current_menu") in (CHAT_MENU, MEETING_MENU):
         st.session_state["connect_tab"] = "meet" if st.session_state["current_menu"] == MEETING_MENU else "chat"
         st.session_state["current_menu"] = CONNECT_MENU
@@ -4358,7 +4360,7 @@ else:
     if is_manager_up:
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "💬 Tin Nhắn & Họp",
+            "💬 Tin Nhắn & Meeting",
             "➕ Thêm Công Việc", 
             "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
@@ -4370,7 +4372,7 @@ else:
     elif current_role == "Foreman":
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "💬 Tin Nhắn & Họp",
+            "💬 Tin Nhắn & Meeting",
             "➕ Thêm Công Việc", 
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -4381,7 +4383,7 @@ else:
     elif current_role == "Team Leader":
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "💬 Tin Nhắn & Họp",
+            "💬 Tin Nhắn & Meeting",
             "➕ Thêm Công Việc",
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -4391,7 +4393,7 @@ else:
     else:
         menu_options = [
             "🧰 Bảng Công Việc",
-            "💬 Tin Nhắn & Họp",
+            "💬 Tin Nhắn & Meeting",
             "👥 Team Của Tôi",
             "📊 Báo Cáo & Khai Báo",
             "🔑 Đổi Mật Khẩu"
@@ -4477,9 +4479,9 @@ else:
     _page_frame = st.container(key=f"pg{st.session_state.get('page_dir', 'R')}_{page_idx}")
     _page_frame.__enter__()
 
-    # 💬 Tin Nhắn & Họp: 1 nút menu, bên trong có 2 thẻ (Tin nhắn | Họp online)
+    # 💬 Tin Nhắn & Meeting: 1 nút menu, bên trong có 2 thẻ (Tin nhắn | Họp online)
     if menu == CONNECT_MENU:
-        st.markdown("<div class='big-table-title'>💬 Tin Nhắn & Họp</div>", unsafe_allow_html=True)
+        st.markdown("<div class='big-table-title'>💬 Tin Nhắn & Meeting</div>", unsafe_allow_html=True)
         st.session_state.setdefault("connect_tab", "chat")
         _ct1, _ct2, _ct_space = st.columns([1.3, 1.3, 2])
         with _ct1:
@@ -4488,7 +4490,7 @@ else:
                       type="primary" if st.session_state["connect_tab"] == "chat" else "secondary",
                       on_click=lambda: st.session_state.update({"connect_tab": "chat"}))
         with _ct2:
-            st.button("🎥 Họp Online", key="btn_connect_meet", use_container_width=True,
+            st.button("🎥 Online Meeting", key="btn_connect_meet", use_container_width=True,
                       type="primary" if st.session_state["connect_tab"] == "meet" else "secondary",
                       on_click=lambda: st.session_state.update({"connect_tab": "meet"}))
         menu = CHAT_MENU if st.session_state["connect_tab"] == "chat" else MEETING_MENU
@@ -5593,7 +5595,7 @@ else:
                     m_date = st.date_input("Ngày họp", value=date.today())
                 with mc2:
                     m_time = st.time_input("Giờ họp", value=(datetime.now() + timedelta(minutes=5)).time().replace(second=0, microsecond=0))
-                m_invite = st.multiselect("Mời người (họ sẽ thấy lời mời trong 🎥 Họp Online)", list(p_label.keys()), placeholder="Chọn người...",
+                m_invite = st.multiselect("Mời người (họ sẽ thấy lời mời trong 🎥 Online Meeting)", list(p_label.keys()), placeholder="Chọn người...",
                                           format_func=lambda i: p_label[i])
                 m_post_general = st.checkbox("📢 Thông báo vào Kênh chung", value=False)
                 if st.form_submit_button("🎥 TẠO CUỘC HỌP"):
@@ -5606,7 +5608,7 @@ else:
                                   + tr("🕒 Thời gian") + f": {datetime.fromisoformat(start_at).strftime('%d/%m/%Y %H:%M')}\n"
                                   + tr("🔢 ID phòng") + f": {format_room_id(room_id)}\n"
                                   + tr("🔑 Mật khẩu") + f": {password}\n"
-                                  + tr("👉 Vào mục 🎥 Họp Online để tham gia."))
+                                  + tr("👉 Vào mục 🎥 Online Meeting để tham gia."))
                         new_mid = cursor.execute("SELECT id FROM meetings WHERE room_id = ?", (room_id,)).fetchone()[0]
                         for uid in m_invite:
                             cursor.execute("INSERT OR IGNORE INTO meeting_invites (meeting_id, user_id) VALUES (?, ?)", (new_mid, uid))
