@@ -1381,6 +1381,7 @@ VI_EN = {
     "Mời người (họ sẽ thấy lời mời trong 🎥 Họp Online)": "Invite people (they'll see the invite in 🎥 Online Meetings)",
     "### 📨 Lời mời họp của bạn": "### 📨 Your meeting invites",
     "🎥 VÀO HỌP": "🎥 JOIN MEETING",
+    "💬 Tin Nhắn & Họp": "💬 Messages & Meetings",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -1707,6 +1708,7 @@ _ZH_LIST = [
     "邀请成员（他们会在 🎥 在线会议 中看到邀请）",
     "### 📨 您的会议邀请",
     "🎥 加入会议",
+    "💬 消息与会议",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2031,6 +2033,7 @@ _JA_LIST = [
     "参加者を招待（🎥 オンライン会議 に招待が表示されます）",
     "### 📨 あなたへの会議の招待",
     "🎥 会議に参加",
+    "💬 メッセージと会議",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2355,6 +2358,7 @@ _KO_LIST = [
     "사람 초대 (🎥 온라인 회의에서 초대를 보게 됩니다)",
     "### 📨 나의 회의 초대",
     "🎥 회의 참가",
+    "💬 메시지 및 회의",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -2907,6 +2911,7 @@ def _guess_device():
 # 💬 TIN NHẮN (kênh chung + nhắn riêng)
 # ==========================================
 CHAT_MENU = "💬 Tin Nhắn"
+CONNECT_MENU = "💬 Tin Nhắn & Họp"      # 1 nút menu gộp Tin nhắn + Họp online
 CHAT_ROLE_ICONS = {"Admin": "🛡️", "WOS Manager": "👑", "Foreman": "👔", "Team Leader": "🧢", "Worker": "👷"}
 _YOU_LABEL = {"vi": "Bạn", "en": "You", "zh": "我", "ja": "自分", "ko": "나"}
 _EMPTY_CHAT = {
@@ -4344,14 +4349,16 @@ else:
 
     st.sidebar.markdown("<div class='sidebar-header'>☸️ Control Menu</div>", unsafe_allow_html=True)
 
+    if st.session_state.get("current_menu") in (CHAT_MENU, MEETING_MENU):
+        st.session_state["connect_tab"] = "meet" if st.session_state["current_menu"] == MEETING_MENU else "chat"
+        st.session_state["current_menu"] = CONNECT_MENU
     is_admin = current_role == "Admin"
     is_manager_up = current_role in ["Admin", "WOS Manager"]
 
     if is_manager_up:
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "💬 Tin Nhắn",
-            "🎥 Họp Online",
+            "💬 Tin Nhắn & Họp",
             "➕ Thêm Công Việc", 
             "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
@@ -4363,8 +4370,7 @@ else:
     elif current_role == "Foreman":
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "💬 Tin Nhắn",
-            "🎥 Họp Online",
+            "💬 Tin Nhắn & Họp",
             "➕ Thêm Công Việc", 
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -4375,8 +4381,7 @@ else:
     elif current_role == "Team Leader":
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "💬 Tin Nhắn",
-            "🎥 Họp Online",
+            "💬 Tin Nhắn & Họp",
             "➕ Thêm Công Việc",
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -4386,8 +4391,7 @@ else:
     else:
         menu_options = [
             "🧰 Bảng Công Việc",
-            "💬 Tin Nhắn",
-            "🎥 Họp Online",
+            "💬 Tin Nhắn & Họp",
             "👥 Team Của Tôi",
             "📊 Báo Cáo & Khai Báo",
             "🔑 Đổi Mật Khẩu"
@@ -4403,7 +4407,7 @@ else:
 
     for item in menu_options:
         is_selected = (st.session_state["current_menu"] == item)
-        _label = item + (f"  🔴 {_chat_unread_total}" if item == CHAT_MENU and _chat_unread_total else "")
+        _label = item + (f"  🔴 {_chat_unread_total}" if item == CONNECT_MENU and _chat_unread_total else "")
         # on_click đổi trang TRƯỚC khi app chạy lại → chỉ chạy 1 lần thay vì 2 lần
         st.sidebar.button(
             _label, 
@@ -4472,6 +4476,22 @@ else:
         st.session_state["page_prev_idx"] = page_idx
     _page_frame = st.container(key=f"pg{st.session_state.get('page_dir', 'R')}_{page_idx}")
     _page_frame.__enter__()
+
+    # 💬 Tin Nhắn & Họp: 1 nút menu, bên trong có 2 thẻ (Tin nhắn | Họp online)
+    if menu == CONNECT_MENU:
+        st.markdown("<div class='big-table-title'>💬 Tin Nhắn & Họp</div>", unsafe_allow_html=True)
+        st.session_state.setdefault("connect_tab", "chat")
+        _ct1, _ct2, _ct_space = st.columns([1.3, 1.3, 2])
+        with _ct1:
+            st.button("💬 Tin Nhắn" + (f"  🔴 {_chat_unread_total}" if _chat_unread_total else ""),
+                      key="btn_connect_chat", use_container_width=True,
+                      type="primary" if st.session_state["connect_tab"] == "chat" else "secondary",
+                      on_click=lambda: st.session_state.update({"connect_tab": "chat"}))
+        with _ct2:
+            st.button("🎥 Họp Online", key="btn_connect_meet", use_container_width=True,
+                      type="primary" if st.session_state["connect_tab"] == "meet" else "secondary",
+                      on_click=lambda: st.session_state.update({"connect_tab": "meet"}))
+        menu = CHAT_MENU if st.session_state["connect_tab"] == "chat" else MEETING_MENU
 
     # 1. BẢNG CÔNG VIỆC
     if menu == "🧰 Bảng Công Việc":
@@ -5345,7 +5365,6 @@ else:
 
     # 9. 💬 TIN NHẮN: kênh chung + nhóm chat tự tạo + nhắn riêng (bấm vào tên tài khoản)
     elif menu == CHAT_MENU:
-        st.markdown("<div class='big-table-title'>💬 Tin Nhắn</div>", unsafe_allow_html=True)
         st.session_state.setdefault("chat_conv", "general")
         if str(st.session_state["chat_conv"]).startswith("dm:"):
             st.session_state["chat_conv"] = "general"
@@ -5502,7 +5521,6 @@ else:
 
     # 10. 🎥 HỌP ONLINE: Foreman / Team Leader tạo phòng họp có ID + mật khẩu; ai cũng vào được nếu có mã
     elif menu == MEETING_MENU:
-        st.markdown("<div class='big-table-title'>🎥 Họp Online</div>", unsafe_allow_html=True)
         me = user_data["id"]
         can_host = current_role in MEETING_HOST_ROLES
         my_name = user_data.get("fullname") or user_data["username"]
