@@ -808,6 +808,38 @@ div[data-testid="stAlert"]:has([data-testid="stAlertContentError"]) * {
 [data-testid="stChatInput"] {
     border-radius: 16px !important;
 }
+/* Ô nhập tin nhắn: luôn nền sáng / chữ đậm (hoặc nền tối / chữ sáng ở chế độ Tối), không phụ thuộc giao diện máy */
+html body [data-testid="stChatInput"] > div {
+    background-color: __INPUT_BG__ !important;
+    border: 1.5px solid __INPUT_BORDER__ !important;
+    border-radius: 16px !important;
+}
+html body [data-testid="stChatInput"] > div:focus-within {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18) !important;
+}
+html body [data-testid="stChatInput"] > div div {
+    background-color: transparent !important;
+}
+html body [data-testid="stChatInput"] textarea {
+    color: __INPUT_TEXT__ !important;
+    -webkit-text-fill-color: __INPUT_TEXT__ !important;
+    caret-color: #0ea5e9 !important;
+    font-size: 1.05rem !important;
+    font-weight: 500 !important;
+}
+html body [data-testid="stChatInput"] textarea::placeholder {
+    color: __PLACEHOLDER__ !important;
+    -webkit-text-fill-color: __PLACEHOLDER__ !important;
+}
+html body [data-testid="stChatInput"] button:not(.sc-mic) {
+    background-color: #0ea5e9 !important;
+    border-radius: 10px !important;
+}
+html body [data-testid="stChatInput"] button:not(.sc-mic) svg {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+}
 /* Danh sách người trong Tin nhắn: chữ căn trái, gọn hơn */
 div[class*="st-key-chat_open_"] div.stButton > button {
     justify-content: flex-start !important;
@@ -2707,6 +2739,11 @@ html body div[data-testid="stSelectbox"] div:has(> input) {
 html body .stApp input, html body .stApp textarea, html body div[data-testid="stSelectbox"] div:has(> input) * {
     color: __OLD_INK__ !important; -webkit-text-fill-color: __OLD_INK__ !important;
 }
+html body [data-testid="stChatInput"] > div {
+    background-color: __OLD_INPUT__ !important;
+    border: 1px solid #8b6b3d !important;
+    border-radius: 4px !important;
+}
 html body .profile-card { border: 1px solid #c9a227 !important; border-radius: 4px !important; }
 html body .pc-avatar { background: #c9a227 !important; color: #2e1e10 !important; border: 2px solid #f3e6c4; }
 html body .made-by-minh { border-radius: 3px !important; background: linear-gradient(180deg, #e6c35c, #c9a227) !important; }
@@ -2757,6 +2794,14 @@ _VOICE_JS = r"""
 <script>
 (function () {
   const win = window.parent, doc = win.document;
+  // Tắt tính năng tự dịch của Chrome / Edge (app đã có nút đổi ngôn ngữ riêng; tự dịch làm chữ bị nửa Việt nửa Anh)
+  try {
+    doc.documentElement.setAttribute("translate", "no");
+    doc.documentElement.classList.add("notranslate");
+    if (!doc.querySelector('meta[name="google"][content="notranslate"]')) {
+      const m = doc.createElement("meta"); m.name = "google"; m.content = "notranslate"; doc.head.appendChild(m);
+    }
+  } catch (e) {}
   const LANG = "__LANG__";
   const MSG_NOSUPPORT = "__MSG_NOSUPPORT__";
   const MSG_DENIED = "__MSG_DENIED__";
@@ -2869,6 +2914,14 @@ _VOICE_OFF_JS = r"""
 <script>
 (function () {
   const win = window.parent, doc = win.document;
+  // Tắt tính năng tự dịch của Chrome / Edge (app đã có nút đổi ngôn ngữ riêng; tự dịch làm chữ bị nửa Việt nửa Anh)
+  try {
+    doc.documentElement.setAttribute("translate", "no");
+    doc.documentElement.classList.add("notranslate");
+    if (!doc.querySelector('meta[name="google"][content="notranslate"]')) {
+      const m = doc.createElement("meta"); m.name = "google"; m.content = "notranslate"; doc.head.appendChild(m);
+    }
+  } catch (e) {}
   if (win.__scVoice && win.__scVoice.cleanup) { try { win.__scVoice.cleanup(); } catch (e) {} }
   win.__scVoice = null;
   // Tự dọn luôn (phòng khi bản cũ đã bị tắt trước): gỡ nút micro và các đánh dấu
