@@ -3216,11 +3216,17 @@ _CHAT_CTX_JS = r"""
     }
     menu.appendChild(item("🗑", L.hide, () => sendAction("hide", data.id), true));
     doc.body.appendChild(menu);
-    // Giữ menu trong màn hình
-    const r = menu.getBoundingClientRect();
+    // Menu mở LÊN TRÊN chỗ bấm (đáy menu ở ngay con trỏ), để không bị che ở cuối màn hình
+    // (ví dụ nút "Manage app"). Chỉ khi phía trên không đủ chỗ mới mở xuống dưới.
+    const r = { width: menu.offsetWidth, height: menu.offsetHeight };   // kích thước thật (không bị ảnh hưởng bởi hiệu ứng phóng to)
     const vw = win.innerWidth, vh = win.innerHeight;
+    const BOTTOM_SAFE = 72;                                  // chừa chỗ cho thanh/nút ở đáy màn hình
+    let top = y - r.height - 6;
+    if (top < 8) top = Math.min(y + 6, vh - r.height - BOTTOM_SAFE);
+    top = Math.max(8, top);
     menu.style.left = Math.max(8, Math.min(x, vw - r.width - 8)) + "px";
-    menu.style.top = Math.max(8, Math.min(y, vh - r.height - 8)) + "px";
+    menu.style.top = top + "px";
+    menu.style.transformOrigin = (top < y ? "bottom" : "top") + " left";
   }
 
   function onContext(e) {
