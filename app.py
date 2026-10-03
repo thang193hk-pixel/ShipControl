@@ -1,4 +1,5 @@
 import streamlit as st
+import json
 import pandas as pd
 import sqlite3
 import hashlib
@@ -782,6 +783,27 @@ div[data-testid="stAlert"]:has([data-testid="stAlertContentError"]) * {
     box-shadow: inset 0 1px 4px rgba(15, 23, 42, 0.05);
     margin-bottom: 10px;
 }
+/* Ô ẩn dùng để gửi lệnh từ menu chuột phải */
+.st-key-chat_action {
+    position: absolute !important;
+    left: -10000px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+}
+.sc-recalled { font-style: italic; opacity: 0.75; }
+.sc-msg { cursor: context-menu; -webkit-touch-callout: none; }
+.sc-pinned {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: __SELECTED_BG__;
+    border-left: 4px solid #0ea5e9;
+    font-size: 0.9rem;
+    color: __INPUT_TEXT__;
+}
+.sc-pin-title { font-weight: 800; margin-bottom: 2px; }
+.sc-pin-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sc-chat-empty { margin: auto; color: __PLACEHOLDER__; font-weight: 600; text-align: center; }
 .sc-msg { display: flex; flex-direction: column; max-width: 78%; }
 .sc-mine { align-self: flex-end; align-items: flex-end; }
@@ -2874,6 +2896,7 @@ _VOICE_JS = r"""
     const wrap = el.closest('[data-testid="stTextInputRootElement"], [data-testid="stTextAreaRootElement"], [data-testid="stChatInput"]');
     if (!wrap) return;
     if (el.type === "password") return;              // không gắn vào ô mật khẩu
+    if (el.closest(".st-key-chat_action")) return;    // ô ẩn của menu tin nhắn
     el.dataset.scMic = "1";
     wrap.style.position = "relative";
     wrap.classList.add("sc-has-mic");
@@ -3017,25 +3040,266 @@ def _chat_time(iso):
     return t.strftime("%H:%M") if t.date() == datetime.now().date() else t.strftime("%d/%m %H:%M")
 
 
-def render_chat_messages(msgs, me):
+def render_chat_messages(msgs, me, is_admin=False, pinned=None):
     """Vẽ khung tin nhắn (tin của mình bên phải màu xanh, của người khác bên trái).
-    Nội dung tin nhắn KHÔNG đi qua bộ dịch, để giữ đúng chữ người gửi viết."""
+    Nội dung tin nhắn KHÔNG đi qua bộ dịch, để giữ đúng chữ người gửi viết.
+    Mỗi tin có data-... để menu chuột phải (giống Zalo) biết tin nào, của ai, đã ghim / đánh dấu chưa."""
     lang = ui_lang()
+    pin_html = ""
+    if pinned:
+        rows = "".join(
+            f"<div class='sc-pin-row'><b>{html.escape(pn)}</b>: {html.escape((pb or '').replace(chr(10), ' ')[:90])}</div>"
+            for _, pb, pn in pinned)
+        pin_html = f"<div class='sc-pinned'><div class='sc-pin-title'>{html.escape(_PINNED_TITLE.get(lang, _PINNED_TITLE['vi']))}</div>{rows}</div>"
     if not msgs:
         inner = f"<div class='sc-chat-empty'>{html.escape(_EMPTY_CHAT.get(lang, _EMPTY_CHAT['vi']))}</div>"
     else:
         parts = []
-        for mid, sid, body, created, fname, uname, role in msgs:   # mới nhất trước (khung xếp ngược)
+        for mid, sid, body, created, fname, uname, role, recalled, starred, is_pinned in msgs:   # mới nhất trước
             mine = (sid == me)
-            name = _YOU_LABEL.get(lang, "Bạn") if mine else (fname or uname or "?")
+            sender = fname or uname or "?"
+            name = _YOU_LABEL.get(lang, "Bạn") if mine else sender
             icon = "" if mine else CHAT_ROLE_ICONS.get(role, "👤") + " "
-            text = html.escape(body or "").replace("\n", "<br>")
+            marks = (" 📌" if is_pinned else "") + (" ⭐" if starred else "")
+            try:
+                full_time = datetime.fromisoformat(created).strftime("%d/%m/%Y %H:%M")
+            except Exception:
+                full_time = created or ""
+            if recalled:
+                bubble = f"<div class='sc-bubble sc-recalled'>{html.escape(_RECALLED_TEXT.get(lang, _RECALLED_TEXT['vi']))}</div>"
+            else:
+                bubble = f"<div class='sc-bubble'>{html.escape(body or '').replace(chr(10), '<br>')}</div>"
+            attrs = (f" data-id='{mid}' data-mine='{1 if mine else 0}' data-admin='{1 if is_admin else 0}'"
+                     f" data-recalled='{1 if recalled else 0}' data-starred='{1 if starred else 0}'"
+                     f" data-pinned='{1 if is_pinned else 0}' data-sender='{html.escape(sender, quote=True)}'"
+                     f" data-time='{html.escape(full_time, quote=True)}' data-text='{html.escape(body or '', quote=True)}'")
             parts.append(
-                f"<div class='sc-msg {'sc-mine' if mine else 'sc-theirs'}'>"
-                f"<div class='sc-meta'>{html.escape(icon + name)} · {_chat_time(created)}</div>"
-                f"<div class='sc-bubble'>{text}</div></div>")
+                f"<div class='sc-msg {'sc-mine' if mine else 'sc-theirs'}'{attrs}>"
+                f"<div class='sc-meta'>{html.escape(icon + name)} · {_chat_time(created)}{marks}</div>"
+                f"{bubble}</div>")
         inner = "".join(parts)
-    _DG._sc_orig_markdown(st._main, f"<div class='sc-chat'>{inner}</div>", unsafe_allow_html=True)
+    _DG._sc_orig_markdown(st._main, f"{pin_html}<div class='sc-chat'>{inner}</div>", unsafe_allow_html=True)
+
+
+# ==========================================
+# 🖱️ MENU CHUỘT PHẢI TRÊN TIN NHẮN (giống Zalo)
+#    Chuột phải (máy tính) hoặc nhấn giữ (điện thoại) vào tin nhắn → menu:
+#    Trả lời · Chia sẻ · Copy · Ghim · Đánh dấu · Xem chi tiết · Thu hồi · Xóa chỉ ở phía tôi
+# ==========================================
+CHAT_CTX_LABELS = {
+    "vi": {"reply": "Trả lời", "share": "Chia sẻ", "copy": "Copy tin nhắn", "pin": "Ghim tin nhắn", "unpin": "Bỏ ghim",
+           "star": "Đánh dấu tin nhắn", "unstar": "Bỏ đánh dấu", "details": "Xem chi tiết", "recall": "Thu hồi",
+           "hide": "Xóa chỉ ở phía tôi", "admin_delete": "Xóa tin nhắn (quản trị)", "copied": "Đã sao chép",
+           "sender": "Người gửi", "time": "Thời gian", "recall_confirm": "Thu hồi tin nhắn này với mọi người?",
+           "admin_confirm": "Xóa tin nhắn này cho mọi người?"},
+    "en": {"reply": "Reply", "share": "Share", "copy": "Copy message", "pin": "Pin message", "unpin": "Unpin",
+           "star": "Star message", "unstar": "Remove star", "details": "View details", "recall": "Recall",
+           "hide": "Delete for me only", "admin_delete": "Delete message (admin)", "copied": "Copied",
+           "sender": "Sender", "time": "Time", "recall_confirm": "Recall this message for everyone?",
+           "admin_confirm": "Delete this message for everyone?"},
+    "zh": {"reply": "回复", "share": "分享", "copy": "复制消息", "pin": "置顶消息", "unpin": "取消置顶",
+           "star": "标记消息", "unstar": "取消标记", "details": "查看详情", "recall": "撤回",
+           "hide": "仅在我这边删除", "admin_delete": "删除消息（管理员）", "copied": "已复制",
+           "sender": "发送者", "time": "时间", "recall_confirm": "要为所有人撤回这条消息吗？",
+           "admin_confirm": "要为所有人删除这条消息吗？"},
+    "ja": {"reply": "返信", "share": "共有", "copy": "メッセージをコピー", "pin": "メッセージを固定", "unpin": "固定を解除",
+           "star": "メッセージにスター", "unstar": "スターを外す", "details": "詳細を表示", "recall": "送信取消",
+           "hide": "自分だけ削除", "admin_delete": "メッセージを削除（管理者）", "copied": "コピーしました",
+           "sender": "送信者", "time": "日時", "recall_confirm": "このメッセージを全員から取り消しますか？",
+           "admin_confirm": "このメッセージを全員から削除しますか？"},
+    "ko": {"reply": "답장", "share": "공유", "copy": "메시지 복사", "pin": "메시지 고정", "unpin": "고정 해제",
+           "star": "메시지 표시", "unstar": "표시 해제", "details": "자세히 보기", "recall": "회수",
+           "hide": "나에게서만 삭제", "admin_delete": "메시지 삭제 (관리자)", "copied": "복사됨",
+           "sender": "보낸 사람", "time": "시간", "recall_confirm": "모든 사람에게서 이 메시지를 회수할까요?",
+           "admin_confirm": "모든 사람에게서 이 메시지를 삭제할까요?"},
+}
+_RECALLED_TEXT = {"vi": "Tin nhắn đã được thu hồi", "en": "Message recalled", "zh": "消息已撤回",
+                  "ja": "メッセージは取り消されました", "ko": "회수된 메시지입니다"}
+_PINNED_TITLE = {"vi": "📌 Tin nhắn đã ghim", "en": "📌 Pinned messages", "zh": "📌 置顶消息",
+                 "ja": "📌 固定されたメッセージ", "ko": "📌 고정된 메시지"}
+
+_CHAT_CTX_JS = r"""
+<script>
+(function () {
+  const win = window.parent, doc = win.document;
+  const L = __LABELS__;
+  if (win.__scCtx && win.__scCtx.cleanup) { try { win.__scCtx.cleanup(); } catch (e) {} }
+
+  if (!doc.getElementById("sc-ctx-style")) {
+    const st = doc.createElement("style");
+    st.id = "sc-ctx-style";
+    st.textContent = `
+      .sc-ctx { position:fixed; z-index:100000; min-width:230px; padding:6px 0; border-radius:14px;
+        background:#ffffff; color:#1f2937; box-shadow:0 12px 36px rgba(15,23,42,.22), 0 0 0 1px rgba(15,23,42,.06);
+        font-family:inherit; animation:scCtxIn .12s ease-out; user-select:none; }
+      @keyframes scCtxIn { from { opacity:0; transform:scale(.96); } to { opacity:1; transform:none; } }
+      .sc-ctx-item { display:flex; align-items:center; gap:12px; padding:9px 16px; font-size:15px; cursor:pointer; }
+      .sc-ctx-item:hover { background:#f1f5f9; }
+      .sc-ctx-item .ic { width:20px; text-align:center; font-size:16px; opacity:.85; }
+      .sc-ctx-sep { height:1px; background:#e5e7eb; margin:5px 0; }
+      .sc-ctx-danger { color:#dc2626; }
+      .sc-ctx-toast { position:fixed; left:50%; bottom:90px; transform:translateX(-50%); z-index:100001;
+        background:#111827; color:#fff; padding:8px 16px; border-radius:999px; font-size:14px; animation:scCtxIn .15s ease-out; }
+      .sc-msg.sc-ctx-active .sc-bubble { outline:2px solid #0ea5e9; outline-offset:2px; }
+    `;
+    doc.head.appendChild(st);
+  }
+
+  let menu = null, activeMsg = null, pressTimer = null;
+
+  function toast(text) {
+    const t = doc.createElement("div"); t.className = "sc-ctx-toast"; t.textContent = text;
+    doc.body.appendChild(t); setTimeout(() => t.remove(), 1400);
+  }
+  function close() {
+    if (menu) { menu.remove(); menu = null; }
+    if (activeMsg) { activeMsg.classList.remove("sc-ctx-active"); activeMsg = null; }
+  }
+  function sendAction(action, id) {
+    // Gửi lệnh cho Python qua một ô nhập ẩn
+    const inp = doc.querySelector(".st-key-chat_action input");
+    if (!inp) return;
+    const val = JSON.stringify({ a: action, id: id, n: Date.now() + Math.random() });
+    Object.getOwnPropertyDescriptor(win.HTMLInputElement.prototype, "value").set.call(inp, val);
+    inp.dispatchEvent(new win.Event("input", { bubbles: true }));
+    inp.dispatchEvent(new win.KeyboardEvent("keydown", { key: "Enter", code: "Enter", keyCode: 13, which: 13, bubbles: true }));
+  }
+  function copyText(text) {
+    try { win.navigator.clipboard.writeText(text).then(() => toast(L.copied)); }
+    catch (e) {
+      const ta = doc.createElement("textarea"); ta.value = text; doc.body.appendChild(ta); ta.select();
+      try { doc.execCommand("copy"); toast(L.copied); } catch (e2) {} ta.remove();
+    }
+  }
+  function reply(d) {
+    const ta = doc.querySelector('[data-testid="stChatInput"] textarea');
+    if (!ta) return;
+    const snippet = d.text.length > 60 ? d.text.slice(0, 60) + "…" : d.text;
+    const val = "↩️ " + d.sender + ": \u201C" + snippet.replace(/\s+/g, " ") + "\u201D\n";
+    Object.getOwnPropertyDescriptor(win.HTMLTextAreaElement.prototype, "value").set.call(ta, val);
+    ta.dispatchEvent(new win.Event("input", { bubbles: true }));
+    ta.focus();
+  }
+
+  function item(ic, label, fn, danger) {
+    const it = doc.createElement("div");
+    it.className = "sc-ctx-item" + (danger ? " sc-ctx-danger" : "");
+    it.innerHTML = '<span class="ic"></span><span></span>';
+    it.firstChild.textContent = ic; it.lastChild.textContent = label;
+    it.addEventListener("click", (e) => { e.stopPropagation(); close(); fn(); });
+    return it;
+  }
+  function sep() { const s = doc.createElement("div"); s.className = "sc-ctx-sep"; return s; }
+
+  function open(msgEl, x, y) {
+    close();
+    const d = msgEl.dataset;
+    if (!d.id || d.recalled === "1") return;
+    const data = { id: d.id, text: d.text || "", sender: d.sender || "", time: d.time || "" };
+    activeMsg = msgEl; msgEl.classList.add("sc-ctx-active");
+    menu = doc.createElement("div"); menu.className = "sc-ctx";
+    menu.appendChild(item("❝", L.reply, () => reply(data)));
+    menu.appendChild(item("↗", L.share, () => {
+      if (win.navigator.share) { win.navigator.share({ text: data.text }).catch(() => {}); } else { copyText(data.text); }
+    }));
+    menu.appendChild(sep());
+    menu.appendChild(item("⧉", L.copy, () => copyText(data.text)));
+    menu.appendChild(sep());
+    menu.appendChild(item("📌", d.pinned === "1" ? L.unpin : L.pin, () => sendAction(d.pinned === "1" ? "unpin" : "pin", data.id)));
+    menu.appendChild(item("☆", d.starred === "1" ? L.unstar : L.star, () => sendAction(d.starred === "1" ? "unstar" : "star", data.id)));
+    menu.appendChild(item("ⓘ", L.details, () => win.alert(L.sender + ": " + data.sender + "\n" + L.time + ": " + data.time)));
+    menu.appendChild(sep());
+    if (d.mine === "1") {
+      menu.appendChild(item("↺", L.recall, () => { if (win.confirm(L.recall_confirm)) sendAction("recall", data.id); }, true));
+    } else if (d.admin === "1") {
+      menu.appendChild(item("🗑", L.admin_delete, () => { if (win.confirm(L.admin_confirm)) sendAction("admin_delete", data.id); }, true));
+    }
+    menu.appendChild(item("🗑", L.hide, () => sendAction("hide", data.id), true));
+    doc.body.appendChild(menu);
+    // Giữ menu trong màn hình
+    const r = menu.getBoundingClientRect();
+    const vw = win.innerWidth, vh = win.innerHeight;
+    menu.style.left = Math.max(8, Math.min(x, vw - r.width - 8)) + "px";
+    menu.style.top = Math.max(8, Math.min(y, vh - r.height - 8)) + "px";
+  }
+
+  function onContext(e) {
+    const m = e.target.closest && e.target.closest(".sc-msg");
+    if (!m) return;
+    e.preventDefault();
+    open(m, e.clientX, e.clientY);
+  }
+  // Điện thoại (iPhone không có chuột phải): nhấn giữ 0,5 giây
+  function onTouchStart(e) {
+    const m = e.target.closest && e.target.closest(".sc-msg");
+    if (!m) return;
+    const t = e.touches[0];
+    pressTimer = setTimeout(() => { open(m, t.clientX, t.clientY); }, 500);
+  }
+  function cancelPress() { if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; } }
+  function onDocClick(e) { if (menu && !menu.contains(e.target)) close(); }
+  function onKey(e) { if (e.key === "Escape") close(); }
+
+  doc.addEventListener("contextmenu", onContext);
+  doc.addEventListener("touchstart", onTouchStart, { passive: true });
+  doc.addEventListener("touchend", cancelPress);
+  doc.addEventListener("touchmove", cancelPress);
+  doc.addEventListener("click", onDocClick, true);
+  doc.addEventListener("keydown", onKey);
+  win.addEventListener("scroll", close, true);
+
+  win.__scCtx = {
+    cleanup() {
+      close();
+      doc.removeEventListener("contextmenu", onContext);
+      doc.removeEventListener("touchstart", onTouchStart);
+      doc.removeEventListener("touchend", cancelPress);
+      doc.removeEventListener("touchmove", cancelPress);
+      doc.removeEventListener("click", onDocClick, true);
+      doc.removeEventListener("keydown", onKey);
+      win.removeEventListener("scroll", close, true);
+    }
+  };
+})();
+</script>
+"""
+
+
+def render_chat_context_menu():
+    labels = CHAT_CTX_LABELS.get(ui_lang(), CHAT_CTX_LABELS["vi"])
+    _components.html(_CHAT_CTX_JS.replace("__LABELS__", json.dumps(labels, ensure_ascii=False)), height=0)
+
+
+def handle_chat_action(raw, conv, me, role):
+    """Thực hiện lệnh từ menu chuột phải (kiểm tra quyền ở phía máy chủ)."""
+    try:
+        act = json.loads(raw)
+        action, mid = act.get("a"), int(act.get("id"))
+    except Exception:
+        return
+    row = cursor.execute("SELECT sender_id, conv FROM chat_messages WHERE id = ?", (mid,)).fetchone()
+    if not row or row[1] != conv:
+        return
+    now = datetime.now().isoformat(timespec="seconds")
+    if action == "pin":
+        cursor.execute("INSERT OR IGNORE INTO chat_pins (conv, message_id, pinned_by, pinned_at) VALUES (?, ?, ?, ?)",
+                       (conv, mid, me, now))
+    elif action == "unpin":
+        cursor.execute("DELETE FROM chat_pins WHERE conv = ? AND message_id = ?", (conv, mid))
+    elif action == "star":
+        cursor.execute("INSERT OR IGNORE INTO chat_stars (user_id, message_id) VALUES (?, ?)", (me, mid))
+    elif action == "unstar":
+        cursor.execute("DELETE FROM chat_stars WHERE user_id = ? AND message_id = ?", (me, mid))
+    elif action == "hide":
+        cursor.execute("INSERT OR IGNORE INTO chat_hidden (user_id, message_id) VALUES (?, ?)", (me, mid))
+    elif action == "recall" and row[0] == me:
+        cursor.execute("UPDATE chat_messages SET body = '', recalled = 1 WHERE id = ?", (mid,))
+        cursor.execute("DELETE FROM chat_pins WHERE message_id = ?", (mid,))
+    elif action == "admin_delete" and is_chat_admin(conv, me, role):
+        cursor.execute("DELETE FROM chat_messages WHERE id = ?", (mid,))
+        cursor.execute("DELETE FROM chat_pins WHERE message_id = ?", (mid,))
+        cursor.execute("DELETE FROM chat_stars WHERE message_id = ?", (mid,))
+        cursor.execute("DELETE FROM chat_hidden WHERE message_id = ?", (mid,))
 
 
 def get_secret(key, default=None):
@@ -3342,6 +3606,13 @@ cursor.execute('''
     )
 ''')
 cursor.execute("CREATE INDEX IF NOT EXISTS idx_chat_conv ON chat_messages (conv, id)")
+try:
+    cursor.execute("ALTER TABLE chat_messages ADD COLUMN recalled INTEGER DEFAULT 0")
+except sqlite3.OperationalError:
+    pass
+cursor.execute("CREATE TABLE IF NOT EXISTS chat_pins (conv TEXT, message_id INTEGER, pinned_by INTEGER, pinned_at TEXT, PRIMARY KEY (conv, message_id))")
+cursor.execute("CREATE TABLE IF NOT EXISTS chat_stars (user_id INTEGER, message_id INTEGER, PRIMARY KEY (user_id, message_id))")
+cursor.execute("CREATE TABLE IF NOT EXISTS chat_hidden (user_id INTEGER, message_id INTEGER, PRIMARY KEY (user_id, message_id))")
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS chat_reads (
         user_id INTEGER NOT NULL,
@@ -5431,6 +5702,11 @@ else:
         def _chat_room():
             me = user_data["id"]
             conv = st.session_state.get("chat_conv", "general")
+            # 🖱️ Lệnh từ menu chuột phải (ghim, đánh dấu, thu hồi, xóa phía tôi...)
+            _raw_action = st.session_state.get("chat_action")
+            if _raw_action:
+                handle_chat_action(_raw_action, conv, me, current_role)
+                st.session_state["chat_action"] = ""
             all_people = cursor.execute("""
                 SELECT id, username, fullname, role FROM users
                 WHERE is_deleted = 0 AND id != ? AND role IS NOT NULL AND role != 'Pending'
@@ -5538,39 +5814,29 @@ else:
                     post_chat_message(conv, me, new_msg)
 
                 msgs = cursor.execute("""
-                    SELECT m.id, m.sender_id, m.body, m.created_at, u.fullname, u.username, u.role
+                    SELECT m.id, m.sender_id, m.body, m.created_at, u.fullname, u.username, u.role,
+                           COALESCE(m.recalled, 0),
+                           EXISTS (SELECT 1 FROM chat_stars s WHERE s.user_id = ? AND s.message_id = m.id),
+                           EXISTS (SELECT 1 FROM chat_pins p WHERE p.message_id = m.id)
                     FROM chat_messages m LEFT JOIN users u ON u.id = m.sender_id
-                    WHERE m.conv = ? ORDER BY m.id DESC LIMIT 200
+                    WHERE m.conv = ? AND m.id NOT IN (SELECT message_id FROM chat_hidden WHERE user_id = ?)
+                    ORDER BY m.id DESC LIMIT 200
+                """, (me, conv, me)).fetchall()
+                pinned = cursor.execute("""
+                    SELECT p.message_id, m.body, COALESCE(u.fullname, u.username)
+                    FROM chat_pins p JOIN chat_messages m ON m.id = p.message_id
+                    LEFT JOIN users u ON u.id = m.sender_id
+                    WHERE p.conv = ? AND COALESCE(m.recalled, 0) = 0
+                    ORDER BY p.pinned_at DESC LIMIT 3
                 """, (conv,)).fetchall()
                 with msg_box:
-                    render_chat_messages(msgs, me)
+                    render_chat_messages(msgs, me, is_admin=is_chat_admin(conv, me, current_role), pinned=pinned)
                 if msgs:
                     mark_chat_read(me, conv, msgs[0][0])
 
-                # 🗑️ Chỉ QUẢN TRỊ của cuộc trò chuyện mới xóa được tin nhắn:
-                #    nhóm chat → người tạo nhóm; kênh chung → Admin / WOS Manager
-                if is_chat_admin(conv, me, current_role):
-                    with st.expander("🗑️ Xóa tin nhắn (quản trị)"):
-                        if not msgs:
-                            st.caption("Chưa có tin nhắn để xóa.")
-                        else:
-                            def _msg_label(mid):
-                                m = next(x for x in msgs if x[0] == mid)
-                                who = m[4] or m[5] or "?"
-                                body = (m[2] or "").replace("\n", " ")
-                                return f"{_chat_time(m[3])} · {who}: {body[:60]}{'…' if len(body) > 60 else ''}"
-                            del_id = st.selectbox("Chọn tin nhắn để xóa", [m[0] for m in msgs],
-                                                  format_func=_msg_label, key=f"chat_del_pick_{conv}")
-                            if st.button("🗑️ XÓA TIN NHẮN", key="chat_del_msg_btn"):
-                                cursor.execute("DELETE FROM chat_messages WHERE id = ? AND conv = ?", (del_id, conv))
-                                st.success("Đã xóa tin nhắn.")
-                                st.rerun()
-                            st.markdown("---")
-                            sure = st.checkbox("Tôi chắc chắn muốn xóa toàn bộ tin nhắn", key=f"chat_clear_ok_{conv}")
-                            if st.button("🧹 XÓA TOÀN BỘ TIN NHẮN", key="chat_clear_btn", disabled=not sure):
-                                cursor.execute("DELETE FROM chat_messages WHERE conv = ?", (conv,))
-                                st.success("Đã xóa toàn bộ tin nhắn.")
-                                st.rerun()
+                # Ô ẩn nhận lệnh từ menu chuột phải + đoạn mã tạo menu (giống Zalo)
+                st.text_input("chat_action", key="chat_action", label_visibility="collapsed")
+                render_chat_context_menu()
 
         _chat_room()
 
