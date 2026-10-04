@@ -986,14 +986,14 @@ section[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"],
     top: 0;
     z-index: 999;
     background: __NAV_BG__ !important;
-    border-radius: 0 0 14px 14px !important;
-    padding: 6px 14px !important;
+    border-radius: 0 0 18px 18px !important;
+    padding: 10px 18px !important;
     margin: 0 0 18px 0 !important;
     box-shadow: 0 6px 20px rgba(15, 23, 42, 0.22) !important;
 }
 .sc-brand {
     font-weight: 900;
-    font-size: 1.05rem;
+    font-size: 1.45rem;
     letter-spacing: 0.04em;
     color: #ffffff !important;
     white-space: nowrap;
@@ -1013,16 +1013,18 @@ section[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"],
 @media (min-width: 900px) {
     .st-key-sc_nav { flex-wrap: wrap !important; overflow-x: visible !important; row-gap: 2px !important; }
 }
-/* Điện thoại: hàng 1 = logo + ⚙️ + tài khoản, hàng 2 = menu (vuốt ngang) */
+/* Hàng 1 = logo + ⚙️ + tài khoản; hàng 2 = menu (dùng cả chiều ngang nên chữ to vẫn gọn) */
+.st-key-sc_topbar { flex-wrap: wrap !important; row-gap: 6px !important; }
+.st-key-sc_topbar > div:has(.sc-brand) { flex: 1 1 auto !important; }
+.st-key-sc_topbar > .st-key-sc_nav,
+.st-key-sc_topbar > div:has(.st-key-sc_nav) {
+    order: 3 !important; flex: 1 1 100% !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important;
+}
+.st-key-sc_nav { width: 100% !important; border-top: 1px solid rgba(255, 255, 255, 0.18); padding-top: 4px !important; }
+.sc-brand { border-right: none !important; }
 @media (max-width: 899px) {
-    .st-key-sc_topbar { flex-wrap: wrap !important; row-gap: 4px !important; }
-    .st-key-sc_topbar > div:has(.sc-brand) { flex: 1 1 auto !important; }
-    .st-key-sc_topbar > .st-key-sc_nav,
-    .st-key-sc_topbar > div:has(.st-key-sc_nav) {
-        order: 3 !important; flex: 1 1 100% !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important;
-    }
-    .st-key-sc_nav { width: 100% !important; }
-    .sc-brand { border-right: none !important; }
+    .st-key-sc_topbar { position: relative !important; }     /* điện thoại: không ghim, để dành chỗ cho nội dung */
+    .sc-brand { font-size: 1.15rem !important; }
 }
 /* Ẩn thanh tiêu đề mặc định của Streamlit (nó nằm đè lên thanh menu và chặn bấm) */
 header[data-testid="stHeader"] { display: none !important; }
@@ -1032,9 +1034,9 @@ html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button,
 html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="secondary"],
 html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] {
     width: auto !important;
-    min-height: 38px !important;
-    height: 38px !important;
-    padding: 0 10px !important;
+    min-height: 58px !important;
+    height: 58px !important;
+    padding: 0 20px !important;
     margin: 0 !important;
     background: transparent !important;
     border: none !important;
@@ -1047,8 +1049,8 @@ html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button * {
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
     text-transform: uppercase !important;
-    font-size: 0.9rem !important;
-    font-weight: 600 !important;
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
     letter-spacing: 0.02em !important;
     white-space: nowrap !important;
 }
@@ -1058,16 +1060,17 @@ html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button:hover:not(:disab
 /* Trang đang mở: gạch chân vàng + nền nhạt */
 html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] {
     background: rgba(255, 255, 255, 0.16) !important;
-    box-shadow: inset 0 -3px 0 #facc15 !important;
+    box-shadow: inset 0 -4px 0 #facc15 !important;
 }
+html body .st-key-sc_tools [data-testid="stPopover"] button * { font-size: 1.15rem !important; }
 html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] * { font-weight: 800 !important; }
 html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button::after { display: none !important; }
 /* Nút ⚙️ và nút tài khoản ở bên phải thanh */
 html body .st-key-sc_tools [data-testid="stPopover"] button {
-    min-height: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    padding: 0 10px !important;
+    min-height: 54px !important;
+    height: 54px !important;
+    min-width: 54px !important;
+    padding: 0 16px !important;
     border-radius: 999px !important;
     background: rgba(255, 255, 255, 0.16) !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
