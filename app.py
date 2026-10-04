@@ -3147,9 +3147,10 @@ _CHAT_CTX_JS = r"""
 
   let menu = null, activeMsg = null, pressTimer = null;
 
-  function toast(text) {
+  function toast(text, ms) {
+    doc.querySelectorAll(".sc-ctx-toast").forEach((x) => x.remove());
     const t = doc.createElement("div"); t.className = "sc-ctx-toast"; t.textContent = text;
-    doc.body.appendChild(t); setTimeout(() => t.remove(), 1400);
+    doc.body.appendChild(t); setTimeout(() => t.remove(), ms || 1400);
   }
   function close() {
     if (menu) { menu.remove(); menu = null; }
@@ -3207,10 +3208,10 @@ _CHAT_CTX_JS = r"""
     menu.appendChild(sep());
     menu.appendChild(item("📌", d.pinned === "1" ? L.unpin : L.pin, () => sendAction(d.pinned === "1" ? "unpin" : "pin", data.id)));
     menu.appendChild(item("☆", d.starred === "1" ? L.unstar : L.star, () => sendAction(d.starred === "1" ? "unstar" : "star", data.id)));
-    menu.appendChild(item("ⓘ", L.details, () => win.alert(L.sender + ": " + data.sender + "\n" + L.time + ": " + data.time)));
+    menu.appendChild(item("ⓘ", L.details, () => toast(L.sender + ": " + data.sender + "  ·  " + L.time + ": " + data.time, 3500)));
     menu.appendChild(sep());
     if (d.mine === "1") {
-      menu.appendChild(item("↺", L.recall, () => { if (win.confirm(L.recall_confirm)) sendAction("recall", data.id); }, true));
+      menu.appendChild(item("↺", L.recall, () => sendAction("recall", data.id), true));
     } else if (d.admin === "1") {
       menu.appendChild(item("🗑", L.admin_delete, () => { if (win.confirm(L.admin_confirm)) sendAction("admin_delete", data.id); }, true));
     }
