@@ -968,6 +968,140 @@ html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsCon
     -webkit-text-fill-color: __INPUT_TEXT__ !important;
 }
 
+/* ================================================================
+   🧭 THANH MENU NGANG (thay thanh bên trái)
+   ================================================================ */
+section[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"],
+[data-testid="stExpandSidebarButton"], [data-testid="stSidebarCollapseButton"] {
+    display: none !important;
+}
+.st-key-sc_js_slot {
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+.st-key-sc_topbar {
+    position: sticky !important;
+    top: 0;
+    z-index: 999;
+    background: __NAV_BG__ !important;
+    border-radius: 0 0 14px 14px !important;
+    padding: 6px 14px !important;
+    margin: 0 0 18px 0 !important;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.22) !important;
+}
+.sc-brand {
+    font-weight: 900;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    color: #ffffff !important;
+    white-space: nowrap;
+    padding-right: 10px;
+    margin-right: 4px;
+    border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+.st-key-sc_topbar .stMarkdown, .st-key-sc_topbar [data-testid="stMarkdownContainer"] p { margin: 0 !important; }
+/* Các mục menu: chữ trắng IN HOA, nền trong suốt; cuộn ngang nếu màn hình hẹp */
+.st-key-sc_nav {
+    overflow-x: auto !important;
+    scrollbar-width: none;
+    flex-wrap: nowrap !important;
+}
+.st-key-sc_nav::-webkit-scrollbar { display: none; }
+/* Màn hình rộng: menu xuống dòng nếu nhiều mục (không bị che). Điện thoại: vuốt ngang. */
+@media (min-width: 900px) {
+    .st-key-sc_nav { flex-wrap: wrap !important; overflow-x: visible !important; row-gap: 2px !important; }
+}
+/* Điện thoại: hàng 1 = logo + ⚙️ + tài khoản, hàng 2 = menu (vuốt ngang) */
+@media (max-width: 899px) {
+    .st-key-sc_topbar { flex-wrap: wrap !important; row-gap: 4px !important; }
+    .st-key-sc_topbar > div:has(.sc-brand) { flex: 1 1 auto !important; }
+    .st-key-sc_topbar > .st-key-sc_nav,
+    .st-key-sc_topbar > div:has(.st-key-sc_nav) {
+        order: 3 !important; flex: 1 1 100% !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important;
+    }
+    .st-key-sc_nav { width: 100% !important; }
+    .sc-brand { border-right: none !important; }
+}
+/* Ẩn thanh tiêu đề mặc định của Streamlit (nó nằm đè lên thanh menu và chặn bấm) */
+header[data-testid="stHeader"] { display: none !important; }
+/* Bớt khoảng trống phía trên trang */
+.block-container, [data-testid="stMainBlockContainer"] { padding-top: 1.6rem !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button,
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="secondary"],
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] {
+    width: auto !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    padding: 0 10px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    white-space: nowrap !important;
+    transform: none !important;
+}
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-transform: uppercase !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    white-space: nowrap !important;
+}
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.14) !important;
+}
+/* Trang đang mở: gạch chân vàng + nền nhạt */
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] {
+    background: rgba(255, 255, 255, 0.16) !important;
+    box-shadow: inset 0 -3px 0 #facc15 !important;
+}
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] * { font-weight: 800 !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button::after { display: none !important; }
+/* Nút ⚙️ và nút tài khoản ở bên phải thanh */
+html body .st-key-sc_tools [data-testid="stPopover"] button {
+    min-height: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    padding: 0 10px !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: none !important;
+}
+html body .st-key-sc_tools [data-testid="stPopover"] button:hover { background: rgba(255, 255, 255, 0.28) !important; }
+html body .st-key-sc_tools [data-testid="stPopover"] button * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    fill: #ffffff !important;
+    font-weight: 800 !important;
+}
+html body .st-key-pop_account button {
+    background: linear-gradient(135deg, #fde047, #facc15) !important;
+    border: none !important;
+}
+html body .st-key-pop_account button * { color: #0c4a6e !important; -webkit-text-fill-color: #0c4a6e !important; }
+html body .st-key-sc_tools button::after { display: none !important; }
+/* Thẻ tài khoản trong bảng bật ra: nền xanh để chữ trắng dễ đọc */
+div[data-testid="stPopoverBody"] .profile-card {
+    background: linear-gradient(135deg, #1d4ed8, #0c4a6e) !important;
+    margin-top: 0 !important;
+}
+div[data-testid="stPopoverBody"] .profile-card,
+div[data-testid="stPopoverBody"] .profile-card * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+div[data-testid="stPopoverBody"] .profile-card .pc-avatar,
+div[data-testid="stPopoverBody"] .profile-card .pc-avatar * { color: #0c4a6e !important; -webkit-text-fill-color: #0c4a6e !important; }
+div[data-testid="stPopoverBody"] .profile-card .pc-role,
+div[data-testid="stPopoverBody"] .profile-card .pc-role * { color: #fde047 !important; -webkit-text-fill-color: #fde047 !important; }
+div[data-testid="stPopoverBody"] .profile-card .pc-label { color: rgba(255,255,255,0.75) !important; -webkit-text-fill-color: rgba(255,255,255,0.75) !important; }
+
 /* ---------- 🎥 Thẻ ID + mật khẩu phòng họp ---------- */
 .sc-meet-card {
     display: flex;
@@ -1436,6 +1570,7 @@ VI_EN = {
     "### 📨 Lời mời họp của bạn": "### 📨 Your meeting invites",
     "🎥 VÀO HỌP": "🎥 JOIN MEETING",
     "💬 Tin Nhắn & Meeting": "💬 Messages & Meetings",
+    "Cài đặt": "Settings",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -1763,6 +1898,7 @@ _ZH_LIST = [
     "### 📨 您的会议邀请",
     "🎥 加入会议",
     "💬 消息与会议",
+    "设置",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2088,6 +2224,7 @@ _JA_LIST = [
     "### 📨 あなたへの会議の招待",
     "🎥 会議に参加",
     "💬 メッセージと会議",
+    "設定",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2413,6 +2550,7 @@ _KO_LIST = [
     "### 📨 나의 회의 초대",
     "🎥 회의 참가",
     "💬 메시지 및 회의",
+    "설정",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -2617,6 +2755,9 @@ html body div[data-testid="stDataFrame"] {
 html body .profile-card { border-color: rgba(34,211,238,0.5) !important; border-radius: 8px !important; box-shadow: 0 0 16px rgba(34,211,238,0.2); }
 html body .pc-avatar { background: linear-gradient(135deg, #22d3ee, #a855f7) !important; color: #fff !important; }
 html body .made-by-minh { background: linear-gradient(90deg, #22d3ee, #e879f9) !important; border-radius: 6px !important; }
+html body .st-key-sc_topbar { background: rgba(5,8,22,0.95) !important; border-bottom: 1px solid #22d3ee !important; box-shadow: 0 0 22px rgba(34,211,238,0.35) !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] { box-shadow: inset 0 -3px 0 #22d3ee !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] * { color: #a5f3fc !important; -webkit-text-fill-color: #a5f3fc !important; }
 '''
 
 _THEME_PLAYFUL = r'''
@@ -2688,6 +2829,10 @@ html body div[data-testid="stAlert"] { border: 3px solid #1e1b4b !important; bor
 html body .profile-card { border-radius: 24px !important; border: 3px solid rgba(255,255,255,0.6) !important; }
 html body .pc-avatar { background: #fef08a !important; color: #a21caf !important; transform: rotate(-6deg); }
 html body .made-by-minh { transform: rotate(-2deg); box-shadow: 4px 4px 0 #1e1b4b !important; }
+html body .st-key-sc_topbar { background: linear-gradient(90deg, #ec4899, #a855f7, #6366f1) !important; border-radius: 0 0 24px 24px !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button { border-radius: 999px !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] { background: #ffffff !important; box-shadow: 3px 3px 0 #facc15 !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] * { color: #a21caf !important; -webkit-text-fill-color: #a21caf !important; }
 '''
 
 _THEME_OLDTIMES = r'''
@@ -2769,6 +2914,10 @@ html body [data-testid="stChatInput"] > div {
 html body .profile-card { border: 1px solid #c9a227 !important; border-radius: 4px !important; }
 html body .pc-avatar { background: #c9a227 !important; color: #2e1e10 !important; border: 2px solid #f3e6c4; }
 html body .made-by-minh { border-radius: 3px !important; background: linear-gradient(180deg, #e6c35c, #c9a227) !important; }
+html body .st-key-sc_topbar { background: linear-gradient(180deg, #4e3420, #3b2716) !important; border-bottom: 4px double #c9a227 !important; border-radius: 0 !important; }
+html body .sc-brand { color: #e6c35c !important; font-family: 'Playfair Display', Georgia, serif !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button * { color: #f3e6c4 !important; -webkit-text-fill-color: #f3e6c4 !important; font-family: 'Lora', Georgia, serif !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] { box-shadow: inset 0 -3px 0 #e6c35c !important; }
 '''
 
 
@@ -2965,7 +3114,7 @@ def render_voice_input(enabled):
               .replace("__MSG_DENIED__", tr("Chưa được phép dùng micro. Hãy cho phép micro cho trang web này trong cài đặt trình duyệt.").replace('"', "'")))
     else:
         js = _VOICE_OFF_JS
-    with st.sidebar:
+    with _js_slot:
         _components.html(js, height=0)
 
 
@@ -3439,7 +3588,7 @@ st.set_page_config(
     page_title="ShipControl - Quản Lý Công Việc Tàu",
     page_icon="🚢",
     layout="wide",
-    initial_sidebar_state="auto"
+    initial_sidebar_state="collapsed"
 )
 
 # KHỞI TẠO COOKIE MANAGER
@@ -3855,8 +4004,15 @@ if "trash_sub_tab" not in st.session_state:
 
 # --- ⚙️ NÚT CÀI ĐẶT (Chế độ Tối + Ngôn ngữ) ---
 # Chỗ đặt nút được giữ sẵn ở đầu thanh bên; nút thật được vẽ sau khi đọc cookie (để nhớ ngôn ngữ đã chọn).
-st.sidebar.markdown("<div style='padding-top: 10px;'></div>", unsafe_allow_html=True)
-_settings_slot = st.sidebar.container()
+# 🧭 THANH MENU NGANG TRÊN CÙNG (thay cho thanh bên trái):
+#    [🚢 SHIPCONTROL] [CÁC TRANG ...........................] [⚙️] [👤 tài khoản]
+_topbar = st.container(key="sc_topbar", horizontal=True, vertical_alignment="center", gap="small", wrap=False)
+with _topbar:
+    st.markdown("<div class='sc-brand'>🚢 SHIPCONTROL</div>", unsafe_allow_html=True)
+    _nav_slot = st.container(key="sc_nav", horizontal=True, vertical_alignment="center", gap=None, width="stretch", wrap=False)
+    _settings_slot = st.container(key="sc_tools", horizontal=True, vertical_alignment="center", gap="small", width="content", wrap=False)
+# Chỗ chứa các đoạn mã chạy ngầm (micro, menu tin nhắn): không chiếm chỗ trên trang
+_js_slot = st.container(key="sc_js_slot")
 dark_mode_on = st.session_state.get("dark_toggle", st.session_state["theme_mode"] == "Dark")
 st.session_state["theme_mode"] = "Dark" if dark_mode_on else "Light"
 
@@ -3937,6 +4093,7 @@ _modern_tokens = {
     "__PLACEHOLDER__": "#7c8aa5" if is_dark else "#94a3b8",
     "__ICON__": "#cbd5e1" if is_dark else "#475569",
     "__SCHEME__": "dark" if is_dark else "light",
+    "__NAV_BG__": "linear-gradient(90deg, #1e3a8a, #1d4ed8)" if not is_dark else "linear-gradient(90deg, #0b1530, #1e3a8a)",
     "__BUBBLE_THEIRS__": "#1e293b" if is_dark else "#eef2f7",
     "__SELECTED_BG__": "rgba(14,165,233,0.18)" if is_dark else "#e0f2fe",
     "__TOGGLE_OFF__": "#475569" if is_dark else "#94a3b8",
@@ -4518,9 +4675,8 @@ st.session_state["w_ui_theme"] = st.session_state["ui_theme"]
 st.session_state["w_device_mode"] = st.session_state["device_mode"]
 
 with _settings_slot:
-    # Hàng nút trên cùng: [⚙️ Cài đặt]  [🌐 ▾ Ngôn ngữ]
-    with st.container(horizontal=True, gap="small", vertical_alignment="center"):
-        with st.popover("⚙️ Cài đặt", key="pop_settings"):
+    if True:
+        with st.popover("⚙️", key="pop_settings", help="Cài đặt"):
             # 🎨 Chủ đề: nút bấm xổ xuống (giống nút Ngôn ngữ)
             st.selectbox("🎨 Chủ đề", THEME_OPTIONS, key="w_ui_theme", on_change=_on_theme_change,
                          format_func=lambda t: THEME_LABELS[t])
@@ -4572,8 +4728,6 @@ if st.session_state.get("_lang_changed") and _lang_cookie != ui_lang():
 # 🔐 HỆ THỐNG XÁC THỰC
 # ==========================================
 if not st.session_state["logged_in"]:
-    st.sidebar.markdown("<div class='sidebar-header'>🔐 Xác Thực</div>", unsafe_allow_html=True)
-    st.sidebar.info("Vui lòng đăng nhập hoặc đăng ký để tiếp tục.")
     if st.session_state.get("_kicked"):
         st.warning("🔒 Tài khoản của bạn vừa được mở ở một tab hoặc thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. "
                    "Nếu đó không phải bạn, hãy đăng nhập lại và đổi mật khẩu ngay.")
@@ -4678,7 +4832,6 @@ else:
     user_data = st.session_state["user_info"]
     current_role = user_data.get("role", "Worker")
 
-    st.sidebar.markdown("<div class='sidebar-header'>☸️ Control Menu</div>", unsafe_allow_html=True)
 
     if st.session_state.get("current_menu") in ("💬 Tin Nhắn & Họp", "🎥 Họp Online"):   # tên cũ
         st.session_state["current_menu"] = CONNECT_MENU
@@ -4738,18 +4891,24 @@ else:
     except sqlite3.OperationalError:
         _chat_unread_total = 0
 
-    for item in menu_options:
-        is_selected = (st.session_state["current_menu"] == item)
-        _label = item + (f"  🔴 {_chat_unread_total}" if item == CONNECT_MENU and _chat_unread_total else "")
-        # on_click đổi trang TRƯỚC khi app chạy lại → chỉ chạy 1 lần thay vì 2 lần
-        st.sidebar.button(
-            _label, 
-            type="primary" if is_selected else "secondary", 
-            use_container_width=True, 
-            key=f"btn_menu_{item}",
-            on_click=_go_to_page,
-            args=(item,),
-        )
+    def _nav_text(item):
+        """Chữ trên thanh menu: bỏ biểu tượng ở đầu cho gọn (giống thanh menu trang web)."""
+        t = tr(item)
+        first, _, rest = t.partition(" ")
+        return rest if rest and not any(ch.isalnum() for ch in first) else t
+
+    with _nav_slot:
+        for item in menu_options:
+            is_selected = (st.session_state["current_menu"] == item)
+            _label = _nav_text(item) + (f" 🔴 {_chat_unread_total}" if item == CONNECT_MENU and _chat_unread_total else "")
+            # on_click đổi trang TRƯỚC khi app chạy lại → chỉ chạy 1 lần thay vì 2 lần
+            st.button(
+                _label,
+                type="primary" if is_selected else "secondary",
+                key=f"btn_menu_{item}",
+                on_click=_go_to_page,
+                args=(item,),
+            )
 
     menu = st.session_state["current_menu"]
     
@@ -4773,7 +4932,8 @@ else:
         _ws_text = f"{_ws_code} · {_ws_name[0]}" if _ws_name and _ws_name[0] else _ws_code
         _ws_row = (f"<div class='pc-row'><span class='pc-label'>Workshop</span>"
                    f"<span class='pc-val'>{html.escape(_ws_text)}</span></div>")
-    st.sidebar.markdown(f"""<div class='profile-card'>
+    _acct_pop = _settings_slot.popover(f"{_initials}", key="pop_account", help=_full)
+    _acct_pop.markdown(f"""<div class='profile-card'>
 <div class='pc-top'><div class='pc-avatar'>{html.escape(_initials)}</div>
 <div class='pc-id'><div class='pc-name'>{html.escape(_full)}</div><div class='pc-status'>● <span>Đang đăng nhập</span></div></div></div>
 <div class='pc-row'><span class='pc-label'>Tài khoản</span><span class='pc-val'>@{html.escape(str(user_data['username']))}</span></div>
@@ -4788,7 +4948,7 @@ else:
     if my_pw and st.session_state.get("_pw_is_default"):
         st.error("⚠️ Tài khoản này vẫn dùng mật khẩu mặc định 'admin123'. Vào mục 🔑 Đổi Mật Khẩu và đổi NGAY!")
 
-    if st.sidebar.button("🚪 Đăng Xuất", type="secondary", key="btn_logout_bottom", use_container_width=True):
+    if _acct_pop.button("🚪 Đăng Xuất", type="secondary", key="btn_logout_bottom", use_container_width=True):
         tok = st.session_state.get("session_token")
         if tok:
             delete_session(tok)
