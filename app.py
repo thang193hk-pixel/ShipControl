@@ -1117,6 +1117,41 @@ div[data-testid="stPopoverBody"] .profile-card .pc-role,
 div[data-testid="stPopoverBody"] .profile-card .pc-role * { color: #fde047 !important; -webkit-text-fill-color: #fde047 !important; }
 div[data-testid="stPopoverBody"] .profile-card .pc-label { color: rgba(255,255,255,0.75) !important; -webkit-text-fill-color: rgba(255,255,255,0.75) !important; }
 
+/* ---------- 🏠 Trang "Về chúng tôi" ---------- */
+.sc-about-hero {
+    text-align: center;
+    padding: 34px 24px 26px 24px;
+    margin: 6px auto 18px auto;
+    max-width: 900px;
+    border-radius: 22px;
+    background: __SURFACE__;
+    border: 1px solid __SURFACE_BORDER__;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.10);
+    animation: scFadeUp 0.35s ease-out both;
+}
+.sc-about-kicker { font-weight: 900; letter-spacing: 0.12em; color: #0ea5e9; font-size: 0.95rem; }
+.sc-about-hero h1 { font-size: 2rem !important; font-weight: 900 !important; margin: 8px 0 10px 0 !important; color: __INPUT_TEXT__ !important; line-height: 1.25 !important; }
+.sc-about-hero p { font-size: 1.1rem; color: __PLACEHOLDER__; margin: 0 auto; max-width: 680px; }
+.sc-about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    max-width: 1000px;
+    margin: 0 auto 22px auto;
+}
+.sc-about-card {
+    padding: 18px;
+    border-radius: 18px;
+    background: __SURFACE__;
+    border: 1px solid __SURFACE_BORDER__;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: scFadeUp 0.45s ease-out both;
+}
+.sc-about-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12); }
+.sc-about-card h3 { font-size: 1.1rem !important; margin: 0 0 6px 0 !important; color: __INPUT_TEXT__ !important; }
+.sc-about-card p { margin: 0; color: __PLACEHOLDER__; font-size: 0.95rem; }
+
 /* ---------- 🎥 Thẻ ID + mật khẩu phòng họp ---------- */
 .sc-meet-card {
     display: flex;
@@ -1586,6 +1621,19 @@ VI_EN = {
     "🎥 VÀO HỌP": "🎥 JOIN MEETING",
     "💬 Tin Nhắn & Meeting": "💬 Messages & Meetings",
     "Cài đặt": "Settings",
+    "Về chúng tôi": "About us",
+    "Đăng nhập / Đăng ký": "Sign in / Register",
+    "Phần mềm quản lý công việc cho xưởng đóng tàu": "Work management software for shipyards",
+    "ShipControl giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.": "ShipControl helps shipyard teams assign work, track progress and stay in touch in one place — on computers and phones.",
+    "📋 Quản lý công việc": "📋 Task management",
+    "Tạo công việc theo Block, Deck, Frame và theo dõi tiến độ từng phần trăm.": "Create tasks by Block, Deck and Frame and track progress percent by percent.",
+    "👥 Team & phân quyền": "👥 Teams & roles",
+    "Admin, WOS Manager, Foreman, Team Leader và Worker — mỗi người thấy đúng phần việc của mình.": "Admin, WOS Manager, Foreman, Team Leader and Worker — everyone sees exactly their own work.",
+    "💬 Tin nhắn & họp online": "💬 Messages & online meetings",
+    "Kênh chung, nhóm chat và phòng họp video có ID + mật khẩu.": "General chat, group chats and video meeting rooms with an ID + password.",
+    "🌐 5 ngôn ngữ & giọng nói": "🌐 5 languages & voice",
+    "Tiếng Việt, English, 中文, 日本語, 한국어 — và nói thay vì gõ trên điện thoại.": "Vietnamese, English, Chinese, Japanese, Korean — and speak instead of typing on phones.",
+    "Chưa có tài khoản? Đăng ký và chờ quản lý cấp quyền.": "No account yet? Register and wait for a manager to give you a role.",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -1914,6 +1962,19 @@ _ZH_LIST = [
     "🎥 加入会议",
     "💬 消息与会议",
     "设置",
+    "关于我们",
+    "登录 / 注册",
+    "船厂工作管理软件",
+    "ShipControl 让船厂团队在同一个地方分配工作、跟踪进度并保持沟通——电脑和手机都能用。",
+    "📋 任务管理",
+    "按分段、甲板、肋位创建任务，并逐个百分比跟踪进度。",
+    "👥 团队与权限",
+    "Admin、WOS Manager、Foreman、Team Leader 和 Worker——每个人只看到自己的工作。",
+    "💬 消息与在线会议",
+    "公共频道、群聊，以及带 ID 和密码的视频会议室。",
+    "🌐 5 种语言与语音输入",
+    "越南语、英语、中文、日语、韩语——在手机上还可以用说话代替打字。",
+    "还没有账号？请注册并等待管理员分配角色。",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2240,6 +2301,19 @@ _JA_LIST = [
     "🎥 会議に参加",
     "💬 メッセージと会議",
     "設定",
+    "私たちについて",
+    "ログイン / 登録",
+    "造船所のための作業管理ソフト",
+    "ShipControl は造船所のチームが作業の割り当て、進捗管理、連絡をひとつの場所で行えるようにします。パソコンでもスマホでも使えます。",
+    "📋 タスク管理",
+    "ブロック・デッキ・フレームごとにタスクを作成し、進捗を1%単位で管理。",
+    "👥 チームと権限",
+    "Admin、WOS Manager、Foreman、Team Leader、Worker ——それぞれが自分の仕事だけを見られます。",
+    "💬 メッセージとオンライン会議",
+    "全体チャット、グループチャット、ID とパスワード付きのビデオ会議室。",
+    "🌐 5か国語と音声入力",
+    "ベトナム語・英語・中国語・日本語・韓国語。スマホでは入力の代わりに話せます。",
+    "アカウントがない場合は、登録して管理者による役割の付与を待ってください。",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2566,6 +2640,19 @@ _KO_LIST = [
     "🎥 회의 참가",
     "💬 메시지 및 회의",
     "설정",
+    "소개",
+    "로그인 / 회원가입",
+    "조선소를 위한 작업 관리 소프트웨어",
+    "ShipControl은 조선소 팀이 한곳에서 작업을 배정하고 진행 상황을 추적하며 소통할 수 있게 해 줍니다. 컴퓨터와 휴대폰 모두에서 사용할 수 있습니다.",
+    "📋 작업 관리",
+    "블록·데크·프레임별로 작업을 만들고 진행률을 퍼센트 단위로 추적합니다.",
+    "👥 팀 및 권한",
+    "Admin, WOS Manager, Foreman, Team Leader, Worker — 각자 자기 일만 정확히 봅니다.",
+    "💬 메시지 및 온라인 회의",
+    "전체 채팅, 그룹 채팅, ID와 비밀번호가 있는 화상 회의실.",
+    "🌐 5개 언어 및 음성 입력",
+    "베트남어, 영어, 중국어, 일본어, 한국어 — 휴대폰에서는 타이핑 대신 말로 입력할 수 있습니다.",
+    "계정이 없나요? 가입한 뒤 관리자가 역할을 배정할 때까지 기다리세요.",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -4746,6 +4833,47 @@ if st.session_state.get("_lang_changed") and _lang_cookie != ui_lang():
 # 🔐 HỆ THỐNG XÁC THỰC
 # ==========================================
 if not st.session_state["logged_in"]:
+    # 🏠 TRANG CHƯA ĐĂNG NHẬP: thanh menu có 2 nút  [VỀ CHÚNG TÔI]  [ĐĂNG NHẬP / ĐĂNG KÝ]
+    st.session_state.setdefault("landing_view", "about")
+    if st.session_state.get("_kicked"):
+        st.session_state["landing_view"] = "auth"
+
+    def _open_auth(tab="login"):
+        st.session_state["landing_view"] = "auth"
+        st.session_state["auth_tab"] = tab
+
+    with _nav_slot:
+        st.button("Về chúng tôi", key="btn_land_about",
+                  type="primary" if st.session_state["landing_view"] == "about" else "secondary",
+                  on_click=lambda: st.session_state.update({"landing_view": "about"}))
+        st.button("Đăng nhập / Đăng ký", key="btn_land_auth",
+                  type="primary" if st.session_state["landing_view"] == "auth" else "secondary",
+                  on_click=_open_auth, args=("login",))
+
+    if st.session_state["landing_view"] == "about":
+        st.markdown("""
+<div class='sc-about-hero'>
+  <div class='sc-about-kicker'>🚢 SHIPCONTROL</div>
+  <h1>Phần mềm quản lý công việc cho xưởng đóng tàu</h1>
+  <p>ShipControl giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.</p>
+</div>
+<div class='sc-about-grid'>
+  <div class='sc-about-card'><h3>📋 Quản lý công việc</h3><p>Tạo công việc theo Block, Deck, Frame và theo dõi tiến độ từng phần trăm.</p></div>
+  <div class='sc-about-card'><h3>👥 Team & phân quyền</h3><p>Admin, WOS Manager, Foreman, Team Leader và Worker — mỗi người thấy đúng phần việc của mình.</p></div>
+  <div class='sc-about-card'><h3>💬 Tin nhắn & họp online</h3><p>Kênh chung, nhóm chat và phòng họp video có ID + mật khẩu.</p></div>
+  <div class='sc-about-card'><h3>🌐 5 ngôn ngữ & giọng nói</h3><p>Tiếng Việt, English, 中文, 日本語, 한국어 — và nói thay vì gõ trên điện thoại.</p></div>
+</div>
+""", unsafe_allow_html=True)
+        _a1, _a2, _a3, _a4 = st.columns([1, 1.2, 1.2, 1])
+        with _a2:
+            st.button("🔑 Đăng Nhập", key="btn_about_login", type="primary", use_container_width=True,
+                      on_click=_open_auth, args=("login",))
+        with _a3:
+            st.button("📝 Đăng Ký Tài Khoản", key="btn_about_register", use_container_width=True,
+                      on_click=_open_auth, args=("register",))
+        st.caption("Chưa có tài khoản? Đăng ký và chờ quản lý cấp quyền.")
+        st.stop()
+
     if st.session_state.get("_kicked"):
         st.warning("🔒 Tài khoản của bạn vừa được mở ở một tab hoặc thiết bị khác, nên bạn đã bị đăng xuất khỏi trang này. "
                    "Nếu đó không phải bạn, hãy đăng nhập lại và đổi mật khẩu ngay.")
