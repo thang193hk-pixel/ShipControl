@@ -2848,6 +2848,9 @@ html body .st-key-sc_topbar { background: linear-gradient(90deg, #ec4899, #a855f
 html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button { border-radius: 999px !important; }
 html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] { background: #ffffff !important; box-shadow: 3px 3px 0 #facc15 !important; }
 html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] * { color: #a21caf !important; -webkit-text-fill-color: #a21caf !important; }
+/* Phông Baloo 2 trông nhỏ hơn phông thường ở cùng cỡ chữ → tăng cỡ để menu to bằng các chủ đề khác */
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button * { font-size: 1.05rem !important; line-height: 1 !important; padding-top: 3px !important; }
+html body .sc-brand { font-size: 1.2rem !important; }
 '''
 
 _THEME_OLDTIMES = r'''
