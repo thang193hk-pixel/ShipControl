@@ -1621,7 +1621,7 @@ VI_EN = {
     "🎥 VÀO HỌP": "🎥 JOIN MEETING",
     "💬 Tin Nhắn & Meeting": "💬 Messages & Meetings",
     "Cài đặt": "Settings",
-    "Về chúng tôi": "About us",
+    "About us": "About us",
     "Đăng nhập / Đăng ký": "Sign in / Register",
     "Phần mềm quản lý công việc cho xưởng đóng tàu": "Work management software for shipyards",
     "ShipControl giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.": "ShipControl helps shipyard teams assign work, track progress and stay in touch in one place — on computers and phones.",
@@ -4843,7 +4843,7 @@ if not st.session_state["logged_in"]:
         st.session_state["auth_tab"] = tab
 
     with _nav_slot:
-        st.button("Về chúng tôi", key="btn_land_about",
+        st.button("About us", key="btn_land_about",
                   type="primary" if st.session_state["landing_view"] == "about" else "secondary",
                   on_click=lambda: st.session_state.update({"landing_view": "about"}))
         st.button("Đăng nhập / Đăng ký", key="btn_land_auth",
