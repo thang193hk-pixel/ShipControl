@@ -5108,10 +5108,10 @@ else:
             "🔑 Đổi Mật Khẩu"
         ]
 
-    # 🛡️ Tài khoản Admin chỉ dùng trang Quản Lý Phân Quyền (Đổi mật khẩu nằm trong nút tài khoản)
+    # 🛡️ Tài khoản Admin: chỉ Quản Lý Phân Quyền + Tin nhắn (Đổi mật khẩu nằm trong nút tài khoản)
     if is_admin:
-        menu_options = ["👥 Quản Lý Phân Quyền"]
-        if st.session_state.get("current_menu") not in ("👥 Quản Lý Phân Quyền", "🔑 Đổi Mật Khẩu"):
+        menu_options = ["👥 Quản Lý Phân Quyền", CONNECT_MENU]
+        if st.session_state.get("current_menu") not in ("👥 Quản Lý Phân Quyền", CONNECT_MENU, "🔑 Đổi Mật Khẩu"):
             st.session_state["current_menu"] = "👥 Quản Lý Phân Quyền"
 
     def _go_to_page(target):
