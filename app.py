@@ -2698,34 +2698,47 @@ def _tr_data(data):
 
 def _install_translator():
     """Tự động dịch chữ hiển thị của các thành phần Streamlit.
-    Chỉ đổi phần HIỂN THỊ; giá trị trả về và logic của app giữ nguyên tiếng Việt."""
+    Chỉ đổi phần HIỂN THỊ; giá trị trả về và logic của app giữ nguyên tiếng Việt.
+
+    QUAN TRỌNG: Streamlit giữ nguyên chương trình Python giữa các lần chạy (kể cả khi bạn
+    upload app.py mới). Vì vậy các hàm bọc KHÔNG được giữ bản 'tr' cũ — chúng luôn gọi
+    bản mới nhất qua _DG._sc_live_* (gán lại ở mỗi lần chạy, xem bên dưới)."""
     # Giữ bản gốc của markdown (không dịch) để hiện nội dung người dùng viết, ví dụ tin nhắn
     if not hasattr(_DG, "_sc_orig_markdown"):
-        _DG._sc_orig_markdown = getattr(_DG.markdown, "__wrapped__", _DG.markdown)
+        _orig = _DG.markdown
+        while getattr(_orig, "_sc_wrapped", False) and hasattr(_orig, "__wrapped__"):
+            _orig = _orig.__wrapped__
+        _DG._sc_orig_markdown = _orig
+
+    def _L():
+        return _DG._sc_live_lang()
+
+    def _T(x):
+        return _DG._sc_live_tr(x)
 
     def text_first(fn):
         @_functools.wraps(fn)
         def wrapper(self, *args, **kwargs):
-            if ui_lang() != "vi":
+            if _L() != "vi":
                 if args and isinstance(args[0], str):
-                    args = (tr(args[0]),) + args[1:]
+                    args = (_T(args[0]),) + args[1:]
                 for k in ("label", "body", "placeholder", "help"):
                     if isinstance(kwargs.get(k), str):
-                        kwargs[k] = tr(kwargs[k])
+                        kwargs[k] = _T(kwargs[k])
             return fn(self, *args, **kwargs)
         return wrapper
 
     def with_options(fn):
         @_functools.wraps(fn)
         def wrapper(self, *args, **kwargs):
-            if ui_lang() != "vi":
+            if _L() != "vi":
                 if args and isinstance(args[0], str):
-                    args = (tr(args[0]),) + args[1:]
+                    args = (_T(args[0]),) + args[1:]
                 for k in ("label", "placeholder", "help"):
                     if isinstance(kwargs.get(k), str):
-                        kwargs[k] = tr(kwargs[k])
+                        kwargs[k] = _T(kwargs[k])
                 _ff = kwargs.get("format_func") or str
-                kwargs["format_func"] = lambda o, _ff=_ff: tr(_ff(o))
+                kwargs["format_func"] = lambda o, _ff=_ff: _T(_ff(o))
             return fn(self, *args, **kwargs)
         return wrapper
 
@@ -2733,16 +2746,16 @@ def _install_translator():
         @_functools.wraps(fn)
         def wrapper(self, *args, **kwargs):
             if args:
-                args = (_tr_data(args[0]),) + args[1:]
+                args = (_DG._sc_live_trdata(args[0]),) + args[1:]
             elif "data" in kwargs:
-                kwargs["data"] = _tr_data(kwargs["data"])
+                kwargs["data"] = _DG._sc_live_trdata(kwargs["data"])
             return fn(self, *args, **kwargs)
         return wrapper
 
     def tabs_first(fn):
         @_functools.wraps(fn)
         def wrapper(self, tabs, *args, **kwargs):
-            return fn(self, [tr(t) for t in tabs], *args, **kwargs)
+            return fn(self, [_T(t) for t in tabs], *args, **kwargs)
         return wrapper
 
     groups = {
@@ -2754,14 +2767,25 @@ def _install_translator():
         data_first: ["dataframe", "table"],
         tabs_first: ["tabs"],
     }
+    _VER = 2
     for wrap, names in groups.items():
         for name in names:
             fn = getattr(_DG, name, None)
-            if fn is None or getattr(fn, "_sc_wrapped", False):
-                continue                      # đã gắn bộ dịch rồi (app chạy lại) → bỏ qua
+            if fn is None or getattr(fn, "_sc_ver", 0) == _VER:
+                continue                      # bản bọc mới nhất đã có → bỏ qua
+            # Gỡ các lớp bọc cũ (từ phiên bản app trước) để không bị dịch bằng từ điển cũ
+            while getattr(fn, "_sc_wrapped", False) and hasattr(fn, "__wrapped__"):
+                fn = fn.__wrapped__
             wrapped = wrap(fn)
             wrapped._sc_wrapped = True
+            wrapped._sc_ver = _VER
             setattr(_DG, name, wrapped)
+
+
+# Bộ dịch MỚI NHẤT cho lần chạy này (các hàm bọc luôn gọi qua đây)
+_DG._sc_live_tr = tr
+_DG._sc_live_lang = ui_lang
+_DG._sc_live_trdata = _tr_data
 
 
 _install_translator()
