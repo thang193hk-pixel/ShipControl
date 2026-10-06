@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 import json
 import pandas as pd
 import sqlite3
@@ -1152,6 +1153,20 @@ div[data-testid="stPopoverBody"] .profile-card .pc-label { color: rgba(255,255,2
 .sc-about-card h3 { font-size: 1.1rem !important; margin: 0 0 6px 0 !important; color: __INPUT_TEXT__ !important; }
 .sc-about-card p { margin: 0; color: __PLACEHOLDER__; font-size: 0.95rem; }
 
+.sc-about-hero.sc-about-hero-left { text-align: left; margin: 0; padding: 30px 28px; max-width: none; }
+.sc-about-hero.sc-about-hero-left h1 { font-size: 1.9rem !important; }
+.sc-about-hero.sc-about-hero-left p { margin: 0; }
+.sc-about-video-title { text-align: center; margin: 6px 0 10px 0; }
+.sc-about-video-title h3 { font-size: 1.4rem !important; font-weight: 800 !important; margin: 0 0 4px 0 !important; color: __INPUT_TEXT__ !important; }
+.sc-about-video-title p { margin: 0; color: __PLACEHOLDER__; }
+.st-key-sc_about_video {
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.22) !important;
+    border: 1px solid __SURFACE_BORDER__ !important;
+}
+.st-key-sc_about_video iframe, .st-key-sc_about_video video { display: block; border-radius: 18px; }
+
 /* ---------- 🎥 Thẻ ID + mật khẩu phòng họp ---------- */
 .sc-meet-card {
     display: flex;
@@ -1634,6 +1649,10 @@ VI_EN = {
     "🌐 5 ngôn ngữ & giọng nói": "🌐 5 languages & voice",
     "Tiếng Việt, English, 中文, 日本語, 한국어 — và nói thay vì gõ trên điện thoại.": "Vietnamese, English, Chinese, Japanese, Korean — and speak instead of typing on phones.",
     "Chưa có tài khoản? Đăng ký và chờ quản lý cấp quyền.": "No account yet? Register and wait for a manager to give you a role.",
+    "🎬 Từ xưởng đến biển": "🎬 From shipyard to sea",
+    "Xem một con tàu được đóng từ những khối thép đầu tiên đến khi hạ thủy.": "Watch a ship being built from the first steel blocks to launch day.",
+    "Không xem được video? ": "Can't play the video? ",
+    "▶ Mở trên YouTube": "▶ Open on YouTube",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -1975,6 +1994,10 @@ _ZH_LIST = [
     "🌐 5 种语言与语音输入",
     "越南语、英语、中文、日语、韩语——在手机上还可以用说话代替打字。",
     "还没有账号？请注册并等待管理员分配角色。",
+    "🎬 从船厂到大海",
+    "观看一艘船从第一块钢板到下水的建造过程。",
+    "无法播放视频？",
+    "▶ 在 YouTube 上打开",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2314,6 +2337,10 @@ _JA_LIST = [
     "🌐 5か国語と音声入力",
     "ベトナム語・英語・中国語・日本語・韓国語。スマホでは入力の代わりに話せます。",
     "アカウントがない場合は、登録して管理者による役割の付与を待ってください。",
+    "🎬 造船所から海へ",
+    "最初の鋼材ブロックから進水まで、船が造られる様子をご覧ください。",
+    "動画が再生できませんか？",
+    "▶ YouTube で開く",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2653,6 +2680,10 @@ _KO_LIST = [
     "🌐 5개 언어 및 음성 입력",
     "베트남어, 영어, 중국어, 일본어, 한국어 — 휴대폰에서는 타이핑 대신 말로 입력할 수 있습니다.",
     "계정이 없나요? 가입한 뒤 관리자가 역할을 배정할 때까지 기다리세요.",
+    "🎬 조선소에서 바다로",
+    "첫 강철 블록부터 진수까지 배가 만들어지는 과정을 보세요.",
+    "영상이 재생되지 않나요? ",
+    "▶ YouTube에서 열기",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -4875,12 +4906,35 @@ if not st.session_state["logged_in"]:
                   on_click=_open_auth, args=("login",))
 
     if st.session_state["landing_view"] == "about":
-        st.markdown("""
-<div class='sc-about-hero'>
+        # 🎬 Video giới thiệu. Đổi video: đặt ABOUT_VIDEO_URL trong Secrets (link YouTube hoặc .mp4),
+        #    hoặc thêm file about_video.mp4 vào cùng thư mục với app.py trên GitHub.
+        _about_video = get_secret("ABOUT_VIDEO_URL")
+        _local_mp4 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "about_video.mp4")
+        if not _about_video and os.path.exists(_local_mp4):
+            _about_video = _local_mp4
+        if not _about_video:
+            _about_video = "https://www.youtube.com/watch?v=lavm7CausyA"   # time-lapse đóng tàu AIDAprima (Mitsubishi, Nagasaki)
+
+        # Phần đầu trang: chữ giới thiệu (trái) + VIDEO (phải) → thấy video ngay, không cần cuộn
+        _h1, _h2 = st.columns([1, 1.15], gap="large", vertical_alignment="center")
+        with _h1:
+            st.markdown("""
+<div class='sc-about-hero sc-about-hero-left'>
   <div class='sc-about-kicker'>🚢 SHIPCONTROL</div>
   <h1>Phần mềm quản lý công việc cho xưởng đóng tàu</h1>
   <p>ShipControl giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.</p>
 </div>
+""", unsafe_allow_html=True)
+        with _h2:
+            st.markdown("<div class='sc-about-video-title'><h3>🎬 Từ xưởng đến biển</h3>"
+                        "<p>Xem một con tàu được đóng từ những khối thép đầu tiên đến khi hạ thủy.</p></div>",
+                        unsafe_allow_html=True)
+            with st.container(key="sc_about_video"):
+                st.video(_about_video)
+            if str(_about_video).startswith("http") and ("youtube.com" in _about_video or "youtu.be" in _about_video):
+                st.caption("Không xem được video? " + f"[▶ Mở trên YouTube]({_about_video})")
+
+        st.markdown("""
 <div class='sc-about-grid'>
   <div class='sc-about-card'><h3>📋 Quản lý công việc</h3><p>Tạo công việc theo Block, Deck, Frame và theo dõi tiến độ từng phần trăm.</p></div>
   <div class='sc-about-card'><h3>👥 Team & phân quyền</h3><p>Admin, WOS Manager, Foreman, Team Leader và Worker — mỗi người thấy đúng phần việc của mình.</p></div>
@@ -4888,6 +4942,7 @@ if not st.session_state["logged_in"]:
   <div class='sc-about-card'><h3>🌐 5 ngôn ngữ & giọng nói</h3><p>Tiếng Việt, English, 中文, 日本語, 한국어 — và nói thay vì gõ trên điện thoại.</p></div>
 </div>
 """, unsafe_allow_html=True)
+
         _a1, _a2, _a3, _a4 = st.columns([1, 1.2, 1.2, 1])
         with _a2:
             st.button("🔑 Đăng Nhập", key="btn_about_login", type="primary", use_container_width=True,
