@@ -4901,6 +4901,12 @@ else:
             "🔑 Đổi Mật Khẩu"
         ]
 
+    # 🛡️ Tài khoản Admin chỉ dùng trang Quản Lý Phân Quyền (Đổi mật khẩu nằm trong nút tài khoản)
+    if is_admin:
+        menu_options = ["👥 Quản Lý Phân Quyền"]
+        if st.session_state.get("current_menu") not in ("👥 Quản Lý Phân Quyền", "🔑 Đổi Mật Khẩu"):
+            st.session_state["current_menu"] = "👥 Quản Lý Phân Quyền"
+
     def _go_to_page(target):
         st.session_state["current_menu"] = target
 
@@ -4966,6 +4972,9 @@ else:
     if my_pw and st.session_state.get("_pw_is_default"):
         st.error("⚠️ Tài khoản này vẫn dùng mật khẩu mặc định 'admin123'. Vào mục 🔑 Đổi Mật Khẩu và đổi NGAY!")
 
+    if is_admin:
+        _acct_pop.button("🔑 Đổi Mật Khẩu", key="btn_admin_change_pw", use_container_width=True,
+                         on_click=_go_to_page, args=("🔑 Đổi Mật Khẩu",))
     if _acct_pop.button("🚪 Đăng Xuất", type="secondary", key="btn_logout_bottom", use_container_width=True):
         tok = st.session_state.get("session_token")
         if tok:
