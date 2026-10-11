@@ -1687,6 +1687,25 @@ VI_EN = {
     "🌲 Rừng xanh (Forest)": "🌲 Forest",
     "⚪ Tối giản (Minimal)": "⚪ Minimal",
     "👑 Hoàng gia (Royal)": "👑 Royal",
+    "📸 Báo cáo hình ảnh theo tuần": "📸 Weekly photo report",
+    "📈 Thống kê": "📈 Statistics",
+    "Bạn chưa có công việc nào để báo cáo.": "You have no tasks to report on yet.",
+    "Bắt đầu": "Start",
+    "Kết thúc dự kiến": "Planned finish",
+    "Tiến độ": "Progress",
+    "Đã hoàn thành": "Finished",
+    "Tuần hiện tại": "Current week",
+    "Tải ảnh lên": "Upload photos",
+    "Tuần": "Week",
+    "Chọn ảnh từ máy tính": "Choose photos from your computer",
+    "Ghi chú cho ảnh (không bắt buộc)": "Photo note (optional)",
+    "📤 TẢI LÊN": "📤 UPLOAD",
+    "Hãy chọn ít nhất 1 ảnh!": "Choose at least 1 photo!",
+    "Không đọc được ảnh (hoặc ảnh lớn hơn 15 MB): ": "Couldn't read these photos (or they are larger than 15 MB): ",
+    "Chưa có ảnh nào cho tuần này.": "No photos for this week yet.",
+    "📥 Tải báo cáo hình ảnh (HTML)": "📥 Download photo report (HTML)",
+    "Mở file rồi bấm Ctrl+P để in hoặc lưu thành PDF.": "Open the file and press Ctrl+P to print or save it as PDF.",
+    "💡 Giữ Ctrl (hoặc Shift) khi chọn để lấy nhiều ảnh cùng lúc. Bấm Upload thêm lần nữa để thêm ảnh khác.": "💡 Hold Ctrl (or Shift) while choosing to pick many photos at once. Press Upload again to add more.",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -2047,6 +2066,25 @@ _ZH_LIST = [
     "🌲 森林",
     "⚪ 极简",
     "👑 皇家",
+    "📸 每周图片报告",
+    "📈 统计",
+    "你还没有可以报告的工作。",
+    "开始",
+    "预计完成",
+    "进度",
+    "已完成",
+    "本周",
+    "上传图片",
+    "第",
+    "从电脑选择图片",
+    "图片备注（可选）",
+    "📤 上传",
+    "请至少选择 1 张图片！",
+    "无法读取这些图片（或大于 15 MB）：",
+    "本周还没有图片。",
+    "📥 下载图片报告（HTML）",
+    "打开文件后按 Ctrl+P 打印或另存为 PDF。",
+    "💡 选择时按住 Ctrl（或 Shift）可一次选多张图片。再按一次 Upload 可继续添加。",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2405,6 +2443,25 @@ _JA_LIST = [
     "🌲 フォレスト",
     "⚪ ミニマル",
     "👑 ロイヤル",
+    "📸 週次写真レポート",
+    "📈 統計",
+    "報告できる作業はまだありません。",
+    "開始",
+    "完了予定",
+    "進捗",
+    "完了",
+    "今週",
+    "写真をアップロード",
+    "第",
+    "パソコンから写真を選択",
+    "写真メモ（任意）",
+    "📤 アップロード",
+    "写真を1枚以上選んでください！",
+    "読み込めなかった写真（または15 MB超）：",
+    "この週の写真はまだありません。",
+    "📥 写真レポートをダウンロード（HTML）",
+    "ファイルを開いて Ctrl+P で印刷または PDF 保存できます。",
+    "💡 Ctrl（または Shift）を押しながら選ぶと複数の写真を一度に選べます。Upload をもう一度押すと追加できます。",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2763,6 +2820,25 @@ _KO_LIST = [
     "🌲 숲",
     "⚪ 미니멀",
     "👑 로열",
+    "📸 주간 사진 보고서",
+    "📈 통계",
+    "보고할 작업이 아직 없습니다.",
+    "시작",
+    "완료 예정",
+    "진행률",
+    "완료됨",
+    "이번 주",
+    "사진 올리기",
+    "주차",
+    "컴퓨터에서 사진 선택",
+    "사진 메모 (선택)",
+    "📤 업로드",
+    "사진을 1장 이상 선택하세요!",
+    "읽을 수 없는 사진 (또는 15 MB 초과): ",
+    "이번 주 사진이 아직 없습니다.",
+    "📥 사진 보고서 다운로드 (HTML)",
+    "파일을 열고 Ctrl+P를 눌러 인쇄하거나 PDF로 저장하세요.",
+    "💡 Ctrl(또는 Shift)를 누른 채 선택하면 여러 사진을 한 번에 고를 수 있습니다. Upload를 다시 누르면 더 추가됩니다.",
 ]
 
 # 🌏 10 ngôn ngữ thêm (cùng thứ tự với VI_EN)
@@ -3123,6 +3199,25 @@ _TH_LIST = [
     "🌲 ป่าไม้",
     "⚪ มินิมอล",
     "👑 ราชวงศ์",
+    "📸 รายงานภาพถ่ายรายสัปดาห์",
+    "📈 สถิติ",
+    "คุณยังไม่มีงานที่จะรายงาน",
+    "เริ่ม",
+    "คาดว่าจะเสร็จ",
+    "ความคืบหน้า",
+    "เสร็จแล้ว",
+    "สัปดาห์ปัจจุบัน",
+    "อัปโหลดรูป",
+    "สัปดาห์",
+    "เลือกรูปจากคอมพิวเตอร์",
+    "หมายเหตุรูป (ไม่บังคับ)",
+    "📤 อัปโหลด",
+    "เลือกรูปอย่างน้อย 1 รูป!",
+    "อ่านรูปเหล่านี้ไม่ได้ (หรือใหญ่เกิน 15 MB): ",
+    "ยังไม่มีรูปสำหรับสัปดาห์นี้",
+    "📥 ดาวน์โหลดรายงานภาพ (HTML)",
+    "เปิดไฟล์แล้วกด Ctrl+P เพื่อพิมพ์หรือบันทึกเป็น PDF",
+    "💡 กด Ctrl (หรือ Shift) ค้างไว้ขณะเลือกเพื่อเลือกหลายรูปพร้อมกัน กด Upload อีกครั้งเพื่อเพิ่มรูป",
 ]
 _ID_LIST = [
     "🚢 SHIPCONTROL - MANAJEMEN PEKERJAAN KAPAL",
@@ -3481,6 +3576,25 @@ _ID_LIST = [
     "🌲 Hutan",
     "⚪ Minimalis",
     "👑 Kerajaan",
+    "📸 Laporan foto mingguan",
+    "📈 Statistik",
+    "Anda belum punya tugas untuk dilaporkan.",
+    "Mulai",
+    "Rencana selesai",
+    "Progres",
+    "Selesai",
+    "Minggu ini",
+    "Unggah foto",
+    "Minggu",
+    "Pilih foto dari komputer",
+    "Catatan foto (opsional)",
+    "📤 UNGGAH",
+    "Pilih minimal 1 foto!",
+    "Foto ini tidak bisa dibaca (atau lebih dari 15 MB): ",
+    "Belum ada foto untuk minggu ini.",
+    "📥 Unduh laporan foto (HTML)",
+    "Buka file lalu tekan Ctrl+P untuk mencetak atau menyimpan sebagai PDF.",
+    "💡 Tahan Ctrl (atau Shift) saat memilih untuk mengambil banyak foto sekaligus. Tekan Upload lagi untuk menambah.",
 ]
 _MS_LIST = [
     "🚢 SHIPCONTROL - PENGURUSAN KERJA KAPAL",
@@ -3839,6 +3953,25 @@ _MS_LIST = [
     "🌲 Hutan",
     "⚪ Minimalis",
     "👑 Diraja",
+    "📸 Laporan foto mingguan",
+    "📈 Statistik",
+    "Anda belum ada tugasan untuk dilaporkan.",
+    "Mula",
+    "Jangka siap",
+    "Kemajuan",
+    "Selesai",
+    "Minggu semasa",
+    "Muat naik foto",
+    "Minggu",
+    "Pilih foto dari komputer",
+    "Nota foto (pilihan)",
+    "📤 MUAT NAIK",
+    "Pilih sekurang-kurangnya 1 foto!",
+    "Foto ini tidak dapat dibaca (atau melebihi 15 MB): ",
+    "Belum ada foto untuk minggu ini.",
+    "📥 Muat turun laporan foto (HTML)",
+    "Buka fail dan tekan Ctrl+P untuk mencetak atau simpan sebagai PDF.",
+    "💡 Tahan Ctrl (atau Shift) semasa memilih untuk ambil banyak foto sekali gus. Tekan Upload sekali lagi untuk menambah.",
 ]
 _TL_LIST = [
     "🚢 SHIPCONTROL - PAMAMAHALA NG TRABAHO SA BARKO",
@@ -4197,6 +4330,25 @@ _TL_LIST = [
     "🌲 Gubat",
     "⚪ Minimal",
     "👑 Maharlika",
+    "📸 Lingguhang ulat ng larawan",
+    "📈 Istatistika",
+    "Wala ka pang gawaing maiuulat.",
+    "Simula",
+    "Planong tapos",
+    "Progreso",
+    "Tapos na",
+    "Kasalukuyang linggo",
+    "Mag-upload ng larawan",
+    "Linggo",
+    "Pumili ng larawan mula sa computer",
+    "Tala sa larawan (opsyonal)",
+    "📤 I-UPLOAD",
+    "Pumili ng kahit 1 larawan!",
+    "Hindi mabasa ang mga larawang ito (o lampas 15 MB): ",
+    "Wala pang larawan para sa linggong ito.",
+    "📥 I-download ang ulat ng larawan (HTML)",
+    "Buksan ang file at pindutin ang Ctrl+P para i-print o i-save bilang PDF.",
+    "💡 Pindutin nang matagal ang Ctrl (o Shift) habang pumipili para kumuha ng maraming larawan nang sabay. Pindutin ulit ang Upload para magdagdag.",
 ]
 _HI_LIST = [
     "🚢 SHIPCONTROL - जहाज़ कार्य प्रबंधन",
@@ -4555,6 +4707,25 @@ _HI_LIST = [
     "🌲 जंगल",
     "⚪ मिनिमल",
     "👑 शाही",
+    "📸 साप्ताहिक फ़ोटो रिपोर्ट",
+    "📈 आँकड़े",
+    "आपके पास रिपोर्ट करने के लिए अभी कोई कार्य नहीं है।",
+    "शुरुआत",
+    "अनुमानित समाप्ति",
+    "प्रगति",
+    "पूरा हुआ",
+    "वर्तमान सप्ताह",
+    "फ़ोटो अपलोड करें",
+    "सप्ताह",
+    "कंप्यूटर से फ़ोटो चुनें",
+    "फ़ोटो नोट (वैकल्पिक)",
+    "📤 अपलोड करें",
+    "कम से कम 1 फ़ोटो चुनें!",
+    "ये फ़ोटो पढ़ी नहीं जा सकीं (या 15 MB से बड़ी हैं): ",
+    "इस सप्ताह की अभी कोई फ़ोटो नहीं है।",
+    "📥 फ़ोटो रिपोर्ट डाउनलोड करें (HTML)",
+    "फ़ाइल खोलें और प्रिंट करने या PDF के रूप में सहेजने के लिए Ctrl+P दबाएँ।",
+    "💡 एक साथ कई फ़ोटो चुनने के लिए चुनते समय Ctrl (या Shift) दबाए रखें। और जोड़ने के लिए फिर से Upload दबाएँ।",
 ]
 _ES_LIST = [
     "🚢 SHIPCONTROL - GESTIÓN DE TRABAJOS NAVALES",
@@ -4913,6 +5084,25 @@ _ES_LIST = [
     "🌲 Bosque",
     "⚪ Minimalista",
     "👑 Real",
+    "📸 Informe fotográfico semanal",
+    "📈 Estadísticas",
+    "Aún no tienes tareas sobre las que informar.",
+    "Inicio",
+    "Fin previsto",
+    "Progreso",
+    "Terminada",
+    "Semana actual",
+    "Subir fotos",
+    "Semana",
+    "Elige fotos del ordenador",
+    "Nota de la foto (opcional)",
+    "📤 SUBIR",
+    "¡Elige al menos 1 foto!",
+    "No se pudieron leer estas fotos (o pesan más de 15 MB): ",
+    "Aún no hay fotos de esta semana.",
+    "📥 Descargar informe fotográfico (HTML)",
+    "Abre el archivo y pulsa Ctrl+P para imprimirlo o guardarlo como PDF.",
+    "💡 Mantén Ctrl (o Shift) al elegir para seleccionar varias fotos a la vez. Pulsa Upload otra vez para añadir más.",
 ]
 _FR_LIST = [
     "🚢 SHIPCONTROL - GESTION DES TRAVAUX NAVALS",
@@ -5271,6 +5461,25 @@ _FR_LIST = [
     "🌲 Forêt",
     "⚪ Minimaliste",
     "👑 Royal",
+    "📸 Rapport photo hebdomadaire",
+    "📈 Statistiques",
+    "Vous n'avez encore aucune tâche à rapporter.",
+    "Début",
+    "Fin prévue",
+    "Avancement",
+    "Terminée",
+    "Semaine en cours",
+    "Ajouter des photos",
+    "Semaine",
+    "Choisir des photos sur l'ordinateur",
+    "Note sur la photo (facultatif)",
+    "📤 ENVOYER",
+    "Choisissez au moins 1 photo !",
+    "Impossible de lire ces photos (ou plus de 15 Mo) : ",
+    "Pas encore de photos pour cette semaine.",
+    "📥 Télécharger le rapport photo (HTML)",
+    "Ouvrez le fichier et appuyez sur Ctrl+P pour l'imprimer ou l'enregistrer en PDF.",
+    "💡 Maintenez Ctrl (ou Maj) pendant la sélection pour choisir plusieurs photos à la fois. Appuyez de nouveau sur Upload pour en ajouter.",
 ]
 _DE_LIST = [
     "🚢 SHIPCONTROL - SCHIFFBAU-ARBEITSVERWALTUNG",
@@ -5629,6 +5838,25 @@ _DE_LIST = [
     "🌲 Wald",
     "⚪ Minimal",
     "👑 Königlich",
+    "📸 Wöchentlicher Fotobericht",
+    "📈 Statistik",
+    "Du hast noch keine Aufgaben für einen Bericht.",
+    "Start",
+    "Geplantes Ende",
+    "Fortschritt",
+    "Fertig",
+    "Aktuelle Woche",
+    "Fotos hochladen",
+    "Woche",
+    "Fotos vom Computer auswählen",
+    "Notiz zum Foto (optional)",
+    "📤 HOCHLADEN",
+    "Wähle mindestens 1 Foto!",
+    "Diese Fotos konnten nicht gelesen werden (oder sind größer als 15 MB): ",
+    "Für diese Woche gibt es noch keine Fotos.",
+    "📥 Fotobericht herunterladen (HTML)",
+    "Datei öffnen und Strg+P drücken, um zu drucken oder als PDF zu speichern.",
+    "💡 Halte beim Auswählen Strg (oder Umschalt) gedrückt, um mehrere Fotos auf einmal zu wählen. Drücke erneut auf Upload, um weitere hinzuzufügen.",
 ]
 _RU_LIST = [
     "🚢 SHIPCONTROL - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
@@ -5987,6 +6215,25 @@ _RU_LIST = [
     "🌲 Лес",
     "⚪ Минимализм",
     "👑 Королевская",
+    "📸 Еженедельный фотоотчёт",
+    "📈 Статистика",
+    "У вас пока нет задач для отчёта.",
+    "Начало",
+    "Плановое окончание",
+    "Прогресс",
+    "Завершено",
+    "Текущая неделя",
+    "Загрузить фото",
+    "Неделя",
+    "Выберите фото с компьютера",
+    "Подпись к фото (необязательно)",
+    "📤 ЗАГРУЗИТЬ",
+    "Выберите хотя бы 1 фото!",
+    "Не удалось прочитать эти фото (или они больше 15 МБ): ",
+    "За эту неделю фото пока нет.",
+    "📥 Скачать фотоотчёт (HTML)",
+    "Откройте файл и нажмите Ctrl+P, чтобы распечатать или сохранить в PDF.",
+    "💡 Удерживайте Ctrl (или Shift) при выборе, чтобы выбрать сразу несколько фото. Нажмите Upload ещё раз, чтобы добавить.",
 ]
 _PT_LIST = [
     "🚢 SHIPCONTROL - GESTÃO DE TRABALHOS NAVAIS",
@@ -6345,6 +6592,25 @@ _PT_LIST = [
     "🌲 Floresta",
     "⚪ Minimalista",
     "👑 Real",
+    "📸 Relatório fotográfico semanal",
+    "📈 Estatísticas",
+    "Você ainda não tem tarefas para relatar.",
+    "Início",
+    "Término previsto",
+    "Progresso",
+    "Concluída",
+    "Semana atual",
+    "Enviar fotos",
+    "Semana",
+    "Escolha fotos do computador",
+    "Nota da foto (opcional)",
+    "📤 ENVIAR",
+    "Escolha pelo menos 1 foto!",
+    "Não foi possível ler estas fotos (ou têm mais de 15 MB): ",
+    "Ainda não há fotos desta semana.",
+    "📥 Baixar relatório fotográfico (HTML)",
+    "Abra o arquivo e pressione Ctrl+P para imprimir ou salvar em PDF.",
+    "💡 Segure Ctrl (ou Shift) ao escolher para pegar várias fotos de uma vez. Toque em Upload de novo para adicionar mais.",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -7743,6 +8009,218 @@ for _sql in ["ALTER TABLE users ADD COLUMN leader_id INTEGER",
 
 LEADER_ROLES = ["Team Leader", "Foreman"]
 
+# ==========================================
+# 📸 BÁO CÁO HÌNH ẢNH THEO TUẦN
+# ==========================================
+PHOTO_MAX_MB = 15
+PHOTO_MAX_SIDE = 1600
+PHOTO_MAX_FILES = 50          # tối đa 50 ảnh mỗi lần tải lên
+
+
+def _prog(v):
+    try:
+        f = float(v)
+        return 0 if f != f else int(f)
+    except Exception:
+        return 0
+
+
+def _parse_day(v):
+    try:
+        return datetime.strptime(str(v)[:10], "%Y-%m-%d").date()
+    except Exception:
+        return None
+
+
+def compress_photo(raw):
+    """Thu nhỏ ảnh (cạnh dài tối đa 1600px, JPEG) để cơ sở dữ liệu không bị phình to."""
+    from PIL import Image, ImageOps
+    import io
+    im = Image.open(io.BytesIO(raw))
+    im = ImageOps.exif_transpose(im)
+    if im.mode not in ("RGB", "L"):
+        bg = Image.new("RGB", im.size, (255, 255, 255))
+        try:
+            bg.paste(im, mask=im.convert("RGBA").split()[-1])
+        except Exception:
+            bg.paste(im.convert("RGB"))
+        im = bg
+    im.thumbnail((PHOTO_MAX_SIDE, PHOTO_MAX_SIDE))
+    out = io.BytesIO()
+    im.convert("RGB").save(out, format="JPEG", quality=82, optimize=True)
+    return out.getvalue()
+
+
+def task_week_info(task_row):
+    """task_row: (id, task_id, task_name, plan_start, plan_finish, initial_date, progress)
+    → (ngày bắt đầu, ngày kết thúc dự kiến, tuần hiện tại, đã xong?)"""
+    start = _parse_day(task_row[3]) or _parse_day(task_row[5]) or date.today()
+    finish = _parse_day(task_row[4])
+    cur_week = max(1, (date.today() - start).days // 7 + 1)
+    done = _prog(task_row[6]) >= 100
+    return start, finish, cur_week, done
+
+
+def build_photo_report_html(task_row, weeks, photos_by_week, names):
+    import base64
+    start, finish, cur_week, done = task_week_info(task_row)
+    parts = [f"""<!doctype html><html><head><meta charset='utf-8'>
+<title>{html.escape(str(task_row[1]))} - {html.escape(tr('📸 Báo cáo hình ảnh theo tuần'))}</title>
+<style>
+body{{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#0f172a}}
+h1{{font-size:22px;margin:0 0 4px}} .meta{{color:#475569;font-size:13px;margin-bottom:18px}}
+h2{{font-size:17px;border-bottom:2px solid #0ea5e9;padding-bottom:4px;margin-top:26px;page-break-after:avoid}}
+.grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}}
+figure{{margin:0;border:1px solid #e2e8f0;border-radius:8px;padding:6px;page-break-inside:avoid}}
+img{{width:100%;border-radius:6px}} figcaption{{font-size:12px;color:#334155;margin-top:4px}}
+.empty{{color:#94a3b8;font-style:italic}}
+</style></head><body>
+<h1>🚢 {html.escape(str(task_row[1]))} — {html.escape(str(task_row[2]))}</h1>
+<div class='meta'>{html.escape(tr('Bắt đầu'))}: {start:%d/%m/%Y}"""
+             + (f" · {html.escape(tr('Kết thúc dự kiến'))}: {finish:%d/%m/%Y}" if finish else "")
+             + f" · {html.escape(tr('Tiến độ'))}: {_prog(task_row[6])}%"
+             + (f" · ✅ {html.escape(tr('Đã hoàn thành'))}" if done else "")
+             + f" · {datetime.now():%d/%m/%Y %H:%M}</div>"]
+    for w in weeks:
+        d1 = start + timedelta(days=7 * (w - 1)); d2 = d1 + timedelta(days=6)
+        parts.append(f"<h2>📅 {html.escape(tr('Tuần'))} {w} ({d1:%d/%m} – {d2:%d/%m})</h2>")
+        items = photos_by_week.get(w, [])
+        if not items:
+            parts.append(f"<div class='empty'>{html.escape(tr('Chưa có ảnh nào cho tuần này.'))}</div>")
+            continue
+        parts.append("<div class='grid'>")
+        for pid, img, mime, note, by, at in items:
+            b64 = base64.b64encode(img).decode()
+            cap = " · ".join(x for x in [html.escape(note or ""), html.escape(names.get(by, "")), html.escape(str(at or "")[:16])] if x)
+            parts.append(f"<figure><img src='data:{mime or 'image/jpeg'};base64,{b64}'><figcaption>{cap}</figcaption></figure>")
+        parts.append("</div>")
+    parts.append("</body></html>")
+    return "".join(parts).encode("utf-8")
+
+
+def render_weekly_photo_report(user_data, current_role):
+    my_id = user_data["id"]
+    base_sql = """SELECT id, task_id, task_name, plan_start_date, plan_finish_date, initial_date, progress
+                  FROM tasks WHERE is_deleted = 0"""
+    if current_role == "Worker":
+        rows = cursor.execute(base_sql + " AND assigned_worker_id = ? ORDER BY id DESC", (my_id,)).fetchall()
+    elif current_role in LEADER_ROLES:
+        rows = cursor.execute(base_sql + " AND assigned_leader_id = ? ORDER BY id DESC", (my_id,)).fetchall()
+    else:
+        rows = cursor.execute(base_sql + " ORDER BY id DESC").fetchall()
+    if not rows:
+        st.info("Bạn chưa có công việc nào để báo cáo.")
+        return
+
+    by_id = {r[0]: r for r in rows}
+    sel = st.selectbox("Chọn công việc:", list(by_id.keys()), key="wr_task",
+                       format_func=lambda k: f"{by_id[k][1]} - {by_id[k][2]} ({_prog(by_id[k][6])}%)")
+    task = by_id[sel]
+    start, finish, cur_week, done = task_week_info(task)
+
+    photos = cursor.execute("""SELECT id, week, image, mime, note, uploaded_by, uploaded_at
+                               FROM task_photos WHERE task_id = ? ORDER BY week, id""", (sel,)).fetchall()
+    photos_by_week = {}
+    for pid, w, img, mime, note, by, at in photos:
+        photos_by_week.setdefault(w, []).append((pid, img, mime, note, by, at))
+    max_photo_week = max(photos_by_week) if photos_by_week else 0
+    # Đang làm: Tuần 1 → tuần hiện tại. Đã xong (100%): dừng ở tuần cuối cùng có ảnh.
+    last_week = (max_photo_week or cur_week) if done else max(cur_week, max_photo_week)
+    weeks = list(range(1, last_week + 1))
+
+    info = f"🗓️ {tr('Bắt đầu')}: {start:%d/%m/%Y}"
+    if finish:
+        info += f" · 🎯 {tr('Kết thúc dự kiến')}: {finish:%d/%m/%Y}"
+    info += f" · 📈 {tr('Tiến độ')}: {_prog(task[6])}%"
+    info += f" · ✅ {tr('Đã hoàn thành')}" if done else f" · 📍 {tr('Tuần hiện tại')}: {cur_week}"
+    st.caption(info)
+
+    names = {u[0]: (u[2] or u[1]) for u in cursor.execute("SELECT id, username, fullname FROM users").fetchall()}
+    can_manage = current_role in ["Admin", "WOS Manager"] + LEADER_ROLES
+
+    # ➕ Tải ảnh lên (nút mini)
+    m = mini_bar(f"wr{sel}", "📸 Báo cáo hình ảnh theo tuần", [("add", "➕", "Tải ảnh lên")])
+    if m == "add":
+        with mini_panel(f"wr{sel}"):
+            wk_opts = weeks if done else list(range(1, max(cur_week, max_photo_week) + 1))
+            up_week = st.selectbox("Tuần", wk_opts, index=len(wk_opts) - 1, key=f"wr_week_{sel}",
+                                   format_func=lambda w: f"{tr('Tuần')} {w} ({(start + timedelta(days=7 * (w - 1))):%d/%m} – {(start + timedelta(days=7 * (w - 1) + 6)):%d/%m})")
+            files = st.file_uploader("Chọn ảnh từ máy tính", type=["jpg", "jpeg", "png", "webp", "bmp"],
+                                     accept_multiple_files=True, key=f"wr_files_{sel}_{st.session_state.get('_wr_nonce', 0)}")
+            st.caption("💡 Giữ Ctrl (hoặc Shift) khi chọn để lấy nhiều ảnh cùng lúc. Bấm Upload thêm lần nữa để thêm ảnh khác.")
+            if files:
+                # Xem trước các ảnh đã chọn (nhỏ) trước khi tải lên
+                st.markdown(f"**📷 × {len(files)}**")
+                _pv = st.columns(6)
+                for _i, _f in enumerate(files[:PHOTO_MAX_FILES]):
+                    with _pv[_i % 6]:
+                        try:
+                            st.image(_f.getvalue(), use_container_width=True)
+                        except Exception:
+                            st.caption(f"⚠️ {_f.name}")
+            note = st.text_input("Ghi chú cho ảnh (không bắt buộc)", key=f"wr_note_{sel}", max_chars=200)
+            if st.button("📤 TẢI LÊN", key=f"wr_upload_{sel}", type="primary", use_container_width=True):
+                if not files:
+                    st.error("Hãy chọn ít nhất 1 ảnh!")
+                else:
+                    saved, bad = 0, []
+                    for f in files[:PHOTO_MAX_FILES]:
+                        raw = f.getvalue()
+                        if len(raw) > PHOTO_MAX_MB * 1024 * 1024:
+                            bad.append(f.name); continue
+                        try:
+                            img = compress_photo(raw)
+                        except Exception:
+                            bad.append(f.name); continue
+                        cursor.execute("""INSERT INTO task_photos (task_id, week, image, mime, note, uploaded_by, uploaded_at)
+                                          VALUES (?, ?, ?, 'image/jpeg', ?, ?, ?)""",
+                                       (sel, int(up_week), img, note.strip()[:200], my_id, datetime.now().strftime("%Y-%m-%d %H:%M")))
+                        saved += 1
+                    conn.commit()
+                    if bad:
+                        st.session_state["_wr_bad"] = bad
+                    st.session_state["_wr_nonce"] = st.session_state.get("_wr_nonce", 0) + 1
+                    st.session_state.pop(f"wr_note_{sel}", None)
+                    st.toast(f"📸 +{saved}")
+                    mini_close(f"wr{sel}")
+                    st.rerun()
+    if st.session_state.get("_wr_bad"):
+        st.warning(tr("Không đọc được ảnh (hoặc ảnh lớn hơn 15 MB): ") + ", ".join(st.session_state.pop("_wr_bad")))
+
+    # 📅 Từng tuần (tuần mới nhất ở trên cùng)
+    for w in reversed(weeks):
+        d1 = start + timedelta(days=7 * (w - 1)); d2 = d1 + timedelta(days=6)
+        items = photos_by_week.get(w, [])
+        label = f"📅 {tr('Tuần')} {w} · {d1:%d/%m} – {d2:%d/%m} · 📷 {len(items)}"
+        if done and w == last_week:
+            label += f" · ✅ {tr('Đã hoàn thành')}"
+        elif not done and w == cur_week:
+            label += " · 📍"
+        with st.expander(label, expanded=(w == last_week)):
+            if not items:
+                st.caption("Chưa có ảnh nào cho tuần này.")
+                continue
+            cols = st.columns(3)
+            for i, (pid, img, mime, note_, by, at) in enumerate(items):
+                with cols[i % 3]:
+                    st.image(img, use_container_width=True)
+                    cap = " · ".join(x for x in [note_ or "", f"👤 {names.get(by, '?')}", f"🕒 {str(at or '')[:16]}"] if x)
+                    _DG._sc_orig_markdown(st._main, f"<div style='font-size:0.8rem;opacity:0.8;margin:-4px 0 6px'>{html.escape(cap)}</div>", unsafe_allow_html=True)
+                    if by == my_id or can_manage:
+                        if st.button("🗑️", key=f"wr_del_{pid}", help=tr("Xóa")):
+                            cursor.execute("DELETE FROM task_photos WHERE id = ?", (pid,))
+                            conn.commit()
+                            st.toast("🗑️")
+                            st.rerun()
+
+    # 📥 Xuất báo cáo (HTML có ảnh, mở ra rồi in / lưu PDF)
+    if photos:
+        st.download_button("📥 Tải báo cáo hình ảnh (HTML)",
+                           data=build_photo_report_html(task, weeks, photos_by_week, names),
+                           file_name=f"Report_{task[1]}_{datetime.now():%Y%m%d}.html", mime="text/html",
+                           key=f"wr_dl_{sel}")
+        st.caption("Mở file rồi bấm Ctrl+P để in hoặc lưu thành PDF.")
+
 def remove_worker_from_team(worker_id, leader_id):
     """Đưa Worker ra khỏi team và bỏ giao các việc của team đó cho Worker này."""
     cursor.execute("UPDATE users SET leader_id = NULL WHERE id = ? AND leader_id = ?", (worker_id, leader_id))
@@ -7854,6 +8332,21 @@ cursor.execute('''
         PRIMARY KEY (meeting_id, user_id)
     )
 ''')
+
+# 📸 ẢNH BÁO CÁO THEO TUẦN (mỗi ảnh gắn với 1 công việc + số tuần)
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS task_photos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        task_id INTEGER NOT NULL,
+        week INTEGER NOT NULL,
+        image BLOB NOT NULL,
+        mime TEXT DEFAULT 'image/jpeg',
+        note TEXT,
+        uploaded_by INTEGER,
+        uploaded_at TEXT
+    )
+''')
+cursor.execute("CREATE INDEX IF NOT EXISTS idx_task_photos ON task_photos (task_id, week)")
 
 # 🔐 BẢNG PHIÊN ĐĂNG NHẬP (cookie chỉ chứa token ngẫu nhiên, không chứa username)
 cursor.execute('''
@@ -9922,65 +10415,79 @@ else:
     # 7. BÁO CÁO & THỐNG KÊ
     elif menu == "📊 Báo Cáo & Khai Báo":
         st.markdown("<div class='big-table-title'>📊 Báo Cáo & Thống Kê Tiến Độ</div>", unsafe_allow_html=True)
-        
-        df_all = pd.read_sql_query("SELECT task_id, task_name, task_cost_code, block, in_charge_by, progress FROM tasks WHERE is_deleted = 0", conn)
-        
-        if df_all.empty:
-            st.info("Chưa có dữ liệu công việc để tạo báo cáo. Vui lòng thêm công việc trước!")
+        _rep_tab = st.session_state.get("report_tab", "photos")
+        _rt1, _rt2, _ = st.columns([1, 1, 1])
+        with _rt1:
+            st.button("📸 Báo cáo hình ảnh theo tuần", key="btn_rep_photos", use_container_width=True,
+                      type="primary" if _rep_tab == "photos" else "secondary",
+                      on_click=lambda: st.session_state.update({"report_tab": "photos"}))
+        with _rt2:
+            st.button("📈 Thống kê", key="btn_rep_stats", use_container_width=True,
+                      type="primary" if _rep_tab == "stats" else "secondary",
+                      on_click=lambda: st.session_state.update({"report_tab": "stats"}))
+
+        if _rep_tab == "photos":
+            render_weekly_photo_report(user_data, current_role)
         else:
-            df_all['progress'] = pd.to_numeric(df_all['progress'], errors='coerce').fillna(0)
+        
+            df_all = pd.read_sql_query("SELECT task_id, task_name, task_cost_code, block, in_charge_by, progress FROM tasks WHERE is_deleted = 0", conn)
+        
+            if df_all.empty:
+                st.info("Chưa có dữ liệu công việc để tạo báo cáo. Vui lòng thêm công việc trước!")
+            else:
+                df_all['progress'] = pd.to_numeric(df_all['progress'], errors='coerce').fillna(0)
             
-            total_tasks = len(df_all)
-            completed_tasks = len(df_all[df_all['progress'] == 100])
-            in_progress_tasks = len(df_all[(df_all['progress'] > 0) & (df_all['progress'] < 100)])
-            avg_progress = round(df_all['progress'].mean(), 1)
+                total_tasks = len(df_all)
+                completed_tasks = len(df_all[df_all['progress'] == 100])
+                in_progress_tasks = len(df_all[(df_all['progress'] > 0) & (df_all['progress'] < 100)])
+                avg_progress = round(df_all['progress'].mean(), 1)
             
-            m1, m2, m3, m4 = st.columns(4)
-            m1.metric("Tổng Số Công Việc", f"{total_tasks}")
-            m2.metric("Đã Hoàn Thành (100%)", f"{completed_tasks}", f"{(completed_tasks/total_tasks*100):.1f}%")
-            m3.metric("Đang Thực Hiện", f"{in_progress_tasks}")
-            m4.metric("Tiến Độ Trung Bình", f"{avg_progress}%")
+                m1, m2, m3, m4 = st.columns(4)
+                m1.metric("Tổng Số Công Việc", f"{total_tasks}")
+                m2.metric("Đã Hoàn Thành (100%)", f"{completed_tasks}", f"{(completed_tasks/total_tasks*100):.1f}%")
+                m3.metric("Đang Thực Hiện", f"{in_progress_tasks}")
+                m4.metric("Tiến Độ Trung Bình", f"{avg_progress}%")
             
-            st.markdown("---")
+                st.markdown("---")
             
-            col_chart1, col_chart2 = st.columns(2)
+                col_chart1, col_chart2 = st.columns(2)
             
-            with col_chart1:
-                st.markdown("### 📈 Phân Bố Tiến Độ Công Việc")
-                progress_bins = pd.cut(df_all['progress'], bins=[-1, 0, 50, 99, 100], labels=[tr('Chưa bắt đầu (0%)'), tr('Đang làm (1-50%)'), tr('Sắp xong (51-99%)'), tr('Hoàn thành (100%)')])
-                progress_dist = progress_bins.value_counts().reset_index()
-                _c_status, _c_count = tr('Trạng Thái'), tr('Số Lượng')
-                progress_dist.columns = [_c_status, _c_count]
+                with col_chart1:
+                    st.markdown("### 📈 Phân Bố Tiến Độ Công Việc")
+                    progress_bins = pd.cut(df_all['progress'], bins=[-1, 0, 50, 99, 100], labels=[tr('Chưa bắt đầu (0%)'), tr('Đang làm (1-50%)'), tr('Sắp xong (51-99%)'), tr('Hoàn thành (100%)')])
+                    progress_dist = progress_bins.value_counts().reset_index()
+                    _c_status, _c_count = tr('Trạng Thái'), tr('Số Lượng')
+                    progress_dist.columns = [_c_status, _c_count]
                 
-                chart = alt.Chart(progress_dist).mark_bar(color='#3b82f6').encode(
-                    x=alt.X(f'{_c_status}:N', axis=alt.Axis(labelAngle=0, labelFontSize=12, title=_c_status)),
-                    y=alt.Y(f'{_c_count}:Q', axis=alt.Axis(title=tr("Số Lượng Công Việc"), tickMinStep=1, format='d')),
-                    tooltip=[_c_status, _c_count]
-                ).properties(height=350)
+                    chart = alt.Chart(progress_dist).mark_bar(color='#3b82f6').encode(
+                        x=alt.X(f'{_c_status}:N', axis=alt.Axis(labelAngle=0, labelFontSize=12, title=_c_status)),
+                        y=alt.Y(f'{_c_count}:Q', axis=alt.Axis(title=tr("Số Lượng Công Việc"), tickMinStep=1, format='d')),
+                        tooltip=[_c_status, _c_count]
+                    ).properties(height=350)
                 
-                st.altair_chart(chart, use_container_width=True)
+                    st.altair_chart(chart, use_container_width=True)
 
-            with col_chart2:
-                st.markdown("### 🏭 Thống Kê Theo Workshop")
-                ws_stats = df_all.groupby('task_cost_code').agg(
-                    Tổng_CV=('task_id', 'count'),
-                    Tiến_Độ_TB=('progress', 'mean')
-                ).reset_index()
-                ws_stats['Tiến_Độ_TB'] = ws_stats['Tiến_Độ_TB'].round(1)
-                ws_stats.columns = ['WS Cost Code', 'Tổng Công Việc', 'Tiến Độ Trung Bình (%)']
-                st.dataframe(ws_stats, use_container_width=True)
+                with col_chart2:
+                    st.markdown("### 🏭 Thống Kê Theo Workshop")
+                    ws_stats = df_all.groupby('task_cost_code').agg(
+                        Tổng_CV=('task_id', 'count'),
+                        Tiến_Độ_TB=('progress', 'mean')
+                    ).reset_index()
+                    ws_stats['Tiến_Độ_TB'] = ws_stats['Tiến_Độ_TB'].round(1)
+                    ws_stats.columns = ['WS Cost Code', 'Tổng Công Việc', 'Tiến Độ Trung Bình (%)']
+                    st.dataframe(ws_stats, use_container_width=True)
 
-            st.markdown("---")
-            st.markdown("### 📥 Tải Báo Cáo Dữ Liệu")
+                st.markdown("---")
+                st.markdown("### 📥 Tải Báo Cáo Dữ Liệu")
             
-            csv_data = df_all.to_csv(index=False).encode('utf-8-sig')
-            st.download_button(
-                label="📥 Tải Báo Cáo Bảng Công Việc (File CSV/Excel)",
-                data=csv_data,
-                file_name=f"ShipControl_Report_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
-                mime="text/csv",
-                type="primary"
-            )
+                csv_data = df_all.to_csv(index=False).encode('utf-8-sig')
+                st.download_button(
+                    label="📥 Tải Báo Cáo Bảng Công Việc (File CSV/Excel)",
+                    data=csv_data,
+                    file_name=f"ShipControl_Report_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
+                    mime="text/csv",
+                    type="primary"
+                )
 
     # 8. ĐỔI MẬT KHẨU (MỌI ROLE)
     elif menu == "🔑 Đổi Mật Khẩu":
