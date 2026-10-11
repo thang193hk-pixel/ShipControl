@@ -982,6 +982,16 @@ section[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"],
     height: 0 !important;
     overflow: hidden !important;
 }
+/* ➕ nút mini tạo nhóm chat */
+.st-key-sc_grp_head { margin-top: 6px !important; }
+.st-key-sc_grp_head h4 { margin: 0 !important; padding: 0 !important; }
+.st-key-sc_grp_head .st-key-chat_grp_toggle { display: flex !important; justify-content: flex-end !important; }
+.st-key-sc_grp_head .st-key-chat_grp_toggle button {
+    width: 32px !important; min-width: 32px !important; height: 32px !important; min-height: 32px !important;
+    padding: 0 !important; border-radius: 50% !important; font-size: 15px !important; line-height: 1 !important;
+}
+.st-key-sc_grp_new { padding: 8px !important; gap: 6px !important; }
+.st-key-sc_grp_new button { min-height: 34px !important; padding: 4px 10px !important; font-size: 13px !important; }
 .st-key-sc_topbar {
     position: sticky !important;
     top: 0;
@@ -1653,6 +1663,8 @@ VI_EN = {
     "Xem một con tàu được đóng từ những khối thép đầu tiên đến khi hạ thủy.": "Watch a ship being built from the first steel blocks to launch day.",
     "Không xem được video? ": "Can't play the video? ",
     "▶ Mở trên YouTube": "▶ Open on YouTube",
+    "Tạo nhóm chat": "Create group chat",
+    "Chưa có nhóm nào — bấm ➕ để tạo.": "No groups yet — tap ➕ to create one.",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -1998,6 +2010,8 @@ _ZH_LIST = [
     "观看一艘船从第一块钢板到下水的建造过程。",
     "无法播放视频？",
     "▶ 在 YouTube 上打开",
+    "创建群聊",
+    "还没有群组——点击 ➕ 创建。",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2341,6 +2355,8 @@ _JA_LIST = [
     "最初の鋼材ブロックから進水まで、船が造られる様子をご覧ください。",
     "動画が再生できませんか？",
     "▶ YouTube で開く",
+    "グループチャットを作成",
+    "グループはまだありません — ➕ をタップして作成。",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2684,6 +2700,8 @@ _KO_LIST = [
     "첫 강철 블록부터 진수까지 배가 만들어지는 과정을 보세요.",
     "영상이 재생되지 않나요? ",
     "▶ YouTube에서 열기",
+    "그룹 채팅 만들기",
+    "아직 그룹이 없습니다 — ➕ 를 눌러 만드세요.",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -6119,22 +6137,6 @@ else:
 
             # ---------- Cột trái: Kênh chung + Nhóm chat (không còn nhắn riêng từng người) ----------
             with col_list:
-                # ➕ Tạo nhóm chat: đặt tên + chọn người
-                with st.expander("➕ Tạo nhóm chat"):
-                    g_name = st.text_input("Tên nhóm", key="chat_new_group_name", placeholder="Ví dụ: Tổ hàn Block 170")
-                    g_members = st.multiselect("Thêm người vào nhóm", list(people_label.keys()), placeholder="Chọn người...",
-                                               format_func=lambda i: people_label[i], key="chat_new_group_members")
-                    if st.button("✨ TẠO NHÓM", key="chat_create_group", type="primary", use_container_width=True):
-                        if not g_name.strip():
-                            st.error("Vui lòng đặt tên nhóm!")
-                        elif not g_members:
-                            st.error("Hãy chọn ít nhất 1 người!")
-                        else:
-                            new_gid = create_chat_group(g_name.strip()[:60], me, g_members)
-                            conv = f"group:{new_gid}"
-                            st.session_state["chat_conv"] = conv
-                            st.success(f"Đã tạo nhóm **{g_name.strip()[:60]}**!")
-
                 unread = chat_unread_by_conv(me)
                 unread.pop(conv, None)        # cuộc đang mở thì coi như đã đọc
                 g_badge = f"  🔴 {unread['general']}" if unread.get("general") else ""
@@ -6142,9 +6144,42 @@ else:
                           type="primary" if conv == "general" else "secondary",
                           on_click=_open_conv, args=("general",))
 
+                # 💬 Tiêu đề "Nhóm chat" + nút ➕ nhỏ (bấm để mở/đóng ô tạo nhóm gọn)
+                if st.session_state.pop("_chat_grp_reset", False):
+                    st.session_state["chat_new_group_name"] = ""
+                    st.session_state["chat_new_group_members"] = []
+                show_new = st.session_state.get("chat_show_new_grp", False)
+                with st.container(key="sc_grp_head"):
+                    h_l, h_r = st.columns([5, 1], vertical_alignment="center", gap="small")
+                    with h_l:
+                        st.markdown("#### 💬 Nhóm chat")
+                    with h_r:
+                        if st.button("✖" if show_new else "➕", key="chat_grp_toggle", help=tr("Tạo nhóm chat")):
+                            st.session_state["chat_show_new_grp"] = not show_new
+                            st.rerun(scope="fragment")
+                if show_new:
+                    with st.container(key="sc_grp_new", border=True):
+                        g_name = st.text_input("Tên nhóm", key="chat_new_group_name", placeholder="Ví dụ: Tổ hàn Block 170",
+                                               label_visibility="collapsed")
+                        g_members = st.multiselect("Thêm người vào nhóm", list(people_label.keys()), placeholder="Chọn người...",
+                                                   format_func=lambda i: people_label[i], key="chat_new_group_members",
+                                                   label_visibility="collapsed")
+                        if st.button("✨ TẠO NHÓM", key="chat_create_group", type="primary", use_container_width=True):
+                            if not g_name.strip():
+                                st.error("Vui lòng đặt tên nhóm!")
+                            elif not g_members:
+                                st.error("Hãy chọn ít nhất 1 người!")
+                            else:
+                                new_gid = create_chat_group(g_name.strip()[:60], me, g_members)
+                                st.session_state["chat_conv"] = f"group:{new_gid}"
+                                st.session_state["chat_show_new_grp"] = False
+                                st.session_state["_chat_grp_reset"] = True
+                                st.rerun(scope="fragment")
+
                 my_groups = user_chat_groups(me)
-                if my_groups:
-                    st.markdown("#### 💬 Nhóm chat")
+                if not my_groups:
+                    st.caption("Chưa có nhóm nào — bấm ➕ để tạo.")
+                else:
                     for gid, gname, gowner, gcount in my_groups:
                         c_id = f"group:{gid}"
                         badge = f"  🔴 {unread[c_id]}" if unread.get(c_id) else ""
