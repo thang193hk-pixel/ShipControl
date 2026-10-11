@@ -1001,6 +1001,30 @@ section[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"],
 .st-key-sc_mini_cc, .st-key-sc_mini_block { margin-top: 0 !important; }
 [class*="st-key-sc_minip_"] { padding: 8px !important; gap: 6px !important; animation: scPop 0.15s ease-out both; }
 [class*="st-key-sc_minip_"] [data-testid="stButton"] button { min-height: 34px !important; padding: 4px 10px !important; font-size: 13px !important; }
+/* 🖥️ Khung slide kiểu PowerPoint (báo cáo hình ảnh theo tuần) */
+[class*="st-key-sc_slide_"] {
+    background: #ffffff !important; border-radius: 18px !important; overflow: hidden !important;
+    border: 1px solid #dbe3ee !important; box-shadow: 0 18px 40px rgba(11, 37, 69, 0.18) !important;
+    padding: 0 22px 14px !important; gap: 12px !important; margin: 6px 0 14px !important;
+}
+[class*="st-key-sc_slide_"] .sc-slide-head {
+    margin: 0 -22px 6px; padding: 22px 28px; display: flex; justify-content: space-between; align-items: flex-end; gap: 12px;
+    background: #0b2545; color: #fff;
+}
+[class*="st-key-sc_slide_"] .sc-slide-kicker { color: #f2a541 !important; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.18em; }
+[class*="st-key-sc_slide_"] .sc-slide-title { color: #fff !important; font-family: Cambria, Georgia, serif; font-size: 2.3rem; font-weight: 800; line-height: 1.1; }
+[class*="st-key-sc_slide_"] .sc-slide-dates { color: #8da9c4 !important; font-size: 1rem; margin-top: 2px; }
+[class*="st-key-sc_slide_"] .sc-slide-right { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+[class*="st-key-sc_slide_"] .sc-slide-badge { background: #134074; color: #fff !important; border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+[class*="st-key-sc_slide_"] .sc-slide-badge.sc-done { background: #f2a541; color: #0b2545 !important; }
+[class*="st-key-sc_slide_"] .sc-slide-empty { background: #eef3f8; color: #64748b !important; border-radius: 14px; padding: 90px 20px; text-align: center; font-size: 1.15rem; }
+[class*="st-key-sc_slide_"] .sc-slide-cap { color: #64748b !important; font-size: 0.8rem; text-align: center; margin: -6px 0 2px; }
+[class*="st-key-sc_slide_"] .sc-slide-foot { display: flex; justify-content: space-between; color: #94a3b8 !important; font-size: 0.75rem; border-top: 1px solid #eef2f7; padding-top: 8px; }
+[class*="st-key-sc_slide_"] .sc-slide-foot span { color: #94a3b8 !important; }
+[class*="st-key-sc_slide_"] img { border-radius: 10px; }
+[class*="st-key-sc_slide_n1_"] img { max-height: 460px !important; width: 100% !important; object-fit: contain !important; }
+[class*="st-key-sc_slide_n2_"] img { height: 300px !important; width: 100% !important; object-fit: cover !important; }
+[class*="st-key-sc_slide_n3_"] img { height: 210px !important; width: 100% !important; object-fit: cover !important; }
 .st-key-sc_topbar {
     position: sticky !important;
     top: 0;
@@ -1706,6 +1730,14 @@ VI_EN = {
     "📥 Tải báo cáo hình ảnh (HTML)": "📥 Download photo report (HTML)",
     "Mở file rồi bấm Ctrl+P để in hoặc lưu thành PDF.": "Open the file and press Ctrl+P to print or save it as PDF.",
     "💡 Giữ Ctrl (hoặc Shift) khi chọn để lấy nhiều ảnh cùng lúc. Bấm Upload thêm lần nữa để thêm ảnh khác.": "💡 Hold Ctrl (or Shift) while choosing to pick many photos at once. Press Upload again to add more.",
+    "📊 Tải PowerPoint (.pptx)": "📊 Download PowerPoint (.pptx)",
+    "◀ Trước": "◀ Previous",
+    "Tiếp ▶": "Next ▶",
+    "Tổng số tuần": "Total weeks",
+    "Tổng số ảnh": "Total photos",
+    "Đang thực hiện": "In progress",
+    "ảnh": "photos",
+    "Tổng kết": "Summary",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -2085,6 +2117,14 @@ _ZH_LIST = [
     "📥 下载图片报告（HTML）",
     "打开文件后按 Ctrl+P 打印或另存为 PDF。",
     "💡 选择时按住 Ctrl（或 Shift）可一次选多张图片。再按一次 Upload 可继续添加。",
+    "📊 下载 PowerPoint (.pptx)",
+    "◀ 上一页",
+    "下一页 ▶",
+    "总周数",
+    "图片总数",
+    "进行中",
+    "张图片",
+    "总结",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2462,6 +2502,14 @@ _JA_LIST = [
     "📥 写真レポートをダウンロード（HTML）",
     "ファイルを開いて Ctrl+P で印刷または PDF 保存できます。",
     "💡 Ctrl（または Shift）を押しながら選ぶと複数の写真を一度に選べます。Upload をもう一度押すと追加できます。",
+    "📊 PowerPoint をダウンロード (.pptx)",
+    "◀ 前へ",
+    "次へ ▶",
+    "合計週数",
+    "写真の合計",
+    "進行中",
+    "枚",
+    "まとめ",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2839,6 +2887,14 @@ _KO_LIST = [
     "📥 사진 보고서 다운로드 (HTML)",
     "파일을 열고 Ctrl+P를 눌러 인쇄하거나 PDF로 저장하세요.",
     "💡 Ctrl(또는 Shift)를 누른 채 선택하면 여러 사진을 한 번에 고를 수 있습니다. Upload를 다시 누르면 더 추가됩니다.",
+    "📊 PowerPoint 다운로드 (.pptx)",
+    "◀ 이전",
+    "다음 ▶",
+    "전체 주 수",
+    "전체 사진 수",
+    "진행 중",
+    "장",
+    "요약",
 ]
 
 # 🌏 10 ngôn ngữ thêm (cùng thứ tự với VI_EN)
@@ -3218,6 +3274,14 @@ _TH_LIST = [
     "📥 ดาวน์โหลดรายงานภาพ (HTML)",
     "เปิดไฟล์แล้วกด Ctrl+P เพื่อพิมพ์หรือบันทึกเป็น PDF",
     "💡 กด Ctrl (หรือ Shift) ค้างไว้ขณะเลือกเพื่อเลือกหลายรูปพร้อมกัน กด Upload อีกครั้งเพื่อเพิ่มรูป",
+    "📊 ดาวน์โหลด PowerPoint (.pptx)",
+    "◀ ก่อนหน้า",
+    "ถัดไป ▶",
+    "จำนวนสัปดาห์ทั้งหมด",
+    "จำนวนรูปทั้งหมด",
+    "กำลังดำเนินการ",
+    "รูป",
+    "สรุป",
 ]
 _ID_LIST = [
     "🚢 SHIPCONTROL - MANAJEMEN PEKERJAAN KAPAL",
@@ -3595,6 +3659,14 @@ _ID_LIST = [
     "📥 Unduh laporan foto (HTML)",
     "Buka file lalu tekan Ctrl+P untuk mencetak atau menyimpan sebagai PDF.",
     "💡 Tahan Ctrl (atau Shift) saat memilih untuk mengambil banyak foto sekaligus. Tekan Upload lagi untuk menambah.",
+    "📊 Unduh PowerPoint (.pptx)",
+    "◀ Sebelumnya",
+    "Berikutnya ▶",
+    "Total minggu",
+    "Total foto",
+    "Sedang berjalan",
+    "foto",
+    "Ringkasan",
 ]
 _MS_LIST = [
     "🚢 SHIPCONTROL - PENGURUSAN KERJA KAPAL",
@@ -3972,6 +4044,14 @@ _MS_LIST = [
     "📥 Muat turun laporan foto (HTML)",
     "Buka fail dan tekan Ctrl+P untuk mencetak atau simpan sebagai PDF.",
     "💡 Tahan Ctrl (atau Shift) semasa memilih untuk ambil banyak foto sekali gus. Tekan Upload sekali lagi untuk menambah.",
+    "📊 Muat turun PowerPoint (.pptx)",
+    "◀ Sebelum",
+    "Seterusnya ▶",
+    "Jumlah minggu",
+    "Jumlah foto",
+    "Sedang dijalankan",
+    "foto",
+    "Ringkasan",
 ]
 _TL_LIST = [
     "🚢 SHIPCONTROL - PAMAMAHALA NG TRABAHO SA BARKO",
@@ -4349,6 +4429,14 @@ _TL_LIST = [
     "📥 I-download ang ulat ng larawan (HTML)",
     "Buksan ang file at pindutin ang Ctrl+P para i-print o i-save bilang PDF.",
     "💡 Pindutin nang matagal ang Ctrl (o Shift) habang pumipili para kumuha ng maraming larawan nang sabay. Pindutin ulit ang Upload para magdagdag.",
+    "📊 I-download ang PowerPoint (.pptx)",
+    "◀ Nakaraan",
+    "Susunod ▶",
+    "Kabuuang linggo",
+    "Kabuuang larawan",
+    "Ginagawa pa",
+    "larawan",
+    "Buod",
 ]
 _HI_LIST = [
     "🚢 SHIPCONTROL - जहाज़ कार्य प्रबंधन",
@@ -4726,6 +4814,14 @@ _HI_LIST = [
     "📥 फ़ोटो रिपोर्ट डाउनलोड करें (HTML)",
     "फ़ाइल खोलें और प्रिंट करने या PDF के रूप में सहेजने के लिए Ctrl+P दबाएँ।",
     "💡 एक साथ कई फ़ोटो चुनने के लिए चुनते समय Ctrl (या Shift) दबाए रखें। और जोड़ने के लिए फिर से Upload दबाएँ।",
+    "📊 PowerPoint डाउनलोड करें (.pptx)",
+    "◀ पिछला",
+    "अगला ▶",
+    "कुल सप्ताह",
+    "कुल फ़ोटो",
+    "चल रहा है",
+    "फ़ोटो",
+    "सारांश",
 ]
 _ES_LIST = [
     "🚢 SHIPCONTROL - GESTIÓN DE TRABAJOS NAVALES",
@@ -5103,6 +5199,14 @@ _ES_LIST = [
     "📥 Descargar informe fotográfico (HTML)",
     "Abre el archivo y pulsa Ctrl+P para imprimirlo o guardarlo como PDF.",
     "💡 Mantén Ctrl (o Shift) al elegir para seleccionar varias fotos a la vez. Pulsa Upload otra vez para añadir más.",
+    "📊 Descargar PowerPoint (.pptx)",
+    "◀ Anterior",
+    "Siguiente ▶",
+    "Total de semanas",
+    "Total de fotos",
+    "En curso",
+    "fotos",
+    "Resumen",
 ]
 _FR_LIST = [
     "🚢 SHIPCONTROL - GESTION DES TRAVAUX NAVALS",
@@ -5480,6 +5584,14 @@ _FR_LIST = [
     "📥 Télécharger le rapport photo (HTML)",
     "Ouvrez le fichier et appuyez sur Ctrl+P pour l'imprimer ou l'enregistrer en PDF.",
     "💡 Maintenez Ctrl (ou Maj) pendant la sélection pour choisir plusieurs photos à la fois. Appuyez de nouveau sur Upload pour en ajouter.",
+    "📊 Télécharger le PowerPoint (.pptx)",
+    "◀ Précédent",
+    "Suivant ▶",
+    "Nombre de semaines",
+    "Nombre de photos",
+    "En cours",
+    "photos",
+    "Bilan",
 ]
 _DE_LIST = [
     "🚢 SHIPCONTROL - SCHIFFBAU-ARBEITSVERWALTUNG",
@@ -5857,6 +5969,14 @@ _DE_LIST = [
     "📥 Fotobericht herunterladen (HTML)",
     "Datei öffnen und Strg+P drücken, um zu drucken oder als PDF zu speichern.",
     "💡 Halte beim Auswählen Strg (oder Umschalt) gedrückt, um mehrere Fotos auf einmal zu wählen. Drücke erneut auf Upload, um weitere hinzuzufügen.",
+    "📊 PowerPoint herunterladen (.pptx)",
+    "◀ Zurück",
+    "Weiter ▶",
+    "Wochen gesamt",
+    "Fotos gesamt",
+    "In Arbeit",
+    "Fotos",
+    "Zusammenfassung",
 ]
 _RU_LIST = [
     "🚢 SHIPCONTROL - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
@@ -6234,6 +6354,14 @@ _RU_LIST = [
     "📥 Скачать фотоотчёт (HTML)",
     "Откройте файл и нажмите Ctrl+P, чтобы распечатать или сохранить в PDF.",
     "💡 Удерживайте Ctrl (или Shift) при выборе, чтобы выбрать сразу несколько фото. Нажмите Upload ещё раз, чтобы добавить.",
+    "📊 Скачать PowerPoint (.pptx)",
+    "◀ Назад",
+    "Далее ▶",
+    "Всего недель",
+    "Всего фото",
+    "В работе",
+    "фото",
+    "Итоги",
 ]
 _PT_LIST = [
     "🚢 SHIPCONTROL - GESTÃO DE TRABALHOS NAVAIS",
@@ -6611,6 +6739,14 @@ _PT_LIST = [
     "📥 Baixar relatório fotográfico (HTML)",
     "Abra o arquivo e pressione Ctrl+P para imprimir ou salvar em PDF.",
     "💡 Segure Ctrl (ou Shift) ao escolher para pegar várias fotos de uma vez. Toque em Upload de novo para adicionar mais.",
+    "📊 Baixar PowerPoint (.pptx)",
+    "◀ Anterior",
+    "Próximo ▶",
+    "Total de semanas",
+    "Total de fotos",
+    "Em andamento",
+    "fotos",
+    "Resumo",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -8098,6 +8234,173 @@ img{{width:100%;border-radius:6px}} figcaption{{font-size:12px;color:#334155;mar
     return "".join(parts).encode("utf-8")
 
 
+def build_photo_report_pptx(task_row, weeks, photos_by_week, names):
+    """Xuất báo cáo hình ảnh thành file PowerPoint (.pptx): trang bìa, mỗi tuần 1 slide (≤6 ảnh/slide), trang tổng kết."""
+    import io
+    from pptx import Presentation
+    from pptx.util import Inches, Pt
+    from pptx.dml.color import RGBColor
+    from pptx.enum.shapes import MSO_SHAPE
+    from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+    from PIL import Image
+
+    NAVY, NAVY2, AMBER = RGBColor(0x0B, 0x25, 0x45), RGBColor(0x13, 0x40, 0x74), RGBColor(0xF2, 0xA5, 0x41)
+    STEEL, INK, MUTED = RGBColor(0x8D, 0xA9, 0xC4), RGBColor(0x0F, 0x1E, 0x33), RGBColor(0x64, 0x74, 0x8B)
+    WHITE, TINT = RGBColor(0xFF, 0xFF, 0xFF), RGBColor(0xEE, 0xF3, 0xF8)
+    HEAD, BODY = "Cambria", "Calibri"
+
+    def clean(t):   # bỏ emoji ở đầu chữ (PowerPoint hiển thị emoji không đẹp)
+        t = str(t or "")
+        while t and not t[0].isalnum():
+            t = t[1:]
+        return t.strip()
+
+    start, finish, cur_week, done = task_week_info(task_row)
+    prog = _prog(task_row[6])
+    total_photos = sum(len(v) for v in photos_by_week.values())
+    title_txt = f"{task_row[1]} — {task_row[2]}"
+
+    prs = Presentation()
+    prs.slide_width, prs.slide_height = Inches(13.333), Inches(7.5)
+    blank = prs.slide_layouts[6]
+
+    def bg(slide, color):
+        f = slide.background.fill
+        f.solid(); f.fore_color.rgb = color
+
+    def text(slide, x, y, w, h, t, size, color, bold=False, font=BODY, align=PP_ALIGN.LEFT,
+             anchor=MSO_ANCHOR.TOP, spacing=None, name=None):
+        tb = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
+        if name:
+            tb.name = name
+        tf = tb.text_frame
+        tf.word_wrap = True
+        tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
+        tf.vertical_anchor = anchor
+        para = tf.paragraphs[0]
+        para.alignment = align
+        r = para.add_run()
+        r.text = t
+        r.font.size, r.font.bold, r.font.name = Pt(size), bold, font
+        r.font.color.rgb = color
+        if spacing:
+            r.font._element.set("spc", str(spacing))
+        return tb
+
+    def pill(slide, x, y, w, h, t, fill, color, size=14, name=None):
+        sh = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(y), Inches(w), Inches(h))
+        sh.adjustments[0] = 0.5
+        sh.fill.solid(); sh.fill.fore_color.rgb = fill
+        sh.line.fill.background()
+        sh.shadow.inherit = False
+        if name:
+            sh.name = name
+        tf = sh.text_frame
+        tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
+        tf.vertical_anchor = MSO_ANCHOR.MIDDLE
+        para = tf.paragraphs[0]; para.alignment = PP_ALIGN.CENTER
+        r = para.add_run(); r.text = t
+        r.font.size, r.font.bold, r.font.name = Pt(size), True, BODY
+        r.font.color.rgb = color
+        return sh
+
+    def footer(slide, n, total):
+        text(slide, 0.6, 6.98, 9.5, 0.3, f"ShipControl  ·  {title_txt}", 10, MUTED, name="Footer")
+        text(slide, 11.2, 6.98, 1.53, 0.3, f"{n} / {total}", 10, MUTED, align=PP_ALIGN.RIGHT, name="Slide number")
+
+    # Chia mỗi tuần thành các trang ≤ 6 ảnh
+    pages = []
+    for w in weeks:
+        items = photos_by_week.get(w, [])
+        chunks = [items[i:i + 6] for i in range(0, len(items), 6)] or [[]]
+        for ci, ch in enumerate(chunks):
+            pages.append((w, ch, ci + 1, len(chunks)))
+    total_slides = len(pages) + 2
+
+    # ---------- 1. Trang bìa ----------
+    s1 = prs.slides.add_slide(blank); bg(s1, NAVY)
+    text(s1, 0.8, 0.8, 7.5, 0.4, "SHIPCONTROL", 14, AMBER, bold=True, spacing=300, name="Kicker")
+    text(s1, 0.8, 1.5, 7.6, 2.4, title_txt, 40, WHITE, bold=True, font=HEAD, anchor=MSO_ANCHOR.BOTTOM, name="Title")
+    text(s1, 0.8, 4.05, 7.6, 0.6, clean(tr("📸 Báo cáo hình ảnh theo tuần")), 20, STEEL, name="Subtitle")
+    meta = f"{clean(tr('Bắt đầu'))}: {start:%d/%m/%Y}"
+    if finish:
+        meta += f"     {clean(tr('Kết thúc dự kiến'))}: {finish:%d/%m/%Y}"
+    text(s1, 0.8, 5.9, 7.6, 0.4, meta, 14, WHITE, name="Dates")
+    text(s1, 0.8, 6.35, 7.6, 0.4, f"{datetime.now():%d/%m/%Y %H:%M}", 12, STEEL, name="Generated")
+    card = s1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(9.0), Inches(1.6), Inches(3.5), Inches(4.2))
+    card.adjustments[0] = 0.08
+    card.fill.solid(); card.fill.fore_color.rgb = NAVY2; card.line.fill.background(); card.name = "Progress card"; card.shadow.inherit = False
+    text(s1, 9.0, 2.2, 3.5, 1.6, f"{prog}%", 72, AMBER, bold=True, font=HEAD, align=PP_ALIGN.CENTER, name="Progress value")
+    text(s1, 9.0, 3.9, 3.5, 0.5, clean(tr("Tiến độ")), 16, WHITE, align=PP_ALIGN.CENTER, name="Progress label")
+    pill(s1, 9.55, 4.75, 2.4, 0.5, clean(tr("Đã hoàn thành")) if done else clean(tr("Đang thực hiện")),
+         AMBER if done else STEEL, NAVY, size=13, name="Status")
+
+    # ---------- 2. Mỗi tuần 1 slide ----------
+    for idx, (w, items, part, parts) in enumerate(pages, start=2):
+        sl = prs.slides.add_slide(blank); bg(sl, WHITE)
+        d1 = start + timedelta(days=7 * (w - 1)); d2 = d1 + timedelta(days=6)
+        head = f"{clean(tr('Tuần'))} {w}" + (f"  ({part}/{parts})" if parts > 1 else "")
+        text(sl, 0.6, 0.4, 8.5, 0.75, head, 36, NAVY, bold=True, font=HEAD, name="Title")
+        text(sl, 0.6, 1.15, 8.5, 0.4, f"{d1:%d/%m/%Y} – {d2:%d/%m/%Y}", 16, MUTED, name="Dates")
+        n_week = len(photos_by_week.get(w, []))
+        pill(sl, 10.53, 0.55, 2.2, 0.5, f"{n_week} {clean(tr('ảnh'))}", NAVY, WHITE, name="Photo count")
+        if done and w == weeks[-1] and part == parts:
+            pill(sl, 8.13, 0.55, 2.2, 0.5, clean(tr("Đã hoàn thành")), AMBER, NAVY, size=13, name="Finished")
+
+        if not items:
+            box = sl.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(1.85), Inches(12.13), Inches(4.85))
+            box.adjustments[0] = 0.04
+            box.fill.solid(); box.fill.fore_color.rgb = TINT; box.line.fill.background(); box.name = "Empty week"; box.shadow.inherit = False
+            text(sl, 0.6, 1.85, 12.13, 4.85, clean(tr("Chưa có ảnh nào cho tuần này.")), 20, MUTED,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, name="Empty message")
+        else:
+            n = len(items)
+            cols = 1 if n == 1 else 2 if n in (2, 4) else 3
+            rows = (n + cols - 1) // cols
+            gx, gy, cap_h = 0.3, 0.25, 0.4
+            area_x, area_y, area_w, area_h = 0.6, 1.85, 12.13, 4.9
+            cell_w = (area_w - gx * (cols - 1)) / cols
+            cell_h = (area_h - gy * (rows - 1)) / rows
+            img_h_max = cell_h - cap_h
+            for i, (pid, img, mime, note_, by, at) in enumerate(items):
+                r_, c_ = divmod(i, cols)
+                cx = area_x + c_ * (cell_w + gx); cy = area_y + r_ * (cell_h + gy)
+                try:
+                    iw, ih = Image.open(io.BytesIO(img)).size
+                except Exception:
+                    iw, ih = 4, 3
+                scale = min(cell_w / iw, img_h_max / ih)
+                w_in, h_in = iw * scale, ih * scale
+                pic = sl.shapes.add_picture(io.BytesIO(img), Inches(cx + (cell_w - w_in) / 2), Inches(cy),
+                                            Inches(w_in), Inches(h_in))
+                pic.name = f"Photo {i + 1}"
+                cap = "  ·  ".join(x for x in [note_ or "", names.get(by, ""), str(at or "")[:16]] if x)
+                text(sl, cx, cy + h_in + 0.06, cell_w, cap_h - 0.06, cap[:120], 10, MUTED,
+                     align=PP_ALIGN.CENTER, name=f"Caption {i + 1}")
+        footer(sl, idx, total_slides)
+
+    # ---------- 3. Trang tổng kết ----------
+    se = prs.slides.add_slide(blank); bg(se, NAVY)
+    text(se, 0.8, 0.7, 11.7, 0.9, clean(tr("Tổng kết")), 40, WHITE, bold=True, font=HEAD, name="Title")
+    text(se, 0.8, 1.55, 11.7, 0.5, title_txt, 18, STEEL, name="Task")
+    stats = [(str(len(weeks)), clean(tr("Tổng số tuần"))), (str(total_photos), clean(tr("Tổng số ảnh"))),
+             (f"{prog}%", clean(tr("Tiến độ")))]
+    for i, (val, lab) in enumerate(stats):
+        x = 0.8 + i * 4.0
+        c = se.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(2.6), Inches(3.6), Inches(2.8))
+        c.adjustments[0] = 0.08
+        c.fill.solid(); c.fill.fore_color.rgb = NAVY2; c.line.fill.background(); c.name = f"Stat card {i + 1}"; c.shadow.inherit = False
+        text(se, x, 2.9, 3.6, 1.4, val, 60, AMBER, bold=True, font=HEAD, align=PP_ALIGN.CENTER, name=f"Stat value {i + 1}")
+        text(se, x, 4.35, 3.6, 0.6, lab, 16, WHITE, align=PP_ALIGN.CENTER, name=f"Stat label {i + 1}")
+    pill(se, 0.8, 5.95, 3.0, 0.55, clean(tr("Đã hoàn thành")) if done else clean(tr("Đang thực hiện")),
+         AMBER if done else STEEL, NAVY, size=14, name="Status")
+    text(se, 9.5, 6.98, 3.23, 0.3, f"{total_slides} / {total_slides}", 10, STEEL, align=PP_ALIGN.RIGHT, name="Slide number")
+
+    out = io.BytesIO()
+    prs.save(out)
+    return out.getvalue()
+
+
 def render_weekly_photo_report(user_data, current_role):
     my_id = user_data["id"]
     base_sql = """SELECT id, task_id, task_name, plan_start_date, plan_finish_date, initial_date, progress
@@ -8187,39 +8490,74 @@ def render_weekly_photo_report(user_data, current_role):
     if st.session_state.get("_wr_bad"):
         st.warning(tr("Không đọc được ảnh (hoặc ảnh lớn hơn 15 MB): ") + ", ".join(st.session_state.pop("_wr_bad")))
 
-    # 📅 Từng tuần (tuần mới nhất ở trên cùng)
-    for w in reversed(weeks):
-        d1 = start + timedelta(days=7 * (w - 1)); d2 = d1 + timedelta(days=6)
-        items = photos_by_week.get(w, [])
-        label = f"📅 {tr('Tuần')} {w} · {d1:%d/%m} – {d2:%d/%m} · 📷 {len(items)}"
-        if done and w == last_week:
-            label += f" · ✅ {tr('Đã hoàn thành')}"
-        elif not done and w == cur_week:
-            label += " · 📍"
-        with st.expander(label, expanded=(w == last_week)):
-            if not items:
-                st.caption("Chưa có ảnh nào cho tuần này.")
-                continue
-            cols = st.columns(3)
+    # 🖥️ Xem kiểu trình chiếu PowerPoint: mỗi tuần là 1 slide, bấm ◀ ▶ hoặc chọn tuần
+    pk = f"wr_pill_{sel}"
+    if st.session_state.get(pk) not in weeks:
+        st.session_state[pk] = weeks[-1]
+
+    def _go(delta, _pk=pk, _weeks=weeks):
+        cur = st.session_state.get(_pk) or _weeks[-1]
+        i = min(max(_weeks.index(cur) + delta, 0), len(_weeks) - 1)
+        st.session_state[_pk] = _weeks[i]
+
+    w = st.session_state[pk]
+    n_idx = weeks.index(w)
+    nav1, nav2, nav3 = st.columns([1, 3, 1], vertical_alignment="center")
+    with nav1:
+        st.button("◀ Trước", key=f"wr_prev_{sel}", on_click=_go, args=(-1,), disabled=(n_idx == 0), use_container_width=True)
+    with nav2:
+        st.pills("Tuần", weeks, key=pk, label_visibility="collapsed",
+                 format_func=lambda x: f"{tr('Tuần')} {x}")
+    with nav3:
+        st.button("Tiếp ▶", key=f"wr_next_{sel}", on_click=_go, args=(1,), disabled=(n_idx == len(weeks) - 1), use_container_width=True)
+    w = st.session_state.get(pk) or weeks[-1]
+
+    d1 = start + timedelta(days=7 * (w - 1)); d2 = d1 + timedelta(days=6)
+    items = photos_by_week.get(w, [])
+    badge = ""
+    if done and w == last_week:
+        badge = f"<span class='sc-slide-badge sc-done'>✅ {html.escape(tr('Đã hoàn thành'))}</span>"
+    elif not done and w == cur_week:
+        badge = f"<span class='sc-slide-badge'>📍 {html.escape(tr('Tuần hiện tại'))}</span>"
+    _ncol = 0 if not items else (1 if len(items) == 1 else 2 if len(items) in (2, 4) else 3)
+    with st.container(key=f"sc_slide_n{_ncol}_{sel}"):
+        _DG._sc_orig_markdown(st._main, f"""
+<div class='sc-slide-head'>
+  <div><div class='sc-slide-kicker'>SHIPCONTROL · {html.escape(str(task[1]))}</div>
+       <div class='sc-slide-title'>{html.escape(tr('Tuần'))} {w}</div>
+       <div class='sc-slide-dates'>{d1:%d/%m/%Y} – {d2:%d/%m/%Y}</div></div>
+  <div class='sc-slide-right'>{badge}<span class='sc-slide-badge sc-count'>📷 {len(items)}</span></div>
+</div>""", unsafe_allow_html=True)
+        if not items:
+            _DG._sc_orig_markdown(st._main, f"<div class='sc-slide-empty'>{html.escape(tr('Chưa có ảnh nào cho tuần này.'))}</div>",
+                                  unsafe_allow_html=True)
+        else:
+            n = len(items)
+            ncol = 1 if n == 1 else 2 if n in (2, 4) else 3
+            cols = st.columns(ncol, gap="medium")
             for i, (pid, img, mime, note_, by, at) in enumerate(items):
-                with cols[i % 3]:
+                with cols[i % ncol]:
                     st.image(img, use_container_width=True)
                     cap = " · ".join(x for x in [note_ or "", f"👤 {names.get(by, '?')}", f"🕒 {str(at or '')[:16]}"] if x)
-                    _DG._sc_orig_markdown(st._main, f"<div style='font-size:0.8rem;opacity:0.8;margin:-4px 0 6px'>{html.escape(cap)}</div>", unsafe_allow_html=True)
+                    _DG._sc_orig_markdown(st._main, f"<div class='sc-slide-cap'>{html.escape(cap)}</div>", unsafe_allow_html=True)
                     if by == my_id or can_manage:
                         if st.button("🗑️", key=f"wr_del_{pid}", help=tr("Xóa")):
                             cursor.execute("DELETE FROM task_photos WHERE id = ?", (pid,))
                             conn.commit()
                             st.toast("🗑️")
                             st.rerun()
+        _DG._sc_orig_markdown(st._main, f"<div class='sc-slide-foot'><span>ShipControl · {html.escape(str(task[1]))} — {html.escape(str(task[2]))}</span>"
+                                        f"<span>{n_idx + 1} / {len(weeks)}</span></div>", unsafe_allow_html=True)
 
-    # 📥 Xuất báo cáo (HTML có ảnh, mở ra rồi in / lưu PDF)
-    if photos:
-        st.download_button("📥 Tải báo cáo hình ảnh (HTML)",
-                           data=build_photo_report_html(task, weeks, photos_by_week, names),
-                           file_name=f"Report_{task[1]}_{datetime.now():%Y%m%d}.html", mime="text/html",
-                           key=f"wr_dl_{sel}")
-        st.caption("Mở file rồi bấm Ctrl+P để in hoặc lưu thành PDF.")
+    # 📊 Xuất PowerPoint (.pptx): bìa + mỗi tuần 1 slide + tổng kết
+    try:
+        _pptx = build_photo_report_pptx(task, weeks, photos_by_week, names)
+        st.download_button("📊 Tải PowerPoint (.pptx)", data=_pptx,
+                           file_name=f"Report_{task[1]}_{datetime.now():%Y%m%d}.pptx",
+                           mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                           key=f"wr_pptx_{sel}", type="primary")
+    except ImportError:
+        st.caption("⚠️ python-pptx")
 
 def remove_worker_from_team(worker_id, leader_id):
     """Đưa Worker ra khỏi team và bỏ giao các việc của team đó cho Worker này."""

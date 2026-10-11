@@ -2,3 +2,4 @@ streamlit
 pandas
 altair
 extra-streamlit-components
+python-pptx
