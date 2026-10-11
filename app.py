@@ -1731,6 +1731,8 @@ VI_EN = {
     "Mở file rồi bấm Ctrl+P để in hoặc lưu thành PDF.": "Open the file and press Ctrl+P to print or save it as PDF.",
     "💡 Giữ Ctrl (hoặc Shift) khi chọn để lấy nhiều ảnh cùng lúc. Bấm Upload thêm lần nữa để thêm ảnh khác.": "💡 Hold Ctrl (or Shift) while choosing to pick many photos at once. Press Upload again to add more.",
     "📊 Tải PowerPoint (.pptx)": "📊 Download PowerPoint (.pptx)",
+    "📊 Có thể chọn cả file PowerPoint (.pptx): ảnh trong từng slide sẽ được lấy ra. Slide có chữ “Tuần 3” (hoặc “Week 3”) sẽ tự vào Tuần 3.": "📊 You can also choose a PowerPoint file (.pptx): the pictures on each slide are taken out. A slide that says “Week 3” goes into Week 3 automatically.",
+    "Không tìm thấy ảnh nào trong file PowerPoint: ": "No pictures found in this PowerPoint file: ",
     "◀ Trước": "◀ Previous",
     "Tiếp ▶": "Next ▶",
     "Tổng số tuần": "Total weeks",
@@ -2125,6 +2127,8 @@ _ZH_LIST = [
     "进行中",
     "张图片",
     "总结",
+    "📊 也可以选择 PowerPoint 文件（.pptx）：会取出每张幻灯片里的图片。写有“Week 3”或“第3周”的幻灯片会自动放入第 3 周。",
+    "PowerPoint 文件中没有找到图片：",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2510,6 +2514,8 @@ _JA_LIST = [
     "進行中",
     "枚",
     "まとめ",
+    "📊 PowerPoint ファイル（.pptx）も選べます。各スライドの写真が取り出されます。「Week 3」と書かれたスライドは自動で第3週に入ります。",
+    "PowerPoint ファイルに写真が見つかりません：",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2895,6 +2901,8 @@ _KO_LIST = [
     "진행 중",
     "장",
     "요약",
+    "📊 PowerPoint 파일(.pptx)도 선택할 수 있습니다. 각 슬라이드의 사진을 꺼내 옵니다. “Week 3”이라고 적힌 슬라이드는 자동으로 3주차에 들어갑니다.",
+    "PowerPoint 파일에서 사진을 찾을 수 없습니다: ",
 ]
 
 # 🌏 10 ngôn ngữ thêm (cùng thứ tự với VI_EN)
@@ -3282,6 +3290,8 @@ _TH_LIST = [
     "กำลังดำเนินการ",
     "รูป",
     "สรุป",
+    "📊 เลือกไฟล์ PowerPoint (.pptx) ได้ด้วย: รูปในแต่ละสไลด์จะถูกดึงออกมา สไลด์ที่เขียนว่า “Week 3” จะเข้าสัปดาห์ที่ 3 อัตโนมัติ",
+    "ไม่พบรูปในไฟล์ PowerPoint: ",
 ]
 _ID_LIST = [
     "🚢 SHIPCONTROL - MANAJEMEN PEKERJAAN KAPAL",
@@ -3667,6 +3677,8 @@ _ID_LIST = [
     "Sedang berjalan",
     "foto",
     "Ringkasan",
+    "📊 Anda juga bisa memilih file PowerPoint (.pptx): foto di setiap slide akan diambil. Slide bertuliskan “Week 3” otomatis masuk ke Minggu 3.",
+    "Tidak ada foto di file PowerPoint ini: ",
 ]
 _MS_LIST = [
     "🚢 SHIPCONTROL - PENGURUSAN KERJA KAPAL",
@@ -4052,6 +4064,8 @@ _MS_LIST = [
     "Sedang dijalankan",
     "foto",
     "Ringkasan",
+    "📊 Anda juga boleh pilih fail PowerPoint (.pptx): foto dalam setiap slaid akan diambil. Slaid yang tertulis “Week 3” akan masuk ke Minggu 3 secara automatik.",
+    "Tiada foto dalam fail PowerPoint ini: ",
 ]
 _TL_LIST = [
     "🚢 SHIPCONTROL - PAMAMAHALA NG TRABAHO SA BARKO",
@@ -4437,6 +4451,8 @@ _TL_LIST = [
     "Ginagawa pa",
     "larawan",
     "Buod",
+    "📊 Puwede ring pumili ng PowerPoint file (.pptx): kukunin ang mga larawan sa bawat slide. Ang slide na may “Week 3” ay awtomatikong mapupunta sa Linggo 3.",
+    "Walang nakitang larawan sa PowerPoint file na ito: ",
 ]
 _HI_LIST = [
     "🚢 SHIPCONTROL - जहाज़ कार्य प्रबंधन",
@@ -4822,6 +4838,8 @@ _HI_LIST = [
     "चल रहा है",
     "फ़ोटो",
     "सारांश",
+    "📊 आप PowerPoint फ़ाइल (.pptx) भी चुन सकते हैं: हर स्लाइड की फ़ोटो निकाल ली जाएँगी। जिस स्लाइड पर “Week 3” लिखा हो वह अपने-आप सप्ताह 3 में जाएगी।",
+    "इस PowerPoint फ़ाइल में कोई फ़ोटो नहीं मिली: ",
 ]
 _ES_LIST = [
     "🚢 SHIPCONTROL - GESTIÓN DE TRABAJOS NAVALES",
@@ -5207,6 +5225,8 @@ _ES_LIST = [
     "En curso",
     "fotos",
     "Resumen",
+    "📊 También puedes elegir un archivo PowerPoint (.pptx): se sacan las fotos de cada diapositiva. Una diapositiva que diga “Week 3” va sola a la Semana 3.",
+    "No se encontraron fotos en este PowerPoint: ",
 ]
 _FR_LIST = [
     "🚢 SHIPCONTROL - GESTION DES TRAVAUX NAVALS",
@@ -5592,6 +5612,8 @@ _FR_LIST = [
     "En cours",
     "photos",
     "Bilan",
+    "📊 Vous pouvez aussi choisir un fichier PowerPoint (.pptx) : les photos de chaque diapositive sont récupérées. Une diapositive qui indique « Week 3 » va automatiquement dans la Semaine 3.",
+    "Aucune photo trouvée dans ce PowerPoint : ",
 ]
 _DE_LIST = [
     "🚢 SHIPCONTROL - SCHIFFBAU-ARBEITSVERWALTUNG",
@@ -5977,6 +5999,8 @@ _DE_LIST = [
     "In Arbeit",
     "Fotos",
     "Zusammenfassung",
+    "📊 Du kannst auch eine PowerPoint-Datei (.pptx) wählen: Die Bilder jeder Folie werden übernommen. Eine Folie mit „Week 3“ landet automatisch in Woche 3.",
+    "In dieser PowerPoint-Datei wurden keine Bilder gefunden: ",
 ]
 _RU_LIST = [
     "🚢 SHIPCONTROL - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
@@ -6362,6 +6386,8 @@ _RU_LIST = [
     "В работе",
     "фото",
     "Итоги",
+    "📊 Можно выбрать и файл PowerPoint (.pptx): фото с каждого слайда будут извлечены. Слайд с надписью «Week 3» автоматически попадёт в Неделю 3.",
+    "В этом файле PowerPoint не найдено фото: ",
 ]
 _PT_LIST = [
     "🚢 SHIPCONTROL - GESTÃO DE TRABALHOS NAVAIS",
@@ -6747,6 +6773,8 @@ _PT_LIST = [
     "Em andamento",
     "fotos",
     "Resumo",
+    "📊 Você também pode escolher um arquivo PowerPoint (.pptx): as fotos de cada slide são extraídas. Um slide que diga “Week 3” vai sozinho para a Semana 3.",
+    "Nenhuma foto encontrada neste PowerPoint: ",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -8234,6 +8262,74 @@ img{{width:100%;border-radius:6px}} figcaption{{font-size:12px;color:#334155;mar
     return "".join(parts).encode("utf-8")
 
 
+
+@st.cache_data(max_entries=6, show_spinner=False)
+def extract_pptx_photos(raw):
+    """Lấy ảnh từ file PowerPoint (.pptx). Trả về [(tuần hoặc None, ảnh, ghi chú)].
+    - Slide có chữ 'Tuần 3' / 'Week 3' / 'W3' → ảnh của slide đó vào Tuần 3.
+    - Bỏ logo lặp lại trên nhiều slide và ảnh quá nhỏ (icon)."""
+    import io, re, hashlib
+    from pptx import Presentation
+    from pptx.enum.shapes import MSO_SHAPE_TYPE
+    from PIL import Image
+    rx = re.compile(r"\b(?:tu[aầâ]n|week|wk|w)\s*[-.:#]?\s*(\d{1,3})\b", re.IGNORECASE)
+    prs = Presentation(io.BytesIO(raw))
+
+    def walk(shapes):
+        for sh in shapes:
+            if sh.shape_type == MSO_SHAPE_TYPE.GROUP:
+                yield from walk(sh.shapes)
+            else:
+                yield sh
+
+    per_slide, counts = [], {}
+    for slide in prs.slides:
+        texts, imgs = [], []
+        for sh in walk(slide.shapes):
+            if getattr(sh, "has_text_frame", False) and sh.has_text_frame and sh.text_frame.text.strip():
+                texts.append(sh.text_frame.text.strip())
+            blob = None
+            try:
+                if sh.shape_type == MSO_SHAPE_TYPE.PICTURE or hasattr(sh, "image"):
+                    blob = sh.image.blob
+            except Exception:
+                blob = None
+            if blob:
+                imgs.append(blob)
+        try:
+            if slide.has_notes_slide and slide.notes_slide.notes_text_frame.text.strip():
+                texts.append(slide.notes_slide.notes_text_frame.text.strip())
+        except Exception:
+            pass
+        uniq = []
+        for b in imgs:
+            h = hashlib.md5(b).hexdigest()
+            if h not in [x[0] for x in uniq]:
+                uniq.append((h, b))
+        for h, _ in uniq:
+            counts[h] = counts.get(h, 0) + 1
+        per_slide.append((texts, uniq))
+
+    n_slides = len(per_slide)
+    out = []
+    for texts, uniq in per_slide:
+        joined = " ".join(texts)
+        m = rx.search(joined)
+        week = int(m.group(1)) if m else None
+        note = (texts[0].splitlines()[0] if texts else "")[:200]
+        for h, b in uniq:
+            if n_slides >= 3 and counts[h] >= max(3, n_slides // 2):
+                continue                    # logo / hình nền lặp lại → bỏ
+            try:
+                w_, h_ = Image.open(io.BytesIO(b)).size
+                if max(w_, h_) < 160:
+                    continue                # icon nhỏ → bỏ
+            except Exception:
+                continue                    # định dạng ảnh không đọc được (EMF/WMF…) → bỏ
+            out.append((week, b, note))
+    return out
+
+
 def build_photo_report_pptx(task_row, weeks, photos_by_week, names):
     """Xuất báo cáo hình ảnh thành file PowerPoint (.pptx): trang bìa, mỗi tuần 1 slide (≤6 ảnh/slide), trang tổng kết."""
     import io
@@ -8448,36 +8544,58 @@ def render_weekly_photo_report(user_data, current_role):
             wk_opts = weeks if done else list(range(1, max(cur_week, max_photo_week) + 1))
             up_week = st.selectbox("Tuần", wk_opts, index=len(wk_opts) - 1, key=f"wr_week_{sel}",
                                    format_func=lambda w: f"{tr('Tuần')} {w} ({(start + timedelta(days=7 * (w - 1))):%d/%m} – {(start + timedelta(days=7 * (w - 1) + 6)):%d/%m})")
-            files = st.file_uploader("Chọn ảnh từ máy tính", type=["jpg", "jpeg", "png", "webp", "bmp"],
+            files = st.file_uploader("Chọn ảnh từ máy tính", type=["jpg", "jpeg", "png", "webp", "bmp", "pptx"],
                                      accept_multiple_files=True, key=f"wr_files_{sel}_{st.session_state.get('_wr_nonce', 0)}")
             st.caption("💡 Giữ Ctrl (hoặc Shift) khi chọn để lấy nhiều ảnh cùng lúc. Bấm Upload thêm lần nữa để thêm ảnh khác.")
-            if files:
+            st.caption("📊 Có thể chọn cả file PowerPoint (.pptx): ảnh trong từng slide sẽ được lấy ra. Slide có chữ “Tuần 3” (hoặc “Week 3”) sẽ tự vào Tuần 3.")
+            # Gom tất cả ảnh: ảnh chọn trực tiếp + ảnh lấy từ PowerPoint → [(tên, ảnh, tuần hoặc None, ghi chú hoặc None)]
+            entries, bad_files = [], []
+            max_wk = max(wk_opts)
+            for _f in (files or []):
+                _raw = _f.getvalue()
+                if _f.name.lower().endswith(".pptx"):
+                    try:
+                        _found = extract_pptx_photos(_raw)
+                    except Exception:
+                        _found = None
+                    if not _found:
+                        bad_files.append(_f.name)
+                        continue
+                    for _k, (_wk, _b, _nt) in enumerate(_found):
+                        entries.append((f"{_f.name} #{_k + 1}", _b, _wk if (_wk and 1 <= _wk <= max_wk) else None, _nt))
+                else:
+                    entries.append((_f.name, _raw, None, None))
+            entries = entries[:PHOTO_MAX_FILES]
+            if bad_files:
+                st.warning(tr("Không tìm thấy ảnh nào trong file PowerPoint: ") + ", ".join(bad_files))
+            if entries:
                 # Xem trước các ảnh đã chọn (nhỏ) trước khi tải lên
-                st.markdown(f"**📷 × {len(files)}**")
+                st.markdown(f"**📷 × {len(entries)}**")
                 _pv = st.columns(6)
-                for _i, _f in enumerate(files[:PHOTO_MAX_FILES]):
+                for _i, (_nm, _b, _wk, _nt) in enumerate(entries):
                     with _pv[_i % 6]:
                         try:
-                            st.image(_f.getvalue(), use_container_width=True)
+                            st.image(_b, use_container_width=True)
+                            st.caption(f"{tr('Tuần')} {_wk if _wk else up_week}")
                         except Exception:
-                            st.caption(f"⚠️ {_f.name}")
+                            st.caption(f"⚠️ {_nm}")
             note = st.text_input("Ghi chú cho ảnh (không bắt buộc)", key=f"wr_note_{sel}", max_chars=200)
             if st.button("📤 TẢI LÊN", key=f"wr_upload_{sel}", type="primary", use_container_width=True):
-                if not files:
+                if not entries:
                     st.error("Hãy chọn ít nhất 1 ảnh!")
                 else:
-                    saved, bad = 0, []
-                    for f in files[:PHOTO_MAX_FILES]:
-                        raw = f.getvalue()
+                    saved, bad = 0, list(bad_files)
+                    for nm, raw, wk_, nt_ in entries:
                         if len(raw) > PHOTO_MAX_MB * 1024 * 1024:
-                            bad.append(f.name); continue
+                            bad.append(nm); continue
                         try:
                             img = compress_photo(raw)
                         except Exception:
-                            bad.append(f.name); continue
+                            bad.append(nm); continue
+                        _note = note.strip() or (nt_ or "")
                         cursor.execute("""INSERT INTO task_photos (task_id, week, image, mime, note, uploaded_by, uploaded_at)
                                           VALUES (?, ?, ?, 'image/jpeg', ?, ?, ?)""",
-                                       (sel, int(up_week), img, note.strip()[:200], my_id, datetime.now().strftime("%Y-%m-%d %H:%M")))
+                                       (sel, int(wk_ or up_week), img, _note[:200], my_id, datetime.now().strftime("%Y-%m-%d %H:%M")))
                         saved += 1
                     conn.commit()
                     if bad:
