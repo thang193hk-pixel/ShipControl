@@ -209,7 +209,7 @@ __DANGER_SEL_HOVER__ {
 }
 
 /* ---------- Thẻ (form, khung mở rộng, bảng) ---------- */
-div[data-testid="stForm"] {
+div[data-testid="stForm"], div.st-key-sc_add_task_box {
     background: __SURFACE__ !important;
     border: 1px solid __SURFACE_BORDER__ !important;
     border-radius: 18px !important;
@@ -982,16 +982,25 @@ section[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"],
     height: 0 !important;
     overflow: hidden !important;
 }
-/* ➕ nút mini tạo nhóm chat */
-.st-key-sc_grp_head { margin-top: 6px !important; }
-.st-key-sc_grp_head h4 { margin: 0 !important; padding: 0 !important; }
-.st-key-sc_grp_head .st-key-chat_grp_toggle { display: flex !important; justify-content: flex-end !important; }
-.st-key-sc_grp_head .st-key-chat_grp_toggle button {
-    width: 32px !important; min-width: 32px !important; height: 32px !important; min-height: 32px !important;
-    padding: 0 !important; border-radius: 50% !important; font-size: 15px !important; line-height: 1 !important;
+/* 🔘 Thanh mini: tiêu đề + nút tròn ➕ ➖ — luôn nằm trên 1 hàng kể cả trên điện thoại */
+[class*="st-key-sc_mini_"] { margin-top: 4px !important; }
+[class*="st-key-sc_mini_"] h4 { margin: 0 !important; padding: 0 !important; font-size: 1.05rem !important; }
+[class*="st-key-sc_mini_"] [data-testid="stColumn"]:first-child [data-testid="stElementContainer"],
+[class*="st-key-sc_mini_"] [data-testid="stColumn"]:first-child [data-testid="stMarkdownContainer"],
+[class*="st-key-sc_mini_"] [data-testid="stColumn"]:first-child .stMarkdown { margin: 0 !important; }
+[class*="st-key-sc_mini_"] [data-testid="stHorizontalBlock"] { flex-wrap: nowrap !important; gap: 6px !important; align-items: center !important; }
+[class*="st-key-sc_mini_"] [data-testid="stColumn"] { min-width: 0 !important; width: auto !important; flex: 0 0 auto !important; }
+[class*="st-key-sc_mini_"] [data-testid="stColumn"]:first-child { flex: 1 1 auto !important; }
+[class*="st-key-sc_mini_"] [data-testid="stButton"] { display: flex !important; justify-content: flex-end !important; }
+[class*="st-key-sc_mini_"] [data-testid="stButton"] button {
+    width: 30px !important; min-width: 30px !important; height: 30px !important; min-height: 30px !important;
+    padding: 0 !important; border-radius: 50% !important; font-size: 14px !important; line-height: 1 !important;
+    letter-spacing: 0 !important; box-shadow: none !important;
 }
-.st-key-sc_grp_new { padding: 8px !important; gap: 6px !important; }
-.st-key-sc_grp_new button { min-height: 34px !important; padding: 4px 10px !important; font-size: 13px !important; }
+.st-key-sc_mini_cc [data-testid="stButton"], .st-key-sc_mini_block [data-testid="stButton"] { margin-bottom: 5px !important; }
+.st-key-sc_mini_cc, .st-key-sc_mini_block { margin-top: 0 !important; }
+[class*="st-key-sc_minip_"] { padding: 8px !important; gap: 6px !important; animation: scPop 0.15s ease-out both; }
+[class*="st-key-sc_minip_"] [data-testid="stButton"] button { min-height: 34px !important; padding: 4px 10px !important; font-size: 13px !important; }
 .st-key-sc_topbar {
     position: sticky !important;
     top: 0;
@@ -1227,7 +1236,7 @@ div[data-testid="stPopoverBody"] { animation: scPop 0.18s cubic-bezier(0.2, 0.8,
     to   { opacity: 1; transform: none; }
 }
 /* Đổi chủ đề / Sáng-Tối: màu chuyển dần thay vì đổi phụt */
-section[data-testid="stSidebar"], div[data-testid="stForm"], div[data-testid="stExpander"] details,
+section[data-testid="stSidebar"], div[data-testid="stForm"], div.st-key-sc_add_task_box, div[data-testid="stExpander"] details,
 div[data-testid="stAlert"], .profile-card, .main-title, .big-table-title, .stApp p, .stApp label {
     transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
@@ -1665,6 +1674,14 @@ VI_EN = {
     "▶ Mở trên YouTube": "▶ Open on YouTube",
     "Tạo nhóm chat": "Create group chat",
     "Chưa có nhóm nào — bấm ➕ để tạo.": "No groups yet — tap ➕ to create one.",
+    "Thêm": "Add",
+    "Xóa": "Remove",
+    "Thêm Worker": "Add workers",
+    "Xóa Khỏi Team": "Remove from team",
+    "Thêm Workshop": "Add workshop",
+    "Xóa Workshop": "Remove workshop",
+    "Xóa nhóm": "Delete group",
+    "Rời nhóm": "Leave group",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -2012,6 +2029,14 @@ _ZH_LIST = [
     "▶ 在 YouTube 上打开",
     "创建群聊",
     "还没有群组——点击 ➕ 创建。",
+    "添加",
+    "删除",
+    "添加工人",
+    "移出团队",
+    "添加车间",
+    "删除车间",
+    "删除群组",
+    "退出群组",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2357,6 +2382,14 @@ _JA_LIST = [
     "▶ YouTube で開く",
     "グループチャットを作成",
     "グループはまだありません — ➕ をタップして作成。",
+    "追加",
+    "削除",
+    "作業員を追加",
+    "チームから外す",
+    "ワークショップを追加",
+    "ワークショップを削除",
+    "グループを削除",
+    "グループを退出",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2702,6 +2735,14 @@ _KO_LIST = [
     "▶ YouTube에서 열기",
     "그룹 채팅 만들기",
     "아직 그룹이 없습니다 — ➕ 를 눌러 만드세요.",
+    "추가",
+    "삭제",
+    "작업자 추가",
+    "팀에서 제외",
+    "작업장 추가",
+    "작업장 삭제",
+    "그룹 삭제",
+    "그룹 나가기",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -2920,7 +2961,7 @@ html body .stMain div.stButton > button[kind="secondary"] {
 }
 html body .stMain div.stButton > button[kind="secondary"] * { color: #a5f3fc !important; -webkit-text-fill-color: #a5f3fc !important; }
 html body div[data-testid="stPopoverBody"] { background: #070c1f !important; }
-html body div[data-testid="stForm"], html body div[data-testid="stExpander"] details,
+html body div[data-testid="stForm"], html body div.st-key-sc_add_task_box, html body div[data-testid="stExpander"] details,
 html body div[data-testid="stDataFrame"] {
     background: rgba(8,14,34,0.88) !important;
     border: 1px solid rgba(34,211,238,0.45) !important;
@@ -2994,7 +3035,7 @@ html body div.stButton > button:active:not(:disabled),
 html body div[data-testid="stFormSubmitButton"] > button:active:not(:disabled) {
     transform: translate(3px, 3px) !important; box-shadow: 1px 1px 0 #1e1b4b !important;
 }
-html body div[data-testid="stForm"], html body div[data-testid="stExpander"] details,
+html body div[data-testid="stForm"], html body div.st-key-sc_add_task_box, html body div[data-testid="stExpander"] details,
 html body div[data-testid="stDataFrame"], html body div[data-testid="stPopoverBody"] {
     border: 3px solid #1e1b4b !important;
     border-radius: 24px !important;
@@ -3067,7 +3108,7 @@ html body .stMain div.stButton > button[kind="secondary"] {
     box-shadow: 0 2px 0 #8b6b3d !important;
 }
 html body .stMain div.stButton > button[kind="secondary"] * { color: __OLD_INK__ !important; -webkit-text-fill-color: __OLD_INK__ !important; }
-html body div[data-testid="stForm"], html body div[data-testid="stExpander"] details,
+html body div[data-testid="stForm"], html body div.st-key-sc_add_task_box, html body div[data-testid="stExpander"] details,
 html body div[data-testid="stDataFrame"], html body div[data-testid="stPopoverBody"] {
     background: __OLD_CARD__ !important;
     border: 3px double #8b6b3d !important;
@@ -4157,6 +4198,59 @@ def send_new_user_email(target_username, target_fullname):
     except Exception as e:
         print("Lỗi gửi email:", e)
         return False
+
+# --- 🔘 THANH MINI: tiêu đề + nút tròn nhỏ ➕ / ➖ (bấm để mở ô thao tác gọn, bấm ✖ để đóng) ---
+def _mini_toggle(state_key, mode):
+    st.session_state[state_key] = None if st.session_state.get(state_key) == mode else mode
+
+def mini_bar(key, title, actions):
+    """actions: [(mode, icon, help)] → trả về mode đang mở (hoặc None)."""
+    sk = f"_mini_{key}"
+    cur = st.session_state.get(sk)
+    if cur not in [a[0] for a in actions]:
+        cur = None
+    with st.container(key=f"sc_mini_{key}"):
+        cols = st.columns([8] + [1] * len(actions), vertical_alignment="center", gap="small")
+        with cols[0]:
+            if title:
+                _t = tr("#### " + title)
+                st.markdown(_t if _t != "#### " + title else "#### " + tr(title))
+        for i, (mode, icon, hlp) in enumerate(actions):
+            with cols[i + 1]:
+                active = (cur == mode)
+                st.button("✖" if active else icon, key=f"mini_{key}_{mode}", help=tr(hlp),
+                          type="primary" if active else "secondary",
+                          on_click=_mini_toggle, args=(sk, mode))
+    return cur
+
+def mini_select(key, label, options, actions, format_func=str):
+    """Ô chọn (selectbox) có nút mini ➕ / ➖ ngay bên cạnh. Trả về (giá trị đang chọn, mode đang mở)."""
+    sk = f"_mini_{key}"
+    cur = st.session_state.get(sk)
+    if cur not in [a[0] for a in actions]:
+        cur = None
+    pend = f"_pending_sel_{key}"
+    if pend in st.session_state:
+        st.session_state[f"sel_{key}"] = st.session_state.pop(pend)
+    if st.session_state.get(f"sel_{key}") not in options:
+        st.session_state.pop(f"sel_{key}", None)
+    with st.container(key=f"sc_mini_{key}"):
+        cols = st.columns([8] + [1] * len(actions), vertical_alignment="bottom", gap="small")
+        with cols[0]:
+            val = st.selectbox(label, options, format_func=format_func, key=f"sel_{key}")
+        for i, (mode, icon, hlp) in enumerate(actions):
+            with cols[i + 1]:
+                active = (cur == mode)
+                st.button("✖" if active else icon, key=f"mini_{key}_{mode}", help=tr(hlp),
+                          type="primary" if active else "secondary",
+                          on_click=_mini_toggle, args=(sk, mode))
+    return val, cur
+
+def mini_close(key):
+    st.session_state[f"_mini_{key}"] = None
+
+def mini_panel(key):
+    return st.container(key=f"sc_minip_{key}", border=True)
 
 # --- KHỞI TẠO STATE THEME, AUTH & SUB-TABS ---
 if "theme_mode" not in st.session_state:
@@ -5323,176 +5417,182 @@ else:
     elif menu == "➕ Thêm Công Việc" and current_role in ["Team Leader", "Foreman", "WOS Manager", "Admin"]:
         st.markdown("<div class='big-table-title'>➕ Thêm Công Việc Mới</div>", unsafe_allow_html=True)
 
-        # ⚙️ Thêm / xóa trong danh sách Block và WS Cost Code (Foreman, WOS Manager, Admin)
-        if current_role in ["Foreman", "WOS Manager", "Admin"]:
-            with st.expander("⚙️ Thêm / Xóa trong danh sách Block và WS Cost Code"):
-                lc1, lc2 = st.columns(2)
+        # 🏭 WS Cost Code + 🧱 Block nằm ngay trong form, nút mini ➕ / ➖ ngay cạnh danh sách (Foreman, WOS Manager, Admin)
+        can_edit_lists = current_role in ["Foreman", "WOS Manager", "Admin"]
+        list_actions = [("add", "➕", "Thêm"), ("del", "➖", "Xóa")] if can_edit_lists else []
+        cost_codes_df = pd.read_sql_query("SELECT code, COALESCE(name, '') AS name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
+        cc_label = {r['code']: (f"{r['code']} - {r['name']}" if r['name'] else r['code']) for _, r in cost_codes_df.iterrows()}
+        NO_BLOCK = "— Không chọn —"
+        block_options = [NO_BLOCK] + [r[0] for r in cursor.execute("SELECT name FROM blocks WHERE is_deleted = 0 ORDER BY name").fetchall()]
 
-                with lc1:
-                    st.markdown("#### 🧱 Block")
-                    nb = st.text_input("Block mới (Ví dụ: 170150):", key="new_block_name")
-                    if st.button("➕ THÊM BLOCK", key="btn_add_block"):
-                        nb_clean = nb.strip().upper()
-                        if not nb_clean:
-                            st.error("Vui lòng nhập tên Block!")
-                        else:
-                            ex = cursor.execute("SELECT is_deleted FROM blocks WHERE name = ?", (nb_clean,)).fetchone()
-                            if ex and ex[0] == 0:
-                                st.error(f"Block **{nb_clean}** đã có trong danh sách!")
+        # Lưu xong thì xóa trắng các ô (thay cho clear_on_submit của form)
+        NT_KEYS = ["nt_id", "nt_name", "nt_desc", "nt_init_by", "nt_init_date", "nt_in_charge", "nt_area", "nt_deck",
+                   "nt_frame", "nt_start", "nt_finish", "nt_progress", "nt_remark", "nt_leader"]
+        if st.session_state.pop("_nt_reset", False):
+            for k in NT_KEYS:
+                st.session_state.pop(k, None)
+            st.session_state["_pending_sel_block"] = NO_BLOCK
+        if st.session_state.get("_nt_saved_msg"):
+            st.success(st.session_state.pop("_nt_saved_msg"))
+
+        with st.container(key="sc_add_task_box", border=True):
+            c1, c2, c3 = st.columns([1, 1.6, 1.4])
+            with c1:
+                task_id = st.text_input("Task ID *", key="nt_id")
+            with c2:
+                task_name_input = st.text_input("Task Name *", key="nt_name")
+            with c3:
+                sel_cc, m = mini_select("cc", "WS Cost Code *", list(cc_label.keys()), list_actions,
+                                        format_func=lambda c: cc_label.get(c, c))
+                if m == "add":
+                    with mini_panel("cc"):
+                        nc_code = st.text_input("Mã (Ví dụ: WOS_07):", key="new_cc_code",
+                                                placeholder="Mã (Ví dụ: WOS_07):", label_visibility="collapsed")
+                        nc_name = st.text_input("Tên Workshop / Phòng ban:", key="new_cc_name",
+                                                placeholder="Tên Workshop / Phòng ban:", label_visibility="collapsed")
+                        if st.button("➕ THÊM COST CODE", key="btn_add_cc", type="primary", use_container_width=True):
+                            code_clean = nc_code.strip().upper().replace(" ", "_")
+                            name_clean = nc_name.strip()
+                            if not code_clean or not name_clean:
+                                st.error("Vui lòng nhập cả Mã và Tên!")
                             else:
-                                if ex:
-                                    cursor.execute("UPDATE blocks SET is_deleted = 0 WHERE name = ?", (nb_clean,))
+                                ex = cursor.execute("SELECT is_deleted FROM custom_cost_codes WHERE code = ?", (code_clean,)).fetchone()
+                                if ex and ex[0] == 0:
+                                    st.error(f"Mã **{code_clean}** đã có trong danh sách!")
                                 else:
-                                    cursor.execute("INSERT INTO blocks (name, is_deleted) VALUES (?, 0)", (nb_clean,))
-                                conn.commit()
-                                st.success(f"Đã thêm Block **{nb_clean}**!")
-                                st.rerun()
-
-                    blk_list = [r[0] for r in cursor.execute("SELECT name FROM blocks WHERE is_deleted = 0 ORDER BY name").fetchall()]
-                    if blk_list:
-                        del_blk = st.selectbox("Chọn Block để xóa:", blk_list, key="sb_del_block")
-                        if st.button("🗑️ XÓA BLOCK", key="btn_del_block"):
-                            cursor.execute("UPDATE blocks SET is_deleted = 1 WHERE name = ?", (del_blk,))
-                            conn.commit()
-                            st.success(f"Đã xóa Block **{del_blk}** khỏi danh sách. Công việc cũ vẫn giữ nguyên.")
-                            st.rerun()
-                    else:
-                        st.caption("Danh sách Block đang trống.")
-
-                with lc2:
-                    st.markdown("#### 🏭 WS Cost Code")
-                    ncc1, ncc2 = st.columns([1, 2])
-                    with ncc1:
-                        nc_code = st.text_input("Mã (Ví dụ: WOS_07):", key="new_cc_code")
-                    with ncc2:
-                        nc_name = st.text_input("Tên Workshop / Phòng ban:", key="new_cc_name")
-                    if st.button("➕ THÊM COST CODE", key="btn_add_cc"):
-                        code_clean = nc_code.strip().upper()
-                        name_clean = nc_name.strip()
-                        if not code_clean or not name_clean:
-                            st.error("Vui lòng nhập cả Mã và Tên!")
-                        else:
-                            ex = cursor.execute("SELECT is_deleted FROM custom_cost_codes WHERE code = ?", (code_clean,)).fetchone()
-                            if ex and ex[0] == 0:
-                                st.error(f"Mã **{code_clean}** đã có trong danh sách!")
-                            else:
-                                if ex:
-                                    cursor.execute("UPDATE custom_cost_codes SET name = ?, is_deleted = 0 WHERE code = ?", (name_clean, code_clean))
-                                else:
-                                    cursor.execute("INSERT INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
-                                                   (code_clean, name_clean))
-                                conn.commit()
-                                st.success(f"Đã thêm **{code_clean} - {name_clean}**!")
-                                st.rerun()
-
-                    cc_df = pd.read_sql_query("SELECT code, COALESCE(name, '') AS name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
-                    if not cc_df.empty:
-                        cc_opts = {r['code']: f"{r['code']} - {r['name']}" for _, r in cc_df.iterrows()}
-                        del_cc = st.selectbox("Chọn Cost Code để xóa:", list(cc_opts.keys()), format_func=lambda c: cc_opts[c], key="sb_del_cc")
-                        if st.button("🗑️ XÓA COST CODE", key="btn_del_cc"):
-                            users_in_ws = cursor.execute("SELECT COUNT(*) FROM users WHERE workshop = ? AND is_deleted = 0", (del_cc,)).fetchone()[0]
+                                    if ex:
+                                        cursor.execute("UPDATE custom_cost_codes SET name = ?, is_deleted = 0 WHERE code = ?", (name_clean, code_clean))
+                                    else:
+                                        cursor.execute("INSERT INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
+                                                       (code_clean, name_clean))
+                                    conn.commit()
+                                    st.toast(f"✅ {code_clean} - {name_clean}")
+                                    st.session_state["_pending_sel_cc"] = code_clean
+                                    mini_close("cc")
+                                    st.rerun()
+                elif m == "del":
+                    with mini_panel("cc"):
+                        if not sel_cc:
+                            st.caption("Danh sách Cost Code đang trống.")
+                        elif st.button(f"🗑️ {tr('Xóa')} {sel_cc}", key="btn_del_cc", use_container_width=True):
+                            users_in_ws = cursor.execute("SELECT COUNT(*) FROM users WHERE workshop = ? AND is_deleted = 0", (sel_cc,)).fetchone()[0]
                             if users_in_ws > 0:
                                 st.error(f"Không thể xóa: còn **{users_in_ws}** tài khoản thuộc workshop này. "
                                          "Hãy chuyển họ sang workshop khác ở 👥 Quản Lý Phân Quyền trước.")
                             else:
-                                cursor.execute("UPDATE custom_cost_codes SET is_deleted = 1 WHERE code = ?", (del_cc,))
+                                cursor.execute("UPDATE custom_cost_codes SET is_deleted = 1 WHERE code = ?", (sel_cc,))
                                 conn.commit()
-                                st.success(f"Đã xóa **{cc_opts[del_cc]}** khỏi danh sách. Công việc cũ vẫn giữ nguyên.")
+                                st.toast(f"🗑️ {cc_label[sel_cc]}")
+                                mini_close("cc")
                                 st.rerun()
-                    else:
-                        st.caption("Danh sách Cost Code đang trống.")
 
-        cost_codes_df = pd.read_sql_query("SELECT code, COALESCE(name, '') AS name FROM custom_cost_codes WHERE is_deleted = 0 ORDER BY code", conn)
-        block_options = ["— Không chọn —"] + [r[0] for r in cursor.execute("SELECT name FROM blocks WHERE is_deleted = 0 ORDER BY name").fetchall()]
-        
-        if cost_codes_df.empty:
-            st.warning("⚠️ CHƯA CÓ WS COST CODE: Foreman / WOS Manager hãy thêm Cost Code ở mục ⚙️ phía trên trước khi thêm công việc!")
-        else:
-            options = [f"{row['code']} - {row['name']}" if row['name'] else row['code'] for _, row in cost_codes_df.iterrows()]
-            
-            with st.form("add_task_form_full", clear_on_submit=True):
-                c1, c2, c3 = st.columns([1, 2, 1])
-                with c1:
-                    task_id = st.text_input("Task ID *")
-                with c2:
-                    task_name_input = st.text_input("Task Name *")
-                with c3:
-                    selected_cost_code = st.selectbox("WS Cost Code *", options)
+            description = st.text_area("Description (Mô tả công việc):", height=80, key="nt_desc")
 
-                description = st.text_area("Description (Mô tả công việc):", height=80)
+            c4, c5, c6 = st.columns(3)
+            with c4:
+                initial_by = st.text_input("Initial By (Người khởi tạo):", value=user_data['fullname'], key="nt_init_by")
+            with c5:
+                initial_date = st.date_input("Initial Date (Ngày tạo):", value=date.today(), key="nt_init_date")
+            with c6:
+                in_charge_by = st.text_input("In Charge By (Người phụ trách):", key="nt_in_charge")
 
-                c4, c5, c6 = st.columns(3)
-                with c4:
-                    initial_by = st.text_input("Initial By (Người khởi tạo):", value=user_data['fullname'])
-                with c5:
-                    initial_date = st.date_input("Initial Date (Ngày tạo):", value=date.today())
-                with c6:
-                    in_charge_by = st.text_input("In Charge By (Người phụ trách):")
+            c7, c8, c9, c10 = st.columns([1.4, 1, 1, 1])
+            with c7:
+                sel_block, m = mini_select("block", "Block:", block_options, list_actions)
+                if m == "add":
+                    with mini_panel("block"):
+                        nb = st.text_input("Block mới (Ví dụ: 170150):", key="new_block_name",
+                                           placeholder="Block mới (Ví dụ: 170150):", label_visibility="collapsed")
+                        if st.button("➕ THÊM BLOCK", key="btn_add_block", type="primary", use_container_width=True):
+                            nb_clean = nb.strip().upper()
+                            if not nb_clean:
+                                st.error("Vui lòng nhập tên Block!")
+                            else:
+                                ex = cursor.execute("SELECT is_deleted FROM blocks WHERE name = ?", (nb_clean,)).fetchone()
+                                if ex and ex[0] == 0:
+                                    st.error(f"Block **{nb_clean}** đã có trong danh sách!")
+                                else:
+                                    if ex:
+                                        cursor.execute("UPDATE blocks SET is_deleted = 0 WHERE name = ?", (nb_clean,))
+                                    else:
+                                        cursor.execute("INSERT INTO blocks (name, is_deleted) VALUES (?, 0)", (nb_clean,))
+                                    conn.commit()
+                                    st.toast(f"✅ Block {nb_clean}")
+                                    st.session_state["_pending_sel_block"] = nb_clean
+                                    mini_close("block")
+                                    st.rerun()
+                elif m == "del":
+                    with mini_panel("block"):
+                        if sel_block == NO_BLOCK:
+                            st.caption("Chọn Block để xóa:")
+                        elif st.button(f"🗑️ {tr('Xóa')} {sel_block}", key="btn_del_block", use_container_width=True):
+                            cursor.execute("UPDATE blocks SET is_deleted = 1 WHERE name = ?", (sel_block,))
+                            conn.commit()
+                            st.toast(f"🗑️ Block {sel_block}")
+                            st.session_state["_pending_sel_block"] = NO_BLOCK
+                            mini_close("block")
+                            st.rerun()
+            block = "" if sel_block == NO_BLOCK else sel_block
+            with c8:
+                area = st.text_input("Area:", key="nt_area")
+            with c9:
+                deck = st.text_input("Deck:", key="nt_deck")
+            with c10:
+                frame = st.text_input("Frame:", key="nt_frame")
 
-                c7, c8, c9, c10 = st.columns(4)
-                with c7:
-                    block = st.selectbox("Block:", block_options)
-                    if block == "— Không chọn —":
-                        block = ""
-                with c8:
-                    area = st.text_input("Area:")
-                with c9:
-                    deck = st.text_input("Deck:")
-                with c10:
-                    frame = st.text_input("Frame:")
+            c11, c12, c13 = st.columns(3)
+            with c11:
+                plan_start = st.date_input("Plan Start Date:", value=date.today(), key="nt_start")
+            with c12:
+                plan_finish = st.date_input("Plan Finish Date:", value=date.today(), key="nt_finish")
+            with c13:
+                progress_val = st.number_input("Progress (%)", min_value=0, max_value=100, value=0, step=5, key="nt_progress")
 
-                c11, c12, c13 = st.columns(3)
-                with c11:
-                    plan_start = st.date_input("Plan Start Date:", value=date.today())
-                with c12:
-                    plan_finish = st.date_input("Plan Finish Date:", value=date.today())
-                with c13:
-                    progress_val = st.number_input("Progress (%)", min_value=0, max_value=100, value=0, step=5)
+            remark = st.text_input("Remark (Ghi chú):", key="nt_remark")
 
-                remark = st.text_input("Remark (Ghi chú):")
+            # Giao việc ngay khi tạo
+            new_task_leader_id = None
+            if current_role in LEADER_ROLES:
+                new_task_leader_id = user_data['id']
+                st.caption("📌 Công việc này sẽ thuộc team của bạn. Vào 📋 Giao Việc để giao cho Worker.")
+            else:
+                leaders_df_add = pd.read_sql_query(
+                    "SELECT id, fullname, role, workshop FROM users WHERE is_deleted = 0 AND role IN ('Team Leader', 'Foreman') ORDER BY fullname", conn)
+                leader_opts_add = {None: "— Chưa giao —"}
+                for _, r in leaders_df_add.iterrows():
+                    leader_opts_add[int(r['id'])] = f"{r['fullname']} ({r['role']}{', ' + r['workshop'] if r['workshop'] else ''})"
+                new_task_leader_id = st.selectbox("Giao cho Team Leader / Foreman:", list(leader_opts_add.keys()),
+                                                  format_func=lambda k: leader_opts_add[k], key="nt_leader")
 
-                # Giao việc ngay khi tạo
-                new_task_leader_id = None
-                if current_role in LEADER_ROLES:
-                    new_task_leader_id = user_data['id']
-                    st.caption("📌 Công việc này sẽ thuộc team của bạn. Vào 📋 Giao Việc để giao cho Worker.")
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.button("💾 LƯU CÔNG VIỆC MỚI", key="btn_save_new_task", type="primary"):
+                if not sel_cc:
+                    st.error("⚠️ CHƯA CÓ WS COST CODE: Foreman / WOS Manager hãy thêm Cost Code ở mục ⚙️ phía trên trước khi thêm công việc!")
+                elif not task_id.strip() or not task_name_input.strip():
+                    st.error("Vui lòng điền đầy đủ thông tin bắt buộc: Task ID và Task Name!")
+                elif plan_finish < plan_start:
+                    st.error("Plan Finish Date không được trước Plan Start Date!")
+                elif cursor.execute("SELECT 1 FROM tasks WHERE task_id = ?", (task_id.strip(),)).fetchone():
+                    st.error(f"Task ID **{task_id.strip()}** đã tồn tại (có thể đang trong Thùng Rác). Vui lòng dùng ID khác!")
                 else:
-                    leaders_df_add = pd.read_sql_query(
-                        "SELECT id, fullname, role, workshop FROM users WHERE is_deleted = 0 AND role IN ('Team Leader', 'Foreman') ORDER BY fullname", conn)
-                    leader_opts_add = {None: "— Chưa giao —"}
-                    for _, r in leaders_df_add.iterrows():
-                        leader_opts_add[int(r['id'])] = f"{r['fullname']} ({r['role']}{', ' + r['workshop'] if r['workshop'] else ''})"
-                    new_task_leader_id = st.selectbox("Giao cho Team Leader / Foreman:", list(leader_opts_add.keys()),
-                                                      format_func=lambda k: leader_opts_add[k])
-
-                st.markdown("<br>", unsafe_allow_html=True)
-                submitted = st.form_submit_button("💾 LƯU CÔNG VIỆC MỚI")
-                
-                if submitted:
-                    if not task_id.strip() or not task_name_input.strip():
-                        st.error("Vui lòng điền đầy đủ thông tin bắt buộc: Task ID và Task Name!")
-                    elif plan_finish < plan_start:
-                        st.error("Plan Finish Date không được trước Plan Start Date!")
-                    elif cursor.execute("SELECT 1 FROM tasks WHERE task_id = ?", (task_id.strip(),)).fetchone():
-                        st.error(f"Task ID **{task_id.strip()}** đã tồn tại (có thể đang trong Thùng Rác). Vui lòng dùng ID khác!")
-                    else:
-                        ws_code_only = selected_cost_code.split(" - ")[0]
-                        cursor.execute("""
-                            INSERT INTO tasks (
-                                task_id, task_name, task_cost_code, description,
-                                initial_by, initial_date, block, area, deck, frame,
-                                in_charge_by, plan_start_date, plan_finish_date,
-                                progress, remark, assigned_leader_id, is_deleted
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
-                        """, (
-                            task_id.strip(), task_name_input.strip(), ws_code_only,
-                            description.strip(), initial_by.strip(), str(initial_date),
-                            block.strip(), area.strip(), deck.strip(), frame.strip(),
-                            in_charge_by.strip(), str(plan_start), str(plan_finish),
-                            int(progress_val), remark.strip(), new_task_leader_id
-                        ))
-                        conn.commit()
-                        st.success(f"Đã lưu thành công công việc **{task_id} - {task_name_input}**!")
+                    cursor.execute("""
+                        INSERT INTO tasks (
+                            task_id, task_name, task_cost_code, description,
+                            initial_by, initial_date, block, area, deck, frame,
+                            in_charge_by, plan_start_date, plan_finish_date,
+                            progress, remark, assigned_leader_id, is_deleted
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
+                    """, (
+                        task_id.strip(), task_name_input.strip(), sel_cc,
+                        description.strip(), initial_by.strip(), str(initial_date),
+                        block.strip(), area.strip(), deck.strip(), frame.strip(),
+                        in_charge_by.strip(), str(plan_start), str(plan_finish),
+                        int(progress_val), remark.strip(), new_task_leader_id
+                    ))
+                    conn.commit()
+                    st.session_state["_nt_saved_msg"] = f"Đã lưu thành công công việc **{task_id.strip()} - {task_name_input.strip()}**!"
+                    st.session_state["_nt_reset"] = True
+                    st.rerun()
 
     # 3B. GIAO VIỆC
     #    - WOS Manager / Admin: giao công việc cho Team Leader / Foreman
@@ -5651,54 +5751,56 @@ else:
                     "SELECT id, username, fullname FROM users WHERE is_deleted = 0 AND role = 'Worker' AND leader_id = ? ORDER BY fullname",
                     conn, params=(my_id,))
 
-                st.markdown("#### 👷 Thành Viên")
+                m = mini_bar("team", "👷 Thành Viên",
+                             [("add", "➕", "Thêm Worker"), ("del", "➖", "Xóa Khỏi Team")])
+                if m == "add":
+                    with mini_panel("team"):
+                        # Chỉ lấy Worker cùng workshop và chưa thuộc team nào
+                        free_workers = pd.read_sql_query("""
+                            SELECT id, username, fullname FROM users
+                            WHERE is_deleted = 0 AND role = 'Worker' AND workshop = ? AND leader_id IS NULL
+                            ORDER BY fullname
+                        """, conn, params=(my_ws,))
+                        if free_workers.empty:
+                            st.caption(f"Không còn Worker nào trong workshop {my_ws} chưa có team.")
+                        else:
+                            fw_opts = {int(r['id']): f"{r['fullname']} (@{r['username']})" for _, r in free_workers.iterrows()}
+                            to_add = st.multiselect("Chọn Worker (cùng workshop, chưa có team):", list(fw_opts.keys()),
+                                                    format_func=lambda k: fw_opts[k], key="ms_team_add",
+                                                    placeholder="Chọn Worker (cùng workshop, chưa có team):",
+                                                    label_visibility="collapsed")
+                            if st.button("➕ THÊM VÀO TEAM", type="primary", key="btn_add_team_members", use_container_width=True):
+                                if not to_add:
+                                    st.error("Hãy chọn ít nhất 1 Worker!")
+                                else:
+                                    for wid in to_add:
+                                        # Kiểm tra lại phía server: đúng workshop và vẫn chưa có team
+                                        cursor.execute("""UPDATE users SET leader_id = ?
+                                                          WHERE id = ? AND role = 'Worker' AND workshop = ? AND leader_id IS NULL AND is_deleted = 0""",
+                                                       (my_id, wid, my_ws))
+                                    conn.commit()
+                                    st.toast(f"✅ +{len(to_add)} Worker")
+                                    mini_close("team")
+                                    st.rerun()
+                elif m == "del":
+                    with mini_panel("team"):
+                        if team_df.empty:
+                            st.caption("Chưa có thành viên để xóa.")
+                        else:
+                            tm_opts = {int(r['id']): f"{r['fullname']} (@{r['username']})" for _, r in team_df.iterrows()}
+                            to_remove = st.selectbox("Chọn Worker:", list(tm_opts.keys()), format_func=lambda k: tm_opts[k],
+                                                     key="sb_team_rm", label_visibility="collapsed")
+                            if st.button("➖ XÓA KHỎI TEAM", type="secondary", key="btn_remove_team_member", use_container_width=True):
+                                remove_worker_from_team(to_remove, my_id)
+                                st.toast(f"🗑️ {tm_opts[to_remove]}")
+                                mini_close("team")
+                                st.rerun()
+
                 if team_df.empty:
                     st.info("Team chưa có Worker nào.")
                 else:
                     st.dataframe(team_df.rename(columns={'username': 'Username', 'fullname': 'Họ và Tên'}).drop(columns=['id']),
                                  use_container_width=True)
-
-                st.markdown("---")
-                col_add, col_remove = st.columns(2)
-
-                with col_add:
-                    st.markdown("#### ➕ Thêm Worker")
-                    # Chỉ lấy Worker cùng workshop và chưa thuộc team nào
-                    free_workers = pd.read_sql_query("""
-                        SELECT id, username, fullname FROM users
-                        WHERE is_deleted = 0 AND role = 'Worker' AND workshop = ? AND leader_id IS NULL
-                        ORDER BY fullname
-                    """, conn, params=(my_ws,))
-                    if free_workers.empty:
-                        st.caption(f"Không còn Worker nào trong workshop {my_ws} chưa có team.")
-                    else:
-                        fw_opts = {int(r['id']): f"{r['fullname']} (@{r['username']})" for _, r in free_workers.iterrows()}
-                        to_add = st.multiselect("Chọn Worker (cùng workshop, chưa có team):", list(fw_opts.keys()),
-                                                format_func=lambda k: fw_opts[k])
-                        if st.button("➕ THÊM VÀO TEAM", type="primary", key="btn_add_team_members"):
-                            if not to_add:
-                                st.error("Hãy chọn ít nhất 1 Worker!")
-                            else:
-                                for wid in to_add:
-                                    # Kiểm tra lại phía server: đúng workshop và vẫn chưa có team
-                                    cursor.execute("""UPDATE users SET leader_id = ?
-                                                      WHERE id = ? AND role = 'Worker' AND workshop = ? AND leader_id IS NULL AND is_deleted = 0""",
-                                                   (my_id, wid, my_ws))
-                                conn.commit()
-                                st.success(f"Đã thêm {len(to_add)} Worker vào team!")
-                                st.rerun()
-
-                with col_remove:
-                    st.markdown("#### ➖ Xóa Khỏi Team")
-                    if team_df.empty:
-                        st.caption("Chưa có thành viên để xóa.")
-                    else:
-                        tm_opts = {int(r['id']): f"{r['fullname']} (@{r['username']})" for _, r in team_df.iterrows()}
-                        to_remove = st.selectbox("Chọn Worker:", list(tm_opts.keys()), format_func=lambda k: tm_opts[k])
-                        if st.button("➖ XÓA KHỎI TEAM", type="secondary", key="btn_remove_team_member"):
-                            remove_worker_from_team(to_remove, my_id)
-                            st.success("Đã xóa Worker khỏi team. Các việc của team giao cho người này đã được bỏ giao.")
-                            st.rerun()
 
         else:
             # WORKER
@@ -5819,60 +5921,66 @@ else:
         st.dataframe(show_df.drop(columns=['id', 'leader_id', 'team_name']), use_container_width=True)
 
         # 🏭 QUẢN LÝ WORKSHOP ngay tại trang phân quyền (thêm workshop mới rồi chọn luôn cho tài khoản)
-        with st.expander("🏭 Workshop: xem danh sách / thêm / xóa", expanded=ws_df.empty):
-            ws_stats = pd.read_sql_query("""
-                SELECT c.code AS 'Mã', COALESCE(c.name, '') AS 'Tên Workshop',
-                       (SELECT COUNT(*) FROM users u WHERE u.workshop = c.code AND u.is_deleted = 0) AS 'Số tài khoản',
-                       (SELECT COUNT(*) FROM tasks t WHERE t.task_cost_code = c.code AND t.is_deleted = 0) AS 'Số công việc'
-                FROM custom_cost_codes c WHERE c.is_deleted = 0 ORDER BY c.code
-            """, conn)
-            if ws_stats.empty:
-                st.info("Chưa có Workshop nào. Hãy thêm Workshop đầu tiên bên dưới.")
-            else:
-                st.dataframe(ws_stats, use_container_width=True, hide_index=True)
-
-            st.markdown("#### ➕ Thêm Workshop Mới")
-            wa1, wa2 = st.columns([1, 2])
-            with wa1:
-                new_ws_code = st.text_input("Mã Workshop (Ví dụ: WOS_07):", key="role_new_ws_code")
-            with wa2:
-                new_ws_name = st.text_input("Tên Workshop / Phòng ban:", key="role_new_ws_name")
-            if st.button("➕ THÊM WORKSHOP", type="primary", key="btn_role_add_ws"):
-                code_clean = new_ws_code.strip().upper().replace(" ", "_")
-                name_clean = new_ws_name.strip()
-                if not code_clean or not name_clean:
-                    st.error("Vui lòng nhập cả Mã và Tên!")
-                elif len(code_clean) > 20 or len(name_clean) > 80:
-                    st.error("Mã tối đa 20 ký tự, tên tối đa 80 ký tự!")
-                else:
-                    ex = cursor.execute("SELECT is_deleted FROM custom_cost_codes WHERE code = ?", (code_clean,)).fetchone()
-                    if ex and ex[0] == 0:
-                        st.error(f"Mã **{code_clean}** đã có trong danh sách!")
+        ws_stats = pd.read_sql_query("""
+            SELECT c.code AS 'Mã', COALESCE(c.name, '') AS 'Tên Workshop',
+                   (SELECT COUNT(*) FROM users u WHERE u.workshop = c.code AND u.is_deleted = 0) AS 'Số tài khoản',
+                   (SELECT COUNT(*) FROM tasks t WHERE t.task_cost_code = c.code AND t.is_deleted = 0) AS 'Số công việc'
+            FROM custom_cost_codes c WHERE c.is_deleted = 0 ORDER BY c.code
+        """, conn)
+        m = mini_bar("ws", "🏭 Workshop", [("add", "➕", "Thêm Workshop"), ("del", "➖", "Xóa Workshop")])
+        if m == "add":
+            with mini_panel("ws"):
+                wa1, wa2 = st.columns([1, 2])
+                with wa1:
+                    new_ws_code = st.text_input("Mã Workshop (Ví dụ: WOS_07):", key="role_new_ws_code",
+                                                placeholder="Mã Workshop (Ví dụ: WOS_07):", label_visibility="collapsed")
+                with wa2:
+                    new_ws_name = st.text_input("Tên Workshop / Phòng ban:", key="role_new_ws_name",
+                                                placeholder="Tên Workshop / Phòng ban:", label_visibility="collapsed")
+                if st.button("➕ THÊM WORKSHOP", type="primary", key="btn_role_add_ws", use_container_width=True):
+                    code_clean = new_ws_code.strip().upper().replace(" ", "_")
+                    name_clean = new_ws_name.strip()
+                    if not code_clean or not name_clean:
+                        st.error("Vui lòng nhập cả Mã và Tên!")
+                    elif len(code_clean) > 20 or len(name_clean) > 80:
+                        st.error("Mã tối đa 20 ký tự, tên tối đa 80 ký tự!")
                     else:
-                        if ex:
-                            cursor.execute("UPDATE custom_cost_codes SET name = ?, is_deleted = 0 WHERE code = ?", (name_clean, code_clean))
+                        ex = cursor.execute("SELECT is_deleted FROM custom_cost_codes WHERE code = ?", (code_clean,)).fetchone()
+                        if ex and ex[0] == 0:
+                            st.error(f"Mã **{code_clean}** đã có trong danh sách!")
                         else:
-                            cursor.execute("INSERT INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
-                                           (code_clean, name_clean))
-                        conn.commit()
-                        st.success(f"Đã thêm **{code_clean} - {name_clean}**!")
-                        st.rerun()
-
-            if not ws_stats.empty:
-                st.markdown("#### 🗑️ Xóa Workshop")
-                del_opts = {r['Mã']: f"{r['Mã']} - {r['Tên Workshop']}" for _, r in ws_stats.iterrows()}
-                del_ws = st.selectbox("Chọn Workshop để xóa:", list(del_opts.keys()),
-                                      format_func=lambda c: del_opts[c], key="role_del_ws")
-                if st.button("🗑️ XÓA WORKSHOP", key="btn_role_del_ws"):
-                    users_in_ws = cursor.execute("SELECT COUNT(*) FROM users WHERE workshop = ? AND is_deleted = 0", (del_ws,)).fetchone()[0]
-                    if users_in_ws > 0:
-                        st.error(f"Không thể xóa: còn **{users_in_ws}** tài khoản thuộc workshop này. "
-                                 "Hãy chuyển họ sang workshop khác ở 👥 Quản Lý Phân Quyền trước.")
-                    else:
-                        cursor.execute("UPDATE custom_cost_codes SET is_deleted = 1 WHERE code = ?", (del_ws,))
-                        conn.commit()
-                        st.success(f"Đã xóa **{del_opts[del_ws]}** khỏi danh sách. Công việc cũ vẫn giữ nguyên.")
-                        st.rerun()
+                            if ex:
+                                cursor.execute("UPDATE custom_cost_codes SET name = ?, is_deleted = 0 WHERE code = ?", (name_clean, code_clean))
+                            else:
+                                cursor.execute("INSERT INTO custom_cost_codes (code, name, description, is_deleted) VALUES (?, ?, '', 0)",
+                                               (code_clean, name_clean))
+                            conn.commit()
+                            st.toast(f"✅ {code_clean} - {name_clean}")
+                            mini_close("ws")
+                            st.rerun()
+        elif m == "del":
+            with mini_panel("ws"):
+                if ws_stats.empty:
+                    st.caption("Danh sách Cost Code đang trống.")
+                else:
+                    del_opts = {r['Mã']: f"{r['Mã']} - {r['Tên Workshop']}" for _, r in ws_stats.iterrows()}
+                    del_ws = st.selectbox("Chọn Workshop để xóa:", list(del_opts.keys()),
+                                          format_func=lambda c: del_opts[c], key="role_del_ws", label_visibility="collapsed")
+                    if st.button("🗑️ XÓA WORKSHOP", key="btn_role_del_ws", use_container_width=True):
+                        users_in_ws = cursor.execute("SELECT COUNT(*) FROM users WHERE workshop = ? AND is_deleted = 0", (del_ws,)).fetchone()[0]
+                        if users_in_ws > 0:
+                            st.error(f"Không thể xóa: còn **{users_in_ws}** tài khoản thuộc workshop này. "
+                                     "Hãy chuyển họ sang workshop khác ở 👥 Quản Lý Phân Quyền trước.")
+                        else:
+                            cursor.execute("UPDATE custom_cost_codes SET is_deleted = 1 WHERE code = ?", (del_ws,))
+                            conn.commit()
+                            st.toast(f"🗑️ {del_opts[del_ws]}")
+                            mini_close("ws")
+                            st.rerun()
+        if ws_stats.empty:
+            st.info("Chưa có Workshop nào. Hãy thêm Workshop đầu tiên bên dưới.")
+        else:
+            st.dataframe(ws_stats, use_container_width=True, hide_index=True)
 
         st.markdown("---")
         st.markdown("### 🔄 Thay Đổi Quyền Hạn Cho Tài Khoản")
@@ -6148,17 +6256,9 @@ else:
                 if st.session_state.pop("_chat_grp_reset", False):
                     st.session_state["chat_new_group_name"] = ""
                     st.session_state["chat_new_group_members"] = []
-                show_new = st.session_state.get("chat_show_new_grp", False)
-                with st.container(key="sc_grp_head"):
-                    h_l, h_r = st.columns([5, 1], vertical_alignment="center", gap="small")
-                    with h_l:
-                        st.markdown("#### 💬 Nhóm chat")
-                    with h_r:
-                        if st.button("✖" if show_new else "➕", key="chat_grp_toggle", help=tr("Tạo nhóm chat")):
-                            st.session_state["chat_show_new_grp"] = not show_new
-                            st.rerun(scope="fragment")
+                show_new = mini_bar("grpnew", "💬 Nhóm chat", [("add", "➕", "Tạo nhóm chat")]) == "add"
                 if show_new:
-                    with st.container(key="sc_grp_new", border=True):
+                    with mini_panel("grpnew"):
                         g_name = st.text_input("Tên nhóm", key="chat_new_group_name", placeholder="Ví dụ: Tổ hàn Block 170",
                                                label_visibility="collapsed")
                         g_members = st.multiselect("Thêm người vào nhóm", list(people_label.keys()), placeholder="Chọn người...",
@@ -6172,7 +6272,7 @@ else:
                             else:
                                 new_gid = create_chat_group(g_name.strip()[:60], me, g_members)
                                 st.session_state["chat_conv"] = f"group:{new_gid}"
-                                st.session_state["chat_show_new_grp"] = False
+                                mini_close("grpnew")
                                 st.session_state["_chat_grp_reset"] = True
                                 st.rerun(scope="fragment")
 
@@ -6204,34 +6304,47 @@ else:
                     if owner_row:
                         st.caption("👑 Quản trị nhóm" + f": {owner_row[2] or owner_row[1]}")
                     st.caption(" · ".join(f"{CHAT_ROLE_ICONS.get(r, '👤')} {n or u}" for _, u, n, r in members))
-                    with st.expander("⚙️ Thành viên nhóm"):
-                        if is_owner:
-                            outsiders = [p for p in all_people if p[0] not in {m[0] for m in members}]
-                            add_ids = st.multiselect("Thêm người vào nhóm", [p[0] for p in outsiders], placeholder="Chọn người...",
-                                                     format_func=lambda i: people_label[i], key=f"chat_add_{gid}")
-                            if st.button("➕ THÊM VÀO NHÓM", key=f"chat_add_btn_{gid}"):
-                                if add_ids:
-                                    for uid in add_ids:
-                                        cursor.execute("INSERT OR IGNORE INTO chat_group_members (group_id, user_id) VALUES (?, ?)", (gid, uid))
-                                    st.success(f"Đã thêm {len(add_ids)} người vào nhóm!")
-                            others = [m for m in members if m[0] != me]
-                            if others:
-                                rm_id = st.selectbox("Xóa khỏi nhóm", [m[0] for m in others],
-                                                     format_func=lambda i: next(f"{n or u} (@{u})" for x, u, n, r in others if x == i),
-                                                     key=f"chat_rm_{gid}")
-                                if st.button("➖ XÓA KHỎI NHÓM", key=f"chat_rm_btn_{gid}"):
-                                    cursor.execute("DELETE FROM chat_group_members WHERE group_id = ? AND user_id = ?", (gid, rm_id))
-                                    st.success("Đã xóa khỏi nhóm.")
-                            if st.button("🗑️ XÓA NHÓM", key=f"chat_del_group_{gid}"):
-                                delete_chat_group(gid)
-                                conv = "general"
-                                st.session_state["chat_conv"] = "general"
-                        else:
-                            st.caption("Chỉ người tạo nhóm mới thêm / xóa được thành viên.")
-                        if conv.startswith("group:") and st.button("🚪 RỜI NHÓM", key=f"chat_leave_{gid}"):
-                            leave_chat_group(gid, me)
-                            conv = "general"
-                            st.session_state["chat_conv"] = "general"
+                    g_actions = ([("add", "➕", "Thêm người vào nhóm"), ("del", "➖", "Xóa khỏi nhóm"),
+                                  ("kill", "🗑️", "Xóa nhóm")] if is_owner else []) + [("leave", "🚪", "Rời nhóm")]
+                    m = mini_bar(f"grp{gid}", "⚙️ Thành viên nhóm", g_actions)
+                    if m:
+                        with mini_panel(f"grp{gid}"):
+                            if m == "add":
+                                outsiders = [p for p in all_people if p[0] not in {x[0] for x in members}]
+                                add_ids = st.multiselect("Thêm người vào nhóm", [p[0] for p in outsiders], placeholder="Chọn người...",
+                                                         format_func=lambda i: people_label[i], key=f"chat_add_{gid}",
+                                                         label_visibility="collapsed")
+                                if st.button("➕ THÊM VÀO NHÓM", key=f"chat_add_btn_{gid}", type="primary", use_container_width=True):
+                                    if add_ids:
+                                        for uid in add_ids:
+                                            cursor.execute("INSERT OR IGNORE INTO chat_group_members (group_id, user_id) VALUES (?, ?)", (gid, uid))
+                                        st.toast(f"✅ +{len(add_ids)}")
+                                        mini_close(f"grp{gid}")
+                                        st.rerun(scope="fragment")
+                            elif m == "del":
+                                others = [x for x in members if x[0] != me]
+                                if others:
+                                    rm_id = st.selectbox("Xóa khỏi nhóm", [x[0] for x in others],
+                                                         format_func=lambda i: next(f"{n or u} (@{u})" for x, u, n, r in others if x == i),
+                                                         key=f"chat_rm_{gid}", label_visibility="collapsed")
+                                    if st.button("➖ XÓA KHỎI NHÓM", key=f"chat_rm_btn_{gid}", use_container_width=True):
+                                        cursor.execute("DELETE FROM chat_group_members WHERE group_id = ? AND user_id = ?", (gid, rm_id))
+                                        mini_close(f"grp{gid}")
+                                        st.rerun(scope="fragment")
+                                else:
+                                    st.caption("Chưa có thành viên để xóa.")
+                            elif m == "kill":
+                                if st.button("🗑️ XÓA NHÓM", key=f"chat_del_group_{gid}", use_container_width=True):
+                                    delete_chat_group(gid)
+                                    mini_close(f"grp{gid}")
+                                    st.session_state["chat_conv"] = "general"
+                                    st.rerun(scope="fragment")
+                            elif m == "leave":
+                                if st.button("🚪 RỜI NHÓM", key=f"chat_leave_{gid}", use_container_width=True):
+                                    leave_chat_group(gid, me)
+                                    mini_close(f"grp{gid}")
+                                    st.session_state["chat_conv"] = "general"
+                                    st.rerun(scope="fragment")
                     if not conv.startswith("group:"):
                         st.markdown("### 📢 Kênh chung")
                 elif conv == "general":
