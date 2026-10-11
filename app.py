@@ -7136,7 +7136,9 @@ def _guess_device():
         ua = st.context.headers.get("User-Agent", "") or ""
     except Exception:
         ua = ""
-    return "mobile" if any(k in ua for k in ("Mobi", "Android", "iPhone", "iPad")) else "desktop"
+    _MOBILE_HINTS = ("Mobi", "Android", "iPhone", "iPad", "iPod", "Windows Phone", "IEMobile", "Opera Mini",
+                     "BlackBerry", "webOS", "Silk/", "Kindle")
+    return "mobile" if any(k in ua for k in _MOBILE_HINTS) else "desktop"
 
 
 # ==========================================
@@ -8737,24 +8739,8 @@ def _on_theme_change():
     st.session_state["ui_theme"] = st.session_state["w_ui_theme"]
     st.session_state["_theme_changed"] = True
 
-# 📱 Thiết bị đang dùng (Máy tính / Điện thoại) — nhớ bằng cookie, lần đầu thì tự đoán
-_dev_cookie = all_cookies.get(DEVICE_COOKIE)
-if "device_mode" not in st.session_state:
-    st.session_state["device_mode"] = _dev_cookie if _dev_cookie in DEVICE_OPTIONS else _guess_device()
-if (_dev_cookie in DEVICE_OPTIONS and not st.session_state.get("_device_restored")
-        and not st.session_state.get("_device_changed")):
-    st.session_state["_device_restored"] = True
-    if _dev_cookie != st.session_state["device_mode"]:
-        st.session_state["device_mode"] = _dev_cookie
-        st.rerun()
-
-def _on_device_change():
-    st.session_state["device_mode"] = st.session_state["w_device_mode"]
-    st.session_state["_device_changed"] = True
-
-def _on_login_device_change():
-    st.session_state["device_mode"] = st.session_state["device_mode_login"]
-    st.session_state["_device_changed"] = True
+# 📱 Thiết bị (Máy tính / Điện thoại): web TỰ NHẬN BIẾT qua trình duyệt, không cần người dùng chọn
+st.session_state["device_mode"] = _guess_device()
 
 # Các nút chọn dùng khóa riêng (w_...), còn giá trị thật lưu ở ui_theme / ui_lang / device_mode.
 # Mỗi lần chạy gán lại giá trị cho nút chọn, để nút luôn hiển thị đúng (không bị lệch hay bị reset).
@@ -8762,7 +8748,6 @@ st.session_state.setdefault("ui_lang", "vi")
 st.session_state.setdefault("ui_theme", "modern")
 st.session_state["w_ui_lang"] = st.session_state["ui_lang"]
 st.session_state["w_ui_theme"] = st.session_state["ui_theme"]
-st.session_state["w_device_mode"] = st.session_state["device_mode"]
 
 with _settings_slot:
     if True:
@@ -8777,19 +8762,12 @@ with _settings_slot:
             # 🌐 Ngôn ngữ: nút xanh có quả địa cầu + mũi tên, bấm để chọn
             st.selectbox("🌐 Ngôn ngữ", LANG_OPTIONS, key="w_ui_lang", on_change=_on_lang_change,
                          format_func=lambda c: LANG_LABELS[c])
-            st.radio("📲 Thiết bị", DEVICE_OPTIONS, key="w_device_mode", horizontal=True, on_change=_on_device_change,
-                     format_func=lambda d: DEVICE_LABELS[d])
             if st.session_state["device_mode"] == "mobile":
                 st.caption("🎤 Bấm nút micro trong ô nhập chữ để nói thay vì gõ.")
 
 
 # 🎤 Nút micro trong ô nhập chữ (chỉ ở chế độ Điện thoại)
 render_voice_input(st.session_state["device_mode"] == "mobile")
-if st.session_state.get("_device_changed") and _dev_cookie != st.session_state["device_mode"]:
-    try:
-        cookie_manager.set(DEVICE_COOKIE, st.session_state["device_mode"], max_age=365 * 24 * 3600, key="set_device_cookie")
-    except Exception:
-        pass
 # 🍪 Lưu cookie đăng nhập (để lần sau mở lại vẫn đăng nhập). Ghi lại cho tới khi trình duyệt xác nhận đã lưu.
 _pending_cookie = st.session_state.get("_pending_session_cookie")
 if _pending_cookie:
@@ -8903,10 +8881,7 @@ if not st.session_state["logged_in"]:
 
         st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
 
-        # 📲 Chọn thiết bị ngay khi đăng nhập (Điện thoại → có nút 🎤 nói để nhập chữ)
-        st.session_state["device_mode_login"] = st.session_state["device_mode"]
-        st.radio("📲 Bạn đang dùng:", DEVICE_OPTIONS, key="device_mode_login", horizontal=True,
-                 on_change=_on_login_device_change, format_func=lambda d: DEVICE_LABELS[d])
+        # 📲 Điện thoại được nhận biết tự động → có nút 🎤 nói để nhập chữ
         if st.session_state["device_mode"] == "mobile":
             st.caption("🎤 Chế độ điện thoại: bấm nút micro trong ô Tên tài khoản để nói thay vì gõ.")
 
