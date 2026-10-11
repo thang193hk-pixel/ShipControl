@@ -5025,7 +5025,7 @@ if not st.session_state["logged_in"]:
         if not _about_video and os.path.exists(_local_mp4):
             _about_video = _local_mp4
         if not _about_video:
-            _about_video = "https://www.youtube.com/watch?v=wNOlGkce1AI"
+            _about_video = "https://www.youtube.com/watch?v=pitqMZO9TbA"
 
         # Phần đầu trang: chữ giới thiệu (trái) + VIDEO (phải) → thấy video ngay, không cần cuộn
         _h1, _h2 = st.columns([1, 1.15], gap="large", vertical_alignment="center")
