@@ -1,0 +1,5 @@
+ship_control.db
+ship_control.db-wal
+ship_control.db-shm
+.streamlit/secrets.toml
+__pycache__/

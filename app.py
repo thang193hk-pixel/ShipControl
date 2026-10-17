@@ -1733,6 +1733,11 @@ VI_EN = {
     "📊 Tải PowerPoint (.pptx)": "📊 Download PowerPoint (.pptx)",
     "📊 Có thể chọn cả file PowerPoint (.pptx): ảnh trong từng slide sẽ được lấy ra. Slide có chữ “Tuần 3” (hoặc “Week 3”) sẽ tự vào Tuần 3.": "📊 You can also choose a PowerPoint file (.pptx): the pictures on each slide are taken out. A slide that says “Week 3” goes into Week 3 automatically.",
     "Không tìm thấy ảnh nào trong file PowerPoint: ": "No pictures found in this PowerPoint file: ",
+    "Lấy gì từ PowerPoint?": "What to take from the PowerPoint?",
+    "🖼️ Cả slide + ảnh trong slide": "🖼️ Whole slides + photos inside",
+    "📊 Chỉ cả slide (giống hệt PowerPoint)": "📊 Whole slides only (exactly like PowerPoint)",
+    "📷 Chỉ ảnh trong slide": "📷 Photos inside slides only",
+    "Máy chủ chưa có LibreOffice nên chưa chụp được cả slide — đang lấy ảnh trong slide. Thêm file packages.txt để bật.": "The server doesn't have LibreOffice yet, so whole slides can't be captured — taking the photos inside the slides instead. Add the packages.txt file to turn it on.",
     "◀ Trước": "◀ Previous",
     "Tiếp ▶": "Next ▶",
     "Tổng số tuần": "Total weeks",
@@ -2129,6 +2134,11 @@ _ZH_LIST = [
     "总结",
     "📊 也可以选择 PowerPoint 文件（.pptx）：会取出每张幻灯片里的图片。写有“Week 3”或“第3周”的幻灯片会自动放入第 3 周。",
     "PowerPoint 文件中没有找到图片：",
+    "从 PowerPoint 中取什么？",
+    "🖼️ 整张幻灯片 + 里面的图片",
+    "📊 只要整张幻灯片（和 PowerPoint 一样）",
+    "📷 只要幻灯片里的图片",
+    "服务器还没有 LibreOffice，无法截取整张幻灯片——改为取出幻灯片里的图片。添加 packages.txt 文件即可开启。",
 ]
 _JA_LIST = [
     "🚢 SHIPCONTROL - 船舶作業管理",
@@ -2516,6 +2526,11 @@ _JA_LIST = [
     "まとめ",
     "📊 PowerPoint ファイル（.pptx）も選べます。各スライドの写真が取り出されます。「Week 3」と書かれたスライドは自動で第3週に入ります。",
     "PowerPoint ファイルに写真が見つかりません：",
+    "PowerPoint から何を取り込みますか？",
+    "🖼️ スライド全体＋中の写真",
+    "📊 スライド全体のみ（PowerPoint と同じ見た目）",
+    "📷 スライド内の写真のみ",
+    "サーバーに LibreOffice がないため、スライド全体を取り込めません。スライド内の写真を取り込みます。packages.txt を追加すると有効になります。",
 ]
 _KO_LIST = [
     "🚢 SHIPCONTROL - 선박 작업 관리",
@@ -2903,6 +2918,11 @@ _KO_LIST = [
     "요약",
     "📊 PowerPoint 파일(.pptx)도 선택할 수 있습니다. 각 슬라이드의 사진을 꺼내 옵니다. “Week 3”이라고 적힌 슬라이드는 자동으로 3주차에 들어갑니다.",
     "PowerPoint 파일에서 사진을 찾을 수 없습니다: ",
+    "PowerPoint에서 무엇을 가져올까요?",
+    "🖼️ 슬라이드 전체 + 안의 사진",
+    "📊 슬라이드 전체만 (PowerPoint와 똑같이)",
+    "📷 슬라이드 안의 사진만",
+    "서버에 LibreOffice가 없어 슬라이드 전체를 가져올 수 없습니다 — 대신 슬라이드 안의 사진을 가져옵니다. packages.txt 파일을 추가하면 켜집니다.",
 ]
 
 # 🌏 10 ngôn ngữ thêm (cùng thứ tự với VI_EN)
@@ -3292,6 +3312,11 @@ _TH_LIST = [
     "สรุป",
     "📊 เลือกไฟล์ PowerPoint (.pptx) ได้ด้วย: รูปในแต่ละสไลด์จะถูกดึงออกมา สไลด์ที่เขียนว่า “Week 3” จะเข้าสัปดาห์ที่ 3 อัตโนมัติ",
     "ไม่พบรูปในไฟล์ PowerPoint: ",
+    "จะเอาอะไรจาก PowerPoint?",
+    "🖼️ ทั้งสไลด์ + รูปในสไลด์",
+    "📊 เฉพาะทั้งสไลด์ (เหมือน PowerPoint)",
+    "📷 เฉพาะรูปในสไลด์",
+    "เซิร์ฟเวอร์ยังไม่มี LibreOffice จึงจับภาพทั้งสไลด์ไม่ได้ — จะดึงรูปในสไลด์แทน เพิ่มไฟล์ packages.txt เพื่อเปิดใช้",
 ]
 _ID_LIST = [
     "🚢 SHIPCONTROL - MANAJEMEN PEKERJAAN KAPAL",
@@ -3679,6 +3704,11 @@ _ID_LIST = [
     "Ringkasan",
     "📊 Anda juga bisa memilih file PowerPoint (.pptx): foto di setiap slide akan diambil. Slide bertuliskan “Week 3” otomatis masuk ke Minggu 3.",
     "Tidak ada foto di file PowerPoint ini: ",
+    "Ambil apa dari PowerPoint?",
+    "🖼️ Slide utuh + foto di dalamnya",
+    "📊 Hanya slide utuh (persis seperti PowerPoint)",
+    "📷 Hanya foto di dalam slide",
+    "Server belum punya LibreOffice, jadi slide utuh belum bisa diambil — foto di dalam slide yang diambil. Tambahkan file packages.txt untuk mengaktifkannya.",
 ]
 _MS_LIST = [
     "🚢 SHIPCONTROL - PENGURUSAN KERJA KAPAL",
@@ -4066,6 +4096,11 @@ _MS_LIST = [
     "Ringkasan",
     "📊 Anda juga boleh pilih fail PowerPoint (.pptx): foto dalam setiap slaid akan diambil. Slaid yang tertulis “Week 3” akan masuk ke Minggu 3 secara automatik.",
     "Tiada foto dalam fail PowerPoint ini: ",
+    "Ambil apa daripada PowerPoint?",
+    "🖼️ Slaid penuh + foto di dalamnya",
+    "📊 Slaid penuh sahaja (sama seperti PowerPoint)",
+    "📷 Foto dalam slaid sahaja",
+    "Pelayan belum ada LibreOffice, jadi slaid penuh belum boleh diambil — foto dalam slaid diambil. Tambah fail packages.txt untuk mengaktifkannya.",
 ]
 _TL_LIST = [
     "🚢 SHIPCONTROL - PAMAMAHALA NG TRABAHO SA BARKO",
@@ -4453,6 +4488,11 @@ _TL_LIST = [
     "Buod",
     "📊 Puwede ring pumili ng PowerPoint file (.pptx): kukunin ang mga larawan sa bawat slide. Ang slide na may “Week 3” ay awtomatikong mapupunta sa Linggo 3.",
     "Walang nakitang larawan sa PowerPoint file na ito: ",
+    "Ano ang kukunin sa PowerPoint?",
+    "🖼️ Buong slide + mga larawan sa loob",
+    "📊 Buong slide lang (kapareho ng PowerPoint)",
+    "📷 Mga larawan sa loob ng slide lang",
+    "Wala pang LibreOffice ang server kaya hindi pa makuha ang buong slide — ang mga larawan sa loob ang kinukuha. Idagdag ang packages.txt para i-on.",
 ]
 _HI_LIST = [
     "🚢 SHIPCONTROL - जहाज़ कार्य प्रबंधन",
@@ -4840,6 +4880,11 @@ _HI_LIST = [
     "सारांश",
     "📊 आप PowerPoint फ़ाइल (.pptx) भी चुन सकते हैं: हर स्लाइड की फ़ोटो निकाल ली जाएँगी। जिस स्लाइड पर “Week 3” लिखा हो वह अपने-आप सप्ताह 3 में जाएगी।",
     "इस PowerPoint फ़ाइल में कोई फ़ोटो नहीं मिली: ",
+    "PowerPoint से क्या लें?",
+    "🖼️ पूरी स्लाइड + अंदर की फ़ोटो",
+    "📊 सिर्फ़ पूरी स्लाइड (बिल्कुल PowerPoint जैसी)",
+    "📷 सिर्फ़ स्लाइड के अंदर की फ़ोटो",
+    "सर्वर पर अभी LibreOffice नहीं है, इसलिए पूरी स्लाइड नहीं ली जा सकती — स्लाइड के अंदर की फ़ोटो ली जा रही हैं। चालू करने के लिए packages.txt फ़ाइल जोड़ें।",
 ]
 _ES_LIST = [
     "🚢 SHIPCONTROL - GESTIÓN DE TRABAJOS NAVALES",
@@ -5227,6 +5272,11 @@ _ES_LIST = [
     "Resumen",
     "📊 También puedes elegir un archivo PowerPoint (.pptx): se sacan las fotos de cada diapositiva. Una diapositiva que diga “Week 3” va sola a la Semana 3.",
     "No se encontraron fotos en este PowerPoint: ",
+    "¿Qué tomar del PowerPoint?",
+    "🖼️ Diapositivas completas + fotos de dentro",
+    "📊 Solo diapositivas completas (igual que en PowerPoint)",
+    "📷 Solo las fotos de dentro",
+    "El servidor aún no tiene LibreOffice, así que no se pueden capturar las diapositivas completas — se toman las fotos de dentro. Añade el archivo packages.txt para activarlo.",
 ]
 _FR_LIST = [
     "🚢 SHIPCONTROL - GESTION DES TRAVAUX NAVALS",
@@ -5614,6 +5664,11 @@ _FR_LIST = [
     "Bilan",
     "📊 Vous pouvez aussi choisir un fichier PowerPoint (.pptx) : les photos de chaque diapositive sont récupérées. Une diapositive qui indique « Week 3 » va automatiquement dans la Semaine 3.",
     "Aucune photo trouvée dans ce PowerPoint : ",
+    "Que prendre dans le PowerPoint ?",
+    "🖼️ Diapositives entières + photos à l'intérieur",
+    "📊 Diapositives entières seulement (comme dans PowerPoint)",
+    "📷 Photos des diapositives seulement",
+    "Le serveur n'a pas encore LibreOffice : impossible de capturer les diapositives entières, les photos à l'intérieur sont récupérées. Ajoutez le fichier packages.txt pour l'activer.",
 ]
 _DE_LIST = [
     "🚢 SHIPCONTROL - SCHIFFBAU-ARBEITSVERWALTUNG",
@@ -6001,6 +6056,11 @@ _DE_LIST = [
     "Zusammenfassung",
     "📊 Du kannst auch eine PowerPoint-Datei (.pptx) wählen: Die Bilder jeder Folie werden übernommen. Eine Folie mit „Week 3“ landet automatisch in Woche 3.",
     "In dieser PowerPoint-Datei wurden keine Bilder gefunden: ",
+    "Was aus der PowerPoint übernehmen?",
+    "🖼️ Ganze Folien + Bilder darin",
+    "📊 Nur ganze Folien (genau wie in PowerPoint)",
+    "📷 Nur Bilder aus den Folien",
+    "Der Server hat noch kein LibreOffice, daher können ganze Folien nicht erfasst werden — stattdessen werden die Bilder aus den Folien übernommen. Füge die Datei packages.txt hinzu, um es einzuschalten.",
 ]
 _RU_LIST = [
     "🚢 SHIPCONTROL - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
@@ -6388,6 +6448,11 @@ _RU_LIST = [
     "Итоги",
     "📊 Можно выбрать и файл PowerPoint (.pptx): фото с каждого слайда будут извлечены. Слайд с надписью «Week 3» автоматически попадёт в Неделю 3.",
     "В этом файле PowerPoint не найдено фото: ",
+    "Что взять из PowerPoint?",
+    "🖼️ Слайды целиком + фото внутри",
+    "📊 Только слайды целиком (как в PowerPoint)",
+    "📷 Только фото из слайдов",
+    "На сервере пока нет LibreOffice, поэтому слайды целиком не захватываются — берутся фото из слайдов. Добавьте файл packages.txt, чтобы включить.",
 ]
 _PT_LIST = [
     "🚢 SHIPCONTROL - GESTÃO DE TRABALHOS NAVAIS",
@@ -6775,6 +6840,11 @@ _PT_LIST = [
     "Resumo",
     "📊 Você também pode escolher um arquivo PowerPoint (.pptx): as fotos de cada slide são extraídas. Um slide que diga “Week 3” vai sozinho para a Semana 3.",
     "Nenhuma foto encontrada neste PowerPoint: ",
+    "O que pegar do PowerPoint?",
+    "🖼️ Slides inteiros + fotos de dentro",
+    "📊 Só slides inteiros (igual ao PowerPoint)",
+    "📷 Só as fotos de dentro dos slides",
+    "O servidor ainda não tem LibreOffice, então não dá para capturar os slides inteiros — as fotos de dentro estão sendo usadas. Adicione o arquivo packages.txt para ativar.",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -8264,9 +8334,10 @@ img{{width:100%;border-radius:6px}} figcaption{{font-size:12px;color:#334155;mar
 
 
 @st.cache_data(max_entries=6, show_spinner=False)
-def extract_pptx_photos(raw):
-    """Lấy ảnh từ file PowerPoint (.pptx). Trả về [(tuần hoặc None, ảnh, ghi chú)].
-    - Slide có chữ 'Tuần 3' / 'Week 3' / 'W3' → ảnh của slide đó vào Tuần 3.
+def read_pptx_slides(raw):
+    """Đọc file PowerPoint (.pptx). Trả về danh sách slide (bỏ slide ẩn):
+    [(tuần hoặc None, ghi chú, [ảnh bên trong slide])].
+    - Slide có chữ 'Tuần 3' / 'Week 3' / 'W3' → thuộc Tuần 3.
     - Bỏ logo lặp lại trên nhiều slide và ảnh quá nhỏ (icon)."""
     import io, re, hashlib
     from pptx import Presentation
@@ -8284,28 +8355,25 @@ def extract_pptx_photos(raw):
 
     per_slide, counts = [], {}
     for slide in prs.slides:
-        texts, imgs = [], []
+        if slide._element.get("show") == "0":
+            continue                         # slide ẩn: PowerPoint không trình chiếu → bỏ
+        texts, uniq = [], []
         for sh in walk(slide.shapes):
             if getattr(sh, "has_text_frame", False) and sh.has_text_frame and sh.text_frame.text.strip():
                 texts.append(sh.text_frame.text.strip())
-            blob = None
             try:
-                if sh.shape_type == MSO_SHAPE_TYPE.PICTURE or hasattr(sh, "image"):
-                    blob = sh.image.blob
+                blob = sh.image.blob if (sh.shape_type == MSO_SHAPE_TYPE.PICTURE or hasattr(sh, "image")) else None
             except Exception:
                 blob = None
             if blob:
-                imgs.append(blob)
+                h = hashlib.md5(blob).hexdigest()
+                if h not in [x[0] for x in uniq]:
+                    uniq.append((h, blob))
         try:
             if slide.has_notes_slide and slide.notes_slide.notes_text_frame.text.strip():
                 texts.append(slide.notes_slide.notes_text_frame.text.strip())
         except Exception:
             pass
-        uniq = []
-        for b in imgs:
-            h = hashlib.md5(b).hexdigest()
-            if h not in [x[0] for x in uniq]:
-                uniq.append((h, b))
         for h, _ in uniq:
             counts[h] = counts.get(h, 0) + 1
         per_slide.append((texts, uniq))
@@ -8313,10 +8381,10 @@ def extract_pptx_photos(raw):
     n_slides = len(per_slide)
     out = []
     for texts, uniq in per_slide:
-        joined = " ".join(texts)
-        m = rx.search(joined)
+        m = rx.search(" ".join(texts))
         week = int(m.group(1)) if m else None
         note = (texts[0].splitlines()[0] if texts else "")[:200]
+        imgs = []
         for h, b in uniq:
             if n_slides >= 3 and counts[h] >= max(3, n_slides // 2):
                 continue                    # logo / hình nền lặp lại → bỏ
@@ -8326,8 +8394,46 @@ def extract_pptx_photos(raw):
                     continue                # icon nhỏ → bỏ
             except Exception:
                 continue                    # định dạng ảnh không đọc được (EMF/WMF…) → bỏ
-            out.append((week, b, note))
+            imgs.append(b)
+        out.append((week, note, imgs))
     return out
+
+
+@st.cache_data(max_entries=4, show_spinner=False)
+def render_pptx_slides(raw):
+    """Chụp NGUYÊN slide thành ảnh (cần LibreOffice trên máy chủ — xem packages.txt).
+    Trả về [ảnh PNG của từng slide] hoặc None nếu máy chủ không có LibreOffice."""
+    import shutil, subprocess, tempfile, pathlib
+    exe = shutil.which("soffice") or shutil.which("libreoffice")
+    if not exe:
+        return None
+    try:
+        import pymupdf as _fz
+    except Exception:
+        try:
+            import fitz as _fz
+        except Exception:
+            return None
+    with tempfile.TemporaryDirectory(prefix="sc_pptx_") as tmp:
+        src = pathlib.Path(tmp) / "in.pptx"
+        src.write_bytes(raw)
+        prof = pathlib.Path(tmp) / "profile"
+        env = dict(os.environ, SAL_USE_VCLPLUGIN="svp", HOME=tmp)
+        try:
+            subprocess.run([exe, f"-env:UserInstallation={prof.as_uri()}", "--headless", "--norestore",
+                            "--convert-to", "pdf", "--outdir", tmp, str(src)],
+                           env=env, capture_output=True, timeout=180)
+        except Exception:
+            return None
+        pdf = pathlib.Path(tmp) / "in.pdf"
+        if not pdf.exists():
+            return None
+        pages = []
+        with _fz.open(str(pdf)) as doc:
+            for page in doc:
+                pix = page.get_pixmap(dpi=110)
+                pages.append(pix.tobytes("png"))
+        return pages
 
 
 def build_photo_report_pptx(task_row, weeks, photos_by_week, names):
@@ -8551,20 +8657,41 @@ def render_weekly_photo_report(user_data, current_role):
             # Gom tất cả ảnh: ảnh chọn trực tiếp + ảnh lấy từ PowerPoint → [(tên, ảnh, tuần hoặc None, ghi chú hoặc None)]
             entries, bad_files = [], []
             max_wk = max(wk_opts)
+            _has_pptx = any(_f.name.lower().endswith(".pptx") for _f in (files or []))
+            _PPT_MODES = ["both", "slides", "photos"]
+            _PPT_LABELS = {"both": "🖼️ Cả slide + ảnh trong slide", "slides": "📊 Chỉ cả slide (giống hệt PowerPoint)",
+                           "photos": "📷 Chỉ ảnh trong slide"}
+            ppt_mode = "both"
+            if _has_pptx:
+                ppt_mode = st.radio("Lấy gì từ PowerPoint?", _PPT_MODES, key=f"wr_pptmode_{sel}", horizontal=True,
+                                    format_func=lambda k: _PPT_LABELS[k])
             for _f in (files or []):
                 _raw = _f.getvalue()
                 if _f.name.lower().endswith(".pptx"):
                     try:
-                        _found = extract_pptx_photos(_raw)
+                        with st.spinner("⏳ PowerPoint…"):
+                            _slides = read_pptx_slides(_raw)
+                            _pages = render_pptx_slides(_raw) if ppt_mode in ("both", "slides") else None
                     except Exception:
-                        _found = None
-                    if not _found:
+                        _slides, _pages = None, None
+                    if ppt_mode in ("both", "slides") and _pages is None:
+                        st.session_state["_wr_noslides"] = True
+                    if _pages is not None and _slides is not None and len(_pages) != len(_slides):
+                        _pages = _pages[:len(_slides)] + [None] * max(0, len(_slides) - len(_pages))
+                    _n_before = len(entries)
+                    for _k, (_wk, _nt, _imgs) in enumerate(_slides or []):
+                        _wk2 = _wk if (_wk and 1 <= _wk <= max_wk) else None
+                        if ppt_mode in ("both", "slides") and _pages and _pages[_k]:
+                            entries.append((f"{_f.name} · slide {_k + 1}", _pages[_k], _wk2, _nt))
+                        if ppt_mode in ("both", "photos") or (ppt_mode == "slides" and not _pages):
+                            for _j, _b in enumerate(_imgs):
+                                entries.append((f"{_f.name} · slide {_k + 1} #{_j + 1}", _b, _wk2, _nt))
+                    if len(entries) == _n_before:
                         bad_files.append(_f.name)
-                        continue
-                    for _k, (_wk, _b, _nt) in enumerate(_found):
-                        entries.append((f"{_f.name} #{_k + 1}", _b, _wk if (_wk and 1 <= _wk <= max_wk) else None, _nt))
                 else:
                     entries.append((_f.name, _raw, None, None))
+            if _has_pptx and st.session_state.pop("_wr_noslides", False):
+                st.info(tr("Máy chủ chưa có LibreOffice nên chưa chụp được cả slide — đang lấy ảnh trong slide. Thêm file packages.txt để bật."))
             entries = entries[:PHOTO_MAX_FILES]
             if bad_files:
                 st.warning(tr("Không tìm thấy ảnh nào trong file PowerPoint: ") + ", ".join(bad_files))
