@@ -1312,7 +1312,7 @@ BG_CSS_TEMPLATE = r'''
 # ==========================================
 VI_EN = {
     # --- Tiêu đề & menu ---
-    "🚢 SHIPCONTROL - QUẢN LÝ CÔNG VIỆC TÀU": "🚢 SHIPCONTROL - SHIP WORK MANAGEMENT",
+    "🚢 EMERALD SHIP - QUẢN LÝ CÔNG VIỆC TÀU": "🚢 EMERALD SHIP - SHIP WORK MANAGEMENT",
     "🔐 Xác Thực": "🔐 Sign In",
     "Vui lòng đăng nhập hoặc đăng ký để tiếp tục.": "Please sign in or register to continue.",
     "🧰 Bảng Công Việc": "🧰 Task Board",
@@ -1682,7 +1682,7 @@ VI_EN = {
     "About us": "About us",
     "Đăng nhập / Đăng ký": "Sign in / Register",
     "Phần mềm quản lý công việc cho xưởng đóng tàu": "Work management software for shipyards",
-    "ShipControl giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.": "ShipControl helps shipyard teams assign work, track progress and stay in touch in one place — on computers and phones.",
+    "Emerald Ship giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.": "Emerald Ship helps shipyard teams assign work, track progress and stay in touch in one place — on computers and phones.",
     "📋 Quản lý công việc": "📋 Task management",
     "Tạo công việc theo Block, Deck, Frame và theo dõi tiến độ từng phần trăm.": "Create tasks by Block, Deck and Frame and track progress percent by percent.",
     "👥 Team & phân quyền": "👥 Teams & roles",
@@ -1749,7 +1749,7 @@ VI_EN = {
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
 _ZH_LIST = [
-    "🚢 SHIPCONTROL - 船舶工作管理",
+    "🚢 EMERALD SHIP - 船舶工作管理",
     "🔐 登录",
     "请登录或注册以继续。",
     "🧰 任务看板",
@@ -2076,7 +2076,7 @@ _ZH_LIST = [
     "关于我们",
     "登录 / 注册",
     "船厂工作管理软件",
-    "ShipControl 让船厂团队在同一个地方分配工作、跟踪进度并保持沟通——电脑和手机都能用。",
+    "Emerald Ship 让船厂团队在同一个地方分配工作、跟踪进度并保持沟通——电脑和手机都能用。",
     "📋 任务管理",
     "按分段、甲板、肋位创建任务，并逐个百分比跟踪进度。",
     "👥 团队与权限",
@@ -2141,7 +2141,7 @@ _ZH_LIST = [
     "服务器还没有 LibreOffice，无法截取整张幻灯片——改为取出幻灯片里的图片。添加 packages.txt 文件即可开启。",
 ]
 _JA_LIST = [
-    "🚢 SHIPCONTROL - 船舶作業管理",
+    "🚢 EMERALD SHIP - 船舶作業管理",
     "🔐 ログイン",
     "続けるにはログインまたは登録してください。",
     "🧰 タスクボード",
@@ -2468,7 +2468,7 @@ _JA_LIST = [
     "私たちについて",
     "ログイン / 登録",
     "造船所のための作業管理ソフト",
-    "ShipControl は造船所のチームが作業の割り当て、進捗管理、連絡をひとつの場所で行えるようにします。パソコンでもスマホでも使えます。",
+    "Emerald Ship は造船所のチームが作業の割り当て、進捗管理、連絡をひとつの場所で行えるようにします。パソコンでもスマホでも使えます。",
     "📋 タスク管理",
     "ブロック・デッキ・フレームごとにタスクを作成し、進捗を1%単位で管理。",
     "👥 チームと権限",
@@ -2533,7 +2533,7 @@ _JA_LIST = [
     "サーバーに LibreOffice がないため、スライド全体を取り込めません。スライド内の写真を取り込みます。packages.txt を追加すると有効になります。",
 ]
 _KO_LIST = [
-    "🚢 SHIPCONTROL - 선박 작업 관리",
+    "🚢 EMERALD SHIP - 선박 작업 관리",
     "🔐 로그인",
     "계속하려면 로그인하거나 회원가입하세요.",
     "🧰 작업 보드",
@@ -2860,7 +2860,7 @@ _KO_LIST = [
     "소개",
     "로그인 / 회원가입",
     "조선소를 위한 작업 관리 소프트웨어",
-    "ShipControl은 조선소 팀이 한곳에서 작업을 배정하고 진행 상황을 추적하며 소통할 수 있게 해 줍니다. 컴퓨터와 휴대폰 모두에서 사용할 수 있습니다.",
+    "Emerald Ship은 조선소 팀이 한곳에서 작업을 배정하고 진행 상황을 추적하며 소통할 수 있게 해 줍니다. 컴퓨터와 휴대폰 모두에서 사용할 수 있습니다.",
     "📋 작업 관리",
     "블록·데크·프레임별로 작업을 만들고 진행률을 퍼센트 단위로 추적합니다.",
     "👥 팀 및 권한",
@@ -2927,7 +2927,7 @@ _KO_LIST = [
 
 # 🌏 10 ngôn ngữ thêm (cùng thứ tự với VI_EN)
 _TH_LIST = [
-    "🚢 SHIPCONTROL - ระบบจัดการงานต่อเรือ",
+    "🚢 EMERALD SHIP - ระบบจัดการงานต่อเรือ",
     "🔐 เข้าสู่ระบบ",
     "กรุณาเข้าสู่ระบบหรือสมัครสมาชิกเพื่อดำเนินการต่อ",
     "🧰 กระดานงาน",
@@ -3254,7 +3254,7 @@ _TH_LIST = [
     "เกี่ยวกับเรา",
     "เข้าสู่ระบบ / สมัครสมาชิก",
     "ซอฟต์แวร์จัดการงานสำหรับอู่ต่อเรือ",
-    "ShipControl ช่วยทีมในอู่ต่อเรือมอบหมายงาน ติดตามความคืบหน้า และติดต่อกันได้ในที่เดียว — ทั้งบนคอมพิวเตอร์และโทรศัพท์",
+    "Emerald Ship ช่วยทีมในอู่ต่อเรือมอบหมายงาน ติดตามความคืบหน้า และติดต่อกันได้ในที่เดียว — ทั้งบนคอมพิวเตอร์และโทรศัพท์",
     "📋 การจัดการงาน",
     "สร้างงานตาม Block, Deck และ Frame แล้วติดตามความคืบหน้าทีละเปอร์เซ็นต์",
     "👥 ทีมและบทบาท",
@@ -3319,7 +3319,7 @@ _TH_LIST = [
     "เซิร์ฟเวอร์ยังไม่มี LibreOffice จึงจับภาพทั้งสไลด์ไม่ได้ — จะดึงรูปในสไลด์แทน เพิ่มไฟล์ packages.txt เพื่อเปิดใช้",
 ]
 _ID_LIST = [
-    "🚢 SHIPCONTROL - MANAJEMEN PEKERJAAN KAPAL",
+    "🚢 EMERALD SHIP - MANAJEMEN PEKERJAAN KAPAL",
     "🔐 Masuk",
     "Silakan masuk atau daftar untuk melanjutkan.",
     "🧰 Papan Tugas",
@@ -3646,7 +3646,7 @@ _ID_LIST = [
     "Tentang kami",
     "Masuk / Daftar",
     "Perangkat lunak manajemen pekerjaan untuk galangan kapal",
-    "ShipControl membantu tim galangan kapal membagikan pekerjaan, memantau progres, dan tetap terhubung di satu tempat — di komputer dan ponsel.",
+    "Emerald Ship membantu tim galangan kapal membagikan pekerjaan, memantau progres, dan tetap terhubung di satu tempat — di komputer dan ponsel.",
     "📋 Manajemen tugas",
     "Buat tugas berdasarkan Block, Deck, dan Frame lalu pantau progres persen demi persen.",
     "👥 Tim & peran",
@@ -3711,7 +3711,7 @@ _ID_LIST = [
     "Server belum punya LibreOffice, jadi slide utuh belum bisa diambil — foto di dalam slide yang diambil. Tambahkan file packages.txt untuk mengaktifkannya.",
 ]
 _MS_LIST = [
-    "🚢 SHIPCONTROL - PENGURUSAN KERJA KAPAL",
+    "🚢 EMERALD SHIP - PENGURUSAN KERJA KAPAL",
     "🔐 Log Masuk",
     "Sila log masuk atau daftar untuk teruskan.",
     "🧰 Papan Tugasan",
@@ -4038,7 +4038,7 @@ _MS_LIST = [
     "Tentang kami",
     "Log masuk / Daftar",
     "Perisian pengurusan kerja untuk limbungan kapal",
-    "ShipControl membantu pasukan limbungan kapal mengagih kerja, menjejak kemajuan dan kekal berhubung di satu tempat — di komputer dan telefon.",
+    "Emerald Ship membantu pasukan limbungan kapal mengagih kerja, menjejak kemajuan dan kekal berhubung di satu tempat — di komputer dan telefon.",
     "📋 Pengurusan tugasan",
     "Cipta tugasan mengikut Block, Deck dan Frame dan jejak kemajuan peratus demi peratus.",
     "👥 Pasukan & peranan",
@@ -4103,7 +4103,7 @@ _MS_LIST = [
     "Pelayan belum ada LibreOffice, jadi slaid penuh belum boleh diambil — foto dalam slaid diambil. Tambah fail packages.txt untuk mengaktifkannya.",
 ]
 _TL_LIST = [
-    "🚢 SHIPCONTROL - PAMAMAHALA NG TRABAHO SA BARKO",
+    "🚢 EMERALD SHIP - PAMAMAHALA NG TRABAHO SA BARKO",
     "🔐 Mag-sign In",
     "Mag-sign in o magparehistro para magpatuloy.",
     "🧰 Board ng mga Gawain",
@@ -4430,7 +4430,7 @@ _TL_LIST = [
     "Tungkol sa amin",
     "Mag-sign in / Magparehistro",
     "Software sa pamamahala ng trabaho para sa shipyard",
-    "Tinutulungan ng ShipControl ang mga team sa shipyard na magtalaga ng trabaho, subaybayan ang progreso at manatiling konektado sa iisang lugar — sa computer at telepono.",
+    "Tinutulungan ng Emerald Ship ang mga team sa shipyard na magtalaga ng trabaho, subaybayan ang progreso at manatiling konektado sa iisang lugar — sa computer at telepono.",
     "📋 Pamamahala ng gawain",
     "Gumawa ng gawain ayon sa Block, Deck at Frame at subaybayan ang progreso bawat porsyento.",
     "👥 Mga team at role",
@@ -4495,7 +4495,7 @@ _TL_LIST = [
     "Wala pang LibreOffice ang server kaya hindi pa makuha ang buong slide — ang mga larawan sa loob ang kinukuha. Idagdag ang packages.txt para i-on.",
 ]
 _HI_LIST = [
-    "🚢 SHIPCONTROL - जहाज़ कार्य प्रबंधन",
+    "🚢 EMERALD SHIP - जहाज़ कार्य प्रबंधन",
     "🔐 साइन इन",
     "जारी रखने के लिए साइन इन या रजिस्टर करें।",
     "🧰 कार्य बोर्ड",
@@ -4822,7 +4822,7 @@ _HI_LIST = [
     "हमारे बारे में",
     "साइन इन / रजिस्टर",
     "शिपयार्ड के लिए कार्य प्रबंधन सॉफ़्टवेयर",
-    "ShipControl शिपयार्ड की टीमों को काम सौंपने, प्रगति पर नज़र रखने और एक ही जगह जुड़े रहने में मदद करता है — कंप्यूटर और फ़ोन दोनों पर।",
+    "Emerald Ship शिपयार्ड की टीमों को काम सौंपने, प्रगति पर नज़र रखने और एक ही जगह जुड़े रहने में मदद करता है — कंप्यूटर और फ़ोन दोनों पर।",
     "📋 कार्य प्रबंधन",
     "Block, Deck और Frame के अनुसार कार्य बनाएँ और प्रतिशत-दर-प्रतिशत प्रगति देखें।",
     "👥 टीमें और भूमिकाएँ",
@@ -4887,7 +4887,7 @@ _HI_LIST = [
     "सर्वर पर अभी LibreOffice नहीं है, इसलिए पूरी स्लाइड नहीं ली जा सकती — स्लाइड के अंदर की फ़ोटो ली जा रही हैं। चालू करने के लिए packages.txt फ़ाइल जोड़ें।",
 ]
 _ES_LIST = [
-    "🚢 SHIPCONTROL - GESTIÓN DE TRABAJOS NAVALES",
+    "🚢 EMERALD SHIP - GESTIÓN DE TRABAJOS NAVALES",
     "🔐 Iniciar sesión",
     "Inicia sesión o regístrate para continuar.",
     "🧰 Tablero de tareas",
@@ -5214,7 +5214,7 @@ _ES_LIST = [
     "Sobre nosotros",
     "Entrar / Registrarse",
     "Software de gestión de trabajos para astilleros",
-    "ShipControl ayuda a los equipos del astillero a asignar trabajo, seguir el progreso y mantenerse en contacto en un solo lugar — en ordenadores y teléfonos.",
+    "Emerald Ship ayuda a los equipos del astillero a asignar trabajo, seguir el progreso y mantenerse en contacto en un solo lugar — en ordenadores y teléfonos.",
     "📋 Gestión de tareas",
     "Crea tareas por Block, Deck y Frame y sigue el progreso porcentaje a porcentaje.",
     "👥 Equipos y roles",
@@ -5279,7 +5279,7 @@ _ES_LIST = [
     "El servidor aún no tiene LibreOffice, así que no se pueden capturar las diapositivas completas — se toman las fotos de dentro. Añade el archivo packages.txt para activarlo.",
 ]
 _FR_LIST = [
-    "🚢 SHIPCONTROL - GESTION DES TRAVAUX NAVALS",
+    "🚢 EMERALD SHIP - GESTION DES TRAVAUX NAVALS",
     "🔐 Connexion",
     "Connectez-vous ou inscrivez-vous pour continuer.",
     "🧰 Tableau des tâches",
@@ -5606,7 +5606,7 @@ _FR_LIST = [
     "À propos",
     "Connexion / Inscription",
     "Logiciel de gestion des travaux pour chantiers navals",
-    "ShipControl aide les équipes du chantier naval à attribuer le travail, suivre l'avancement et rester en contact au même endroit — sur ordinateur et téléphone.",
+    "Emerald Ship aide les équipes du chantier naval à attribuer le travail, suivre l'avancement et rester en contact au même endroit — sur ordinateur et téléphone.",
     "📋 Gestion des tâches",
     "Créez des tâches par Block, Deck et Frame et suivez l'avancement pour cent par pour cent.",
     "👥 Équipes et rôles",
@@ -5671,7 +5671,7 @@ _FR_LIST = [
     "Le serveur n'a pas encore LibreOffice : impossible de capturer les diapositives entières, les photos à l'intérieur sont récupérées. Ajoutez le fichier packages.txt pour l'activer.",
 ]
 _DE_LIST = [
-    "🚢 SHIPCONTROL - SCHIFFBAU-ARBEITSVERWALTUNG",
+    "🚢 EMERALD SHIP - SCHIFFBAU-ARBEITSVERWALTUNG",
     "🔐 Anmelden",
     "Bitte melde dich an oder registriere dich, um fortzufahren.",
     "🧰 Aufgabenübersicht",
@@ -5998,7 +5998,7 @@ _DE_LIST = [
     "Über uns",
     "Anmelden / Registrieren",
     "Arbeitsverwaltungssoftware für Werften",
-    "ShipControl hilft Werft-Teams, Arbeit zu verteilen, den Fortschritt zu verfolgen und an einem Ort in Kontakt zu bleiben — am Computer und am Handy.",
+    "Emerald Ship hilft Werft-Teams, Arbeit zu verteilen, den Fortschritt zu verfolgen und an einem Ort in Kontakt zu bleiben — am Computer und am Handy.",
     "📋 Aufgabenverwaltung",
     "Erstelle Aufgaben nach Block, Deck und Frame und verfolge den Fortschritt Prozent für Prozent.",
     "👥 Teams & Rollen",
@@ -6063,7 +6063,7 @@ _DE_LIST = [
     "Der Server hat noch kein LibreOffice, daher können ganze Folien nicht erfasst werden — stattdessen werden die Bilder aus den Folien übernommen. Füge die Datei packages.txt hinzu, um es einzuschalten.",
 ]
 _RU_LIST = [
-    "🚢 SHIPCONTROL - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
+    "🚢 EMERALD SHIP - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
     "🔐 Вход",
     "Войдите или зарегистрируйтесь, чтобы продолжить.",
     "🧰 Доска задач",
@@ -6390,7 +6390,7 @@ _RU_LIST = [
     "О нас",
     "Вход / Регистрация",
     "Программа управления работами для верфей",
-    "ShipControl помогает командам верфи распределять работу, следить за прогрессом и оставаться на связи в одном месте — на компьютере и телефоне.",
+    "Emerald Ship помогает командам верфи распределять работу, следить за прогрессом и оставаться на связи в одном месте — на компьютере и телефоне.",
     "📋 Управление задачами",
     "Создавайте задачи по Block, Deck и Frame и отслеживайте прогресс процент за процентом.",
     "👥 Бригады и роли",
@@ -6455,7 +6455,7 @@ _RU_LIST = [
     "На сервере пока нет LibreOffice, поэтому слайды целиком не захватываются — берутся фото из слайдов. Добавьте файл packages.txt, чтобы включить.",
 ]
 _PT_LIST = [
-    "🚢 SHIPCONTROL - GESTÃO DE TRABALHOS NAVAIS",
+    "🚢 EMERALD SHIP - GESTÃO DE TRABALHOS NAVAIS",
     "🔐 Entrar",
     "Entre ou cadastre-se para continuar.",
     "🧰 Quadro de tarefas",
@@ -6782,7 +6782,7 @@ _PT_LIST = [
     "Sobre nós",
     "Entrar / Cadastrar",
     "Software de gestão de trabalhos para estaleiros",
-    "O ShipControl ajuda as equipes do estaleiro a distribuir o trabalho, acompanhar o progresso e manter contato em um só lugar — no computador e no celular.",
+    "O Emerald Ship ajuda as equipes do estaleiro a distribuir o trabalho, acompanhar o progresso e manter contato em um só lugar — no computador e no celular.",
     "📋 Gestão de tarefas",
     "Crie tarefas por Block, Deck e Frame e acompanhe o progresso por cento a por cento.",
     "👥 Equipes e funções",
@@ -8092,7 +8092,7 @@ def create_meeting(title, host_id, start_at):
             break
     alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"                           # bỏ các ký tự dễ nhầm (0/O, 1/I)
     password = "".join(secrets.choice(alphabet) for _ in range(6))
-    video_room = "ShipControl" + secrets.token_hex(10)                      # tên phòng video bí mật, không đoán được
+    video_room = "EmeraldShip" + secrets.token_hex(10)                      # tên phòng video bí mật, không đoán được
     cursor.execute("""INSERT INTO meetings (room_id, password, title, host_id, video_room, start_at, created_at, is_active)
                       VALUES (?, ?, ?, ?, ?, ?, ?, 1)""",
                    (room_id, password, title, host_id, video_room, start_at, datetime.now().isoformat(timespec="seconds")))
@@ -8124,7 +8124,7 @@ def meeting_code_card(room_id, password, compact=False):
 
 # CẤU HÌNH GIAO DIỆN
 st.set_page_config(
-    page_title="ShipControl - Quản Lý Công Việc Tàu",
+    page_title="Emerald Ship - Quản Lý Công Việc Tàu",
     page_icon="🚢",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -8507,7 +8507,7 @@ def build_photo_report_pptx(task_row, weeks, photos_by_week, names):
         return sh
 
     def footer(slide, n, total):
-        text(slide, 0.6, 6.98, 9.5, 0.3, f"ShipControl  ·  {title_txt}", 10, MUTED, name="Footer")
+        text(slide, 0.6, 6.98, 9.5, 0.3, f"Emerald Ship  ·  {title_txt}", 10, MUTED, name="Footer")
         text(slide, 11.2, 6.98, 1.53, 0.3, f"{n} / {total}", 10, MUTED, align=PP_ALIGN.RIGHT, name="Slide number")
 
     # Chia mỗi tuần thành các trang ≤ 6 ảnh
@@ -8521,7 +8521,7 @@ def build_photo_report_pptx(task_row, weeks, photos_by_week, names):
 
     # ---------- 1. Trang bìa ----------
     s1 = prs.slides.add_slide(blank); bg(s1, NAVY)
-    text(s1, 0.8, 0.8, 7.5, 0.4, "SHIPCONTROL", 14, AMBER, bold=True, spacing=300, name="Kicker")
+    text(s1, 0.8, 0.8, 7.5, 0.4, "EMERALD SHIP", 14, AMBER, bold=True, spacing=300, name="Kicker")
     text(s1, 0.8, 1.5, 7.6, 2.4, title_txt, 40, WHITE, bold=True, font=HEAD, anchor=MSO_ANCHOR.BOTTOM, name="Title")
     text(s1, 0.8, 4.05, 7.6, 0.6, clean(tr("📸 Báo cáo hình ảnh theo tuần")), 20, STEEL, name="Subtitle")
     meta = f"{clean(tr('Bắt đầu'))}: {start:%d/%m/%Y}"
@@ -8768,7 +8768,7 @@ def render_weekly_photo_report(user_data, current_role):
     with st.container(key=f"sc_slide_n{_ncol}_{sel}"):
         _DG._sc_orig_markdown(st._main, f"""
 <div class='sc-slide-head'>
-  <div><div class='sc-slide-kicker'>SHIPCONTROL · {html.escape(str(task[1]))}</div>
+  <div><div class='sc-slide-kicker'>EMERALD SHIP · {html.escape(str(task[1]))}</div>
        <div class='sc-slide-title'>{html.escape(tr('Tuần'))} {w}</div>
        <div class='sc-slide-dates'>{d1:%d/%m/%Y} – {d2:%d/%m/%Y}</div></div>
   <div class='sc-slide-right'>{badge}<span class='sc-slide-badge sc-count'>📷 {len(items)}</span></div>
@@ -8791,7 +8791,7 @@ def render_weekly_photo_report(user_data, current_role):
                             conn.commit()
                             st.toast("🗑️")
                             st.rerun()
-        _DG._sc_orig_markdown(st._main, f"<div class='sc-slide-foot'><span>ShipControl · {html.escape(str(task[1]))} — {html.escape(str(task[2]))}</span>"
+        _DG._sc_orig_markdown(st._main, f"<div class='sc-slide-foot'><span>Emerald Ship · {html.escape(str(task[1]))} — {html.escape(str(task[2]))}</span>"
                                         f"<span>{n_idx + 1} / {len(weeks)}</span></div>", unsafe_allow_html=True)
 
     # 📊 Xuất PowerPoint (.pptx): bìa + mỗi tuần 1 slide + tổng kết
@@ -9019,7 +9019,7 @@ if not admin_exists:
     if not initial_admin_pw:
         initial_admin_pw = secrets.token_urlsafe(12)
         print("=" * 60)
-        print(f"[ShipControl] Mật khẩu admin tạm thời: {initial_admin_pw}")
+        print(f"[Emerald Ship] Mật khẩu admin tạm thời: {initial_admin_pw}")
         print("Hãy đăng nhập và đổi mật khẩu ngay, hoặc đặt ADMIN_PASSWORD trong Secrets.")
         print("=" * 60)
     cursor.execute("INSERT INTO users (username, password, fullname, role, is_deleted) VALUES (?, ?, ?, ?, 0)",
@@ -9059,22 +9059,22 @@ def send_new_user_email(target_username, target_fullname):
     sender_password = get_secret("SMTP_APP_PASSWORD")
     receiver_email = get_secret("ADMIN_EMAIL", sender_email)
     if not sender_email or not sender_password or not receiver_email:
-        print("[ShipControl] Chưa cấu hình SMTP trong Secrets - bỏ qua gửi email.")
+        print("[Emerald Ship] Chưa cấu hình SMTP trong Secrets - bỏ qua gửi email.")
         return False
 
     safe_user = html.escape(target_username)
     safe_name = html.escape(target_fullname)
-    subject = f"🔔 [ShipControl] Tài khoản mới chờ duyệt: {target_username}"
+    subject = f"🔔 [Emerald Ship] Tài khoản mới chờ duyệt: {target_username}"
     body = f"""
     <div style="font-family: Arial, sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 10px;">
         <h2 style="color: #0284c7;">🚢 CÓ TÀI KHOẢN ĐĂNG KÝ MỚI</h2>
-        <p>Có người dùng vừa đăng ký trên hệ thống <b>ShipControl</b>:</p>
+        <p>Có người dùng vừa đăng ký trên hệ thống <b>Emerald Ship</b>:</p>
         <hr>
         <p><b>Họ và Tên:</b> {safe_name}</p>
         <p><b>Tên đăng nhập (Username):</b> {safe_user}</p>
         <hr>
         <p>Đăng nhập bằng tài khoản <b>Admin</b> hoặc <b>WOS Manager</b>, vào mục <b>👥 Quản Lý Phân Quyền</b> để cấp Role.</p>
-        <a href="{APP_URL}" style="display: inline-block; background-color: #16a34a; color: white; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold;">👉 Mở ShipControl</a>
+        <a href="{APP_URL}" style="display: inline-block; background-color: #16a34a; color: white; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold;">👉 Mở Emerald Ship</a>
     </div>
     """
 
@@ -9173,10 +9173,10 @@ if "trash_sub_tab" not in st.session_state:
 # --- ⚙️ NÚT CÀI ĐẶT (Chế độ Tối + Ngôn ngữ) ---
 # Chỗ đặt nút được giữ sẵn ở đầu thanh bên; nút thật được vẽ sau khi đọc cookie (để nhớ ngôn ngữ đã chọn).
 # 🧭 THANH MENU NGANG TRÊN CÙNG (thay cho thanh bên trái):
-#    [🚢 SHIPCONTROL] [CÁC TRANG ...........................] [⚙️] [👤 tài khoản]
+#    [🚢 EMERALD SHIP] [CÁC TRANG ...........................] [⚙️] [👤 tài khoản]
 _topbar = st.container(key="sc_topbar", horizontal=True, vertical_alignment="center", gap="small", wrap=False)
 with _topbar:
-    st.markdown("<div class='sc-brand'>🚢 SHIPCONTROL</div>", unsafe_allow_html=True)
+    st.markdown("<div class='sc-brand'>🚢 EMERALD SHIP</div>", unsafe_allow_html=True)
     _nav_slot = st.container(key="sc_nav", horizontal=True, vertical_alignment="center", gap=None, width="stretch", wrap=False)
     _settings_slot = st.container(key="sc_tools", horizontal=True, vertical_alignment="center", gap="small", width="content", wrap=False)
 # Chỗ chứa các đoạn mã chạy ngầm (micro, menu tin nhắn): không chiếm chỗ trên trang
@@ -9729,7 +9729,7 @@ if _theme_css:
     st.markdown(f"<style>{_theme_css}</style>", unsafe_allow_html=True)
 
 # --- TIÊU ĐỀ TRANG ---
-st.markdown("<div class='main-title'>🚢 SHIPCONTROL - QUẢN LÝ CÔNG VIỆC TÀU</div>", unsafe_allow_html=True)
+st.markdown("<div class='main-title'>🚢 EMERALD SHIP - QUẢN LÝ CÔNG VIỆC TÀU</div>", unsafe_allow_html=True)
 
 # --- KHỞI TẠO KHỔI PHỤC ĐĂNG NHẬP CHUẨN ĐỒNG BỘ COOKIE ---
 all_cookies = cookie_manager.get_all()
@@ -9904,9 +9904,9 @@ if not st.session_state["logged_in"]:
         with _h1:
             st.markdown("""
 <div class='sc-about-hero sc-about-hero-left'>
-  <div class='sc-about-kicker'>🚢 SHIPCONTROL</div>
+  <div class='sc-about-kicker'>🚢 EMERALD SHIP</div>
   <h1>Phần mềm quản lý công việc cho xưởng đóng tàu</h1>
-  <p>ShipControl giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.</p>
+  <p>Emerald Ship giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.</p>
 </div>
 """, unsafe_allow_html=True)
         with _h2:
@@ -11067,7 +11067,7 @@ else:
                 st.download_button(
                     label="📥 Tải Báo Cáo Bảng Công Việc (File CSV/Excel)",
                     data=csv_data,
-                    file_name=f"ShipControl_Report_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
+                    file_name=f"EmeraldShip_Report_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
                     mime="text/csv",
                     type="primary"
                 )
