@@ -67,7 +67,7 @@ header[data-testid="stHeader"] {
 
 /* ---------- Thanh bên ---------- */
 section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0369a1 0%, #075985 55%, #0c4a6e 100%) !important;
+    background: linear-gradient(180deg, #047857 0%, #065f46 55%, #064e3b 100%) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 4px 0 24px rgba(12, 74, 110, 0.18) !important;
 }
@@ -157,8 +157,8 @@ div.stDownloadButton > button:hover:not(:disabled) {
 }
 .stMain div.stButton > button[kind="secondary"]:hover:not(:disabled),
 .main div.stButton > button[kind="secondary"]:hover:not(:disabled) {
-    border-color: #0ea5e9 !important;
-    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.18) !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.18) !important;
     transform: translateY(-2px) !important;
 }
 div.stButton > button:active:not(:disabled),
@@ -196,7 +196,7 @@ __DANGER_SEL_HOVER__ {
     height: 4px;
     transform: translateX(-50%);
     border-radius: 999px;
-    background: linear-gradient(90deg, #0ea5e9, #22c55e, #facc15);
+    background: linear-gradient(90deg, #10b981, #22c55e, #facc15);
 }
 .big-table-title {
     font-size: 1.55rem !important;
@@ -289,8 +289,8 @@ div[data-testid="stSelectbox"] div:has(> input):focus-within,
 div[data-testid="stMultiSelect"] div:has(> input):focus-within,
 div[data-baseweb="input"]:focus-within,
 div[data-baseweb="textarea"]:focus-within {
-    border-color: #0ea5e9 !important;
-    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18) !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18) !important;
 }
 div[data-testid="stTextInputRootElement"] *,
 div[data-testid="stTextAreaRootElement"] *,
@@ -320,7 +320,7 @@ div[data-testid="stDateInputField"] div[data-baseweb="input"] {
     box-shadow: none !important;
     color: __INPUT_TEXT__ !important;
     -webkit-text-fill-color: __INPUT_TEXT__ !important;
-    caret-color: #0ea5e9 !important;
+    caret-color: #10b981 !important;
     font-size: 1.05rem !important;
     font-weight: 500 !important;
 }
@@ -370,8 +370,8 @@ div[data-baseweb="select"] svg {
 div[data-testid="stTextInputRootElement"] button:hover svg,
 div[data-baseweb="input"] button:hover svg,
 div[data-testid="stNumberInputContainer"] button:hover svg {
-    color: #0ea5e9 !important;
-    fill: #0ea5e9 !important;
+    color: #10b981 !important;
+    fill: #10b981 !important;
 }
 
 div[data-testid="stTextInputRootElement"] button span,
@@ -414,7 +414,7 @@ div[data-testid="stDateInputField"] input {
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #fde047, #facc15);
-    color: #0c4a6e !important;
+    color: #064e3b !important;
     font-weight: 800;
     font-size: 1.05rem;
     box-shadow: 0 4px 12px rgba(250, 204, 21, 0.35);
@@ -473,11 +473,11 @@ label:has(> span > input[role="switch"]) > div:not([data-testid]) > div {
     opacity: 1 !important;
 }
 label:has(> span > input[role="switch"]:checked) > div:not([data-testid]) {
-    background: #0ea5e9 !important;
-    border-color: #0284c7 !important;
+    background: #10b981 !important;
+    border-color: #059669 !important;
 }
 label:has(> span > input[role="switch"]:focus-visible) > div:not([data-testid]) {
-    outline: 3px solid rgba(14, 165, 233, 0.45) !important;
+    outline: 3px solid rgba(16, 185, 129, 0.45) !important;
     outline-offset: 2px !important;
 }
 label:has(> span > input[role="switch"]:disabled) {
@@ -494,8 +494,8 @@ html body .st-key-w_ui_theme div[data-testid="stSelectbox"] div:has(> input),
 html body .st-key-w_ui_lang div[data-testid="stSelectbox"] div:has(> input),
 html body .st-key-w_ui_theme div[data-baseweb="select"] > div,
 html body .st-key-w_ui_lang div[data-baseweb="select"] > div {
-    background: #4f8ef7 !important;
-    background-color: #4f8ef7 !important;
+    background: #34d399 !important;
+    background-color: #34d399 !important;
     border: none !important;
     border-radius: 8px !important;
     min-height: 38px !important;
@@ -506,8 +506,8 @@ html body .st-key-w_ui_lang div[data-baseweb="select"] > div {
 }
 html body .st-key-w_ui_theme div[data-testid="stSelectbox"] div:has(> input):hover,
 html body .st-key-w_ui_lang div[data-testid="stSelectbox"] div:has(> input):hover {
-    background: #3b7cf0 !important;
-    background-color: #3b7cf0 !important;
+    background: #10b981 !important;
+    background-color: #10b981 !important;
 }
 html body .st-key-w_ui_theme div[data-testid="stSelectbox"] div:has(> input) *,
 html body .st-key-w_ui_lang div[data-testid="stSelectbox"] div:has(> input) *,
@@ -527,7 +527,7 @@ html body .st-key-w_ui_lang div[data-testid="stSelectbox"] svg {
 /* ---------- 🌐 Nút ngôn ngữ: ô vuông xanh, quả địa cầu trắng + mũi tên ---------- */
 section[data-testid="stSidebar"] .st-key-pop_lang [data-testid="stPopover"] button,
 section[data-testid="stSidebar"] .st-key-pop_lang button {
-    background: #4f8ef7 !important;
+    background: #34d399 !important;
     border: none !important;
     border-radius: 8px !important;
     min-height: 34px !important;
@@ -540,7 +540,7 @@ section[data-testid="stSidebar"] .st-key-pop_lang button {
 }
 section[data-testid="stSidebar"] .st-key-pop_lang [data-testid="stPopover"] button:hover,
 section[data-testid="stSidebar"] .st-key-pop_lang button:hover {
-    background: #3b7cf0 !important;
+    background: #10b981 !important;
 }
 section[data-testid="stSidebar"] .st-key-pop_lang button * {
     color: #ffffff !important;
@@ -590,15 +590,15 @@ section[data-testid="stSidebar"] .st-key-pop_lang button::after {
 }
 .st-key-device_mode_login label[data-testid="stRadioOption"]:hover,
 .st-key-w_device_mode label[data-testid="stRadioOption"]:hover {
-    border-color: #0ea5e9 !important;
+    border-color: #10b981 !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.18) !important;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.18) !important;
 }
 .st-key-device_mode_login label[data-testid="stRadioOption"][data-selected="true"],
 .st-key-w_device_mode label[data-testid="stRadioOption"][data-selected="true"] {
-    border-color: #0ea5e9 !important;
+    border-color: #10b981 !important;
     background: __SELECTED_BG__ !important;
-    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18), 0 6px 16px rgba(14, 165, 233, 0.20) !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18), 0 6px 16px rgba(16, 185, 129, 0.20) !important;
 }
 .st-key-device_mode_login label[data-testid="stRadioOption"][data-selected="true"]::after,
 .st-key-w_device_mode label[data-testid="stRadioOption"][data-selected="true"]::after {
@@ -609,7 +609,7 @@ section[data-testid="stSidebar"] .st-key-pop_lang button::after {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #0ea5e9;
+    background: #10b981;
     color: #ffffff;
     font-size: 14px;
     font-weight: 900;
@@ -632,7 +632,7 @@ section[data-testid="stSidebar"] .st-key-pop_lang button::after {
 }
 .st-key-device_mode_login label[data-testid="stRadioOption"]:has(input:focus-visible),
 .st-key-w_device_mode label[data-testid="stRadioOption"]:has(input:focus-visible) {
-    outline: 3px solid rgba(14, 165, 233, 0.5) !important;
+    outline: 3px solid rgba(16, 185, 129, 0.5) !important;
     outline-offset: 2px !important;
 }
 /* Trong bảng Cài đặt: nhỏ gọn hơn một chút */
@@ -687,7 +687,7 @@ div[data-testid="stPopoverBody"] [data-testid="stWidgetLabel"] p {
 /* ---------- Nút mở / đóng thanh bên (») và («) ---------- */
 [data-testid="stExpandSidebarButton"],
 [data-testid="stSidebarCollapsedControl"] button {
-    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
     border-radius: 12px !important;
     width: 44px !important;
     height: 44px !important;
@@ -703,7 +703,7 @@ div[data-testid="stPopoverBody"] [data-testid="stWidgetLabel"] p {
 }
 [data-testid="stExpandSidebarButton"]:hover,
 [data-testid="stSidebarCollapsedControl"] button:hover {
-    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
 }
 [data-testid="stSidebarCollapseButton"] button {
     background: rgba(255, 255, 255, 0.14) !important;
@@ -746,7 +746,7 @@ div[data-testid="stAlert"] * {
     font-weight: 600 !important;
 }
 div[data-testid="stAlert"]:has([data-testid="stAlertContentInfo"]) {
-    background: __INFO_BG__ !important; border-color: rgba(14, 165, 233, 0.35) !important;
+    background: __INFO_BG__ !important; border-color: rgba(16, 185, 129, 0.35) !important;
 }
 div[data-testid="stAlert"]:has([data-testid="stAlertContentInfo"]) * {
     color: __INFO_TX__ !important; -webkit-text-fill-color: __INFO_TX__ !important;
@@ -799,7 +799,7 @@ div[data-testid="stAlert"]:has([data-testid="stAlertContentError"]) * {
     padding: 8px 12px;
     border-radius: 12px;
     background: __SELECTED_BG__;
-    border-left: 4px solid #0ea5e9;
+    border-left: 4px solid #10b981;
     font-size: 0.9rem;
     color: __INPUT_TEXT__;
 }
@@ -819,7 +819,7 @@ div[data-testid="stAlert"]:has([data-testid="stAlertContentError"]) * {
     animation: scFadeUp 0.2s ease-out both;
 }
 .sc-mine .sc-bubble {
-    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    background: linear-gradient(135deg, #10b981, #059669);
     color: #ffffff;
     border-bottom-right-radius: 6px;
 }
@@ -838,8 +838,8 @@ html body [data-testid="stChatInput"] > div {
     border-radius: 16px !important;
 }
 html body [data-testid="stChatInput"] > div:focus-within {
-    border-color: #0ea5e9 !important;
-    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18) !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18) !important;
 }
 html body [data-testid="stChatInput"] > div div {
     background-color: transparent !important;
@@ -847,7 +847,7 @@ html body [data-testid="stChatInput"] > div div {
 html body [data-testid="stChatInput"] textarea {
     color: __INPUT_TEXT__ !important;
     -webkit-text-fill-color: __INPUT_TEXT__ !important;
-    caret-color: #0ea5e9 !important;
+    caret-color: #10b981 !important;
     font-size: 1.05rem !important;
     font-weight: 500 !important;
 }
@@ -856,7 +856,7 @@ html body [data-testid="stChatInput"] textarea::placeholder {
     -webkit-text-fill-color: __PLACEHOLDER__ !important;
 }
 html body [data-testid="stChatInput"] button:not(.sc-mic) {
-    background-color: #0ea5e9 !important;
+    background-color: #10b981 !important;
     border-radius: 10px !important;
 }
 html body [data-testid="stChatInput"] button:not(.sc-mic) svg {
@@ -921,8 +921,8 @@ html body div[data-testid="stMultiSelect"] div:has(> div[data-testid="stMultiSel
     border-radius: 12px !important;
 }
 html body div[data-testid="stMultiSelect"] div:has(> div[data-testid="stMultiSelectTagsContainer"]):focus-within {
-    border-color: #0ea5e9 !important;
-    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18) !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18) !important;
 }
 html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsContainer"] {
     background-color: transparent !important;
@@ -933,7 +933,7 @@ html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsCon
 html body div[data-testid="stMultiSelect"] div[data-testid="stMultiSelectTagsContainer"] > span > span,
 html body div[data-testid="stMultiSelect"] [data-baseweb="tag"] {
     background-color: __SELECTED_BG__ !important;
-    border: 1px solid #0ea5e9 !important;
+    border: 1px solid #10b981 !important;
     border-radius: 14px !important;
     padding: 4px 4px 4px 10px !important;
 }
@@ -1009,14 +1009,14 @@ section[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"],
 }
 [class*="st-key-sc_slide_"] .sc-slide-head {
     margin: 0 -22px 6px; padding: 22px 28px; display: flex; justify-content: space-between; align-items: flex-end; gap: 12px;
-    background: #0b2545; color: #fff;
+    background: #064e3b; color: #fff;
 }
 [class*="st-key-sc_slide_"] .sc-slide-kicker { color: #f2a541 !important; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.18em; }
 [class*="st-key-sc_slide_"] .sc-slide-title { color: #fff !important; font-family: Cambria, Georgia, serif; font-size: 2.3rem; font-weight: 800; line-height: 1.1; }
-[class*="st-key-sc_slide_"] .sc-slide-dates { color: #8da9c4 !important; font-size: 1rem; margin-top: 2px; }
+[class*="st-key-sc_slide_"] .sc-slide-dates { color: #a7f3d0 !important; font-size: 1rem; margin-top: 2px; }
 [class*="st-key-sc_slide_"] .sc-slide-right { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-[class*="st-key-sc_slide_"] .sc-slide-badge { background: #134074; color: #fff !important; border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
-[class*="st-key-sc_slide_"] .sc-slide-badge.sc-done { background: #f2a541; color: #0b2545 !important; }
+[class*="st-key-sc_slide_"] .sc-slide-badge { background: #065f46; color: #fff !important; border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+[class*="st-key-sc_slide_"] .sc-slide-badge.sc-done { background: #f2a541; color: #064e3b !important; }
 [class*="st-key-sc_slide_"] .sc-slide-empty { background: #eef3f8; color: #64748b !important; border-radius: 14px; padding: 90px 20px; text-align: center; font-size: 1.15rem; }
 [class*="st-key-sc_slide_"] .sc-slide-cap { color: #64748b !important; font-size: 0.8rem; text-align: center; margin: -6px 0 2px; }
 [class*="st-key-sc_slide_"] .sc-slide-foot { display: flex; justify-content: space-between; color: #94a3b8 !important; font-size: 0.75rem; border-top: 1px solid #eef2f7; padding-top: 8px; }
@@ -1143,11 +1143,11 @@ html body .st-key-pop_account button {
     background: linear-gradient(135deg, #fde047, #facc15) !important;
     border: none !important;
 }
-html body .st-key-pop_account button * { color: #0c4a6e !important; -webkit-text-fill-color: #0c4a6e !important; }
+html body .st-key-pop_account button * { color: #064e3b !important; -webkit-text-fill-color: #064e3b !important; }
 html body .st-key-sc_tools button::after { display: none !important; }
 /* Thẻ tài khoản trong bảng bật ra: nền xanh để chữ trắng dễ đọc */
 div[data-testid="stPopoverBody"] .profile-card {
-    background: linear-gradient(135deg, #1d4ed8, #0c4a6e) !important;
+    background: linear-gradient(135deg, #047857, #064e3b) !important;
     margin-top: 0 !important;
 }
 div[data-testid="stPopoverBody"] .profile-card,
@@ -1156,7 +1156,7 @@ div[data-testid="stPopoverBody"] .profile-card * {
     -webkit-text-fill-color: #ffffff !important;
 }
 div[data-testid="stPopoverBody"] .profile-card .pc-avatar,
-div[data-testid="stPopoverBody"] .profile-card .pc-avatar * { color: #0c4a6e !important; -webkit-text-fill-color: #0c4a6e !important; }
+div[data-testid="stPopoverBody"] .profile-card .pc-avatar * { color: #064e3b !important; -webkit-text-fill-color: #064e3b !important; }
 div[data-testid="stPopoverBody"] .profile-card .pc-role,
 div[data-testid="stPopoverBody"] .profile-card .pc-role * { color: #fde047 !important; -webkit-text-fill-color: #fde047 !important; }
 div[data-testid="stPopoverBody"] .profile-card .pc-label { color: rgba(255,255,255,0.75) !important; -webkit-text-fill-color: rgba(255,255,255,0.75) !important; }
@@ -1173,7 +1173,7 @@ div[data-testid="stPopoverBody"] .profile-card .pc-label { color: rgba(255,255,2
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.10);
     animation: scFadeUp 0.35s ease-out both;
 }
-.sc-about-kicker { font-weight: 900; letter-spacing: 0.12em; color: #0ea5e9; font-size: 0.95rem; }
+.sc-about-kicker { font-weight: 900; letter-spacing: 0.12em; color: #10b981; font-size: 0.95rem; }
 .sc-about-hero h1 { font-size: 2rem !important; font-weight: 900 !important; margin: 8px 0 10px 0 !important; color: __INPUT_TEXT__ !important; line-height: 1.25 !important; }
 .sc-about-hero p { font-size: 1.1rem; color: __PLACEHOLDER__; margin: 0 auto; max-width: 680px; }
 .sc-about-grid {
@@ -1222,7 +1222,7 @@ div[data-testid="stPopoverBody"] .profile-card .pc-label { color: rgba(255,255,2
     padding: 12px 16px;
     border-radius: 14px;
     background: __SELECTED_BG__;
-    border: 2px dashed #0ea5e9;
+    border: 2px dashed #10b981;
 }
 .sc-meet-card span { display: block; font-size: 0.85rem; color: __PLACEHOLDER__; font-weight: 600; }
 .sc-meet-card b { display: block; font-size: 1.7rem; letter-spacing: 0.08em; color: __INPUT_TEXT__; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace !important; }
@@ -8446,8 +8446,8 @@ def build_photo_report_pptx(task_row, weeks, photos_by_week, names):
     from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
     from PIL import Image
 
-    NAVY, NAVY2, AMBER = RGBColor(0x0B, 0x25, 0x45), RGBColor(0x13, 0x40, 0x74), RGBColor(0xF2, 0xA5, 0x41)
-    STEEL, INK, MUTED = RGBColor(0x8D, 0xA9, 0xC4), RGBColor(0x0F, 0x1E, 0x33), RGBColor(0x64, 0x74, 0x8B)
+    NAVY, NAVY2, AMBER = RGBColor(0x06, 0x4E, 0x3B), RGBColor(0x06, 0x5F, 0x46), RGBColor(0xF2, 0xA5, 0x41)
+    STEEL, INK, MUTED = RGBColor(0xA7, 0xF3, 0xD0), RGBColor(0x0F, 0x1E, 0x33), RGBColor(0x64, 0x74, 0x8B)
     WHITE, TINT = RGBColor(0xFF, 0xFF, 0xFF), RGBColor(0xEE, 0xF3, 0xF8)
     HEAD, BODY = "Cambria", "Calibri"
 
@@ -9261,9 +9261,9 @@ _modern_tokens = {
     "__PLACEHOLDER__": "#7c8aa5" if is_dark else "#94a3b8",
     "__ICON__": "#cbd5e1" if is_dark else "#475569",
     "__SCHEME__": "dark" if is_dark else "light",
-    "__NAV_BG__": "linear-gradient(90deg, #1e3a8a, #1d4ed8)" if not is_dark else "linear-gradient(90deg, #0b1530, #1e3a8a)",
+    "__NAV_BG__": "linear-gradient(90deg, #064e3b, #047857 55%, #059669)" if not is_dark else "linear-gradient(90deg, #022c22, #064e3b)",
     "__BUBBLE_THEIRS__": "#1e293b" if is_dark else "#eef2f7",
-    "__SELECTED_BG__": "rgba(14,165,233,0.18)" if is_dark else "#e0f2fe",
+    "__SELECTED_BG__": "rgba(16,185,129,0.18)" if is_dark else "#d1fae5",
     "__TOGGLE_OFF__": "#475569" if is_dark else "#94a3b8",
     "__TOGGLE_OFF_BORDER__": "#64748b" if is_dark else "#64748b",
     "__HOVER_TINT__": "rgba(255,255,255,0.04)" if is_dark else "#f8fafc",
@@ -9292,7 +9292,7 @@ st.markdown(f"""
     }}
     
     section[data-testid="stSidebar"] {{
-        background-color: #0284c7 !important;
+        background-color: #047857 !important;
         width: 330px !important;
     }}
     
@@ -11042,7 +11042,7 @@ else:
                     _c_status, _c_count = tr('Trạng Thái'), tr('Số Lượng')
                     progress_dist.columns = [_c_status, _c_count]
                 
-                    chart = alt.Chart(progress_dist).mark_bar(color='#3b82f6').encode(
+                    chart = alt.Chart(progress_dist).mark_bar(color='#10b981').encode(
                         x=alt.X(f'{_c_status}:N', axis=alt.Axis(labelAngle=0, labelFontSize=12, title=_c_status)),
                         y=alt.Y(f'{_c_count}:Q', axis=alt.Axis(title=tr("Số Lượng Công Việc"), tickMinStep=1, format='d')),
                         tooltip=[_c_status, _c_count]
