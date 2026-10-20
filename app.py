@@ -1283,6 +1283,48 @@ section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.35); border-radius: 999px; }
 ::-webkit-scrollbar-track { background: transparent; }
+
+/* 🏠 Trang đầu (chưa đăng nhập): 2 nút menu TO, dễ bấm */
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button,
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button {
+    height: 50px !important; min-height: 50px !important;
+    padding: 0 26px !important; margin: 4px 6px 4px 0 !important;
+    border-radius: 999px !important;
+    border: 2px solid rgba(255, 255, 255, 0.55) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+    transition: transform 0.15s ease, background 0.15s ease !important;
+}
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button *,
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button * {
+    font-size: 1.12rem !important; font-weight: 800 !important; letter-spacing: 0.03em !important;
+    color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;
+}
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button:hover,
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button:hover {
+    transform: translateY(-1px) !important; background: rgba(255, 255, 255, 0.18) !important;
+}
+/* Nút đang chọn: nền trắng, chữ màu chủ đạo */
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button[kind="primary"],
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button[kind="primary"] {
+    background: #ffffff !important; border-color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18) !important;
+}
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button[kind="primary"] *,
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button[kind="primary"] * {
+    color: #047857 !important; -webkit-text-fill-color: #047857 !important;
+}
+html body .st-key-sc_topbar:has(.st-key-btn_land_auth) { padding-top: 8px !important; padding-bottom: 8px !important; }
+html body .st-key-sc_topbar:has(.st-key-btn_land_auth) .sc-brand { font-size: 1.3rem !important; }
+@media (max-width: 899px) {
+    html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button,
+    html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button {
+        height: 44px !important; min-height: 44px !important; padding: 0 14px !important; margin: 3px 4px 3px 0 !important;
+    }
+    html body div.st-key-sc_nav.st-key-sc_nav:has(.st-key-btn_land_auth) { flex-wrap: wrap !important; overflow: visible !important; }
+    html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button *,
+    html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button * { font-size: 0.92rem !important; letter-spacing: 0 !important; }
+}
 '''
 
 # Phần CSS thay đổi theo từng trang (ảnh nền) được tách riêng và rất nhỏ,
