@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://thang193hk-pixel.github.io/ShipControl/sitemap.xml
