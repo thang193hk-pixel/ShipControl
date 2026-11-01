@@ -1780,6 +1780,12 @@ VI_EN = {
     "📊 Chỉ cả slide (giống hệt PowerPoint)": "📊 Whole slides only (exactly like PowerPoint)",
     "📷 Chỉ ảnh trong slide": "📷 Photos inside slides only",
     "Máy chủ chưa có LibreOffice nên chưa chụp được cả slide — đang lấy ảnh trong slide. Thêm file packages.txt để bật.": "The server doesn't have LibreOffice yet, so whole slides can't be captured — taking the photos inside the slides instead. Add the packages.txt file to turn it on.",
+    "Mới nhất": "Latest",
+    "Phiên bản": "Version",
+    "📜 Nhật ký cập nhật": "📜 Update log",
+    "🎉 Emerald Ship vừa được cập nhật!": "🎉 Emerald Ship has been updated!",
+    "Có gì mới:": "What's new:",
+    "👍 Đã hiểu": "👍 Got it",
     "◀ Trước": "◀ Previous",
     "Tiếp ▶": "Next ▶",
     "Tổng số tuần": "Total weeks",
@@ -2181,6 +2187,12 @@ _ZH_LIST = [
     "📊 只要整张幻灯片（和 PowerPoint 一样）",
     "📷 只要幻灯片里的图片",
     "服务器还没有 LibreOffice，无法截取整张幻灯片——改为取出幻灯片里的图片。添加 packages.txt 文件即可开启。",
+    "最新",
+    "版本",
+    "📜 更新日志",
+    "🎉 Emerald Ship 已更新！",
+    "新内容：",
+    "👍 知道了",
 ]
 _JA_LIST = [
     "🚢 EMERALD SHIP - 船舶作業管理",
@@ -2573,6 +2585,12 @@ _JA_LIST = [
     "📊 スライド全体のみ（PowerPoint と同じ見た目）",
     "📷 スライド内の写真のみ",
     "サーバーに LibreOffice がないため、スライド全体を取り込めません。スライド内の写真を取り込みます。packages.txt を追加すると有効になります。",
+    "最新",
+    "バージョン",
+    "📜 更新履歴",
+    "🎉 Emerald Ship がアップデートされました！",
+    "新機能：",
+    "👍 わかりました",
 ]
 _KO_LIST = [
     "🚢 EMERALD SHIP - 선박 작업 관리",
@@ -2965,6 +2983,12 @@ _KO_LIST = [
     "📊 슬라이드 전체만 (PowerPoint와 똑같이)",
     "📷 슬라이드 안의 사진만",
     "서버에 LibreOffice가 없어 슬라이드 전체를 가져올 수 없습니다 — 대신 슬라이드 안의 사진을 가져옵니다. packages.txt 파일을 추가하면 켜집니다.",
+    "최신",
+    "버전",
+    "📜 업데이트 기록",
+    "🎉 Emerald Ship이 업데이트되었습니다!",
+    "새로운 기능:",
+    "👍 확인",
 ]
 
 # 🌏 10 ngôn ngữ thêm (cùng thứ tự với VI_EN)
@@ -3359,6 +3383,12 @@ _TH_LIST = [
     "📊 เฉพาะทั้งสไลด์ (เหมือน PowerPoint)",
     "📷 เฉพาะรูปในสไลด์",
     "เซิร์ฟเวอร์ยังไม่มี LibreOffice จึงจับภาพทั้งสไลด์ไม่ได้ — จะดึงรูปในสไลด์แทน เพิ่มไฟล์ packages.txt เพื่อเปิดใช้",
+    "ล่าสุด",
+    "เวอร์ชัน",
+    "📜 บันทึกการอัปเดต",
+    "🎉 Emerald Ship อัปเดตแล้ว!",
+    "มีอะไรใหม่:",
+    "👍 เข้าใจแล้ว",
 ]
 _ID_LIST = [
     "🚢 EMERALD SHIP - MANAJEMEN PEKERJAAN KAPAL",
@@ -3751,6 +3781,12 @@ _ID_LIST = [
     "📊 Hanya slide utuh (persis seperti PowerPoint)",
     "📷 Hanya foto di dalam slide",
     "Server belum punya LibreOffice, jadi slide utuh belum bisa diambil — foto di dalam slide yang diambil. Tambahkan file packages.txt untuk mengaktifkannya.",
+    "Terbaru",
+    "Versi",
+    "📜 Catatan pembaruan",
+    "🎉 Emerald Ship baru saja diperbarui!",
+    "Yang baru:",
+    "👍 Mengerti",
 ]
 _MS_LIST = [
     "🚢 EMERALD SHIP - PENGURUSAN KERJA KAPAL",
@@ -4143,6 +4179,12 @@ _MS_LIST = [
     "📊 Slaid penuh sahaja (sama seperti PowerPoint)",
     "📷 Foto dalam slaid sahaja",
     "Pelayan belum ada LibreOffice, jadi slaid penuh belum boleh diambil — foto dalam slaid diambil. Tambah fail packages.txt untuk mengaktifkannya.",
+    "Terkini",
+    "Versi",
+    "📜 Log kemas kini",
+    "🎉 Emerald Ship baru dikemas kini!",
+    "Apa yang baharu:",
+    "👍 Faham",
 ]
 _TL_LIST = [
     "🚢 EMERALD SHIP - PAMAMAHALA NG TRABAHO SA BARKO",
@@ -4535,6 +4577,12 @@ _TL_LIST = [
     "📊 Buong slide lang (kapareho ng PowerPoint)",
     "📷 Mga larawan sa loob ng slide lang",
     "Wala pang LibreOffice ang server kaya hindi pa makuha ang buong slide — ang mga larawan sa loob ang kinukuha. Idagdag ang packages.txt para i-on.",
+    "Pinakabago",
+    "Bersyon",
+    "📜 Talaan ng mga update",
+    "🎉 Na-update ang Emerald Ship!",
+    "Ano ang bago:",
+    "👍 Sige",
 ]
 _HI_LIST = [
     "🚢 EMERALD SHIP - जहाज़ कार्य प्रबंधन",
@@ -4927,6 +4975,12 @@ _HI_LIST = [
     "📊 सिर्फ़ पूरी स्लाइड (बिल्कुल PowerPoint जैसी)",
     "📷 सिर्फ़ स्लाइड के अंदर की फ़ोटो",
     "सर्वर पर अभी LibreOffice नहीं है, इसलिए पूरी स्लाइड नहीं ली जा सकती — स्लाइड के अंदर की फ़ोटो ली जा रही हैं। चालू करने के लिए packages.txt फ़ाइल जोड़ें।",
+    "नवीनतम",
+    "संस्करण",
+    "📜 अपडेट लॉग",
+    "🎉 Emerald Ship अपडेट हो गया है!",
+    "नया क्या है:",
+    "👍 समझ गया",
 ]
 _ES_LIST = [
     "🚢 EMERALD SHIP - GESTIÓN DE TRABAJOS NAVALES",
@@ -5319,6 +5373,12 @@ _ES_LIST = [
     "📊 Solo diapositivas completas (igual que en PowerPoint)",
     "📷 Solo las fotos de dentro",
     "El servidor aún no tiene LibreOffice, así que no se pueden capturar las diapositivas completas — se toman las fotos de dentro. Añade el archivo packages.txt para activarlo.",
+    "Más reciente",
+    "Versión",
+    "📜 Registro de cambios",
+    "🎉 ¡Emerald Ship se ha actualizado!",
+    "Novedades:",
+    "👍 Entendido",
 ]
 _FR_LIST = [
     "🚢 EMERALD SHIP - GESTION DES TRAVAUX NAVALS",
@@ -5711,6 +5771,12 @@ _FR_LIST = [
     "📊 Diapositives entières seulement (comme dans PowerPoint)",
     "📷 Photos des diapositives seulement",
     "Le serveur n'a pas encore LibreOffice : impossible de capturer les diapositives entières, les photos à l'intérieur sont récupérées. Ajoutez le fichier packages.txt pour l'activer.",
+    "Dernière",
+    "Version",
+    "📜 Journal des mises à jour",
+    "🎉 Emerald Ship a été mis à jour !",
+    "Nouveautés :",
+    "👍 Compris",
 ]
 _DE_LIST = [
     "🚢 EMERALD SHIP - SCHIFFBAU-ARBEITSVERWALTUNG",
@@ -6103,6 +6169,12 @@ _DE_LIST = [
     "📊 Nur ganze Folien (genau wie in PowerPoint)",
     "📷 Nur Bilder aus den Folien",
     "Der Server hat noch kein LibreOffice, daher können ganze Folien nicht erfasst werden — stattdessen werden die Bilder aus den Folien übernommen. Füge die Datei packages.txt hinzu, um es einzuschalten.",
+    "Neueste",
+    "Version",
+    "📜 Änderungsprotokoll",
+    "🎉 Emerald Ship wurde aktualisiert!",
+    "Was ist neu:",
+    "👍 Verstanden",
 ]
 _RU_LIST = [
     "🚢 EMERALD SHIP - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
@@ -6495,6 +6567,12 @@ _RU_LIST = [
     "📊 Только слайды целиком (как в PowerPoint)",
     "📷 Только фото из слайдов",
     "На сервере пока нет LibreOffice, поэтому слайды целиком не захватываются — берутся фото из слайдов. Добавьте файл packages.txt, чтобы включить.",
+    "Новая",
+    "Версия",
+    "📜 Журнал обновлений",
+    "🎉 Emerald Ship обновлён!",
+    "Что нового:",
+    "👍 Понятно",
 ]
 _PT_LIST = [
     "🚢 EMERALD SHIP - GESTÃO DE TRABALHOS NAVAIS",
@@ -6887,6 +6965,12 @@ _PT_LIST = [
     "📊 Só slides inteiros (igual ao PowerPoint)",
     "📷 Só as fotos de dentro dos slides",
     "O servidor ainda não tem LibreOffice, então não dá para capturar os slides inteiros — as fotos de dentro estão sendo usadas. Adicione o arquivo packages.txt para ativar.",
+    "Mais recente",
+    "Versão",
+    "📜 Registro de atualizações",
+    "🎉 O Emerald Ship foi atualizado!",
+    "Novidades:",
+    "👍 Entendi",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -8264,6 +8348,12 @@ for col_name, col_type in tasks_schema_updates.items():
             pass
 
 
+# 🆕 Phiên bản app mà người dùng đã xem thông báo cập nhật
+try:
+    cursor.execute("ALTER TABLE users ADD COLUMN seen_version TEXT")
+except sqlite3.OperationalError:
+    pass
+
 # 🏭 CỘT WORKSHOP CHO NGƯỜI DÙNG (mỗi tài khoản thuộc 1 workshop / phòng ban)
 try:
     cursor.execute("ALTER TABLE users ADD COLUMN workshop TEXT")
@@ -8284,6 +8374,71 @@ for _sql in ["ALTER TABLE users ADD COLUMN leader_id INTEGER",
         pass
 
 LEADER_ROLES = ["Team Leader", "Foreman"]
+
+# ==========================================
+# 🆕 PHIÊN BẢN & NHẬT KÝ CẬP NHẬT
+#    Mỗi lần cập nhật app: tăng APP_VERSION và thêm 1 mục MỚI LÊN ĐẦU danh sách CHANGELOG.
+#    Ai mở app (máy tính, điện thoại, icon đã cài) sẽ thấy thông báo "vừa cập nhật" 1 lần.
+# ==========================================
+APP_VERSION = "2.6"
+CHANGELOG = [
+    {"v": "2.6", "date": "01/11/2026",
+     "vi": ["📲 Cài Emerald Ship lên điện thoại thành icon như app thật (Android & iPhone)",
+            "📶 Mất mạng (trên tàu, trong hầm…) app chờ và tự mở lại khi có mạng",
+            "⏰ App không còn bị “ngủ” trên máy chủ miễn phí",
+            "🆕 Thông báo khi app cập nhật + Nhật ký cập nhật (trong nút tài khoản)"],
+     "en": ["📲 Install Emerald Ship on your phone as an app icon (Android & iPhone)",
+            "📶 With no signal (train, tunnel…) the app waits and reopens when you're back online",
+            "⏰ The app no longer falls asleep on the free server",
+            "🆕 Update notice + update log (in the account button)"]},
+    {"v": "2.5", "date": "20/10/2026",
+     "vi": ["🚢 Đổi tên thành Emerald Ship, giao diện màu xanh ngọc lục bảo",
+            "🔘 Nút menu ở trang đầu to hơn, dễ bấm",
+            "🔎 Trang giới thiệu để tìm thấy Emerald Ship trên Google + mã QR"],
+     "en": ["🚢 Renamed to Emerald Ship, new emerald-green look",
+            "🔘 Bigger menu buttons on the start page",
+            "🔎 Home page so people can find Emerald Ship on Google + QR code"]},
+    {"v": "2.4", "date": "15/10/2026",
+     "vi": ["📊 Tải file PowerPoint lên báo cáo: lấy cả slide và ảnh trong slide",
+            "🗓️ Slide có chữ “Tuần 3” tự vào Tuần 3"],
+     "en": ["📊 Upload a PowerPoint to the report: whole slides and the photos inside",
+            "🗓️ A slide that says “Week 3” goes into Week 3 automatically"]},
+    {"v": "2.3", "date": "11/10/2026",
+     "vi": ["📸 Báo cáo hình ảnh theo tuần (Tuần 1, Tuần 2… tới khi xong việc)",
+            "🖼️ Tải nhiều ảnh cùng lúc, xem kiểu trình chiếu",
+            "📥 Xuất báo cáo ra PowerPoint (.pptx)"],
+     "en": ["📸 Weekly photo report (Week 1, Week 2… until the work is done)",
+            "🖼️ Upload many photos at once, slideshow view",
+            "📥 Export the report to PowerPoint (.pptx)"]},
+    {"v": "2.2", "date": "11/10/2026",
+     "vi": ["🎨 5 chủ đề mới và 10 ngôn ngữ mới (tổng 15 ngôn ngữ)",
+            "📱 Tự nhận biết máy tính / điện thoại",
+            "➕➖ Nút thêm / xóa nhỏ gọn ngay cạnh danh sách"],
+     "en": ["🎨 5 new themes and 10 new languages (15 in total)",
+            "📱 Detects computer / phone automatically",
+            "➕➖ Small add / remove buttons right next to each list"]},
+    {"v": "2.1", "date": "10/2026",
+     "vi": ["💬 Tin nhắn, nhóm chat và họp online", "🧭 Menu ngang trên cùng như website"],
+     "en": ["💬 Messages, group chats and online meetings", "🧭 Top menu bar like a website"]},
+]
+
+
+def _ver_key(v):
+    try:
+        return tuple(int(x) for x in str(v).split("."))
+    except Exception:
+        return (0,)
+
+
+def changelog_items(entry):
+    return entry.get("vi") if ui_lang() == "vi" else entry.get("en", entry.get("vi"))
+
+
+def render_changelog(entries):
+    for e in entries:
+        latest = " · 🆕 " + tr("Mới nhất") if e["v"] == APP_VERSION else ""
+        st.markdown(f"**{tr('Phiên bản')} {e['v']}** · {e['date']}{latest}")
+        _DG._sc_orig_markdown(st._main, "\n".join(f"- {html.escape(x)}" for x in changelog_items(e)))
 
 # ==========================================
 # 📸 BÁO CÁO HÌNH ẢNH THEO TUẦN
@@ -10205,6 +10360,34 @@ else:
     if is_admin:
         _acct_pop.button("🔑 Đổi Mật Khẩu", key="btn_admin_change_pw", use_container_width=True,
                          on_click=_go_to_page, args=("🔑 Đổi Mật Khẩu",))
+    @st.dialog(tr("📜 Nhật ký cập nhật"), width="large")
+    def _changelog_dialog():
+        render_changelog(CHANGELOG)
+
+    @st.dialog(tr("🎉 Emerald Ship vừa được cập nhật!"), width="large")
+    def _update_notice_dialog(new_entries):
+        st.markdown(f"**{tr('Có gì mới:')}**")
+        render_changelog(new_entries)
+        if st.button("👍 Đã hiểu", key="btn_update_ack", type="primary", use_container_width=True):
+            cursor.execute("UPDATE users SET seen_version = ? WHERE id = ?", (APP_VERSION, user_data['id']))
+            conn.commit()
+            st.session_state["_update_ack"] = APP_VERSION
+            st.rerun()
+
+    _cl_clicked = _acct_pop.button(f"📜 Nhật ký cập nhật · v{APP_VERSION}", key="btn_changelog", use_container_width=True)
+    if _cl_clicked:
+        _changelog_dialog()
+
+    # 🆕 Thông báo cập nhật: hiện 1 lần cho mỗi tài khoản sau mỗi lần app được cập nhật
+    if not _cl_clicked and st.session_state.get("_update_ack") != APP_VERSION:
+        _seen = cursor.execute("SELECT seen_version FROM users WHERE id = ?", (user_data['id'],)).fetchone()
+        _seen = _seen[0] if _seen else None
+        if _ver_key(_seen) < _ver_key(APP_VERSION):
+            _new = [e for e in CHANGELOG if _ver_key(e["v"]) > _ver_key(_seen)] if _seen else CHANGELOG[:1]
+            _update_notice_dialog(_new or CHANGELOG[:1])
+        else:
+            st.session_state["_update_ack"] = APP_VERSION
+
     if _acct_pop.button("🚪 Đăng Xuất", type="secondary", key="btn_logout_bottom", use_container_width=True):
         tok = st.session_state.get("session_token")
         if tok:
