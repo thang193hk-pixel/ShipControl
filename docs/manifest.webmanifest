@@ -1,0 +1,17 @@
+{
+  "name": "Emerald Ship",
+  "short_name": "Emerald Ship",
+  "description": "Quản lý công việc xưởng đóng tàu",
+  "id": "/ShipControl/app/",
+  "start_url": "/ShipControl/app/?source=homescreen",
+  "scope": "/ShipControl/",
+  "display": "standalone",
+  "background_color": "#064e3b",
+  "theme_color": "#047857",
+  "lang": "vi",
+  "icons": [
+    { "src": "/ShipControl/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/ShipControl/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/ShipControl/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

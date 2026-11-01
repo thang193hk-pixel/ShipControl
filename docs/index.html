@@ -11,6 +11,10 @@
 <link rel="canonical" href="https://thang193hk-pixel.github.io/ShipControl/">
 <meta name="theme-color" content="#047857">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/ShipControl/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/ShipControl/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Emerald Ship">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Emerald Ship">
@@ -121,6 +125,7 @@
   .step h3 { margin: 0 0 4px; font-size: 1.05rem; }
   .step p { margin: 0; color: var(--muted); }
 
+  .install .btn { margin-bottom: 22px; }
   .final { text-align: center; background: linear-gradient(160deg, var(--em-900), #032a20); color: #fff; }
   .final p { color: #c9eadb; }
   footer { padding: 26px 0; color: var(--muted); font-size: .9rem; text-align: center; }
@@ -186,7 +191,23 @@
     </div>
   </section>
 
-  <section>
+  <section id="cai-app">
+    <div class="wrap">
+      <h2>📲 Cài Emerald Ship lên điện thoại</h2>
+      <p class="sub">Cài một lần, sau đó chỉ cần bấm icon Emerald Ship trên màn hình điện thoại — ở xưởng, ở nhà hay trên tàu. Miễn phí, không cần cửa hàng ứng dụng.</p>
+      <div class="install">
+        <button class="btn btn-gold" id="installBtn" type="button" hidden>⬇️ Cài app ngay</button>
+        <div class="steps">
+          <div class="step"><h3>Android (Chrome)</h3><p>Bấm nút <b>Cài app ngay</b> ở trên, hoặc bấm <b>⋮</b> → <b>Cài đặt ứng dụng / Thêm vào màn hình chính</b>.</p></div>
+          <div class="step"><h3>iPhone (Safari)</h3><p>Bấm nút <b>Chia sẻ</b> (ô vuông có mũi tên) → <b>Thêm vào MH chính</b> → <b>Thêm</b>.</p></div>
+          <div class="step"><h3>Mở app</h3><p>Bấm icon <b>Emerald Ship</b> màu xanh trên điện thoại. Khi mất mạng, app chờ và tự mở lại khi có mạng.</p></div>
+        </div>
+        <p class="sub" id="installed" hidden>✅ Emerald Ship đã được cài trên máy này.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
     <div class="wrap">
       <h2>Bắt đầu trong 3 bước</h2>
       <p class="sub">Không cần cài đặt — mở bằng trình duyệt trên máy tính hoặc điện thoại.</p>
@@ -210,5 +231,20 @@
 <footer>
   <div class="wrap">© 2026 Emerald Ship · Phần mềm quản lý công việc xưởng đóng tàu · Shipyard work management app</div>
 </footer>
+<script>
+  // 📲 Cài app (PWA): nút "Cài app ngay" hiện trên Android Chrome; iPhone dùng Chia sẻ → Thêm vào MH chính
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/ShipControl/sw.js", { scope: "/ShipControl/" }).catch(function () {});
+  }
+  var deferred = null, btn = document.getElementById("installBtn");
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferred = e; btn.hidden = false; });
+  btn.addEventListener("click", function () {
+    if (!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.finally(function () { deferred = null; btn.hidden = true; });
+  });
+  window.addEventListener("appinstalled", function () { btn.hidden = true; document.getElementById("installed").hidden = false; });
+  if (window.matchMedia("(display-mode: standalone)").matches) { document.getElementById("installed").hidden = false; }
+</script>
 </body>
 </html>

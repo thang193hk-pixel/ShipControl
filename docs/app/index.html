@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emerald Ship – đang mở…</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#047857">
+<link rel="manifest" href="/ShipControl/manifest.webmanifest">
+<link rel="icon" href="/ShipControl/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/ShipControl/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Emerald Ship">
+<style>
+  :root { --em-900: #064e3b; --em-700: #047857; --gold: #f2a541; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: grid; place-items: center; padding: 24px 16px;
+    background: linear-gradient(160deg, var(--em-900), #032a20); color: #fff;
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; text-align: center;
+  }
+  .box { max-width: 420px; width: 100%; }
+  .logo { width: 96px; height: 96px; border-radius: 22px; margin: 0 auto 18px; display: block; }
+  h1 { margin: 0 0 6px; font-size: 1.7rem; letter-spacing: .04em; }
+  p { margin: 6px 0; color: #c9eadb; }
+  .spin { width: 34px; height: 34px; margin: 22px auto; border-radius: 50%;
+          border: 4px solid rgba(255,255,255,.25); border-top-color: var(--gold); animation: r 0.9s linear infinite; }
+  @keyframes r { to { transform: rotate(360deg); } }
+  .btn { display: inline-block; margin-top: 18px; padding: 14px 26px; border-radius: 999px; border: 0;
+         background: var(--gold); color: #3b2503; font-weight: 800; font-size: 1.05rem; text-decoration: none; cursor: pointer; }
+  .tip { margin-top: 22px; font-size: .9rem; color: #9fd6bd; }
+  #offline { display: none; }
+  @media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
+</style>
+</head>
+<body>
+<div class="box">
+  <img class="logo" src="/ShipControl/icon-192.png" alt="Emerald Ship" width="96" height="96">
+  <h1>EMERALD SHIP</h1>
+
+  <div id="online">
+    <div class="spin" aria-hidden="true"></div>
+    <p>Đang mở ứng dụng…</p>
+    <p class="tip">Nếu app đang “ngủ”, bấm nút <b>Yes, get this app back up!</b> rồi chờ khoảng 30 giây.</p>
+    <a class="btn" id="go" href="#">Mở Emerald Ship</a>
+  </div>
+
+  <div id="offline">
+    <p style="font-size:1.15rem;color:#fff"><b>📶 Chưa có mạng</b></p>
+    <p>Điện thoại đang mất kết nối (ví dụ trên tàu hoặc trong hầm). App sẽ tự mở ngay khi có mạng trở lại.</p>
+    <button class="btn" id="retry" type="button">Thử lại</button>
+  </div>
+</div>
+
+<script>
+  // Địa chỉ app. Nếu đổi tên app trên Streamlit, chỉ cần sửa dòng này.
+  var APP_URL = "https://shipcontrol-ten42qbuu3mmnpbffqtfnl.streamlit.app/";
+
+  document.getElementById("go").href = APP_URL;
+  function openApp() {
+    if (navigator.onLine === false) { show(false); return; }
+    show(true);
+    setTimeout(function () { location.replace(APP_URL); }, 400);
+  }
+  function show(isOnline) {
+    document.getElementById("online").style.display = isOnline ? "block" : "none";
+    document.getElementById("offline").style.display = isOnline ? "none" : "block";
+  }
+  document.getElementById("retry").addEventListener("click", openApp);
+  window.addEventListener("online", openApp);
+  window.addEventListener("offline", function () { show(false); });
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/ShipControl/sw.js", { scope: "/ShipControl/" }).catch(function () {});
+  }
+  openApp();
+</script>
+</body>
+</html>
