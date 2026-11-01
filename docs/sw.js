@@ -1,5 +1,5 @@
 // Emerald Ship: giữ trang mở app trong bộ nhớ máy, để icon trên điện thoại luôn mở được (kể cả khi mạng yếu)
-const CACHE = "emerald-ship-v1";
+const CACHE = "emerald-ship-v2";
 const FILES = ["/ShipControl/", "/ShipControl/app/", "/ShipControl/manifest.webmanifest",
                "/ShipControl/icon-192.png", "/ShipControl/icon-512.png", "/ShipControl/favicon.svg"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))); self.skipWaiting(); });

@@ -126,6 +126,12 @@
   .step p { margin: 0; color: var(--muted); }
 
   .install .btn { margin-bottom: 22px; }
+  [hidden] { display: none !important; }
+  .help { background: var(--card); border: 2px solid var(--em-600); border-radius: 16px; padding: 18px 20px; margin: 0 0 22px; }
+  .help h3 { margin: 0 0 8px; font-size: 1.1rem; }
+  .help ol { margin: 6px 0 0; padding-left: 22px; }
+  .help li { margin: 4px 0; }
+  .help .btn { margin: 12px 0 0; }
   .final { text-align: center; background: linear-gradient(160deg, var(--em-900), #032a20); color: #fff; }
   .final p { color: #c9eadb; }
   footer { padding: 26px 0; color: var(--muted); font-size: .9rem; text-align: center; }
@@ -196,7 +202,8 @@
       <h2>📲 Cài Emerald Ship lên điện thoại</h2>
       <p class="sub">Cài một lần, sau đó chỉ cần bấm icon Emerald Ship trên màn hình điện thoại — ở xưởng, ở nhà hay trên tàu. Miễn phí, không cần cửa hàng ứng dụng.</p>
       <div class="install">
-        <button class="btn btn-gold" id="installBtn" type="button" hidden>⬇️ Cài app ngay</button>
+        <button class="btn btn-gold" id="installBtn" type="button">⬇️ Cài app ngay</button>
+        <div class="help" id="installHelp" role="status" aria-live="polite" hidden></div>
         <div class="steps">
           <div class="step"><h3>Android (Chrome)</h3><p>Bấm nút <b>Cài app ngay</b> ở trên, hoặc bấm <b>⋮</b> → <b>Cài đặt ứng dụng / Thêm vào màn hình chính</b>.</p></div>
           <div class="step"><h3>iPhone (Safari)</h3><p>Bấm nút <b>Chia sẻ</b> (ô vuông có mũi tên) → <b>Thêm vào MH chính</b> → <b>Thêm</b>.</p></div>
@@ -236,14 +243,55 @@
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/ShipControl/sw.js", { scope: "/ShipControl/" }).catch(function () {});
   }
-  var deferred = null, btn = document.getElementById("installBtn");
-  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferred = e; btn.hidden = false; });
+  var deferred = null, btn = document.getElementById("installBtn"), help = document.getElementById("installHelp");
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferred = e; });
+  var ua = navigator.userAgent || "";
+  var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  var isAndroid = /Android/i.test(ua);
+  var inApp = /Zalo|FBAN|FBAV|FB_IAB|Messenger|Instagram|Line\/|TikTok|; wv\)/i.test(ua);
+  var standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  var PAGE = "https://thang193hk-pixel.github.io/ShipControl/";
+
+  function showHelp(html) { help.innerHTML = html; help.hidden = false; help.scrollIntoView({ behavior: "smooth", block: "center" }); }
+
   btn.addEventListener("click", function () {
-    if (!deferred) return;
-    deferred.prompt();
-    deferred.userChoice.finally(function () { deferred = null; btn.hidden = true; });
+    if (standalone) {
+      showHelp("<h3>✅ Đã cài rồi</h3><p>Bạn đang mở Emerald Ship từ icon trên điện thoại.</p>");
+      return;
+    }
+    if (deferred) {                       // Android Chrome / Edge / máy tính: hiện hộp cài đặt
+      deferred.prompt();
+      deferred.userChoice.finally(function () { deferred = null; });
+      return;
+    }
+    if (inApp) {                          // Đang mở trong Zalo / Facebook / Messenger… → không cài được ở đây
+      var chrome = isAndroid
+        ? '<a class="btn btn-gold" href="intent://thang193hk-pixel.github.io/ShipControl/#Intent;scheme=https;package=com.android.chrome;end">Mở bằng Chrome</a>'
+        : "";
+      showHelp("<h3>📱 Hãy mở trang này bằng " + (isIOS ? "Safari" : "Chrome") + "</h3>" +
+        "<p>Bạn đang mở trong Zalo / Facebook nên không cài app được ở đây.</p><ol>" +
+        "<li>Bấm nút <b>⋯</b> hoặc <b>⋮</b> ở góc trên bên phải.</li>" +
+        "<li>Chọn <b>Mở bằng trình duyệt</b> / <b>Mở trong " + (isIOS ? "Safari" : "Chrome") + "</b>.</li>" +
+        "<li>Bấm lại nút <b>⬇️ Cài app ngay</b>.</li></ol>" + chrome);
+      return;
+    }
+    if (isIOS) {
+      showHelp("<h3>🍎 Cài trên iPhone (Safari)</h3><ol>" +
+        "<li>Bấm nút <b>Chia sẻ</b> (ô vuông có mũi tên ↑) ở dưới màn hình.</li>" +
+        "<li>Kéo xuống, chọn <b>Thêm vào MH chính</b>.</li>" +
+        "<li>Bấm <b>Thêm</b>. Icon Emerald Ship sẽ xuất hiện trên màn hình.</li></ol>" +
+        "<p>Nếu không thấy nút Chia sẻ: mở trang này bằng <b>Safari</b> (không phải Chrome).</p>");
+      return;
+    }
+    showHelp("<h3>🤖 Cài trên Android (Chrome)</h3><ol>" +
+      "<li>Bấm <b>⋮</b> ở góc trên bên phải Chrome.</li>" +
+      "<li>Chọn <b>Cài đặt ứng dụng</b> hoặc <b>Thêm vào màn hình chính</b>.</li>" +
+      "<li>Bấm <b>Cài đặt</b> / <b>Thêm</b>. Icon Emerald Ship sẽ xuất hiện trên màn hình.</li></ol>" +
+      "<p>Nếu đã cài rồi, icon Emerald Ship đã có trên điện thoại của bạn.</p>");
   });
-  window.addEventListener("appinstalled", function () { btn.hidden = true; document.getElementById("installed").hidden = false; });
+  window.addEventListener("appinstalled", function () {
+    help.hidden = true; document.getElementById("installed").hidden = false;
+  });
   if (window.matchMedia("(display-mode: standalone)").matches) { document.getElementById("installed").hidden = false; }
 </script>
 </body>
