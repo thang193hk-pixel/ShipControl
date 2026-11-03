@@ -2,13 +2,16 @@ name: Keep Emerald Ship awake
 
 on:
   schedule:
-    - cron: "17 */6 * * *"   # every 6 hours
+    - cron: "23 * * * *"     # mỗi giờ (GitHub có thể chạy trễ vài phút)
   workflow_dispatch: {}
+
+permissions:
+  contents: write            # để bước cuối giữ cho lịch chạy không bị GitHub tắt
 
 jobs:
   ping:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -16,3 +19,17 @@ jobs:
           python-version: "3.12"
       - run: pip install playwright && python -m playwright install --with-deps chromium
       - run: python scripts/keep_awake.py
+
+      # GitHub tự tắt lịch chạy nếu kho code không có thay đổi gì trong 60 ngày.
+      # Bước này tạo một commit trống mỗi ~50 ngày để lịch chạy luôn được giữ.
+      - name: Keep the schedule alive
+        if: github.event_name == 'schedule'
+        run: |
+          last=$(git log -1 --format=%ct)
+          now=$(date +%s)
+          if [ $(( (now - last) / 86400 )) -ge 50 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit --allow-empty -m "Keep the keep-awake schedule active"
+            git push
+          fi
