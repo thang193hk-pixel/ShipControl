@@ -25,6 +25,12 @@ html, body, .stApp, .stApp p, .stApp label, .stApp input, .stApp textarea, .stAp
     font-family: 'Twemoji Country Flags', 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;
 }
 
+/* Biểu tượng nét mảnh (Material Symbols): luôn giữ đúng phông biểu tượng ở mọi chủ đề */
+html body .stApp span.sc-ico.sc-ico, html body .stApp span[data-testid="stAlertDynamicIcon"][translate="no"],
+html body .stApp span[data-testid="stIconMaterial"][translate="no"] {
+    font-family: "Material Symbols Rounded" !important; font-weight: 400 !important; letter-spacing: 0 !important;
+    text-transform: none !important; font-feature-settings: "liga" !important; }
+
 /* ---------- 🏳️ Cờ các nước: Windows không tự hiện emoji cờ (chỉ hiện chữ "VN"),
    nên tải một phông chữ nhỏ CHỈ chứa hình cờ (các ký tự khác vẫn dùng phông bình thường) ---------- */
 @font-face {
@@ -133,6 +139,9 @@ div[data-testid="stFormSubmitButton"] > button * {
     font-weight: 700 !important;
     letter-spacing: 0 !important;
 }
+.sc-ico { font-family: "Material Symbols Rounded"; font-weight: 400; font-style: normal; font-size: 1.15em;
+    line-height: 1; vertical-align: -0.18em; margin-right: 0.4em; letter-spacing: 0; text-transform: none;
+    white-space: nowrap; font-feature-settings: "liga"; -webkit-font-feature-settings: "liga"; display: inline-block; }
 .stMain div.stButton > button[kind="primary"],
 .main div.stButton > button[kind="primary"],
 div[data-testid="stFormSubmitButton"] > button,
@@ -7050,14 +7059,26 @@ def _install_translator():
         return _DG._sc_live_tr(x)
 
     def text_first(fn):
+        _name = fn.__name__
+
         @_functools.wraps(fn)
         def wrapper(self, *args, **kwargs):
+            if args and isinstance(args[0], str):
+                _raw = args[0]
+            else:
+                _raw = kwargs.get("label", kwargs.get("body"))
             if _L() != "vi":
                 if args and isinstance(args[0], str):
                     args = (_T(args[0]),) + args[1:]
                 for k in ("label", "body", "placeholder", "help"):
                     if isinstance(kwargs.get(k), str):
                         kwargs[k] = _T(kwargs[k])
+            _hook = getattr(_DG, "_sc_live_icon", None)
+            if _hook is not None and isinstance(_raw, str):
+                try:
+                    args, kwargs = _hook(_name, _raw, args, kwargs)
+                except Exception:
+                    pass
             return fn(self, *args, **kwargs)
         return wrapper
 
@@ -7088,7 +7109,8 @@ def _install_translator():
     def tabs_first(fn):
         @_functools.wraps(fn)
         def wrapper(self, tabs, *args, **kwargs):
-            return fn(self, [_T(t) for t in tabs], *args, **kwargs)
+            _ic = getattr(_DG, "_sc_live_icon_name", lambda t: None)
+            return fn(self, [((f":material/{_ic(t)}: " if _ic(t) else "") + _T(t)) for t in tabs], *args, **kwargs)
         return wrapper
 
     groups = {
@@ -7100,7 +7122,7 @@ def _install_translator():
         data_first: ["dataframe", "table"],
         tabs_first: ["tabs"],
     }
-    _VER = 2
+    _VER = 3
     for wrap, names in groups.items():
         for name in names:
             fn = getattr(_DG, name, None)
@@ -7136,9 +7158,94 @@ def _plain(text):
     return out
 
 
-def _ui_text(x):
-    return _plain(tr(x))
+_H_ICON_RX = _re.compile(r"(<h[34][^>]*>)\s*(" + _EMO + r")[\ufe0f\u200d]*\s+")
 
+
+def _html_icons(t):
+    # <h3>📋 Tiêu đề</h3> → biểu tượng nét mảnh thay cho emoji
+    if not isinstance(t, str) or "<h" not in t:
+        return t
+    def _sub(m):
+        ic = _ICON_MAP.get(m.group(2))
+        return m.group(1) + (f"<span class='sc-ico' aria-hidden='true'>{ic}</span>" if ic else "")
+    return _H_ICON_RX.sub(_sub, t)
+
+
+def _ui_text(x):
+    t = tr(x)
+    if ICON_UI:
+        t = _html_icons(t)
+    return _plain(t)
+
+
+# 🔣 BIỂU TƯỢNG GỌN: thay emoji màu ở đầu nhãn bằng biểu tượng nét mảnh (Material Symbols),
+#    cùng một kiểu cho toàn app. Muốn đổi biểu tượng nào thì sửa bảng dưới đây.
+ICON_UI = True
+_ICON_MAP = {
+    "🧰": "dashboard", "📋": "assignment", "➕": "add", "➖": "remove", "🗑": "delete", "💾": "save",
+    "📊": "bar_chart", "👑": "workspace_premium", "👥": "group", "⚠": "warning", "🔑": "key",
+    "💬": "chat", "✏": "edit", "🚪": "logout", "✨": "add_circle", "🚀": "arrow_forward",
+    "🎉": "check_circle", "⚙": "settings", "✅": "check_circle", "👤": "person", "📜": "history",
+    "📥": "download", "📲": "devices", "🎤": "mic", "🌐": "language", "⛔": "block",
+    "♻": "restore_from_trash", "💥": "delete_forever", "📢": "campaign", "📌": "push_pin",
+    "📸": "photo_camera", "🚢": "directions_boat", "📱": "smartphone", "🎨": "palette",
+    "👷": "engineering", "🖼": "image", "📷": "photo_library", "🏭": "factory", "📝": "how_to_reg",
+    "⏳": "hourglass_top", "🛡": "shield", "🔎": "search", "🔍": "search", "🕒": "schedule",
+    "🔢": "tag", "👉": "arrow_right_alt", "🧹": "cleaning_services", "💻": "computer",
+    "🔒": "lock", "🔓": "lock_open", "🌙": "dark_mode", "🎬": "movie", "📈": "trending_up",
+    "📤": "upload", "💡": "lightbulb", "👍": "thumb_up", "🔐": "login", "🗓": "calendar_month",
+    "📅": "event", "📍": "location_on", "🔔": "notifications", "↩": "undo", "🔄": "refresh",
+    "🎥": "videocam", "📞": "call", "▶": "play_arrow", "◀": "chevron_left", "📁": "folder",
+    "📄": "description", "🏷": "label", "⭐": "star", "❌": "close", "✖": "close", "🔁": "sync",
+    "📦": "inventory_2", "🧾": "receipt_long", "🏗": "construction", "🔧": "build", "🛠": "build",
+    "📆": "event", "🗂": "folder_open", "🆕": "new_releases", "🏠": "home", "ℹ": "info",
+}
+_ALERT_ICON = {"info": "info", "success": "check_circle", "warning": "warning", "error": "error"}
+_ICON_LEAD = _re.compile(r"^(?:\s|#|\*\*|<div class='(?:big-table-title|main-title)'>)*(" + _EMO + r")")
+
+
+def _icon_name(raw):
+    if not ICON_UI or not isinstance(raw, str):
+        return None
+    m = _ICON_LEAD.match(raw)
+    if not m:
+        return None
+    rest = raw[m.end():].lstrip("\ufe0f\u200d")
+    if not rest.strip():                      # nút chỉ có biểu tượng (➕ ✖ 🗑️) → giữ nguyên
+        return None
+    return _ICON_MAP.get(m.group(1))
+
+
+def _apply_icon(name, raw, args, kwargs):
+    if not ICON_UI:
+        return args, kwargs
+    ic = _icon_name(raw)
+    if name in ("button", "form_submit_button", "download_button", "link_button", "popover", "expander"):
+        if ic and not kwargs.get("icon"):
+            kwargs["icon"] = f":material/{ic}:"
+    elif name in _ALERT_ICON:
+        if not kwargs.get("icon"):
+            kwargs["icon"] = f":material/{ic or _ALERT_ICON[name]}:"
+    elif name in ("markdown", "subheader", "header", "title") and ic:
+        txt = args[0] if args else kwargs.get("body")
+        if isinstance(txt, str):
+            if txt.lstrip().startswith("<div class='big-table-title'>") or txt.lstrip().startswith("<div class='main-title'>"):
+                new = _re.sub(r"(<div class='(?:big-table-title|main-title)'>)",
+                              rf"\1<span class='sc-ico' aria-hidden='true'>{ic}</span>", txt, count=1)
+            elif "<" in txt:
+                return args, kwargs
+            else:
+                mh = _re.match(r"^(\s*#{1,6}\s+|\s*\*\*)?", txt)
+                new = txt[:mh.end()] + f":material/{ic}: " + txt[mh.end():]
+            if args:
+                args = (new,) + args[1:]
+            else:
+                kwargs["body"] = new
+    return args, kwargs
+
+
+_DG._sc_live_icon = _apply_icon
+_DG._sc_live_icon_name = _icon_name
 
 # Bộ dịch MỚI NHẤT cho lần chạy này (các hàm bọc luôn gọi qua đây)
 _DG._sc_live_tr = _ui_text
@@ -8405,8 +8512,11 @@ LEADER_ROLES = ["Team Leader", "Foreman"]
 #    Mỗi lần cập nhật app: tăng APP_VERSION và thêm 1 mục MỚI LÊN ĐẦU danh sách CHANGELOG.
 #    Ai mở app (máy tính, điện thoại, icon đã cài) sẽ thấy thông báo "vừa cập nhật" 1 lần.
 # ==========================================
-APP_VERSION = "2.8"
+APP_VERSION = "2.9"
 CHANGELOG = [
+    {"v": "2.9", "date": "03/11/2026",
+     "vi": ["Biểu tượng nét mảnh, cùng một kiểu trên menu, nút, tiêu đề và thông báo"],
+     "en": ["Clean line icons in one style on the menu, buttons, titles and messages"]},
     {"v": "2.8", "date": "03/11/2026",
      "vi": ["Giao diện gọn gàng hơn: bớt biểu tượng trang trí, màu đặc, không hiệu ứng nhấp nháy",
             "Menu và nút viết chữ thường, dễ đọc hơn"],
@@ -9965,6 +10075,7 @@ if ui_theme == "modern":
         "rule": "#2A3833" if is_dark else "#D5DBD8",
         "field": "#111A17" if is_dark else "#FFFFFF",
         "primer": "#D4952B",
+        "icon": "#34D399" if is_dark else "#0E4D3A",
         "hover": "#1D2A25" if is_dark else "#F6F8F7",
     }
     _theme_css = _theme_css + """
@@ -10060,6 +10171,11 @@ html body .stApp div[data-testid] > button, html body .stApp div[data-testid] > 
 html body .stApp div[data-testid="stLinkButton"] a, html body .stApp div[data-testid="stLinkButton"] a:hover {
     box-shadow: none !important; transform: none !important; }
 html body .stApp div[data-testid="stLinkButton"] a[kind="primary"] { background: __hull !important; border-radius: 6px !important; }
+html body .sc-ico { font-family: "Material Symbols Rounded" !important; font-weight: 400 !important; font-style: normal;
+    font-size: 1.15em; line-height: 1; vertical-align: -0.18em; margin-right: 0.4em; color: __icon;
+    -webkit-font-feature-settings: "liga"; font-feature-settings: "liga"; letter-spacing: 0 !important;
+    text-transform: none !important; -webkit-text-fill-color: currentColor; }
+html body [data-testid="stIconMaterial"] { color: inherit; }
 html body .profile-card { box-shadow: none !important; border-radius: 10px !important; background: __hull !important; }
 """
     for _k, _v in sorted(_H.items(), key=lambda kv: -len(kv[0])):
@@ -10167,7 +10283,7 @@ st.session_state["w_ui_theme"] = st.session_state["ui_theme"]
 
 with _settings_slot:
     if True:
-        with st.popover("⚙️", key="pop_settings", help="Cài đặt"):
+        with st.popover("", icon=":material/settings:", key="pop_settings", help="Cài đặt"):
             # 🎨 Chủ đề: nút bấm xổ xuống (giống nút Ngôn ngữ)
             st.selectbox("🎨 Chủ đề", THEME_OPTIONS, key="w_ui_theme", on_change=_on_theme_change,
                          format_func=lambda t: THEME_LABELS[t])
@@ -10244,7 +10360,7 @@ if not st.session_state["logged_in"]:
         with _h1:
             st.markdown("""
 <div class='sc-about-hero sc-about-hero-left'>
-  <div class='sc-about-kicker'>Emerald Ship</div>
+  <div class='sc-about-kicker'><span class='sc-ico' aria-hidden='true'>directions_boat</span>Emerald Ship</div>
   <h1>Phần mềm quản lý công việc cho xưởng đóng tàu</h1>
   <p>Emerald Ship giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và báo cáo hình ảnh theo tuần ở cùng một nơi — trên máy tính lẫn điện thoại.</p>
 </div>
@@ -10448,6 +10564,7 @@ else:
                 _label,
                 type="primary" if is_selected else "secondary",
                 key=f"btn_menu_{item}",
+                icon=(f":material/{_icon_name(item)}:" if _icon_name(item) else None),
                 on_click=_go_to_page,
                 args=(item,),
             )
