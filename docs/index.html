@@ -65,24 +65,22 @@
 
   header.top {
     position: sticky; top: 0; z-index: 10;
-    background: linear-gradient(90deg, var(--em-900), var(--em-700) 55%, var(--em-600));
+    background: var(--em-900);
     color: #fff;
   }
   header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 64px; }
-  .brand { font-weight: 900; letter-spacing: .06em; font-size: 1.1rem; text-decoration: none; white-space: nowrap; }
+  .brand { font-weight: 800; letter-spacing: 0; font-size: 1.15rem; text-decoration: none; white-space: nowrap; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 800;
-    border-radius: 999px; padding: 12px 22px; transition: transform .15s ease, box-shadow .15s ease;
+    border-radius: 6px; padding: 12px 22px; transition: background-color .12s ease;
   }
-  .btn:hover { transform: translateY(-1px); }
-  .btn-light { background: #fff; color: var(--em-700); box-shadow: 0 6px 18px rgba(0,0,0,.18); }
-  .btn-gold { background: var(--gold); color: #3b2503; box-shadow: 0 10px 26px rgba(242,165,65,.35); font-size: 1.1rem; padding: 16px 30px; }
+  .btn-light { background: #fff; color: var(--em-900); }
+  .btn-gold { background: var(--gold); color: #2b1a02; font-size: 1.05rem; padding: 14px 26px; }
+  .btn-gold:hover { background: #e39a2e; }
   .btn-ghost { border: 2px solid rgba(255,255,255,.6); color: #fff; }
 
   .hero {
-    background:
-      radial-gradient(1200px 500px at 85% -10%, rgba(16,185,129,.35), transparent 60%),
-      linear-gradient(160deg, var(--em-900) 0%, #053b2d 60%, #032a20 100%);
+    background: var(--em-900);
     color: #fff; padding: 72px 0 84px;
   }
   .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; }
@@ -91,17 +89,16 @@
   .lead { font-size: 1.15rem; color: #c9eadb; margin: 0 0 28px; max-width: 34em; }
   .cta { display: flex; flex-wrap: wrap; gap: 12px; }
   .hero img {
-    width: 100%; height: auto; border-radius: 16px; display: block;
-    box-shadow: 0 30px 60px rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.12);
+    width: 100%; height: auto; border-radius: 8px; display: block;
+    border: 1px solid rgba(255,255,255,.18);
   }
 
   section { padding: 72px 0; }
   h2 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); margin: 0 0 10px; }
   .sub { color: var(--muted); margin: 0 0 36px; max-width: 46em; }
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .card {
-    background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px;
-  }
+  .grid { gap: 0 36px !important; }
+  .card { padding: 18px 0 20px; border-top: 1px solid var(--line); }
   .card .ico {
     width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
     background: var(--em-100); font-size: 1.35rem; margin-bottom: 12px;
@@ -110,13 +107,13 @@
   .card p { margin: 0; color: var(--muted); font-size: .97rem; }
 
   .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-  figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
   figure img { width: 100%; height: auto; display: block; }
   figcaption { padding: 12px 16px; color: var(--muted); font-size: .95rem; }
 
   .band { background: var(--em-100); }
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: s; }
-  .step { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 20px; }
   .step::before {
     counter-increment: s; content: counter(s);
     display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%;
@@ -127,12 +124,12 @@
 
   .install .btn { margin-bottom: 22px; }
   [hidden] { display: none !important; }
-  .help { background: var(--card); border: 2px solid var(--em-600); border-radius: 16px; padding: 18px 20px; margin: 0 0 22px; }
+  .help { background: var(--card); border: 1px solid var(--em-600); border-radius: 8px; padding: 18px 20px; margin: 0 0 22px; }
   .help h3 { margin: 0 0 8px; font-size: 1.1rem; }
   .help ol { margin: 6px 0 0; padding-left: 22px; }
   .help li { margin: 4px 0; }
   .help .btn { margin: 12px 0 0; }
-  .final { text-align: center; background: linear-gradient(160deg, var(--em-900), #032a20); color: #fff; }
+  .final { text-align: center; background: var(--em-900); color: #fff; }
   .final p { color: #c9eadb; }
   footer { padding: 26px 0; color: var(--muted); font-size: .9rem; text-align: center; }
 
@@ -149,8 +146,8 @@
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#">🚢 EMERALD SHIP</a>
-    <a class="btn btn-light" href="https://shipcontrol-ten42qbuu3mmnpbffqtfnl.streamlit.app/">Mở ứng dụng →</a>
+    <a class="brand" href="#">Emerald Ship</a>
+    <a class="btn btn-light" href="https://shipcontrol-ten42qbuu3mmnpbffqtfnl.streamlit.app/">Mở ứng dụng</a>
   </div>
 </header>
 
@@ -158,13 +155,12 @@
   <section class="hero">
     <div class="wrap">
       <div>
-        <div class="kicker">EMERALD SHIP</div>
         <h1>Phần mềm quản lý công việc cho xưởng đóng tàu</h1>
         <p class="lead">Emerald Ship giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ, và báo cáo hình ảnh theo tuần ở cùng một nơi — trên máy tính lẫn điện thoại.
           <br><span lang="en">Shipyard work management: tasks, progress and weekly photo reports in one app.</span></p>
         <div class="cta">
-          <a class="btn btn-gold" href="https://shipcontrol-ten42qbuu3mmnpbffqtfnl.streamlit.app/">🚀 Mở Emerald Ship</a>
-          <a class="btn btn-ghost" href="#tinh-nang">Xem tính năng</a>
+          <a class="btn btn-gold" href="https://shipcontrol-ten42qbuu3mmnpbffqtfnl.streamlit.app/">Mở Emerald Ship</a>
+          <a class="btn btn-ghost" href="#cai-app">Cài lên điện thoại</a>
         </div>
       </div>
       <img src="img/weekly-report.jpg" alt="Emerald Ship – báo cáo hình ảnh theo tuần" width="1200" height="640">
@@ -176,11 +172,11 @@
       <h2>Tính năng chính</h2>
       <p class="sub">Mọi thứ đội xưởng tàu cần để làm việc mỗi ngày, gọn trong một ứng dụng web.</p>
       <div class="grid">
-        <article class="card"><div class="ico">📋</div><h3>Quản lý công việc</h3><p>Tạo công việc theo Block, Deck, Frame và WS Cost Code, theo dõi tiến độ từng phần trăm.</p></article>
-        <article class="card"><div class="ico">👥</div><h3>Team &amp; phân quyền</h3><p>Admin, WOS Manager, Foreman, Team Leader và Worker — mỗi người thấy đúng phần việc của mình.</p></article>
-        <article class="card"><div class="ico">📸</div><h3>Báo cáo hình ảnh theo tuần</h3><p>Tuần 1, Tuần 2… cho tới khi xong việc. Tải nhiều ảnh cùng lúc hoặc lấy ảnh từ file PowerPoint.</p></article>
-        <article class="card"><div class="ico">📊</div><h3>Xuất PowerPoint</h3><p>Một nút bấm tạo file .pptx: trang bìa, mỗi tuần một slide ảnh và trang tổng kết.</p></article>
-        <article class="card"><div class="ico">🌐</div><h3>15 ngôn ngữ &amp; giọng nói</h3><p>Tiếng Việt, English, 中文, 日本語, 한국어, ไทย, Indonesia… và nói thay vì gõ trên điện thoại.</p></article>
+        <article class="card"><h3>Quản lý công việc</h3><p>Tạo công việc theo Block, Deck, Frame và WS Cost Code, theo dõi tiến độ từng phần trăm.</p></article>
+        <article class="card"><h3>Team &amp; phân quyền</h3><p>Admin, WOS Manager, Foreman, Team Leader và Worker — mỗi người thấy đúng phần việc của mình.</p></article>
+        <article class="card"><h3>Báo cáo hình ảnh theo tuần</h3><p>Tuần 1, Tuần 2… cho tới khi xong việc. Tải nhiều ảnh cùng lúc hoặc lấy ảnh từ file PowerPoint.</p></article>
+        <article class="card"><h3>Xuất PowerPoint</h3><p>Một nút bấm tạo file .pptx: trang bìa, mỗi tuần một slide ảnh và trang tổng kết.</p></article>
+        <article class="card"><h3>15 ngôn ngữ &amp; giọng nói</h3><p>Tiếng Việt, English, 中文, 日本語, 한국어, ไทย, Indonesia… và nói thay vì gõ trên điện thoại.</p></article>
       </div>
     </div>
   </section>
@@ -198,17 +194,17 @@
 
   <section id="cai-app">
     <div class="wrap">
-      <h2>📲 Cài Emerald Ship lên điện thoại</h2>
+      <h2>Cài Emerald Ship lên điện thoại</h2>
       <p class="sub">Cài một lần, sau đó chỉ cần bấm icon Emerald Ship trên màn hình điện thoại — ở xưởng, ở nhà hay trên tàu. Miễn phí, không cần cửa hàng ứng dụng.</p>
       <div class="install">
-        <button class="btn btn-gold" id="installBtn" type="button">⬇️ Cài app ngay</button>
+        <button class="btn btn-gold" id="installBtn" type="button">Cài app ngay</button>
         <div class="help" id="installHelp" role="status" aria-live="polite" hidden></div>
         <div class="steps">
           <div class="step"><h3>Android (Chrome)</h3><p>Bấm nút <b>Cài app ngay</b> ở trên, hoặc bấm <b>⋮</b> → <b>Cài đặt ứng dụng / Thêm vào màn hình chính</b>.</p></div>
           <div class="step"><h3>iPhone (Safari)</h3><p>Bấm nút <b>Chia sẻ</b> (ô vuông có mũi tên) → <b>Thêm vào MH chính</b> → <b>Thêm</b>.</p></div>
           <div class="step"><h3>Mở app</h3><p>Bấm icon <b>Emerald Ship</b> màu xanh trên điện thoại. Khi mất mạng, app chờ và tự mở lại khi có mạng.</p></div>
         </div>
-        <p class="sub" id="installed" hidden>✅ Emerald Ship đã được cài trên máy này.</p>
+        <p class="sub" id="installed" hidden>Emerald Ship đã được cài trên máy này.</p>
       </div>
     </div>
   </section>
@@ -229,7 +225,7 @@
     <div class="wrap">
       <h2>Emerald Ship — từ xưởng đến biển</h2>
       <p>Quản lý công việc đóng tàu đơn giản, rõ ràng, mọi lúc mọi nơi.</p>
-      <a class="btn btn-gold" href="https://shipcontrol-ten42qbuu3mmnpbffqtfnl.streamlit.app/">🚀 Mở Emerald Ship</a>
+      <a class="btn btn-gold" href="https://shipcontrol-ten42qbuu3mmnpbffqtfnl.streamlit.app/">Mở Emerald Ship</a>
     </div>
   </section>
 </main>
@@ -255,7 +251,7 @@
 
   btn.addEventListener("click", function () {
     if (standalone) {
-      showHelp("<h3>✅ Đã cài rồi</h3><p>Bạn đang mở Emerald Ship từ icon trên điện thoại.</p>");
+      showHelp("<h3>Đã cài rồi</h3><p>Bạn đang mở Emerald Ship từ icon trên điện thoại.</p>");
       return;
     }
     if (deferred) {                       // Android Chrome / Edge / máy tính: hiện hộp cài đặt
@@ -267,22 +263,22 @@
       var chrome = isAndroid
         ? '<a class="btn btn-gold" href="intent://thang193hk-pixel.github.io/ShipControl/#Intent;scheme=https;package=com.android.chrome;end">Mở bằng Chrome</a>'
         : "";
-      showHelp("<h3>📱 Hãy mở trang này bằng " + (isIOS ? "Safari" : "Chrome") + "</h3>" +
+      showHelp("<h3>Hãy mở trang này bằng " + (isIOS ? "Safari" : "Chrome") + "</h3>" +
         "<p>Bạn đang mở trong Zalo / Facebook nên không cài app được ở đây.</p><ol>" +
         "<li>Bấm nút <b>⋯</b> hoặc <b>⋮</b> ở góc trên bên phải.</li>" +
         "<li>Chọn <b>Mở bằng trình duyệt</b> / <b>Mở trong " + (isIOS ? "Safari" : "Chrome") + "</b>.</li>" +
-        "<li>Bấm lại nút <b>⬇️ Cài app ngay</b>.</li></ol>" + chrome);
+        "<li>Bấm lại nút <b>Cài app ngay</b>.</li></ol>" + chrome);
       return;
     }
     if (isIOS) {
-      showHelp("<h3>🍎 Cài trên iPhone (Safari)</h3><ol>" +
+      showHelp("<h3>Cài trên iPhone (Safari)</h3><ol>" +
         "<li>Bấm nút <b>Chia sẻ</b> (ô vuông có mũi tên ↑) ở dưới màn hình.</li>" +
         "<li>Kéo xuống, chọn <b>Thêm vào MH chính</b>.</li>" +
         "<li>Bấm <b>Thêm</b>. Icon Emerald Ship sẽ xuất hiện trên màn hình.</li></ol>" +
         "<p>Nếu không thấy nút Chia sẻ: mở trang này bằng <b>Safari</b> (không phải Chrome).</p>");
       return;
     }
-    showHelp("<h3>🤖 Cài trên Android (Chrome)</h3><ol>" +
+    showHelp("<h3>Cài trên Android (Chrome)</h3><ol>" +
       "<li>Bấm <b>⋮</b> ở góc trên bên phải Chrome.</li>" +
       "<li>Chọn <b>Cài đặt ứng dụng</b> hoặc <b>Thêm vào màn hình chính</b>.</li>" +
       "<li>Bấm <b>Cài đặt</b> / <b>Thêm</b>. Icon Emerald Ship sẽ xuất hiện trên màn hình.</li></ol>" +

@@ -1724,7 +1724,7 @@ VI_EN = {
     "About us": "About us",
     "Đăng nhập / Đăng ký": "Sign in / Register",
     "Phần mềm quản lý công việc cho xưởng đóng tàu": "Work management software for shipyards",
-    "Emerald Ship giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.": "Emerald Ship helps shipyard teams assign work, track progress and stay in touch in one place — on computers and phones.",
+    "Emerald Ship giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và báo cáo hình ảnh theo tuần ở cùng một nơi — trên máy tính lẫn điện thoại.": "Emerald Ship helps shipyard teams assign work, track progress and send weekly photo reports in one place — on computers and phones.",
     "📋 Quản lý công việc": "📋 Task management",
     "Tạo công việc theo Block, Deck, Frame và theo dõi tiến độ từng phần trăm.": "Create tasks by Block, Deck and Frame and track progress percent by percent.",
     "👥 Team & phân quyền": "👥 Teams & roles",
@@ -7115,9 +7115,34 @@ def _install_translator():
             setattr(_DG, name, wrapped)
 
 
+# ✍️ GIAO DIỆN "TỰ NHIÊN": bỏ biểu tượng cảm xúc trang trí ở đầu nhãn và viết thường các nút IN HOA.
+#    (Nút chỉ có biểu tượng như ➕ ➖ ✖ 🗑️ vẫn giữ nguyên; cờ ngôn ngữ 🇻🇳 cũng giữ.)
+PLAIN_UI = True
+_EMO = (r"[\U0001F300-\U0001FAFF\U0001F000-\U0001F1E5☀-➿⬀-⯿⌀-⏿"
+        r"←-⇿™ℹ〰〽㊗㊙▪-◾⤴⤵]")
+_PLAIN_RX = _re.compile(r"(?:^|(?<=>)|(?<=\n)|(?<=\*\*)|(?<=# )|(?<=- )|(?<=\| )|(?<=· ))[ \t]*"
+                        + _EMO + r"(?:[️‍\U0001F3FB-\U0001F3FF]|" + _EMO + r")*[ \t]+(?=\S)")
+
+
+def _plain(text):
+    if not PLAIN_UI or not isinstance(text, str) or not text or text.lstrip().startswith(("<style", "<script")):
+        return text
+    out = _PLAIN_RX.sub("", text)
+    core = out.strip()
+    # NÚT IN HOA → Viết hoa chữ đầu (giữ nguyên mã như WOS_07, T-170)
+    if (len(core) > 5 and " " in core and not any(ch.islower() for ch in core)
+            and not any(ch.isdigit() or ch == "_" for ch in core) and "<" not in core):
+        out = out.replace(core, core[:1] + core[1:].lower(), 1)
+    return out
+
+
+def _ui_text(x):
+    return _plain(tr(x))
+
+
 # Bộ dịch MỚI NHẤT cho lần chạy này (các hàm bọc luôn gọi qua đây)
-_DG._sc_live_tr = tr
-_DG._sc_live_lang = ui_lang
+_DG._sc_live_tr = _ui_text
+_DG._sc_live_lang = lambda: "ui"          # luôn chạy qua bộ lọc (kể cả Tiếng Việt) để làm gọn nhãn
 _DG._sc_live_trdata = _tr_data
 
 
@@ -8380,8 +8405,13 @@ LEADER_ROLES = ["Team Leader", "Foreman"]
 #    Mỗi lần cập nhật app: tăng APP_VERSION và thêm 1 mục MỚI LÊN ĐẦU danh sách CHANGELOG.
 #    Ai mở app (máy tính, điện thoại, icon đã cài) sẽ thấy thông báo "vừa cập nhật" 1 lần.
 # ==========================================
-APP_VERSION = "2.7"
+APP_VERSION = "2.8"
 CHANGELOG = [
+    {"v": "2.8", "date": "03/11/2026",
+     "vi": ["Giao diện gọn gàng hơn: bớt biểu tượng trang trí, màu đặc, không hiệu ứng nhấp nháy",
+            "Menu và nút viết chữ thường, dễ đọc hơn"],
+     "en": ["Cleaner look: fewer decorative icons, solid colours, no flashy effects",
+            "Menus and buttons in normal case, easier to read"]},
     {"v": "2.7", "date": "03/11/2026",
      "vi": ["🧹 Gỡ bỏ mục Tin nhắn & Họp online để app gọn và nhanh hơn"],
      "en": ["🧹 Removed Messages & Online meetings to keep the app simpler and faster"]},
@@ -8968,7 +8998,7 @@ def render_weekly_photo_report(user_data, current_role):
     with st.container(key=f"sc_slide_n{_ncol}_{sel}"):
         _DG._sc_orig_markdown(st._main, f"""
 <div class='sc-slide-head'>
-  <div><div class='sc-slide-kicker'>EMERALD SHIP · {html.escape(str(task[1]))}</div>
+  <div><div class='sc-slide-kicker'>Emerald Ship · {html.escape(str(task[1]))}</div>
        <div class='sc-slide-title'>{html.escape(tr('Tuần'))} {w}</div>
        <div class='sc-slide-dates'>{d1:%d/%m/%Y} – {d2:%d/%m/%Y}</div></div>
   <div class='sc-slide-right'>{badge}<span class='sc-slide-badge sc-count'>📷 {len(items)}</span></div>
@@ -9376,7 +9406,7 @@ if "trash_sub_tab" not in st.session_state:
 #    [🚢 EMERALD SHIP] [CÁC TRANG ...........................] [⚙️] [👤 tài khoản]
 _topbar = st.container(key="sc_topbar", horizontal=True, vertical_alignment="center", gap="small", wrap=False)
 with _topbar:
-    st.markdown("<div class='sc-brand'>🚢 EMERALD SHIP</div>", unsafe_allow_html=True)
+    st.markdown("<div class='sc-brand'>Emerald Ship</div>", unsafe_allow_html=True)
     _nav_slot = st.container(key="sc_nav", horizontal=True, vertical_alignment="center", gap=None, width="stretch", wrap=False)
     _settings_slot = st.container(key="sc_tools", horizontal=True, vertical_alignment="center", gap="small", width="content", wrap=False)
 # Chỗ chứa các đoạn mã chạy ngầm (micro, menu tin nhắn): không chiếm chỗ trên trang
@@ -9925,6 +9955,116 @@ st.markdown(f"<style>{_bg_css}</style>", unsafe_allow_html=True)
 
 # 🎨 Lớp CSS của chủ đề đang chọn (Modern thì không cần thêm gì)
 _theme_css = build_theme_css(ui_theme, is_dark, page_bg_url)
+if ui_theme == "modern":
+    _H = {   # bảng màu "xưởng tàu": xanh vỏ tàu, thép, tấm tôn, sơn lót vàng
+        "hull": "#0E4D3A", "hull2": "#0B3D2E",
+        "ink": "#E6ECEA" if is_dark else "#1F2A2E",
+        "muted": "#9AA9A4" if is_dark else "#5B6B66",
+        "plate": "#0F1714" if is_dark else "#F1F3F2",
+        "panel": "#16211D" if is_dark else "#FFFFFF",
+        "rule": "#2A3833" if is_dark else "#D5DBD8",
+        "field": "#111A17" if is_dark else "#FFFFFF",
+        "primer": "#D4952B",
+        "hover": "#1D2A25" if is_dark else "#F6F8F7",
+    }
+    _theme_css = _theme_css + """
+/* ===== Emerald Ship: giao diện gọn, không hiệu ứng trang trí ===== */
+html body .stApp { background: __plate !important; }
+html body .stApp::before { display: none !important; }
+html body .stApp, html body .stApp p, html body .stApp label, html body .stApp li { color: __ink; }
+html body [data-testid="stCaptionContainer"], html body .stCaption, html body small { color: __muted !important; }
+
+/* Không chuyển động tự chạy: bỏ vệt sáng trên nút, bỏ hiệu ứng lướt trang */
+html body div.stButton > button::after, html body div.stDownloadButton > button::after,
+html body div[data-testid="stFormSubmitButton"] > button::after,
+html body div.stButton > button::before { display: none !important; animation: none !important; }
+html body div[class*="st-key-pgR_"], html body div[class*="st-key-pgL_"],
+html body div[data-testid="stAlert"] { animation: none !important; }
+
+/* Tiêu đề trang: chữ đậm vừa, không gạch màu */
+html body .big-table-title { font-size: 1.5rem !important; font-weight: 700 !important; color: __ink !important;
+    letter-spacing: -0.01em !important; margin: 6px 0 14px !important; }
+html body .main-title { color: __ink !important; }
+html body .main-title::after { display: none !important; }
+html body .stApp h3 { font-size: 1.2rem !important; font-weight: 700 !important; }
+html body .stApp h4 { font-size: 1.02rem !important; font-weight: 600 !important; }
+
+/* Thanh trên cùng: màu vỏ tàu, mục đang chọn gạch chân vàng */
+html body .st-key-sc_topbar { background: __hull !important; border-radius: 0 0 8px 8px !important;
+    box-shadow: none !important; }
+html body .sc-brand { letter-spacing: 0.02em !important; font-weight: 800 !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button,
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind] {
+    background: transparent !important; border-radius: 0 !important; box-shadow: none !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button * {
+    text-transform: none !important; font-weight: 500 !important; font-size: 0.95rem !important;
+    letter-spacing: 0 !important; color: rgba(255,255,255,0.86) !important; -webkit-text-fill-color: rgba(255,255,255,0.86) !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] {
+    box-shadow: inset 0 -3px 0 __primer !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button[kind="primary"] * {
+    font-weight: 700 !important; color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.stButton > button:hover * { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+
+/* Nút: màu đặc, góc vuông nhẹ, không bóng, không nhún */
+html body div.stButton > button[kind], html body div.stButton > button[kind]:hover, html body div.stButton > button[kind]:active,
+html body div.stDownloadButton > button, html body div.stDownloadButton > button:hover,
+html body div[data-testid="stFormSubmitButton"] > button:hover,
+html body div.stButton > button, html body div.stDownloadButton > button,
+html body div[data-testid="stFormSubmitButton"] > button {
+    border-radius: 6px !important; box-shadow: none !important; transform: none !important;
+    transition: background-color .12s ease, border-color .12s ease !important; }
+html body .stMain div.stButton > button[kind="primary"], html body div[data-testid="stFormSubmitButton"] > button,
+html body div.stDownloadButton > button {
+    background: __hull !important; border: 1px solid __hull !important; }
+html body .stMain div.stButton > button[kind="primary"]:hover:not(:disabled),
+html body div[data-testid="stFormSubmitButton"] > button:hover:not(:disabled),
+html body div.stDownloadButton > button:hover:not(:disabled) { background: __hull2 !important; }
+html body .stMain div.stButton > button[kind="primary"] *, html body div[data-testid="stFormSubmitButton"] > button *,
+html body div.stDownloadButton > button * { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; font-weight: 600 !important; }
+html body .stMain div.stButton > button[kind="secondary"] { background: __panel !important; border: 1px solid __rule !important; }
+html body .stMain div.stButton > button[kind="secondary"]:hover:not(:disabled) { background: __hover !important; border-color: __muted !important; }
+html body .stMain div.stButton > button[kind="secondary"] * { color: __ink !important; -webkit-text-fill-color: __ink !important; font-weight: 600 !important; }
+
+/* Khung, bảng, form: viền mảnh, không đổ bóng */
+html body div[data-testid="stForm"], html body div.st-key-sc_add_task_box, html body div[data-testid="stExpander"] details,
+html body div[data-testid="stDataFrame"], html body [class*="st-key-sc_minip_"] {
+    background: __panel !important; border: 1px solid __rule !important; border-radius: 8px !important; box-shadow: none !important; }
+html body div[data-testid="stPopoverBody"] { border: 1px solid __rule !important; border-radius: 8px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important; }
+html body div[data-testid="stTextInputRootElement"], html body div[data-testid="stTextAreaRootElement"],
+html body div[data-testid="stNumberInputContainer"], html body div[data-testid="stDateInputField"],
+html body div[data-testid="stSelectbox"] div:has(> input) {
+    background: __field !important; border: 1px solid __rule !important; border-radius: 6px !important; box-shadow: none !important; }
+html body div[data-testid="stAlert"] { border-radius: 6px !important; box-shadow: none !important; }
+
+/* Báo cáo theo tuần: đầu slide màu vỏ tàu, tuần hiện tại đánh dấu vàng */
+html body [class*="st-key-sc_slide_"] { box-shadow: none !important; border: 1px solid __rule !important; border-radius: 10px !important; }
+html body [class*="st-key-sc_slide_"] .sc-slide-head { background: __hull !important; }
+html body [class*="st-key-sc_slide_"] .sc-slide-kicker { letter-spacing: 0.04em !important; font-weight: 600 !important; }
+
+/* Trang đầu */
+html body .sc-about-hero, html body .sc-about-card { box-shadow: none !important; border: 1px solid __rule !important; border-radius: 10px !important; }
+html body .sc-about-kicker { letter-spacing: 0 !important; text-transform: none !important; font-size: 0.95rem !important; }
+html body .st-key-sc_about_video, html body .st-key-sc_about_video * { box-shadow: none !important; }
+html body .sc-brand { text-transform: none !important; font-size: 1.15rem !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button,
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button {
+    border-radius: 6px !important; box-shadow: none !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button *,
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button * { letter-spacing: 0 !important; }
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_about div.stButton > button[kind="primary"] *,
+html body div.st-key-sc_nav.st-key-sc_nav div.st-key-btn_land_auth div.stButton > button[kind="primary"] { color: __hull !important; -webkit-text-fill-color: __hull !important; }
+html body .stApp button, html body .stApp button:hover,
+html body .stApp div.stButton > button[kind], html body .stApp div.stButton > button[kind]:hover,
+html body .stApp div[data-testid] > button, html body .stApp div[data-testid] > button:hover,
+html body .stApp div[data-testid="stLinkButton"] a, html body .stApp div[data-testid="stLinkButton"] a:hover {
+    box-shadow: none !important; transform: none !important; }
+html body .stApp div[data-testid="stLinkButton"] a[kind="primary"] { background: __hull !important; border-radius: 6px !important; }
+html body .profile-card { box-shadow: none !important; border-radius: 10px !important; background: __hull !important; }
+"""
+    for _k, _v in sorted(_H.items(), key=lambda kv: -len(kv[0])):
+        _theme_css = _theme_css.replace("__" + _k, _v)
+
 if _theme_css:
     st.markdown(f"<style>{_theme_css}</style>", unsafe_allow_html=True)
 
@@ -10104,9 +10244,9 @@ if not st.session_state["logged_in"]:
         with _h1:
             st.markdown("""
 <div class='sc-about-hero sc-about-hero-left'>
-  <div class='sc-about-kicker'>🚢 EMERALD SHIP</div>
+  <div class='sc-about-kicker'>Emerald Ship</div>
   <h1>Phần mềm quản lý công việc cho xưởng đóng tàu</h1>
-  <p>Emerald Ship giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và liên lạc với nhau ở cùng một nơi — trên máy tính lẫn điện thoại.</p>
+  <p>Emerald Ship giúp đội ngũ xưởng tàu giao việc, theo dõi tiến độ và báo cáo hình ảnh theo tuần ở cùng một nơi — trên máy tính lẫn điện thoại.</p>
 </div>
 """, unsafe_allow_html=True)
         with _h2:
