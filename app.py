@@ -8380,8 +8380,11 @@ LEADER_ROLES = ["Team Leader", "Foreman"]
 #    Mỗi lần cập nhật app: tăng APP_VERSION và thêm 1 mục MỚI LÊN ĐẦU danh sách CHANGELOG.
 #    Ai mở app (máy tính, điện thoại, icon đã cài) sẽ thấy thông báo "vừa cập nhật" 1 lần.
 # ==========================================
-APP_VERSION = "2.6"
+APP_VERSION = "2.7"
 CHANGELOG = [
+    {"v": "2.7", "date": "03/11/2026",
+     "vi": ["🧹 Gỡ bỏ mục Tin nhắn & Họp online để app gọn và nhanh hơn"],
+     "en": ["🧹 Removed Messages & Online meetings to keep the app simpler and faster"]},
     {"v": "2.6", "date": "01/11/2026",
      "vi": ["📲 Cài Emerald Ship lên điện thoại thành icon như app thật (Android & iPhone)",
             "📶 Mất mạng (trên tàu, trong hầm…) app chờ và tự mở lại khi có mạng",
@@ -10119,7 +10122,6 @@ if not st.session_state["logged_in"]:
 <div class='sc-about-grid'>
   <div class='sc-about-card'><h3>📋 Quản lý công việc</h3><p>Tạo công việc theo Block, Deck, Frame và theo dõi tiến độ từng phần trăm.</p></div>
   <div class='sc-about-card'><h3>👥 Team & phân quyền</h3><p>Admin, WOS Manager, Foreman, Team Leader và Worker — mỗi người thấy đúng phần việc của mình.</p></div>
-  <div class='sc-about-card'><h3>💬 Tin nhắn & họp online</h3><p>Kênh chung, nhóm chat và phòng họp video có ID + mật khẩu.</p></div>
   <div class='sc-about-card'><h3>🌐 15 ngôn ngữ & giọng nói</h3><p>Tiếng Việt, English, 中文, 日本語, 한국어, ไทย, Indonesia, Español, Français, Deutsch, Русский… — và nói thay vì gõ trên điện thoại.</p></div>
 </div>
 """, unsafe_allow_html=True)
@@ -10236,18 +10238,15 @@ else:
     current_role = user_data.get("role", "Worker")
 
 
-    if st.session_state.get("current_menu") in ("💬 Tin Nhắn & Họp", "🎥 Họp Online"):   # tên cũ
-        st.session_state["current_menu"] = CONNECT_MENU
-    if st.session_state.get("current_menu") in (CHAT_MENU, MEETING_MENU):
-        st.session_state["connect_tab"] = "meet" if st.session_state["current_menu"] == MEETING_MENU else "chat"
-        st.session_state["current_menu"] = CONNECT_MENU
+    # 💬 Tin nhắn & họp online đã được gỡ bỏ (v2.7) → ai đang ở trang đó thì chuyển về Bảng Công Việc
+    if st.session_state.get("current_menu") in ("💬 Tin Nhắn & Họp", "🎥 Họp Online", CHAT_MENU, MEETING_MENU, CONNECT_MENU):
+        st.session_state["current_menu"] = "🧰 Bảng Công Việc"
     is_admin = current_role == "Admin"
     is_manager_up = current_role in ["Admin", "WOS Manager"]
 
     if is_manager_up:
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "💬 Tin Nhắn & Meeting",
             "➕ Thêm Công Việc", 
             "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
@@ -10259,7 +10258,6 @@ else:
     elif current_role == "Foreman":
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "💬 Tin Nhắn & Meeting",
             "➕ Thêm Công Việc", 
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -10270,7 +10268,6 @@ else:
     elif current_role == "Team Leader":
         menu_options = [
             "🧰 Bảng Công Việc", 
-            "💬 Tin Nhắn & Meeting",
             "➕ Thêm Công Việc",
             "👥 Team Của Tôi",
             "📋 Giao Việc",
@@ -10280,7 +10277,6 @@ else:
     else:
         menu_options = [
             "🧰 Bảng Công Việc",
-            "💬 Tin Nhắn & Meeting",
             "👥 Team Của Tôi",
             "📊 Báo Cáo & Khai Báo",
             "🔑 Đổi Mật Khẩu"
@@ -10288,17 +10284,14 @@ else:
 
     # 🛡️ Tài khoản Admin: chỉ Quản Lý Phân Quyền + Tin nhắn (Đổi mật khẩu nằm trong nút tài khoản)
     if is_admin:
-        menu_options = ["👥 Quản Lý Phân Quyền", CONNECT_MENU]
-        if st.session_state.get("current_menu") not in ("👥 Quản Lý Phân Quyền", CONNECT_MENU, "🔑 Đổi Mật Khẩu"):
+        menu_options = ["👥 Quản Lý Phân Quyền"]
+        if st.session_state.get("current_menu") not in ("👥 Quản Lý Phân Quyền", "🔑 Đổi Mật Khẩu"):
             st.session_state["current_menu"] = "👥 Quản Lý Phân Quyền"
 
     def _go_to_page(target):
         st.session_state["current_menu"] = target
 
-    try:
-        _chat_unread_total = sum(chat_unread_by_conv(user_data["id"]).values())
-    except sqlite3.OperationalError:
-        _chat_unread_total = 0
+    _chat_unread_total = 0          # tin nhắn đã gỡ bỏ
 
     def _nav_text(item):
         """Chữ trên thanh menu: bỏ biểu tượng ở đầu cho gọn (giống thanh menu trang web)."""
