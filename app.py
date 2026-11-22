@@ -27,7 +27,8 @@ html, body, .stApp, .stApp p, .stApp label, .stApp input, .stApp textarea, .stAp
 
 /* Biểu tượng nét mảnh (Material Symbols): luôn giữ đúng phông biểu tượng ở mọi chủ đề */
 html body .stApp span.sc-ico.sc-ico, html body .stApp span[data-testid="stAlertDynamicIcon"][translate="no"],
-html body .stApp span[data-testid="stIconMaterial"][translate="no"] {
+html body .stApp span[data-testid="stIconMaterial"][translate="no"],
+html body .stApp span[role="img"][translate="no"] {
     font-family: "Material Symbols Rounded" !important; font-weight: 400 !important; letter-spacing: 0 !important;
     text-transform: none !important; font-feature-settings: "liga" !important; }
 
@@ -1782,6 +1783,13 @@ VI_EN = {
     "Mở file rồi bấm Ctrl+P để in hoặc lưu thành PDF.": "Open the file and press Ctrl+P to print or save it as PDF.",
     "💡 Giữ Ctrl (hoặc Shift) khi chọn để lấy nhiều ảnh cùng lúc. Bấm Upload thêm lần nữa để thêm ảnh khác.": "💡 Hold Ctrl (or Shift) while choosing to pick many photos at once. Press Upload again to add more.",
     "📊 Tải PowerPoint (.pptx)": "📊 Download PowerPoint (.pptx)",
+    "◀ Trước": "◀ Previous",
+    "Tiếp ▶": "Next ▶",
+    "Tổng số tuần": "Total weeks",
+    "Tổng số ảnh": "Total photos",
+    "Đang thực hiện": "In progress",
+    "ảnh": "photos",
+    "Tổng kết": "Summary",
     "📊 Có thể chọn cả file PowerPoint (.pptx): ảnh trong từng slide sẽ được lấy ra. Slide có chữ “Tuần 3” (hoặc “Week 3”) sẽ tự vào Tuần 3.": "📊 You can also choose a PowerPoint file (.pptx): the pictures on each slide are taken out. A slide that says “Week 3” goes into Week 3 automatically.",
     "Không tìm thấy ảnh nào trong file PowerPoint: ": "No pictures found in this PowerPoint file: ",
     "Lấy gì từ PowerPoint?": "What to take from the PowerPoint?",
@@ -1795,13 +1803,78 @@ VI_EN = {
     "🎉 Emerald Ship vừa được cập nhật!": "🎉 Emerald Ship has been updated!",
     "Có gì mới:": "What's new:",
     "👍 Đã hiểu": "👍 Got it",
-    "◀ Trước": "◀ Previous",
-    "Tiếp ▶": "Next ▶",
-    "Tổng số tuần": "Total weeks",
-    "Tổng số ảnh": "Total photos",
-    "Đang thực hiện": "In progress",
-    "ảnh": "photos",
-    "Tổng kết": "Summary",
+    "⚠️ Lỗi Hiện Trường": "⚠️ Site Defects",
+    "Đang mở": "Open",
+    "Đang xử lý": "In progress",
+    "Đã sửa xong": "Fixed",
+    "Đã đóng": "Closed",
+    "Mức nhẹ": "Minor",
+    "Mức trung bình": "Moderate",
+    "Nghiêm trọng": "Critical",
+    "Chưa xong": "Not done",
+    "Tất cả": "All",
+    "Kết nối Google Photos bị lỗi: ": "Google Photos connection failed: ",
+    "Chưa kết nối Google Photos (bạn đã không đồng ý hoặc đã hủy).": "Google Photos not connected (you declined or cancelled).",
+    "Đã kết nối Google Photos!": "Google Photos connected!",
+    "Khu vực": "Area",
+    "🖼️ Lưu ảnh vào Google Photos": "🖼️ Save photos to Google Photos",
+    "đã kết nối": "connected",
+    "Chưa cài đặt Google Photos. Thêm client_id và client_secret vào Secrets (mục [gphotos]) theo hướng dẫn, rồi quay lại đây bấm Kết nối.": "Google Photos is not set up yet. Add client_id and client_secret to Secrets (the [gphotos] section) as described, then come back here and press Connect.",
+    "Ảnh lỗi sẽ được lưu vào một album riêng trong Google Photos của tài khoản bạn kết nối.": "Defect photos will be saved to their own album in the Google Photos of the account you connect.",
+    "🔐 Kết nối Google Photos": "🔐 Connect Google Photos",
+    "Google sẽ hỏi bạn đồng ý, sau đó tự đưa bạn quay lại app.": "Google will ask you to agree, then bring you back to the app.",
+    "Ảnh lỗi được lưu vào album": "Defect photos are saved to the album",
+    "**Bản dự phòng:** máy chủ miễn phí có thể bị khởi động lại và quên kết nối. Hãy chép dòng dưới đây vào Secrets, ngay dưới mục [gphotos]:": "**Backup:** the free server can restart and forget the connection. Copy the line below into Secrets, right under [gphotos]:",
+    "✅ Đã chép xong": "✅ Copied",
+    "📤 Gửi ảnh chưa lưu lên Google Photos": "📤 Send unsaved photos to Google Photos",
+    "Đang lưu ảnh lên Google Photos…": "Saving photos to Google Photos…",
+    "Google Photos báo lỗi: ": "Google Photos error: ",
+    "Ngắt kết nối Google Photos": "Disconnect Google Photos",
+    "Còn refresh_token trong Secrets — xóa dòng đó trong Secrets để ngắt hẳn.": "A refresh_token is still in Secrets — delete that line in Secrets to disconnect completely.",
+    "Ghi lỗi mới": "New defect",
+    "Chụp hoặc chọn ảnh lỗi (chọn được nhiều ảnh)": "Take or choose defect photos (you can pick several)",
+    "Trên điện thoại: bấm nút trên rồi chọn Máy ảnh để chụp, hoặc chọn ảnh có sẵn.": "On a phone: tap the button above, then choose Camera to take a photo, or pick existing photos.",
+    "Chụp bằng camera ngay trong app": "Use the camera inside the app",
+    "Chụp ảnh": "Take photo",
+    "Bỏ ảnh này": "Remove this photo",
+    "Mô tả lỗi *": "Defect description *",
+    "Ví dụ: Mối hàn bị rỗ ở chân giá đỡ, cần mài và hàn lại": "Example: porous weld at the bracket foot, grind and re-weld",
+    "Mức độ": "Severity",
+    "Giao cho": "Assign to",
+    "Hạn xử lý (không bắt buộc)": "Due date (optional)",
+    "Lưu lỗi": "Save defect",
+    "Hủy": "Cancel",
+    "Hãy viết mô tả lỗi!": "Please describe the defect!",
+    "Hãy chụp hoặc chọn ít nhất 1 ảnh!": "Please take or choose at least 1 photo!",
+    "Đang lưu ảnh…": "Saving photos…",
+    "Ảnh lỗi": "Defect photos",
+    "🖼️ Mở trong Google Photos": "🖼️ Open in Google Photos",
+    "Chỉ tài khoản Google đã kết nối mới mở được link này. Người khác xem ảnh ngay tại đây.": "Only the connected Google account can open this link. Everyone else sees the photos right here.",
+    "Quá trình xử lý": "Progress",
+    "giao cho": "assigned to",
+    "Cập nhật xử lý": "Update",
+    "Ghi chú / việc đã làm": "Note / what was done",
+    "Trạng thái": "Status",
+    "Thêm ảnh (ví dụ ảnh sau khi sửa)": "Add photos (for example after the fix)",
+    "Gửi cập nhật": "Send update",
+    "Hãy viết ghi chú, thêm ảnh hoặc đổi trạng thái!": "Write a note, add photos or change the status!",
+    "Đã cập nhật": "Updated",
+    "🗑️ Xóa lỗi này": "🗑️ Delete this defect",
+    "Lỗi sẽ bị ẩn khỏi danh sách. Ảnh đã lưu trên Google Photos vẫn còn.": "The defect will be hidden from the list. Photos saved in Google Photos stay there.",
+    "Xác nhận xóa": "Confirm delete",
+    "Đã ghi lỗi": "Defect recorded",
+    "đã lưu vào Google Photos": "saved to Google Photos",
+    "Ảnh vẫn được lưu trong app.": "The photos are still saved in the app.",
+    "Giao cho tôi": "Assigned to me",
+    "Chỉ lỗi giao cho tôi": "Only defects assigned to me",
+    "Tìm mã, mô tả, block…": "Search code, description, block…",
+    "Không có lỗi nào ở đây. Bấm “Ghi lỗi mới” khi phát hiện lỗi lúc kiểm tra.": "No defects here. Press “New defect” when you find one during inspection.",
+    "Người ghi": "Reported by",
+    "Quá hạn": "Overdue",
+    "Hạn xử lý": "Due",
+    "Thu gọn": "Collapse",
+    "Xem chi tiết & xử lý": "View details & action",
+    "Xem thêm": "Show more",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -2202,6 +2275,78 @@ _ZH_LIST = [
     "🎉 Emerald Ship 已更新！",
     "新内容：",
     "👍 知道了",
+    "⚠️ 现场缺陷",
+    "未处理",
+    "处理中",
+    "已修复",
+    "已关闭",
+    "轻微",
+    "中等",
+    "严重",
+    "未完成",
+    "全部",
+    "连接 Google 相册失败：",
+    "未连接 Google 相册（您拒绝或取消了）。",
+    "已连接 Google 相册！",
+    "区域",
+    "🖼️ 保存照片到 Google 相册",
+    "已连接",
+    "尚未设置 Google 相册。请按说明在 Secrets（[gphotos] 部分）中添加 client_id 和 client_secret，然后回到这里点击连接。",
+    "缺陷照片将保存到所连接账号的 Google 相册中的专用相册。",
+    "🔐 连接 Google 相册",
+    "Google 会请您同意，然后自动带您回到应用。",
+    "缺陷照片保存在相册",
+    "**备份：**免费服务器可能重启并丢失连接。请把下面这一行复制到 Secrets 中 [gphotos] 下面：",
+    "✅ 已复制",
+    "📤 将未保存的照片发送到 Google 相册",
+    "正在保存照片到 Google 相册…",
+    "Google 相册错误：",
+    "断开 Google 相册",
+    "Secrets 中仍有 refresh_token — 删除该行即可完全断开。",
+    "新缺陷",
+    "拍摄或选择缺陷照片（可多选）",
+    "手机上：点上面的按钮，选择相机拍照，或选择已有照片。",
+    "在应用内使用相机",
+    "拍照",
+    "移除此照片",
+    "缺陷描述 *",
+    "例如：支架根部焊缝有气孔，需打磨后重焊",
+    "严重程度",
+    "指派给",
+    "处理期限（可选）",
+    "保存缺陷",
+    "取消",
+    "请描述缺陷！",
+    "请至少拍摄或选择 1 张照片！",
+    "正在保存照片…",
+    "缺陷照片",
+    "🖼️ 在 Google 相册中打开",
+    "只有已连接的 Google 账号能打开此链接。其他人可在这里直接查看照片。",
+    "处理过程",
+    "指派给",
+    "处理更新",
+    "备注 / 已做的工作",
+    "状态",
+    "添加照片（例如修复后的照片）",
+    "发送更新",
+    "请填写备注、添加照片或更改状态！",
+    "已更新",
+    "🗑️ 删除此缺陷",
+    "缺陷将从列表中隐藏。已保存到 Google 相册的照片仍会保留。",
+    "确认删除",
+    "已记录缺陷",
+    "已保存到 Google 相册",
+    "照片仍保存在应用中。",
+    "指派给我",
+    "只看指派给我的缺陷",
+    "搜索编号、描述、分段…",
+    "这里没有缺陷。检查时发现缺陷请点“新缺陷”。",
+    "记录人",
+    "已逾期",
+    "期限",
+    "收起",
+    "查看详情并处理",
+    "显示更多",
 ]
 _JA_LIST = [
     "🚢 EMERALD SHIP - 船舶作業管理",
@@ -2600,6 +2745,78 @@ _JA_LIST = [
     "🎉 Emerald Ship がアップデートされました！",
     "新機能：",
     "👍 わかりました",
+    "⚠️ 現場の不具合",
+    "未対応",
+    "対応中",
+    "修正済み",
+    "完了",
+    "軽微",
+    "中程度",
+    "重大",
+    "未完了",
+    "すべて",
+    "Google フォトへの接続に失敗しました：",
+    "Google フォトに接続されていません（拒否またはキャンセルされました）。",
+    "Google フォトに接続しました！",
+    "エリア",
+    "🖼️ 写真を Google フォトに保存",
+    "接続済み",
+    "Google フォトはまだ設定されていません。手順に従って Secrets（[gphotos] セクション）に client_id と client_secret を追加し、ここに戻って接続を押してください。",
+    "不具合の写真は、接続したアカウントの Google フォト内の専用アルバムに保存されます。",
+    "🔐 Google フォトに接続",
+    "Google が同意を求め、その後アプリに戻ります。",
+    "不具合の写真の保存先アルバム",
+    "**バックアップ：**無料サーバーは再起動して接続を忘れることがあります。下の行を Secrets の [gphotos] のすぐ下にコピーしてください：",
+    "✅ コピーしました",
+    "📤 未保存の写真を Google フォトに送る",
+    "Google フォトに保存中…",
+    "Google フォトのエラー：",
+    "Google フォトとの接続を解除",
+    "Secrets に refresh_token が残っています — 完全に解除するにはその行を削除してください。",
+    "新しい不具合",
+    "不具合の写真を撮影または選択（複数可）",
+    "スマホでは：上のボタンを押してカメラを選んで撮影するか、既存の写真を選びます。",
+    "アプリ内のカメラを使う",
+    "写真を撮る",
+    "この写真を外す",
+    "不具合の説明 *",
+    "例：ブラケット根元の溶接にブローホール、研削して再溶接",
+    "重要度",
+    "担当者",
+    "期限（任意）",
+    "不具合を保存",
+    "キャンセル",
+    "不具合の説明を入力してください！",
+    "写真を1枚以上撮影または選択してください！",
+    "写真を保存中…",
+    "不具合の写真",
+    "🖼️ Google フォトで開く",
+    "このリンクは接続した Google アカウントでのみ開けます。他の人はここで写真を見られます。",
+    "対応の経過",
+    "担当",
+    "対応の更新",
+    "メモ / 実施内容",
+    "ステータス",
+    "写真を追加（例：修正後の写真）",
+    "更新を送信",
+    "メモを書くか、写真を追加するか、ステータスを変更してください！",
+    "更新しました",
+    "🗑️ この不具合を削除",
+    "不具合は一覧から非表示になります。Google フォトに保存された写真は残ります。",
+    "削除を確認",
+    "不具合を記録しました",
+    "Google フォトに保存済み",
+    "写真はアプリ内に保存されています。",
+    "自分の担当",
+    "自分の担当のみ",
+    "番号、説明、ブロックで検索…",
+    "不具合はありません。検査で見つけたら「新しい不具合」を押してください。",
+    "記録者",
+    "期限切れ",
+    "期限",
+    "閉じる",
+    "詳細を見て対応",
+    "もっと見る",
 ]
 _KO_LIST = [
     "🚢 EMERALD SHIP - 선박 작업 관리",
@@ -2998,6 +3215,78 @@ _KO_LIST = [
     "🎉 Emerald Ship이 업데이트되었습니다!",
     "새로운 기능:",
     "👍 확인",
+    "⚠️ 현장 결함",
+    "미처리",
+    "처리 중",
+    "수정 완료",
+    "종료",
+    "경미",
+    "보통",
+    "심각",
+    "미완료",
+    "전체",
+    "Google 포토 연결 실패: ",
+    "Google 포토가 연결되지 않았습니다(거부 또는 취소).",
+    "Google 포토가 연결되었습니다!",
+    "구역",
+    "🖼️ Google 포토에 사진 저장",
+    "연결됨",
+    "Google 포토가 아직 설정되지 않았습니다. 안내에 따라 Secrets([gphotos] 항목)에 client_id와 client_secret을 추가한 뒤 여기로 돌아와 연결을 누르세요.",
+    "결함 사진은 연결한 계정의 Google 포토 전용 앨범에 저장됩니다.",
+    "🔐 Google 포토 연결",
+    "Google이 동의를 요청한 뒤 앱으로 돌아옵니다.",
+    "결함 사진 저장 앨범",
+    "**백업:** 무료 서버는 재시작되어 연결을 잊을 수 있습니다. 아래 줄을 Secrets의 [gphotos] 바로 아래에 복사하세요:",
+    "✅ 복사 완료",
+    "📤 저장되지 않은 사진을 Google 포토로 보내기",
+    "Google 포토에 사진 저장 중…",
+    "Google 포토 오류: ",
+    "Google 포토 연결 해제",
+    "Secrets에 refresh_token이 남아 있습니다 — 완전히 해제하려면 그 줄을 삭제하세요.",
+    "새 결함",
+    "결함 사진 촬영 또는 선택(여러 장 가능)",
+    "휴대폰: 위 버튼을 누르고 카메라를 선택해 촬영하거나 기존 사진을 고르세요.",
+    "앱 안에서 카메라 사용",
+    "사진 찍기",
+    "이 사진 빼기",
+    "결함 설명 *",
+    "예: 브래킷 하단 용접부 기공, 그라인딩 후 재용접",
+    "심각도",
+    "담당자 지정",
+    "처리 기한(선택)",
+    "결함 저장",
+    "취소",
+    "결함을 설명해 주세요!",
+    "사진을 1장 이상 찍거나 선택하세요!",
+    "사진 저장 중…",
+    "결함 사진",
+    "🖼️ Google 포토에서 열기",
+    "연결된 Google 계정만 이 링크를 열 수 있습니다. 다른 사람은 여기서 사진을 봅니다.",
+    "처리 과정",
+    "담당",
+    "처리 업데이트",
+    "메모 / 한 작업",
+    "상태",
+    "사진 추가(예: 수정 후 사진)",
+    "업데이트 보내기",
+    "메모를 쓰거나 사진을 추가하거나 상태를 바꾸세요!",
+    "업데이트됨",
+    "🗑️ 이 결함 삭제",
+    "결함이 목록에서 숨겨집니다. Google 포토에 저장된 사진은 남습니다.",
+    "삭제 확인",
+    "결함 기록 완료",
+    "Google 포토에 저장됨",
+    "사진은 앱에 그대로 저장되어 있습니다.",
+    "내 담당",
+    "내 담당 결함만",
+    "번호, 설명, 블록 검색…",
+    "결함이 없습니다. 점검 중 결함을 발견하면 “새 결함”을 누르세요.",
+    "기록자",
+    "기한 초과",
+    "기한",
+    "접기",
+    "상세 보기 및 처리",
+    "더 보기",
 ]
 
 # 🌏 10 ngôn ngữ thêm (cùng thứ tự với VI_EN)
@@ -3398,6 +3687,78 @@ _TH_LIST = [
     "🎉 Emerald Ship อัปเดตแล้ว!",
     "มีอะไรใหม่:",
     "👍 เข้าใจแล้ว",
+    "⚠️ ข้อบกพร่องหน้างาน",
+    "เปิดอยู่",
+    "กำลังดำเนินการ",
+    "แก้ไขแล้ว",
+    "ปิดแล้ว",
+    "เล็กน้อย",
+    "ปานกลาง",
+    "ร้ายแรง",
+    "ยังไม่เสร็จ",
+    "ทั้งหมด",
+    "เชื่อมต่อ Google Photos ไม่สำเร็จ: ",
+    "ยังไม่ได้เชื่อมต่อ Google Photos (คุณไม่ยินยอมหรือยกเลิก)",
+    "เชื่อมต่อ Google Photos แล้ว!",
+    "พื้นที่",
+    "🖼️ บันทึกรูปไปที่ Google Photos",
+    "เชื่อมต่อแล้ว",
+    "ยังไม่ได้ตั้งค่า Google Photos ให้เพิ่ม client_id และ client_secret ใน Secrets (หัวข้อ [gphotos]) ตามคำแนะนำ แล้วกลับมากดเชื่อมต่อที่นี่",
+    "รูปข้อบกพร่องจะถูกบันทึกในอัลบั้มแยกใน Google Photos ของบัญชีที่คุณเชื่อมต่อ",
+    "🔐 เชื่อมต่อ Google Photos",
+    "Google จะขอความยินยอม แล้วพาคุณกลับมาที่แอป",
+    "รูปข้อบกพร่องถูกบันทึกในอัลบั้ม",
+    "**สำรองไว้:** เซิร์ฟเวอร์ฟรีอาจรีสตาร์ตและลืมการเชื่อมต่อ ให้คัดลอกบรรทัดด้านล่างไปไว้ใน Secrets ใต้ [gphotos]:",
+    "✅ คัดลอกแล้ว",
+    "📤 ส่งรูปที่ยังไม่บันทึกไปที่ Google Photos",
+    "กำลังบันทึกรูปไปที่ Google Photos…",
+    "Google Photos แจ้งข้อผิดพลาด: ",
+    "ยกเลิกการเชื่อมต่อ Google Photos",
+    "ยังมี refresh_token ใน Secrets — ลบบรรทัดนั้นเพื่อยกเลิกการเชื่อมต่อทั้งหมด",
+    "บันทึกข้อบกพร่องใหม่",
+    "ถ่ายหรือเลือกรูปข้อบกพร่อง (เลือกได้หลายรูป)",
+    "บนโทรศัพท์: กดปุ่มด้านบนแล้วเลือกกล้องเพื่อถ่าย หรือเลือกรูปที่มีอยู่",
+    "ใช้กล้องในแอป",
+    "ถ่ายรูป",
+    "เอารูปนี้ออก",
+    "คำอธิบายข้อบกพร่อง *",
+    "ตัวอย่าง: แนวเชื่อมที่ฐานขายึดมีรูพรุน ต้องเจียแล้วเชื่อมใหม่",
+    "ระดับความรุนแรง",
+    "มอบหมายให้",
+    "กำหนดเสร็จ (ไม่บังคับ)",
+    "บันทึกข้อบกพร่อง",
+    "ยกเลิก",
+    "กรุณาอธิบายข้อบกพร่อง!",
+    "กรุณาถ่ายหรือเลือกรูปอย่างน้อย 1 รูป!",
+    "กำลังบันทึกรูป…",
+    "รูปข้อบกพร่อง",
+    "🖼️ เปิดใน Google Photos",
+    "เฉพาะบัญชี Google ที่เชื่อมต่อเท่านั้นที่เปิดลิงก์นี้ได้ คนอื่นดูรูปได้ที่นี่",
+    "ขั้นตอนการแก้ไข",
+    "มอบหมายให้",
+    "อัปเดตการแก้ไข",
+    "บันทึก / สิ่งที่ทำแล้ว",
+    "สถานะ",
+    "เพิ่มรูป (เช่น รูปหลังแก้ไข)",
+    "ส่งอัปเดต",
+    "กรุณาเขียนบันทึก เพิ่มรูป หรือเปลี่ยนสถานะ!",
+    "อัปเดตแล้ว",
+    "🗑️ ลบข้อบกพร่องนี้",
+    "ข้อบกพร่องจะถูกซ่อนจากรายการ รูปที่บันทึกใน Google Photos ยังอยู่",
+    "ยืนยันการลบ",
+    "บันทึกข้อบกพร่องแล้ว",
+    "บันทึกใน Google Photos แล้ว",
+    "รูปยังถูกบันทึกในแอป",
+    "มอบหมายให้ฉัน",
+    "เฉพาะที่มอบหมายให้ฉัน",
+    "ค้นหารหัส คำอธิบาย บล็อก…",
+    "ไม่มีข้อบกพร่อง กด “บันทึกข้อบกพร่องใหม่” เมื่อพบระหว่างการตรวจ",
+    "ผู้บันทึก",
+    "เลยกำหนด",
+    "กำหนดเสร็จ",
+    "ย่อ",
+    "ดูรายละเอียดและดำเนินการ",
+    "ดูเพิ่มเติม",
 ]
 _ID_LIST = [
     "🚢 EMERALD SHIP - MANAJEMEN PEKERJAAN KAPAL",
@@ -3796,6 +4157,78 @@ _ID_LIST = [
     "🎉 Emerald Ship baru saja diperbarui!",
     "Yang baru:",
     "👍 Mengerti",
+    "⚠️ Cacat Lapangan",
+    "Terbuka",
+    "Sedang dikerjakan",
+    "Sudah diperbaiki",
+    "Ditutup",
+    "Ringan",
+    "Sedang",
+    "Kritis",
+    "Belum selesai",
+    "Semua",
+    "Gagal menghubungkan Google Foto: ",
+    "Google Foto belum terhubung (Anda menolak atau membatalkan).",
+    "Google Foto terhubung!",
+    "Area",
+    "🖼️ Simpan foto ke Google Foto",
+    "terhubung",
+    "Google Foto belum diatur. Tambahkan client_id dan client_secret ke Secrets (bagian [gphotos]) sesuai petunjuk, lalu kembali ke sini dan tekan Hubungkan.",
+    "Foto cacat akan disimpan ke album khusus di Google Foto akun yang Anda hubungkan.",
+    "🔐 Hubungkan Google Foto",
+    "Google akan meminta persetujuan Anda, lalu membawa Anda kembali ke aplikasi.",
+    "Foto cacat disimpan ke album",
+    "**Cadangan:** server gratis bisa memulai ulang dan melupakan koneksi. Salin baris di bawah ke Secrets, tepat di bawah [gphotos]:",
+    "✅ Sudah disalin",
+    "📤 Kirim foto yang belum tersimpan ke Google Foto",
+    "Menyimpan foto ke Google Foto…",
+    "Kesalahan Google Foto: ",
+    "Putuskan Google Foto",
+    "Masih ada refresh_token di Secrets — hapus baris itu untuk memutuskan sepenuhnya.",
+    "Cacat baru",
+    "Ambil atau pilih foto cacat (bisa beberapa)",
+    "Di ponsel: tekan tombol di atas lalu pilih Kamera untuk memotret, atau pilih foto yang ada.",
+    "Gunakan kamera di dalam aplikasi",
+    "Ambil foto",
+    "Hapus foto ini",
+    "Deskripsi cacat *",
+    "Contoh: las berpori di kaki braket, gerinda dan las ulang",
+    "Tingkat keparahan",
+    "Tugaskan ke",
+    "Batas waktu (opsional)",
+    "Simpan cacat",
+    "Batal",
+    "Tuliskan deskripsi cacat!",
+    "Ambil atau pilih minimal 1 foto!",
+    "Menyimpan foto…",
+    "Foto cacat",
+    "🖼️ Buka di Google Foto",
+    "Hanya akun Google yang terhubung yang bisa membuka tautan ini. Orang lain melihat foto di sini.",
+    "Proses penanganan",
+    "ditugaskan ke",
+    "Pembaruan penanganan",
+    "Catatan / yang sudah dikerjakan",
+    "Status",
+    "Tambah foto (misalnya setelah perbaikan)",
+    "Kirim pembaruan",
+    "Tulis catatan, tambah foto, atau ubah status!",
+    "Diperbarui",
+    "🗑️ Hapus cacat ini",
+    "Cacat akan disembunyikan dari daftar. Foto di Google Foto tetap ada.",
+    "Konfirmasi hapus",
+    "Cacat tercatat",
+    "tersimpan di Google Foto",
+    "Foto tetap tersimpan di aplikasi.",
+    "Ditugaskan ke saya",
+    "Hanya yang ditugaskan ke saya",
+    "Cari kode, deskripsi, blok…",
+    "Tidak ada cacat di sini. Tekan “Cacat baru” saat menemukan cacat ketika inspeksi.",
+    "Dicatat oleh",
+    "Terlambat",
+    "Batas waktu",
+    "Tutup",
+    "Lihat detail & tangani",
+    "Tampilkan lagi",
 ]
 _MS_LIST = [
     "🚢 EMERALD SHIP - PENGURUSAN KERJA KAPAL",
@@ -4194,6 +4627,78 @@ _MS_LIST = [
     "🎉 Emerald Ship baru dikemas kini!",
     "Apa yang baharu:",
     "👍 Faham",
+    "⚠️ Kecacatan Tapak",
+    "Dibuka",
+    "Sedang diproses",
+    "Sudah dibaiki",
+    "Ditutup",
+    "Ringan",
+    "Sederhana",
+    "Kritikal",
+    "Belum selesai",
+    "Semua",
+    "Gagal menyambung Google Photos: ",
+    "Google Photos belum disambung (anda menolak atau membatalkan).",
+    "Google Photos disambung!",
+    "Kawasan",
+    "🖼️ Simpan foto ke Google Photos",
+    "disambung",
+    "Google Photos belum disediakan. Tambah client_id dan client_secret ke Secrets (bahagian [gphotos]) mengikut panduan, kemudian kembali ke sini dan tekan Sambung.",
+    "Foto kecacatan akan disimpan ke album khas dalam Google Photos akaun yang anda sambung.",
+    "🔐 Sambung Google Photos",
+    "Google akan meminta persetujuan anda, kemudian membawa anda kembali ke aplikasi.",
+    "Foto kecacatan disimpan ke album",
+    "**Sandaran:** pelayan percuma boleh dimulakan semula dan terlupa sambungan. Salin baris di bawah ke Secrets, betul-betul di bawah [gphotos]:",
+    "✅ Sudah disalin",
+    "📤 Hantar foto yang belum disimpan ke Google Photos",
+    "Menyimpan foto ke Google Photos…",
+    "Ralat Google Photos: ",
+    "Putuskan Google Photos",
+    "Masih ada refresh_token dalam Secrets — padam baris itu untuk memutuskan sepenuhnya.",
+    "Kecacatan baharu",
+    "Ambil atau pilih foto kecacatan (boleh beberapa)",
+    "Di telefon: tekan butang di atas dan pilih Kamera untuk mengambil gambar, atau pilih foto sedia ada.",
+    "Guna kamera dalam aplikasi",
+    "Ambil foto",
+    "Buang foto ini",
+    "Penerangan kecacatan *",
+    "Contoh: kimpalan berliang di kaki pendakap, perlu dicanai dan dikimpal semula",
+    "Tahap keterukan",
+    "Tugaskan kepada",
+    "Tarikh akhir (pilihan)",
+    "Simpan kecacatan",
+    "Batal",
+    "Sila terangkan kecacatan!",
+    "Sila ambil atau pilih sekurang-kurangnya 1 foto!",
+    "Menyimpan foto…",
+    "Foto kecacatan",
+    "🖼️ Buka dalam Google Photos",
+    "Hanya akaun Google yang disambung boleh membuka pautan ini. Orang lain melihat foto di sini.",
+    "Proses tindakan",
+    "ditugaskan kepada",
+    "Kemas kini tindakan",
+    "Nota / kerja yang dibuat",
+    "Status",
+    "Tambah foto (contohnya selepas dibaiki)",
+    "Hantar kemas kini",
+    "Tulis nota, tambah foto atau tukar status!",
+    "Dikemas kini",
+    "🗑️ Padam kecacatan ini",
+    "Kecacatan akan disembunyikan daripada senarai. Foto dalam Google Photos kekal.",
+    "Sahkan padam",
+    "Kecacatan direkodkan",
+    "disimpan dalam Google Photos",
+    "Foto masih disimpan dalam aplikasi.",
+    "Ditugaskan kepada saya",
+    "Hanya yang ditugaskan kepada saya",
+    "Cari kod, penerangan, blok…",
+    "Tiada kecacatan di sini. Tekan “Kecacatan baharu” apabila menemui kecacatan semasa pemeriksaan.",
+    "Direkod oleh",
+    "Lewat",
+    "Tarikh akhir",
+    "Tutup",
+    "Lihat butiran & tindakan",
+    "Tunjuk lagi",
 ]
 _TL_LIST = [
     "🚢 EMERALD SHIP - PAMAMAHALA NG TRABAHO SA BARKO",
@@ -4592,6 +5097,78 @@ _TL_LIST = [
     "🎉 Na-update ang Emerald Ship!",
     "Ano ang bago:",
     "👍 Sige",
+    "⚠️ Mga Depekto sa Site",
+    "Bukas",
+    "Inaayos",
+    "Naayos na",
+    "Sarado",
+    "Maliit",
+    "Katamtaman",
+    "Malubha",
+    "Hindi pa tapos",
+    "Lahat",
+    "Nabigo ang pagkonekta sa Google Photos: ",
+    "Hindi nakakonekta ang Google Photos (tumanggi ka o kinansela).",
+    "Nakakonekta na ang Google Photos!",
+    "Lugar",
+    "🖼️ I-save ang mga larawan sa Google Photos",
+    "nakakonekta",
+    "Hindi pa naka-set up ang Google Photos. Idagdag ang client_id at client_secret sa Secrets (seksiyong [gphotos]) ayon sa gabay, saka bumalik dito at pindutin ang Ikonekta.",
+    "Ise-save ang mga larawan ng depekto sa sariling album sa Google Photos ng account na ikinonekta mo.",
+    "🔐 Ikonekta ang Google Photos",
+    "Hihingi ng pahintulot ang Google, saka ka ibabalik sa app.",
+    "Naka-save ang mga larawan ng depekto sa album",
+    "**Backup:** maaaring mag-restart ang libreng server at makalimutan ang koneksyon. Kopyahin ang linya sa ibaba sa Secrets, sa ilalim mismo ng [gphotos]:",
+    "✅ Nakopya na",
+    "📤 Ipadala sa Google Photos ang mga hindi pa naka-save",
+    "Sine-save ang mga larawan sa Google Photos…",
+    "Error ng Google Photos: ",
+    "Idiskonekta ang Google Photos",
+    "May refresh_token pa sa Secrets — burahin ang linyang iyon para tuluyang madiskonekta.",
+    "Bagong depekto",
+    "Kumuha o pumili ng larawan ng depekto (puwedeng marami)",
+    "Sa telepono: pindutin ang button sa itaas at piliin ang Camera, o pumili ng larawang mayroon na.",
+    "Gamitin ang camera sa loob ng app",
+    "Kumuha ng larawan",
+    "Alisin ang larawang ito",
+    "Paglalarawan ng depekto *",
+    "Halimbawa: may butas ang weld sa paanan ng bracket, i-grind at i-weld muli",
+    "Kalubhaan",
+    "Italaga kay",
+    "Takdang petsa (opsyonal)",
+    "I-save ang depekto",
+    "Kanselahin",
+    "Ilarawan ang depekto!",
+    "Kumuha o pumili ng kahit 1 larawan!",
+    "Sine-save ang mga larawan…",
+    "Mga larawan ng depekto",
+    "🖼️ Buksan sa Google Photos",
+    "Ang nakakonektang Google account lang ang makakabukas ng link na ito. Ang iba ay makikita ang mga larawan dito.",
+    "Takbo ng pag-aayos",
+    "itinalaga kay",
+    "Update sa pag-aayos",
+    "Tala / ginawa na",
+    "Status",
+    "Magdagdag ng larawan (hal. pagkatapos ayusin)",
+    "Ipadala ang update",
+    "Sumulat ng tala, magdagdag ng larawan o baguhin ang status!",
+    "Na-update",
+    "🗑️ Burahin ang depektong ito",
+    "Itatago ang depekto sa listahan. Mananatili ang mga larawan sa Google Photos.",
+    "Kumpirmahin ang pagbura",
+    "Naitala ang depekto",
+    "naka-save sa Google Photos",
+    "Naka-save pa rin ang mga larawan sa app.",
+    "Nakatalaga sa akin",
+    "Ang nakatalaga lang sa akin",
+    "Hanapin ang code, paglalarawan, block…",
+    "Walang depekto rito. Pindutin ang “Bagong depekto” kapag may nakita sa inspeksyon.",
+    "Itinala ni",
+    "Lampas na",
+    "Takdang petsa",
+    "Isara",
+    "Tingnan ang detalye at aksyon",
+    "Ipakita pa",
 ]
 _HI_LIST = [
     "🚢 EMERALD SHIP - जहाज़ कार्य प्रबंधन",
@@ -4990,6 +5567,78 @@ _HI_LIST = [
     "🎉 Emerald Ship अपडेट हो गया है!",
     "नया क्या है:",
     "👍 समझ गया",
+    "⚠️ साइट दोष",
+    "खुला",
+    "काम जारी",
+    "ठीक किया गया",
+    "बंद",
+    "मामूली",
+    "मध्यम",
+    "गंभीर",
+    "अधूरे",
+    "सभी",
+    "Google Photos से जुड़ना विफल: ",
+    "Google Photos जुड़ा नहीं (आपने मना किया या रद्द किया)।",
+    "Google Photos जुड़ गया!",
+    "क्षेत्र",
+    "🖼️ फ़ोटो Google Photos में सहेजें",
+    "जुड़ा हुआ",
+    "Google Photos अभी सेट नहीं है। निर्देश के अनुसार Secrets ([gphotos] भाग) में client_id और client_secret जोड़ें, फिर यहाँ लौटकर जोड़ें दबाएँ।",
+    "दोष की फ़ोटो जुड़े हुए खाते के Google Photos में एक अलग एल्बम में सहेजी जाएँगी।",
+    "🔐 Google Photos जोड़ें",
+    "Google आपकी सहमति माँगेगा, फिर आपको ऐप पर वापस लाएगा।",
+    "दोष की फ़ोटो इस एल्बम में सहेजी जाती हैं",
+    "**बैकअप:** मुफ़्त सर्वर रीस्टार्ट होकर कनेक्शन भूल सकता है। नीचे की पंक्ति Secrets में [gphotos] के ठीक नीचे कॉपी करें:",
+    "✅ कॉपी हो गया",
+    "📤 बिना सहेजी फ़ोटो Google Photos में भेजें",
+    "फ़ोटो Google Photos में सहेजी जा रही हैं…",
+    "Google Photos त्रुटि: ",
+    "Google Photos अलग करें",
+    "Secrets में अभी भी refresh_token है — पूरी तरह अलग करने के लिए वह पंक्ति हटाएँ।",
+    "नया दोष",
+    "दोष की फ़ोटो लें या चुनें (कई चुन सकते हैं)",
+    "फ़ोन पर: ऊपर का बटन दबाकर कैमरा चुनें, या मौजूदा फ़ोटो चुनें।",
+    "ऐप के अंदर कैमरा इस्तेमाल करें",
+    "फ़ोटो लें",
+    "यह फ़ोटो हटाएँ",
+    "दोष का विवरण *",
+    "उदाहरण: ब्रैकेट के पैर पर वेल्ड में छिद्र, घिसकर दोबारा वेल्ड करें",
+    "गंभीरता",
+    "सौंपें",
+    "समय सीमा (वैकल्पिक)",
+    "दोष सहेजें",
+    "रद्द करें",
+    "कृपया दोष का विवरण लिखें!",
+    "कम से कम 1 फ़ोटो लें या चुनें!",
+    "फ़ोटो सहेजी जा रही हैं…",
+    "दोष की फ़ोटो",
+    "🖼️ Google Photos में खोलें",
+    "यह लिंक केवल जुड़ा हुआ Google खाता खोल सकता है। बाकी लोग फ़ोटो यहीं देखते हैं।",
+    "कार्यवाही का क्रम",
+    "सौंपा गया",
+    "कार्यवाही अपडेट",
+    "नोट / किया गया काम",
+    "स्थिति",
+    "फ़ोटो जोड़ें (जैसे ठीक करने के बाद)",
+    "अपडेट भेजें",
+    "नोट लिखें, फ़ोटो जोड़ें या स्थिति बदलें!",
+    "अपडेट हो गया",
+    "🗑️ यह दोष हटाएँ",
+    "दोष सूची से छिप जाएगा। Google Photos में सहेजी फ़ोटो बनी रहेंगी।",
+    "हटाने की पुष्टि करें",
+    "दोष दर्ज हुआ",
+    "Google Photos में सहेजा गया",
+    "फ़ोटो ऐप में सहेजी हुई हैं।",
+    "मुझे सौंपे गए",
+    "केवल मुझे सौंपे गए दोष",
+    "कोड, विवरण, ब्लॉक खोजें…",
+    "यहाँ कोई दोष नहीं है। निरीक्षण में दोष मिले तो “नया दोष” दबाएँ।",
+    "दर्ज करने वाले",
+    "समय सीमा पार",
+    "समय सीमा",
+    "समेटें",
+    "विवरण देखें और कार्रवाई करें",
+    "और दिखाएँ",
 ]
 _ES_LIST = [
     "🚢 EMERALD SHIP - GESTIÓN DE TRABAJOS NAVALES",
@@ -5388,6 +6037,78 @@ _ES_LIST = [
     "🎉 ¡Emerald Ship se ha actualizado!",
     "Novedades:",
     "👍 Entendido",
+    "⚠️ Defectos en obra",
+    "Abierto",
+    "En proceso",
+    "Corregido",
+    "Cerrado",
+    "Leve",
+    "Moderado",
+    "Grave",
+    "Sin terminar",
+    "Todos",
+    "Error al conectar Google Fotos: ",
+    "Google Fotos no está conectado (lo rechazaste o cancelaste).",
+    "¡Google Fotos conectado!",
+    "Zona",
+    "🖼️ Guardar fotos en Google Fotos",
+    "conectado",
+    "Google Fotos aún no está configurado. Añade client_id y client_secret en Secrets (sección [gphotos]) según la guía, luego vuelve aquí y pulsa Conectar.",
+    "Las fotos de defectos se guardarán en un álbum propio en el Google Fotos de la cuenta que conectes.",
+    "🔐 Conectar Google Fotos",
+    "Google te pedirá permiso y luego te devolverá a la app.",
+    "Las fotos de defectos se guardan en el álbum",
+    "**Copia de seguridad:** el servidor gratuito puede reiniciarse y olvidar la conexión. Copia la línea de abajo en Secrets, justo debajo de [gphotos]:",
+    "✅ Ya la copié",
+    "📤 Enviar fotos no guardadas a Google Fotos",
+    "Guardando fotos en Google Fotos…",
+    "Error de Google Fotos: ",
+    "Desconectar Google Fotos",
+    "Aún hay un refresh_token en Secrets: borra esa línea para desconectar del todo.",
+    "Nuevo defecto",
+    "Toma o elige fotos del defecto (puedes elegir varias)",
+    "En el móvil: pulsa el botón de arriba y elige Cámara para tomar la foto, o elige fotos existentes.",
+    "Usar la cámara dentro de la app",
+    "Tomar foto",
+    "Quitar esta foto",
+    "Descripción del defecto *",
+    "Ejemplo: soldadura porosa en el pie del soporte, amolar y volver a soldar",
+    "Gravedad",
+    "Asignar a",
+    "Fecha límite (opcional)",
+    "Guardar defecto",
+    "Cancelar",
+    "¡Describe el defecto!",
+    "¡Toma o elige al menos 1 foto!",
+    "Guardando fotos…",
+    "Fotos del defecto",
+    "🖼️ Abrir en Google Fotos",
+    "Solo la cuenta de Google conectada puede abrir este enlace. Los demás ven las fotos aquí mismo.",
+    "Seguimiento",
+    "asignado a",
+    "Actualizar",
+    "Nota / trabajo realizado",
+    "Estado",
+    "Añadir fotos (por ejemplo, después de la reparación)",
+    "Enviar actualización",
+    "¡Escribe una nota, añade fotos o cambia el estado!",
+    "Actualizado",
+    "🗑️ Eliminar este defecto",
+    "El defecto se ocultará de la lista. Las fotos guardadas en Google Fotos se mantienen.",
+    "Confirmar eliminación",
+    "Defecto registrado",
+    "guardado en Google Fotos",
+    "Las fotos siguen guardadas en la app.",
+    "Asignados a mí",
+    "Solo los asignados a mí",
+    "Buscar código, descripción, bloque…",
+    "No hay defectos aquí. Pulsa “Nuevo defecto” cuando encuentres uno durante la inspección.",
+    "Registrado por",
+    "Vencido",
+    "Fecha límite",
+    "Contraer",
+    "Ver detalles y actuar",
+    "Ver más",
 ]
 _FR_LIST = [
     "🚢 EMERALD SHIP - GESTION DES TRAVAUX NAVALS",
@@ -5786,6 +6507,78 @@ _FR_LIST = [
     "🎉 Emerald Ship a été mis à jour !",
     "Nouveautés :",
     "👍 Compris",
+    "⚠️ Défauts sur site",
+    "Ouvert",
+    "En cours",
+    "Corrigé",
+    "Clôturé",
+    "Mineur",
+    "Moyen",
+    "Critique",
+    "Non terminés",
+    "Tous",
+    "Échec de connexion à Google Photos : ",
+    "Google Photos n’est pas connecté (refusé ou annulé).",
+    "Google Photos connecté !",
+    "Zone",
+    "🖼️ Enregistrer les photos dans Google Photos",
+    "connecté",
+    "Google Photos n’est pas encore configuré. Ajoutez client_id et client_secret dans Secrets (section [gphotos]) selon le guide, puis revenez ici et appuyez sur Connecter.",
+    "Les photos de défauts seront enregistrées dans un album dédié du Google Photos du compte connecté.",
+    "🔐 Connecter Google Photos",
+    "Google vous demandera votre accord, puis vous ramènera dans l’app.",
+    "Les photos de défauts sont enregistrées dans l’album",
+    "**Sauvegarde :** le serveur gratuit peut redémarrer et oublier la connexion. Copiez la ligne ci-dessous dans Secrets, juste sous [gphotos] :",
+    "✅ C’est copié",
+    "📤 Envoyer les photos non enregistrées vers Google Photos",
+    "Enregistrement des photos dans Google Photos…",
+    "Erreur Google Photos : ",
+    "Déconnecter Google Photos",
+    "Un refresh_token est encore dans Secrets — supprimez cette ligne pour déconnecter complètement.",
+    "Nouveau défaut",
+    "Prendre ou choisir des photos du défaut (plusieurs possibles)",
+    "Sur téléphone : appuyez sur le bouton ci-dessus puis choisissez Appareil photo, ou choisissez des photos existantes.",
+    "Utiliser l’appareil photo dans l’app",
+    "Prendre une photo",
+    "Retirer cette photo",
+    "Description du défaut *",
+    "Exemple : soudure poreuse au pied du support, meuler et ressouder",
+    "Gravité",
+    "Attribuer à",
+    "Échéance (facultatif)",
+    "Enregistrer le défaut",
+    "Annuler",
+    "Décrivez le défaut !",
+    "Prenez ou choisissez au moins 1 photo !",
+    "Enregistrement des photos…",
+    "Photos du défaut",
+    "🖼️ Ouvrir dans Google Photos",
+    "Seul le compte Google connecté peut ouvrir ce lien. Les autres voient les photos ici.",
+    "Suivi du traitement",
+    "attribué à",
+    "Mise à jour",
+    "Note / travail effectué",
+    "Statut",
+    "Ajouter des photos (par exemple après réparation)",
+    "Envoyer la mise à jour",
+    "Écrivez une note, ajoutez des photos ou changez le statut !",
+    "Mis à jour",
+    "🗑️ Supprimer ce défaut",
+    "Le défaut sera masqué de la liste. Les photos dans Google Photos restent.",
+    "Confirmer la suppression",
+    "Défaut enregistré",
+    "enregistré dans Google Photos",
+    "Les photos restent enregistrées dans l’app.",
+    "Attribués à moi",
+    "Seulement ceux attribués à moi",
+    "Rechercher code, description, bloc…",
+    "Aucun défaut ici. Appuyez sur « Nouveau défaut » quand vous en trouvez un pendant l’inspection.",
+    "Signalé par",
+    "En retard",
+    "Échéance",
+    "Réduire",
+    "Voir le détail et agir",
+    "Afficher plus",
 ]
 _DE_LIST = [
     "🚢 EMERALD SHIP - SCHIFFBAU-ARBEITSVERWALTUNG",
@@ -6184,6 +6977,78 @@ _DE_LIST = [
     "🎉 Emerald Ship wurde aktualisiert!",
     "Was ist neu:",
     "👍 Verstanden",
+    "⚠️ Mängel vor Ort",
+    "Offen",
+    "In Bearbeitung",
+    "Behoben",
+    "Geschlossen",
+    "Gering",
+    "Mittel",
+    "Kritisch",
+    "Nicht erledigt",
+    "Alle",
+    "Verbindung mit Google Fotos fehlgeschlagen: ",
+    "Google Fotos nicht verbunden (abgelehnt oder abgebrochen).",
+    "Google Fotos verbunden!",
+    "Bereich",
+    "🖼️ Fotos in Google Fotos speichern",
+    "verbunden",
+    "Google Fotos ist noch nicht eingerichtet. Füge client_id und client_secret laut Anleitung in Secrets (Abschnitt [gphotos]) ein, komm dann hierher zurück und tippe auf Verbinden.",
+    "Mängelfotos werden in einem eigenen Album in Google Fotos des verbundenen Kontos gespeichert.",
+    "🔐 Google Fotos verbinden",
+    "Google fragt nach deiner Zustimmung und bringt dich dann zur App zurück.",
+    "Mängelfotos werden gespeichert im Album",
+    "**Sicherung:** Der kostenlose Server kann neu starten und die Verbindung vergessen. Kopiere die Zeile unten in Secrets, direkt unter [gphotos]:",
+    "✅ Kopiert",
+    "📤 Nicht gespeicherte Fotos an Google Fotos senden",
+    "Fotos werden in Google Fotos gespeichert…",
+    "Google-Fotos-Fehler: ",
+    "Google Fotos trennen",
+    "In Secrets steht noch ein refresh_token — lösche diese Zeile, um ganz zu trennen.",
+    "Neuer Mangel",
+    "Mängelfotos aufnehmen oder auswählen (mehrere möglich)",
+    "Am Handy: oben auf den Knopf tippen und Kamera wählen, oder vorhandene Fotos auswählen.",
+    "Kamera in der App verwenden",
+    "Foto aufnehmen",
+    "Dieses Foto entfernen",
+    "Beschreibung des Mangels *",
+    "Beispiel: poröse Schweißnaht am Konsolenfuß, schleifen und neu schweißen",
+    "Schweregrad",
+    "Zuweisen an",
+    "Frist (optional)",
+    "Mangel speichern",
+    "Abbrechen",
+    "Bitte den Mangel beschreiben!",
+    "Bitte mindestens 1 Foto aufnehmen oder auswählen!",
+    "Fotos werden gespeichert…",
+    "Mängelfotos",
+    "🖼️ In Google Fotos öffnen",
+    "Nur das verbundene Google-Konto kann diesen Link öffnen. Alle anderen sehen die Fotos hier.",
+    "Verlauf der Bearbeitung",
+    "zugewiesen an",
+    "Bearbeitung aktualisieren",
+    "Notiz / erledigte Arbeit",
+    "Status",
+    "Fotos hinzufügen (z. B. nach der Reparatur)",
+    "Aktualisierung senden",
+    "Notiz schreiben, Fotos hinzufügen oder Status ändern!",
+    "Aktualisiert",
+    "🗑️ Diesen Mangel löschen",
+    "Der Mangel wird aus der Liste ausgeblendet. Fotos in Google Fotos bleiben erhalten.",
+    "Löschen bestätigen",
+    "Mangel erfasst",
+    "in Google Fotos gespeichert",
+    "Die Fotos sind weiterhin in der App gespeichert.",
+    "Mir zugewiesen",
+    "Nur mir zugewiesene",
+    "Code, Beschreibung, Block suchen…",
+    "Hier gibt es keine Mängel. Tippe auf „Neuer Mangel“, wenn du bei der Prüfung einen findest.",
+    "Erfasst von",
+    "Überfällig",
+    "Frist",
+    "Einklappen",
+    "Details ansehen & bearbeiten",
+    "Mehr anzeigen",
 ]
 _RU_LIST = [
     "🚢 EMERALD SHIP - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
@@ -6582,6 +7447,78 @@ _RU_LIST = [
     "🎉 Emerald Ship обновлён!",
     "Что нового:",
     "👍 Понятно",
+    "⚠️ Дефекты на объекте",
+    "Открыт",
+    "В работе",
+    "Исправлен",
+    "Закрыт",
+    "Незначительный",
+    "Средний",
+    "Критический",
+    "Не завершены",
+    "Все",
+    "Не удалось подключить Google Фото: ",
+    "Google Фото не подключено (вы отказались или отменили).",
+    "Google Фото подключено!",
+    "Зона",
+    "🖼️ Сохранять фото в Google Фото",
+    "подключено",
+    "Google Фото ещё не настроено. Добавьте client_id и client_secret в Secrets (раздел [gphotos]) по инструкции, затем вернитесь сюда и нажмите «Подключить».",
+    "Фото дефектов будут сохраняться в отдельный альбом в Google Фото подключённого аккаунта.",
+    "🔐 Подключить Google Фото",
+    "Google попросит согласие, затем вернёт вас в приложение.",
+    "Фото дефектов сохраняются в альбом",
+    "**Резервная копия:** бесплатный сервер может перезапуститься и забыть подключение. Скопируйте строку ниже в Secrets, сразу под [gphotos]:",
+    "✅ Скопировано",
+    "📤 Отправить несохранённые фото в Google Фото",
+    "Сохранение фото в Google Фото…",
+    "Ошибка Google Фото: ",
+    "Отключить Google Фото",
+    "В Secrets остался refresh_token — удалите эту строку, чтобы отключить полностью.",
+    "Новый дефект",
+    "Снимите или выберите фото дефекта (можно несколько)",
+    "На телефоне: нажмите кнопку выше и выберите Камеру, или выберите готовые фото.",
+    "Использовать камеру в приложении",
+    "Сделать фото",
+    "Убрать это фото",
+    "Описание дефекта *",
+    "Пример: пористый шов у основания кронштейна, зачистить и переварить",
+    "Серьёзность",
+    "Назначить",
+    "Срок (необязательно)",
+    "Сохранить дефект",
+    "Отмена",
+    "Опишите дефект!",
+    "Снимите или выберите хотя бы 1 фото!",
+    "Сохранение фото…",
+    "Фото дефекта",
+    "🖼️ Открыть в Google Фото",
+    "Эту ссылку может открыть только подключённый аккаунт Google. Остальные видят фото здесь.",
+    "Ход устранения",
+    "назначено",
+    "Обновить статус",
+    "Заметка / что сделано",
+    "Статус",
+    "Добавить фото (например, после исправления)",
+    "Отправить обновление",
+    "Напишите заметку, добавьте фото или измените статус!",
+    "Обновлено",
+    "🗑️ Удалить этот дефект",
+    "Дефект будет скрыт из списка. Фото в Google Фото останутся.",
+    "Подтвердить удаление",
+    "Дефект записан",
+    "сохранено в Google Фото",
+    "Фото по-прежнему сохранены в приложении.",
+    "Назначены мне",
+    "Только назначенные мне",
+    "Поиск по коду, описанию, блоку…",
+    "Здесь нет дефектов. Нажмите «Новый дефект», когда найдёте дефект при проверке.",
+    "Записал",
+    "Просрочен",
+    "Срок",
+    "Свернуть",
+    "Подробнее и действия",
+    "Показать ещё",
 ]
 _PT_LIST = [
     "🚢 EMERALD SHIP - GESTÃO DE TRABALHOS NAVAIS",
@@ -6980,6 +7917,78 @@ _PT_LIST = [
     "🎉 O Emerald Ship foi atualizado!",
     "Novidades:",
     "👍 Entendi",
+    "⚠️ Defeitos em obra",
+    "Aberto",
+    "Em andamento",
+    "Corrigido",
+    "Fechado",
+    "Leve",
+    "Moderado",
+    "Grave",
+    "Não concluídos",
+    "Todos",
+    "Falha ao conectar o Google Fotos: ",
+    "Google Fotos não conectado (você recusou ou cancelou).",
+    "Google Fotos conectado!",
+    "Área",
+    "🖼️ Salvar fotos no Google Fotos",
+    "conectado",
+    "O Google Fotos ainda não está configurado. Adicione client_id e client_secret em Secrets (seção [gphotos]) conforme o guia, depois volte aqui e toque em Conectar.",
+    "As fotos de defeitos serão salvas em um álbum próprio no Google Fotos da conta conectada.",
+    "🔐 Conectar Google Fotos",
+    "O Google vai pedir sua permissão e depois trazer você de volta ao app.",
+    "As fotos de defeitos são salvas no álbum",
+    "**Backup:** o servidor gratuito pode reiniciar e esquecer a conexão. Copie a linha abaixo em Secrets, logo abaixo de [gphotos]:",
+    "✅ Já copiei",
+    "📤 Enviar fotos não salvas ao Google Fotos",
+    "Salvando fotos no Google Fotos…",
+    "Erro do Google Fotos: ",
+    "Desconectar Google Fotos",
+    "Ainda há um refresh_token em Secrets — apague essa linha para desconectar totalmente.",
+    "Novo defeito",
+    "Tire ou escolha fotos do defeito (pode escolher várias)",
+    "No celular: toque no botão acima e escolha Câmera para fotografar, ou escolha fotos existentes.",
+    "Usar a câmera dentro do app",
+    "Tirar foto",
+    "Remover esta foto",
+    "Descrição do defeito *",
+    "Exemplo: solda porosa no pé do suporte, esmerilhar e soldar de novo",
+    "Gravidade",
+    "Atribuir a",
+    "Prazo (opcional)",
+    "Salvar defeito",
+    "Cancelar",
+    "Descreva o defeito!",
+    "Tire ou escolha pelo menos 1 foto!",
+    "Salvando fotos…",
+    "Fotos do defeito",
+    "🖼️ Abrir no Google Fotos",
+    "Só a conta Google conectada abre este link. Os outros veem as fotos aqui mesmo.",
+    "Andamento",
+    "atribuído a",
+    "Atualizar",
+    "Nota / o que foi feito",
+    "Status",
+    "Adicionar fotos (por exemplo, depois do reparo)",
+    "Enviar atualização",
+    "Escreva uma nota, adicione fotos ou mude o status!",
+    "Atualizado",
+    "🗑️ Excluir este defeito",
+    "O defeito será ocultado da lista. As fotos no Google Fotos continuam lá.",
+    "Confirmar exclusão",
+    "Defeito registrado",
+    "salvo no Google Fotos",
+    "As fotos continuam salvas no app.",
+    "Atribuídos a mim",
+    "Só os atribuídos a mim",
+    "Buscar código, descrição, bloco…",
+    "Nenhum defeito aqui. Toque em “Novo defeito” ao encontrar um durante a inspeção.",
+    "Registrado por",
+    "Atrasado",
+    "Prazo",
+    "Recolher",
+    "Ver detalhes e agir",
+    "Ver mais",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -8512,8 +9521,15 @@ LEADER_ROLES = ["Team Leader", "Foreman"]
 #    Mỗi lần cập nhật app: tăng APP_VERSION và thêm 1 mục MỚI LÊN ĐẦU danh sách CHANGELOG.
 #    Ai mở app (máy tính, điện thoại, icon đã cài) sẽ thấy thông báo "vừa cập nhật" 1 lần.
 # ==========================================
-APP_VERSION = "2.9"
+APP_VERSION = "3.0"
 CHANGELOG = [
+    {"v": "3.0", "date": "22/11/2026",
+     "vi": ["Mục mới “Lỗi hiện trường”: chụp một hoặc nhiều ảnh lỗi khi kiểm tra, ghi mô tả, vị trí và mức độ",
+            "Ảnh lỗi tự lưu vào Google Photos (khi quản lý đã kết nối)",
+            "Cả team xem ảnh, giao người xử lý, cập nhật trạng thái và thêm ảnh sau khi sửa"],
+     "en": ["New “Site defects” page: take one or more photos of a defect during inspection, add a description, location and severity",
+            "Defect photos are saved to Google Photos automatically (once a manager connects it)",
+            "The whole team can see the photos, assign who fixes it, update the status and add photos after the fix"]},
     {"v": "2.9", "date": "03/11/2026",
      "vi": ["Biểu tượng nét mảnh, cùng một kiểu trên menu, nút, tiêu đề và thông báo"],
      "en": ["Clean line icons in one style on the menu, buttons, titles and messages"]},
@@ -9279,6 +10295,779 @@ cursor.execute('''
         expires_at TEXT
     )
 ''')
+
+
+# ==========================================
+# ⚠️ LỖI HIỆN TRƯỜNG
+#    Đi kiểm tra → chụp 1 hoặc nhiều ảnh lỗi + ghi chú → lỗi được ghi lại,
+#    ảnh tự lưu vào Google Photos (nếu đã kết nối) → team xem và cập nhật cách xử lý.
+# ==========================================
+DEFECT_MENU = "⚠️ Lỗi Hiện Trường"
+DF_OPEN, DF_WORK, DF_FIXED, DF_CLOSED = "Đang mở", "Đang xử lý", "Đã sửa xong", "Đã đóng"
+DF_STATUSES = [DF_OPEN, DF_WORK, DF_FIXED, DF_CLOSED]
+DF_SEVERITIES = ["Mức nhẹ", "Mức trung bình", "Nghiêm trọng"]
+DF_NOT_DONE = "Chưa xong"
+DF_ALL = "Tất cả"
+_DF_STATUS_STYLE = {DF_OPEN: ("#B42318", "#FEE4E2"), DF_WORK: ("#B54708", "#FEF0C7"),
+                    DF_FIXED: ("#175CD3", "#D1E9FF"), DF_CLOSED: ("#067647", "#DCFAE6")}
+_DF_SEV_STYLE = {"Mức nhẹ": ("#344054", "#EAECF0"), "Mức trung bình": ("#B54708", "#FEF0C7"),
+                 "Nghiêm trọng": ("#FFFFFF", "#B42318")}
+DF_PAGE = 20                       # số lỗi hiện mỗi lần (bấm "Xem thêm" để hiện tiếp)
+
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS defects (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        description TEXT NOT NULL,
+        block TEXT, area TEXT, deck TEXT, frame TEXT,
+        severity TEXT, status TEXT,
+        reported_by INTEGER, reported_at TEXT,
+        assigned_to INTEGER, due_date TEXT,
+        workshop TEXT, team_leader INTEGER,
+        updated_at TEXT, is_deleted INTEGER DEFAULT 0
+    )
+''')
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS defect_photos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        defect_id INTEGER NOT NULL,
+        update_id INTEGER,
+        image BLOB NOT NULL,
+        kind TEXT DEFAULT 'defect',
+        uploaded_by INTEGER,
+        uploaded_at TEXT,
+        gphoto_id TEXT,
+        gphoto_url TEXT
+    )
+''')
+cursor.execute("CREATE INDEX IF NOT EXISTS idx_defect_photos ON defect_photos (defect_id)")
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS defect_updates (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        defect_id INTEGER NOT NULL,
+        user_id INTEGER,
+        text TEXT,
+        status_from TEXT, status_to TEXT,
+        assigned_to INTEGER,
+        created_at TEXT
+    )
+''')
+cursor.execute("CREATE INDEX IF NOT EXISTS idx_defect_updates ON defect_updates (defect_id)")
+cursor.execute("CREATE TABLE IF NOT EXISTS app_settings (key TEXT PRIMARY KEY, value TEXT)")
+conn.commit()
+
+
+def _vn_now():
+    """Giờ Việt Nam (máy chủ Streamlit Cloud chạy giờ UTC)."""
+    return (datetime.utcnow() + timedelta(hours=7)).strftime("%Y-%m-%d %H:%M")
+
+
+def setting_get(key, default=None):
+    row = cursor.execute("SELECT value FROM app_settings WHERE key = ?", (key,)).fetchone()
+    return row[0] if row and row[0] is not None else default
+
+
+def setting_set(key, value):
+    if value is None:
+        cursor.execute("DELETE FROM app_settings WHERE key = ?", (key,))
+    else:
+        cursor.execute("INSERT INTO app_settings (key, value) VALUES (?, ?) "
+                       "ON CONFLICT(key) DO UPDATE SET value = excluded.value", (key, str(value)))
+    conn.commit()
+
+
+def df_code(did):
+    return f"D-{int(did):04d}"
+
+
+# ------------------------------------------
+# 🖼️ GOOGLE PHOTOS (miễn phí — dùng Google Photos Library API, quyền "chỉ thêm ảnh")
+#    Cấu hình trong Secrets:
+#       [gphotos]
+#       client_id = "....apps.googleusercontent.com"
+#       client_secret = "...."
+#       refresh_token = "...."      # (không bắt buộc) bản dự phòng, app tự lấy khi bấm "Kết nối"
+# ------------------------------------------
+GPHOTOS_SCOPE = "https://www.googleapis.com/auth/photoslibrary.appendonly"
+GPHOTOS_ALBUM = "Emerald Ship – Lỗi hiện trường"
+GPHOTOS_DEFAULT_REDIRECT = "https://shipcontrol-ten42qbuu3mmnpbffqtfnl.streamlit.app/"
+_GP_TOKEN_CACHE = {}
+
+
+class GPhotosError(Exception):
+    pass
+
+
+def _gp_conf():
+    try:
+        return dict(st.secrets["gphotos"])
+    except Exception:
+        return {}
+
+
+def gp_redirect_uri():
+    return _gp_conf().get("redirect_uri") or GPHOTOS_DEFAULT_REDIRECT
+
+
+def gp_has_client():
+    c = _gp_conf()
+    return bool(c.get("client_id") and c.get("client_secret"))
+
+
+def gp_refresh_token():
+    return setting_get("gphotos_refresh_token") or _gp_conf().get("refresh_token")
+
+
+def gp_connected():
+    return gp_has_client() and bool(gp_refresh_token())
+
+
+def gp_auth_url():
+    import time as _time
+    import urllib.parse as _up
+    saved = (setting_get("gphotos_oauth_state") or "").split("|")
+    if len(saved) == 2 and saved[1].isdigit() and _time.time() - int(saved[1]) < 1800:
+        state = saved[0]
+    else:
+        state = secrets.token_urlsafe(16)
+        setting_set("gphotos_oauth_state", f"{state}|{int(_time.time())}")
+    params = {
+        "client_id": _gp_conf().get("client_id"),
+        "redirect_uri": gp_redirect_uri(),
+        "response_type": "code",
+        "scope": GPHOTOS_SCOPE,
+        "access_type": "offline",
+        "prompt": "consent",
+        "include_granted_scopes": "true",
+        "state": state,
+    }
+    return "https://accounts.google.com/o/oauth2/v2/auth?" + _up.urlencode(params)
+
+
+def gp_handle_callback():
+    """Google đưa người dùng quay lại app với ?code=...&state=... → đổi lấy refresh token và lưu lại."""
+    try:
+        qp = st.query_params
+        code, state, err = qp.get("code"), qp.get("state"), qp.get("error")
+    except Exception:
+        return
+    if not (state and (code or err)):
+        return
+    saved = (setting_get("gphotos_oauth_state") or "").split("|")[0]
+    if not saved or not hmac.compare_digest(saved, str(state)):
+        return                          # không phải lượt kết nối Google Photos của app này
+    st.query_params.clear()
+    setting_set("gphotos_oauth_state", None)
+    st.session_state["current_menu"] = DEFECT_MENU
+    if err or not code:
+        st.session_state["_gp_msg"] = ("warning", "Chưa kết nối Google Photos (bạn đã không đồng ý hoặc đã hủy).")
+        return
+    try:
+        import requests
+        c = _gp_conf()
+        r = requests.post("https://oauth2.googleapis.com/token", data={
+            "code": code, "client_id": c.get("client_id"), "client_secret": c.get("client_secret"),
+            "redirect_uri": gp_redirect_uri(), "grant_type": "authorization_code"}, timeout=30)
+        j = r.json()
+        rt = j.get("refresh_token")
+        if r.status_code != 200 or not rt:
+            raise GPhotosError(f"{r.status_code}: {str(j)[:200]}")
+        setting_set("gphotos_refresh_token", rt)
+        setting_set("gphotos_album_id", None)          # tài khoản mới → tạo album mới
+        _GP_TOKEN_CACHE.clear()
+        st.session_state["_gp_new_rt"] = rt
+        st.session_state["_gp_msg"] = ("success", "Đã kết nối Google Photos!")
+    except Exception as e:
+        st.session_state["_gp_msg"] = ("error", tr("Kết nối Google Photos bị lỗi: ") + str(e)[:300])
+
+
+def _gp_access_token():
+    import time as _time
+    import requests
+    rt = gp_refresh_token()
+    if not (gp_has_client() and rt):
+        raise GPhotosError("not connected")
+    cached = _GP_TOKEN_CACHE.get(rt)
+    if cached and cached[1] > _time.time() + 60:
+        return cached[0]
+    c = _gp_conf()
+    r = requests.post("https://oauth2.googleapis.com/token", data={
+        "client_id": c.get("client_id"), "client_secret": c.get("client_secret"),
+        "refresh_token": rt, "grant_type": "refresh_token"}, timeout=30)
+    if r.status_code != 200:
+        raise GPhotosError(f"token {r.status_code}: {r.text[:200]}")
+    j = r.json()
+    _GP_TOKEN_CACHE[rt] = (j["access_token"], _time.time() + int(j.get("expires_in", 3600)))
+    return j["access_token"]
+
+
+def _gp_album(token, force_new=False):
+    import requests
+    aid = None if force_new else setting_get("gphotos_album_id")
+    if aid:
+        return aid
+    r = requests.post("https://photoslibrary.googleapis.com/v1/albums",
+                      headers={"Authorization": f"Bearer {token}"},
+                      json={"album": {"title": _gp_conf().get("album_title") or GPHOTOS_ALBUM}}, timeout=30)
+    if r.status_code != 200:
+        raise GPhotosError(f"album {r.status_code}: {r.text[:200]}")
+    aid = r.json()["id"]
+    setting_set("gphotos_album_id", aid)
+    return aid
+
+
+def gp_upload(items):
+    """items: [(jpeg_bytes, file_name, description)] → [(media_id, product_url) hoặc None] cùng thứ tự."""
+    import requests
+    token = _gp_access_token()
+    auth = {"Authorization": f"Bearer {token}"}
+    tokens = []
+    for b, _name, _desc in items:
+        try:
+            r = requests.post("https://photoslibrary.googleapis.com/v1/uploads", data=b, timeout=180,
+                              headers={**auth, "Content-type": "application/octet-stream",
+                                       "X-Goog-Upload-Content-Type": "image/jpeg",
+                                       "X-Goog-Upload-Protocol": "raw"})
+            tokens.append(r.text.strip() if r.status_code == 200 and r.text.strip() else None)
+        except Exception:
+            tokens.append(None)
+    todo = [(i, t) for i, t in enumerate(tokens) if t]
+    out = [None] * len(items)
+    if not todo:
+        raise GPhotosError("upload failed")
+    res = None
+    for attempt in (0, 1):
+        aid = _gp_album(token, force_new=(attempt == 1))
+        body = {"albumId": aid, "newMediaItems": [
+            {"description": (items[i][2] or "")[:1000],
+             "simpleMediaItem": {"uploadToken": t, "fileName": items[i][1]}} for i, t in todo]}
+        res = requests.post("https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate",
+                            headers=auth, json=body, timeout=180)
+        if res.status_code in (200, 207):
+            break
+        if attempt == 0 and res.status_code in (400, 403, 404):
+            continue                     # album cũ không dùng được nữa → tạo album mới rồi thử lại
+        raise GPhotosError(f"batchCreate {res.status_code}: {res.text[:200]}")
+    by_token = {}
+    for item in res.json().get("newMediaItemResults", []):
+        mi = item.get("mediaItem")
+        if mi:
+            by_token[item.get("uploadToken")] = (mi.get("id"), mi.get("productUrl"))
+    for i, t in todo:
+        out[i] = by_token.get(t)
+    return out
+
+
+def _df_jpeg_full(raw):
+    """Ảnh chất lượng cao (tối đa 4096px) để gửi lên Google Photos."""
+    from PIL import Image, ImageOps
+    import io
+    im = ImageOps.exif_transpose(Image.open(io.BytesIO(raw)))
+    if im.mode not in ("RGB", "L"):
+        im = im.convert("RGB")
+    im.thumbnail((4096, 4096))
+    out = io.BytesIO()
+    im.convert("RGB").save(out, format="JPEG", quality=90, optimize=True)
+    return out.getvalue()
+
+
+try:                                    # ảnh HEIC của iPhone (nếu có cài pillow-heif)
+    from pillow_heif import register_heif_opener as _reg_heif
+    _reg_heif()
+except Exception:
+    pass
+
+
+def _df_location(block, area, deck, frame):
+    parts = [(tr("Block"), block), ("Deck", deck), ("Frame", frame), (tr("Khu vực"), area)]
+    return " · ".join(f"{k} {v}" for k, v in parts if v)
+
+
+def _df_gp_description(code, severity, location, text, who, when):
+    head = " · ".join(x for x in (code, severity, location) if x)
+    return f"{head}\n{text or ''}\n— {who or ''}, {when}".strip()
+
+
+def _df_push_to_gphotos(photo_rows):
+    """photo_rows: [(photo_id, jpeg_bytes, file_name, description)] → (số ảnh đã lưu, lỗi hoặc None)."""
+    if not photo_rows or not gp_connected():
+        return 0, None
+    try:
+        res = gp_upload([(b, n, d) for _pid, b, n, d in photo_rows])
+    except Exception as e:
+        return 0, str(e)[:300]
+    ok = 0
+    for (pid, _b, _n, _d), r in zip(photo_rows, res):
+        if r:
+            cursor.execute("UPDATE defect_photos SET gphoto_id = ?, gphoto_url = ? WHERE id = ?", (r[0], r[1], pid))
+            ok += 1
+    conn.commit()
+    return ok, (None if ok == len(photo_rows) else f"{len(photo_rows) - ok} ảnh chưa lưu được")
+
+
+def _df_scope(user_data, role):
+    me = user_data["id"]
+    row = cursor.execute("SELECT workshop, leader_id FROM users WHERE id = ?", (me,)).fetchone() or (None, None)
+    ws = row[0] or user_data.get("workshop")
+    team = me if role in LEADER_ROLES else row[1]
+    return ws, team
+
+
+def _df_visible_sql(user_data, role):
+    """Ai xem được lỗi nào: quản lý xem tất cả; người khác xem lỗi cùng workshop / cùng team,
+    lỗi mình ghi và lỗi được giao cho mình."""
+    if role in ("Admin", "WOS Manager"):
+        return "1 = 1", []
+    me = user_data["id"]
+    ws, team = _df_scope(user_data, role)
+    conds, params = ["d.reported_by = ?", "d.assigned_to = ?"], [me, me]
+    if ws:
+        conds.append("d.workshop = ?"); params.append(ws)
+    if team:
+        conds.append("d.team_leader = ?"); params.append(team)
+    return "(" + " OR ".join(conds) + ")", params
+
+
+def _df_people(user_data, role):
+    rows = cursor.execute("""SELECT id, fullname, role, workshop, leader_id FROM users
+                             WHERE COALESCE(is_deleted, 0) = 0 AND role NOT IN ('Pending', 'Admin')
+                             ORDER BY fullname""").fetchall()
+    if role in ("Admin", "WOS Manager"):
+        return rows
+    me = user_data["id"]
+    ws, team = _df_scope(user_data, role)
+    return [r for r in rows if r[0] == me or (ws and r[3] == ws)
+            or (team and (r[0] == team or r[4] == team))]
+
+
+def df_open_count_for(user_id):
+    try:
+        return cursor.execute("SELECT COUNT(*) FROM defects WHERE is_deleted = 0 AND assigned_to = ? AND status IN (?, ?)",
+                              (user_id, DF_OPEN, DF_WORK)).fetchone()[0]
+    except Exception:
+        return 0
+
+
+def _df_badge(text, style):
+    fg, bg = style
+    return (f"<span style='display:inline-block;padding:1px 8px;border-radius:4px;font-size:0.78rem;"
+            f"font-weight:600;color:{fg};background:{bg};margin-right:6px;white-space:nowrap'>"
+            f"{html.escape(tr(text))}</span>")
+
+
+def _df_user_md(text):
+    """Hiện chữ người dùng viết (không dịch, không hiểu là HTML/markdown)."""
+    safe = html.escape(text or "").replace("\n", "<br>")
+    _DG._sc_orig_markdown(st._main, f"<div style='white-space:normal;line-height:1.5'>{safe}</div>",
+                          unsafe_allow_html=True)
+
+
+def _df_read_uploads(files, cam_shots):
+    """→ [(name, raw_bytes)] từ ảnh chọn/chụp, bỏ file quá lớn."""
+    out, bad = [], []
+    for f in files or []:
+        raw = f.getvalue()
+        if len(raw) > PHOTO_MAX_MB * 1024 * 1024:
+            bad.append(f.name)
+        else:
+            out.append((f.name, raw))
+    for k, raw in enumerate(cam_shots or []):
+        out.append((f"camera_{k + 1}.jpg", raw))
+    return out[:PHOTO_MAX_FILES], bad
+
+
+def _df_save_photos(defect_id, update_id, entries, kind, me, when):
+    """Lưu ảnh (bản nhỏ) vào app. → (danh sách (photo_id, ảnh lớn), tên file lỗi)."""
+    saved, bad = [], []
+    for name, raw in entries:
+        try:
+            small = compress_photo(raw)
+            big = _df_jpeg_full(raw)
+        except Exception:
+            bad.append(name)
+            continue
+        cursor.execute("""INSERT INTO defect_photos (defect_id, update_id, image, kind, uploaded_by, uploaded_at)
+                          VALUES (?, ?, ?, ?, ?, ?)""", (defect_id, update_id, small, kind, me, when))
+        saved.append((cursor.lastrowid, big))
+    conn.commit()
+    return saved, bad
+
+
+def _df_gphotos_panel(user_data):
+    connected = gp_connected()
+    with st.expander("🖼️ Lưu ảnh vào Google Photos" + (" · " + tr("đã kết nối") if connected else ""),
+                     expanded=bool(st.session_state.get("_gp_new_rt"))):
+        if not gp_has_client():
+            st.info("Chưa cài đặt Google Photos. Thêm client_id và client_secret vào Secrets (mục [gphotos]) "
+                    "theo hướng dẫn, rồi quay lại đây bấm Kết nối.")
+            return
+        if not connected:
+            st.markdown("Ảnh lỗi sẽ được lưu vào một album riêng trong Google Photos của tài khoản bạn kết nối.")
+            st.link_button("🔐 Kết nối Google Photos", gp_auth_url(), type="primary")
+            st.caption("Google sẽ hỏi bạn đồng ý, sau đó tự đưa bạn quay lại app.")
+            return
+        st.success(tr("Ảnh lỗi được lưu vào album") + f" “{_gp_conf().get('album_title') or GPHOTOS_ALBUM}”.")
+        new_rt = st.session_state.get("_gp_new_rt")
+        if new_rt:
+            st.markdown("**Bản dự phòng:** máy chủ miễn phí có thể bị khởi động lại và quên kết nối. "
+                        "Hãy chép dòng dưới đây vào Secrets, ngay dưới mục [gphotos]:")
+            st.code(f'refresh_token = "{new_rt}"', language="toml")
+            if st.button("✅ Đã chép xong", key="btn_gp_rt_done"):
+                st.session_state.pop("_gp_new_rt", None)
+                st.rerun()
+        pending = cursor.execute("""SELECT COUNT(*) FROM defect_photos p JOIN defects d ON d.id = p.defect_id
+                                    WHERE p.gphoto_id IS NULL AND d.is_deleted = 0""").fetchone()[0]
+        c1, c2 = st.columns(2)
+        if pending:
+            if c1.button(tr("📤 Gửi ảnh chưa lưu lên Google Photos") + f" ({pending})", key="btn_gp_retry",
+                         use_container_width=True):
+                rows = cursor.execute("""SELECT p.id, p.image, p.kind, d.id, d.severity, d.block, d.area, d.deck, d.frame,
+                                                d.description, p.uploaded_by, p.uploaded_at
+                                         FROM defect_photos p JOIN defects d ON d.id = p.defect_id
+                                         WHERE p.gphoto_id IS NULL AND d.is_deleted = 0 ORDER BY p.id LIMIT 40""").fetchall()
+                names = dict(cursor.execute("SELECT id, fullname FROM users").fetchall())
+                batch = [(r[0], r[1], f"{df_code(r[3])}_{r[0]}.jpg",
+                          _df_gp_description(df_code(r[3]), r[4], _df_location(r[5], r[6], r[7], r[8]),
+                                             r[9], names.get(r[10]), r[11])) for r in rows]
+                with st.spinner(tr("Đang lưu ảnh lên Google Photos…")):
+                    ok, err = _df_push_to_gphotos(batch)
+                if err:
+                    st.warning(tr("Google Photos báo lỗi: ") + err)
+                else:
+                    st.toast(f"Google Photos +{ok}")
+                    st.rerun()
+        if c2.button("Ngắt kết nối Google Photos", key="btn_gp_disconnect", use_container_width=True):
+            setting_set("gphotos_refresh_token", None)
+            setting_set("gphotos_album_id", None)
+            _GP_TOKEN_CACHE.clear()
+            if _gp_conf().get("refresh_token"):
+                st.warning("Còn refresh_token trong Secrets — xóa dòng đó trong Secrets để ngắt hẳn.")
+            else:
+                st.rerun()
+
+
+def _df_new_form(user_data, role, people, blocks):
+    me = user_data["id"]
+    nonce = st.session_state.setdefault("df_nonce", 0)
+    shots = st.session_state.setdefault("df_cam_shots", [])
+    with st.container(border=True, key="sc_df_new"):
+        st.markdown("#### 📸 Ghi lỗi mới")
+        files = st.file_uploader(tr("Chụp hoặc chọn ảnh lỗi (chọn được nhiều ảnh)"),
+                                 type=["jpg", "jpeg", "png", "webp", "heic", "heif"],
+                                 accept_multiple_files=True, key=f"df_files_{nonce}")
+        st.caption("Trên điện thoại: bấm nút trên rồi chọn Máy ảnh để chụp, hoặc chọn ảnh có sẵn.")
+        if st.toggle("Chụp bằng camera ngay trong app", key=f"df_usecam_{nonce}"):
+            shot = st.camera_input(tr("Chụp ảnh"), key=f"df_cam_{nonce}_{len(shots)}")
+            if shot is not None:
+                shots.append(shot.getvalue())
+                st.rerun()
+        entries, bad = _df_read_uploads(files, shots)
+        if entries:
+            st.markdown(f"**📷 × {len(entries)}**")
+            cols = st.columns(6)
+            n_files = len(entries) - len(shots)
+            for i, (nm, raw) in enumerate(entries):
+                with cols[i % 6]:
+                    try:
+                        st.image(raw, use_container_width=True)
+                    except Exception:
+                        st.caption(nm)
+                    if i >= n_files and st.button("✖", key=f"df_rmshot_{nonce}_{i}", help="Bỏ ảnh này"):
+                        shots.pop(i - n_files)
+                        st.rerun()
+        if bad:
+            st.warning(tr("Không đọc được ảnh (hoặc ảnh lớn hơn 15 MB): ") + ", ".join(bad))
+
+        desc = st.text_area("Mô tả lỗi *", key=f"df_desc_{nonce}", max_chars=1000, height=90,
+                            placeholder="Ví dụ: Mối hàn bị rỗ ở chân giá đỡ, cần mài và hàn lại")
+        c1, c2, c3, c4 = st.columns(4)
+        blk = c1.selectbox("Block", ["—"] + blocks, key=f"df_block_{nonce}")
+        deck = c2.text_input("Deck", key=f"df_deck_{nonce}", max_chars=40)
+        frame = c3.text_input("Frame", key=f"df_frame_{nonce}", max_chars=40)
+        area = c4.text_input("Khu vực", key=f"df_area_{nonce}", max_chars=60)
+        c5, c6, c7 = st.columns(3)
+        sev = c5.selectbox("Mức độ", DF_SEVERITIES, index=1, key=f"df_sev_{nonce}")
+        pname = {p[0]: p[1] for p in people}
+        assign = c6.selectbox("Giao cho", [None] + [p[0] for p in people], key=f"df_assign_{nonce}",
+                              format_func=lambda x: tr("Chưa giao") if x is None else pname.get(x, "?"))
+        due = c7.date_input("Hạn xử lý (không bắt buộc)", value=None, key=f"df_due_{nonce}", format="DD/MM/YYYY")
+
+        b1, b2 = st.columns([1, 1])
+        save = b1.button("💾 Lưu lỗi", key=f"df_save_{nonce}", type="primary", use_container_width=True)
+        if b2.button("Hủy", key=f"df_cancel_{nonce}", use_container_width=True):
+            st.session_state["df_new_open"] = False
+            st.session_state["df_cam_shots"] = []
+            st.session_state["df_nonce"] = nonce + 1
+            st.rerun()
+        if save:
+            if not desc.strip():
+                st.error("Hãy viết mô tả lỗi!")
+                return
+            if not entries:
+                st.error("Hãy chụp hoặc chọn ít nhất 1 ảnh!")
+                return
+            when = _vn_now()
+            ws, team = _df_scope(user_data, role)
+            status = DF_OPEN
+            cursor.execute("""INSERT INTO defects (description, block, area, deck, frame, severity, status,
+                                  reported_by, reported_at, assigned_to, due_date, workshop, team_leader, updated_at)
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                           (desc.strip(), None if blk == "—" else blk, area.strip() or None, deck.strip() or None,
+                            frame.strip() or None, sev, status, me, when, assign,
+                            due.isoformat() if due else None, ws, team, when))
+            did = cursor.lastrowid
+            conn.commit()
+            with st.spinner(tr("Đang lưu ảnh…")):
+                saved, bad2 = _df_save_photos(did, None, entries, "defect", me, when)
+            code = df_code(did)
+            gp_desc = _df_gp_description(code, sev, _df_location(None if blk == "—" else blk, area, deck, frame),
+                                         desc.strip(), user_data.get("fullname"), when)
+            ok, err = 0, None
+            if gp_connected() and saved:
+                with st.spinner(tr("Đang lưu ảnh lên Google Photos…")):
+                    ok, err = _df_push_to_gphotos([(pid, big, f"{code}_{k + 1}.jpg", gp_desc)
+                                                   for k, (pid, big) in enumerate(saved)])
+            st.session_state["_df_saved_msg"] = (code, len(saved), ok, err, bad2)
+            st.session_state["df_new_open"] = False
+            st.session_state["df_cam_shots"] = []
+            st.session_state["df_nonce"] = nonce + 1
+            st.session_state["df_open"] = did
+            st.rerun()
+
+
+def _df_photo_grid(images, ncol=4):
+    cols = st.columns(ncol)
+    for i, img in enumerate(images):
+        with cols[i % ncol]:
+            st.image(img, use_container_width=True)
+
+
+def _df_detail(d, user_data, role, people, names):
+    (did, desc, blk, area, deck, frame, sev, status, rep_by, rep_at, assigned, due, _ws, _team, upd_at) = d
+    me = user_data["id"]
+    code = df_code(did)
+    photos = cursor.execute("SELECT id, image, kind, gphoto_url, update_id FROM defect_photos WHERE defect_id = ? ORDER BY id",
+                            (did,)).fetchall()
+    first = [p[1] for p in photos if p[2] == "defect"]
+    later = [p for p in photos if p[2] != "defect"]
+    if first:
+        st.markdown("**📷 Ảnh lỗi**")
+        _df_photo_grid(first)
+    gp_urls = [p[3] for p in photos if p[3]]
+    if gp_urls:
+        st.link_button("🖼️ Mở trong Google Photos", gp_urls[0])
+        st.caption("Chỉ tài khoản Google đã kết nối mới mở được link này. Người khác xem ảnh ngay tại đây.")
+
+    ups = cursor.execute("""SELECT id, user_id, text, status_from, status_to, assigned_to, created_at
+                            FROM defect_updates WHERE defect_id = ? ORDER BY id""", (did,)).fetchall()
+    if ups:
+        st.markdown("**🕒 Quá trình xử lý**")
+        for u in ups:
+            with st.container(border=True):
+                bits = [f"**{html.escape(names.get(u[1], '?'))}**", u[6] or ""]
+                if u[4] and u[4] != u[3]:
+                    bits.append(f"{tr(u[3] or '')} → {tr(u[4])}")
+                if u[5]:
+                    bits.append(tr("giao cho") + " " + html.escape(names.get(u[5], "?")))
+                _DG._sc_orig_markdown(st._main, " · ".join(b for b in bits if b))
+                if u[2]:
+                    _df_user_md(u[2])
+                imgs = [p[1] for p in later if p[4] == u[0]]
+                if imgs:
+                    _df_photo_grid(imgs)
+
+    # ✍️ Cập nhật xử lý: ghi chú + đổi trạng thái + giao lại + thêm ảnh (ví dụ ảnh sau khi sửa)
+    _v = len(ups)                       # đổi khóa sau mỗi lần cập nhật → ô chọn hiện đúng giá trị mới
+    with st.form(f"df_act_{did}_{_v}", clear_on_submit=True):
+        st.markdown("**✍️ Cập nhật xử lý**")
+        note = st.text_area("Ghi chú / việc đã làm", max_chars=1000, height=80, key=f"df_note_{did}_{_v}")
+        c1, c2 = st.columns(2)
+        new_status = c1.selectbox("Trạng thái", DF_STATUSES,
+                                  index=DF_STATUSES.index(status) if status in DF_STATUSES else 0, key=f"df_st_{did}_{_v}")
+        pname = {p[0]: p[1] for p in people}
+        opts = [None] + [p[0] for p in people]
+        if assigned and assigned not in opts:
+            opts.append(assigned)
+            pname[assigned] = names.get(assigned, "?")
+        new_assign = c2.selectbox("Giao cho", opts, index=opts.index(assigned) if assigned in opts else 0,
+                                  format_func=lambda x: tr("Chưa giao") if x is None else pname.get(x, "?"),
+                                  key=f"df_as_{did}_{_v}")
+        files = st.file_uploader(tr("Thêm ảnh (ví dụ ảnh sau khi sửa)"), type=["jpg", "jpeg", "png", "webp", "heic", "heif"],
+                                 accept_multiple_files=True, key=f"df_upf_{did}_{_v}")
+        sent = st.form_submit_button("📤 Gửi cập nhật", use_container_width=True)
+    if sent:
+        entries, bad = _df_read_uploads(files, [])
+        changed_status = new_status != status
+        changed_assign = new_assign != assigned
+        if not (note.strip() or entries or changed_status or changed_assign):
+            st.error("Hãy viết ghi chú, thêm ảnh hoặc đổi trạng thái!")
+        else:
+            when = _vn_now()
+            cursor.execute("""INSERT INTO defect_updates (defect_id, user_id, text, status_from, status_to, assigned_to, created_at)
+                              VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                           (did, me, note.strip() or None, status, new_status,
+                            new_assign if changed_assign else None, when))
+            uid = cursor.lastrowid
+            cursor.execute("UPDATE defects SET status = ?, assigned_to = ?, updated_at = ? WHERE id = ?",
+                           (new_status, new_assign, when, did))
+            conn.commit()
+            kind = "fix" if new_status in (DF_FIXED, DF_CLOSED) else "update"
+            saved, bad2 = _df_save_photos(did, uid, entries, kind, me, when)
+            ok, err = 0, None
+            if gp_connected() and saved:
+                gp_desc = _df_gp_description(code, new_status, _df_location(blk, area, deck, frame),
+                                             note.strip(), user_data.get("fullname"), when)
+                with st.spinner(tr("Đang lưu ảnh lên Google Photos…")):
+                    ok, err = _df_push_to_gphotos([(pid, big, f"{code}_{kind}_{pid}.jpg", gp_desc) for pid, big in saved])
+            if err:
+                st.session_state["_df_gp_err"] = err
+            if bad + bad2:
+                st.session_state["_df_bad"] = bad + bad2
+            st.toast(tr("Đã cập nhật") + f" {code}")
+            st.rerun()
+
+    if me == rep_by or role in ("Admin", "WOS Manager"):
+        with st.popover("🗑️ Xóa lỗi này"):
+            st.caption("Lỗi sẽ bị ẩn khỏi danh sách. Ảnh đã lưu trên Google Photos vẫn còn.")
+            if st.button("Xác nhận xóa", key=f"df_del_{did}", type="primary"):
+                cursor.execute("UPDATE defects SET is_deleted = 1, updated_at = ? WHERE id = ?", (_vn_now(), did))
+                conn.commit()
+                st.session_state["df_open"] = None
+                st.rerun()
+
+
+def render_defects(user_data, role):
+    me = user_data["id"]
+    st.markdown("<div class='big-table-title'>⚠️ Lỗi Hiện Trường</div>", unsafe_allow_html=True)
+
+    msg = st.session_state.pop("_gp_msg", None)
+    if msg:
+        getattr(st, msg[0])(msg[1])
+    saved_msg = st.session_state.pop("_df_saved_msg", None)
+    if saved_msg:
+        code, n, ok, err, bad = saved_msg
+        line = tr("Đã ghi lỗi") + f" {code}"
+        if ok:
+            line += " · " + tr("đã lưu vào Google Photos")
+        st.success(line)
+        if err:
+            st.warning(tr("Google Photos báo lỗi: ") + err + ". " + tr("Ảnh vẫn được lưu trong app."))
+        if bad:
+            st.warning(tr("Không đọc được ảnh (hoặc ảnh lớn hơn 15 MB): ") + ", ".join(bad))
+    if st.session_state.get("_df_gp_err"):
+        st.warning(tr("Google Photos báo lỗi: ") + st.session_state.pop("_df_gp_err") + ". " + tr("Ảnh vẫn được lưu trong app."))
+    if st.session_state.get("_df_bad"):
+        st.warning(tr("Không đọc được ảnh (hoặc ảnh lớn hơn 15 MB): ") + ", ".join(st.session_state.pop("_df_bad")))
+
+    where, params = _df_visible_sql(user_data, role)
+    counts = dict(cursor.execute(f"SELECT status, COUNT(*) FROM defects d WHERE d.is_deleted = 0 AND {where} GROUP BY status",
+                                 params).fetchall())
+    mine = df_open_count_for(me)
+    _DG._sc_orig_markdown(st._main, " ".join(
+        _df_badge(s, _DF_STATUS_STYLE[s]).replace("</span>", f" {counts.get(s, 0)}</span>") for s in DF_STATUSES)
+        + (f" &nbsp; <b>{html.escape(tr('Giao cho tôi'))}: {mine}</b>" if mine else ""), unsafe_allow_html=True)
+
+    top1, top2 = st.columns([1, 2])
+    if not st.session_state.get("df_new_open"):
+        if top1.button("📸 Ghi lỗi mới", key="btn_df_new", type="primary", use_container_width=True):
+            st.session_state["df_new_open"] = True
+            st.rerun()
+
+    people = _df_people(user_data, role)
+    names = dict(cursor.execute("SELECT id, fullname FROM users").fetchall())
+    blocks = [r[0] for r in cursor.execute("SELECT name FROM blocks WHERE is_deleted = 0 ORDER BY name").fetchall()]
+
+    if role in ("Admin", "WOS Manager") or st.session_state.get("_gp_new_rt"):
+        _df_gphotos_panel(user_data)
+    if st.session_state.get("df_new_open"):
+        _df_new_form(user_data, role, people, blocks)
+
+    # 🔎 Lọc
+    f1, f2, f3 = st.columns([3, 1.2, 1.6])
+    with f1:
+        flt = st.pills(tr("Trạng thái"), [DF_NOT_DONE] + DF_STATUSES + [DF_ALL], default=DF_NOT_DONE,
+                       format_func=tr, key="df_filter", label_visibility="collapsed") or DF_NOT_DONE
+    only_mine = f2.toggle("Chỉ lỗi giao cho tôi", key="df_only_mine")
+    q = f3.text_input("Tìm", key="df_q", placeholder="Tìm mã, mô tả, block…", label_visibility="collapsed")
+
+    sql = f"""SELECT d.id, d.description, d.block, d.area, d.deck, d.frame, d.severity, d.status, d.reported_by,
+                     d.reported_at, d.assigned_to, d.due_date, d.workshop, d.team_leader, d.updated_at
+              FROM defects d WHERE d.is_deleted = 0 AND {where}"""
+    p2 = list(params)
+    if flt == DF_NOT_DONE:
+        sql += " AND d.status IN (?, ?, ?)"; p2 += [DF_OPEN, DF_WORK, DF_FIXED]
+    elif flt in DF_STATUSES:
+        sql += " AND d.status = ?"; p2.append(flt)
+    if only_mine:
+        sql += " AND d.assigned_to = ?"; p2.append(me)
+    if q.strip():
+        qq = q.strip()
+        num = qq.upper().replace("D-", "").lstrip("0")
+        sql += """ AND (d.description LIKE ? OR d.block LIKE ? OR d.deck LIKE ? OR d.frame LIKE ? OR d.area LIKE ?
+                       OR CAST(d.id AS TEXT) = ?)"""
+        like = f"%{qq}%"
+        p2 += [like, like, like, like, like, num or "-1"]
+    limit = st.session_state.get("df_limit", DF_PAGE)
+    rows = cursor.execute(sql + " ORDER BY CASE d.severity WHEN 'Nghiêm trọng' THEN 0 ELSE 1 END, d.updated_at DESC LIMIT ?",
+                          p2 + [limit + 1]).fetchall()
+    more = len(rows) > limit
+    rows = rows[:limit]
+
+    if not rows:
+        st.info("Không có lỗi nào ở đây. Bấm “Ghi lỗi mới” khi phát hiện lỗi lúc kiểm tra.")
+        return
+
+    today = (datetime.utcnow() + timedelta(hours=7)).date().isoformat()
+    for d in rows:
+        (did, desc, blk, area, deck, frame, sev, status, rep_by, rep_at, assigned, due, _ws, _team, upd_at) = d
+        is_open = st.session_state.get("df_open") == did
+        with st.container(border=True, key=f"sc_df_{did}"):
+            thumb = cursor.execute("SELECT image FROM defect_photos WHERE defect_id = ? ORDER BY kind = 'defect' DESC, id LIMIT 1",
+                                   (did,)).fetchone()
+            n_ph = cursor.execute("SELECT COUNT(*) FROM defect_photos WHERE defect_id = ?", (did,)).fetchone()[0]
+            if is_open:                       # đang mở chi tiết: ảnh hiện to ở dưới, không cần ảnh nhỏ
+                c2 = st.container()
+            else:
+                c1, c2 = st.columns([1, 3])
+                with c1:
+                    if thumb:
+                        st.image(thumb[0], use_container_width=True)
+            with c2:
+                head = (f"<b style='font-size:1.02rem;margin-right:8px'>{df_code(did)}</b>"
+                        + _df_badge(status or DF_OPEN, _DF_STATUS_STYLE.get(status, _DF_STATUS_STYLE[DF_OPEN]))
+                        + _df_badge(sev or DF_SEVERITIES[1], _DF_SEV_STYLE.get(sev, _DF_SEV_STYLE[DF_SEVERITIES[1]])))
+                _DG._sc_orig_markdown(st._main, head, unsafe_allow_html=True)
+                _df_user_md(desc if is_open or len(desc or "") <= 220 else (desc[:220] + "…"))
+                meta = []
+                loc = _df_location(blk, area, deck, frame)
+                if loc:
+                    meta.append(html.escape(loc))
+                meta.append(f"{html.escape(tr('Người ghi'))}: {html.escape(names.get(rep_by, '?'))} · {rep_at or ''}")
+                meta.append(f"{html.escape(tr('Giao cho'))}: "
+                            + (html.escape(names.get(assigned, '?')) if assigned else html.escape(tr('Chưa giao'))))
+                if due:
+                    late = status in (DF_OPEN, DF_WORK) and due < today
+                    try:
+                        due_s = datetime.strptime(due, "%Y-%m-%d").strftime("%d/%m/%Y")
+                    except Exception:
+                        due_s = due
+                    meta.append((f"<span style='color:#B42318;font-weight:600'>{html.escape(tr('Quá hạn'))} {due_s}</span>"
+                                 if late else f"{html.escape(tr('Hạn xử lý'))} {due_s}"))
+                meta.append(f"<span class='sc-ico' aria-hidden='true'>photo_library</span>{n_ph}")
+                _DG._sc_orig_markdown(st._main, "<div style='font-size:0.85rem;opacity:0.75;line-height:1.6'>"
+                                      + "<br>".join(meta) + "</div>", unsafe_allow_html=True)
+                if st.button("Thu gọn" if is_open else "Xem chi tiết & xử lý", key=f"df_toggle_{did}",
+                             type="secondary"):
+                    st.session_state["df_open"] = None if is_open else did
+                    st.rerun()
+            if is_open:
+                _df_detail(d, user_data, role, people, names)
+    if more:
+        if st.button("Xem thêm", key="df_more", use_container_width=True):
+            st.session_state["df_limit"] = limit + DF_PAGE
+            st.rerun()
+
+
+gp_handle_callback()
 
 
 # ==========================================
@@ -10509,6 +12298,7 @@ else:
             "👥 Quản Lý Phân Quyền",
             "🗑️ Thùng Rác",
             "📊 Báo Cáo & Khai Báo",
+            DEFECT_MENU,
             "🔑 Đổi Mật Khẩu"
         ]
     elif current_role == "Foreman":
@@ -10519,6 +12309,7 @@ else:
             "📋 Giao Việc",
             "✏️ Chỉnh Sửa/Xóa",
             "📊 Báo Cáo & Khai Báo",
+            DEFECT_MENU,
             "🔑 Đổi Mật Khẩu"
         ]
     elif current_role == "Team Leader":
@@ -10528,6 +12319,7 @@ else:
             "👥 Team Của Tôi",
             "📋 Giao Việc",
             "📊 Báo Cáo & Khai Báo",
+            DEFECT_MENU,
             "🔑 Đổi Mật Khẩu"
         ]
     else:
@@ -10535,19 +12327,21 @@ else:
             "🧰 Bảng Công Việc",
             "👥 Team Của Tôi",
             "📊 Báo Cáo & Khai Báo",
+            DEFECT_MENU,
             "🔑 Đổi Mật Khẩu"
         ]
 
     # 🛡️ Tài khoản Admin: chỉ Quản Lý Phân Quyền + Tin nhắn (Đổi mật khẩu nằm trong nút tài khoản)
     if is_admin:
-        menu_options = ["👥 Quản Lý Phân Quyền"]
-        if st.session_state.get("current_menu") not in ("👥 Quản Lý Phân Quyền", "🔑 Đổi Mật Khẩu"):
+        menu_options = ["👥 Quản Lý Phân Quyền", DEFECT_MENU]
+        if st.session_state.get("current_menu") not in ("👥 Quản Lý Phân Quyền", "🔑 Đổi Mật Khẩu", DEFECT_MENU):
             st.session_state["current_menu"] = "👥 Quản Lý Phân Quyền"
 
     def _go_to_page(target):
         st.session_state["current_menu"] = target
 
     _chat_unread_total = 0          # tin nhắn đã gỡ bỏ
+    _df_mine_open = df_open_count_for(user_data["id"])   # số lỗi đang giao cho mình
 
     def _nav_text(item):
         """Chữ trên thanh menu: bỏ biểu tượng ở đầu cho gọn (giống thanh menu trang web)."""
@@ -10559,6 +12353,8 @@ else:
         for item in menu_options:
             is_selected = (st.session_state["current_menu"] == item)
             _label = _nav_text(item) + (f" 🔴 {_chat_unread_total}" if item == CONNECT_MENU and _chat_unread_total else "")
+            if item == DEFECT_MENU and _df_mine_open:
+                _label += f" ({_df_mine_open})"
             # on_click đổi trang TRƯỚC khi app chạy lại → chỉ chạy 1 lần thay vì 2 lần
             st.button(
                 _label,
@@ -11548,6 +13344,9 @@ else:
                 )
 
     # 8. ĐỔI MẬT KHẨU (MỌI ROLE)
+    elif menu == DEFECT_MENU:
+        render_defects(user_data, current_role)
+
     elif menu == "🔑 Đổi Mật Khẩu":
         st.markdown("<div class='big-table-title'>🔑 Đổi Mật Khẩu</div>", unsafe_allow_html=True)
         with st.form("change_password_form", clear_on_submit=True):

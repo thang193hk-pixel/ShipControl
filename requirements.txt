@@ -4,3 +4,4 @@ altair
 extra-streamlit-components
 python-pptx
 pymupdf
+pillow-heif
