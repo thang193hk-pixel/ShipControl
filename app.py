@@ -1876,6 +1876,13 @@ VI_EN = {
     "Xem chi tiết & xử lý": "View details & action",
     "Xem thêm": "Show more",
     "Trong Secrets còn thiếu: ": "Still missing in Secrets: ",
+    "Dự án": "Project",
+    "Thêm dự án": "Add project",
+    "Dự án mới (Ví dụ: H2405 – Tàu hàng 5000T):": "New project (e.g. H2405 – 5000T cargo ship):",
+    "Vui lòng nhập tên dự án!": "Please enter a project name!",
+    "Tên quá dài (tối đa 60 ký tự)!": "Name is too long (max 60 characters)!",
+    "Chọn mục cần xóa trong danh sách.": "Choose the item to remove in the list.",
+    "Tất cả dự án": "All projects",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -2349,6 +2356,13 @@ _ZH_LIST = [
     "查看详情并处理",
     "显示更多",
     "Secrets 中仍缺少：",
+    "项目",
+    "添加项目",
+    "新项目（例如：H2405 – 5000吨货船）：",
+    "请输入项目名称！",
+    "名称太长（最多 60 个字符）！",
+    "请在列表中选择要删除的项。",
+    "全部项目",
 ]
 _JA_LIST = [
     "🚢 EMERALD SHIP - 船舶作業管理",
@@ -2820,6 +2834,13 @@ _JA_LIST = [
     "詳細を見て対応",
     "もっと見る",
     "Secrets にまだ足りないもの：",
+    "プロジェクト",
+    "プロジェクトを追加",
+    "新しいプロジェクト（例：H2405 – 5000T 貨物船）：",
+    "プロジェクト名を入力してください！",
+    "名前が長すぎます（最大60文字）！",
+    "削除する項目を一覧から選んでください。",
+    "すべてのプロジェクト",
 ]
 _KO_LIST = [
     "🚢 EMERALD SHIP - 선박 작업 관리",
@@ -3291,6 +3312,13 @@ _KO_LIST = [
     "상세 보기 및 처리",
     "더 보기",
     "Secrets에 아직 없는 항목: ",
+    "프로젝트",
+    "프로젝트 추가",
+    "새 프로젝트(예: H2405 – 5000T 화물선):",
+    "프로젝트 이름을 입력하세요!",
+    "이름이 너무 깁니다(최대 60자)!",
+    "목록에서 삭제할 항목을 고르세요.",
+    "모든 프로젝트",
 ]
 
 # 🌏 10 ngôn ngữ thêm (cùng thứ tự với VI_EN)
@@ -3764,6 +3792,13 @@ _TH_LIST = [
     "ดูรายละเอียดและดำเนินการ",
     "ดูเพิ่มเติม",
     "ใน Secrets ยังขาด: ",
+    "โครงการ",
+    "เพิ่มโครงการ",
+    "โครงการใหม่ (เช่น H2405 – เรือสินค้า 5000T):",
+    "กรุณาใส่ชื่อโครงการ!",
+    "ชื่อยาวเกินไป (สูงสุด 60 ตัวอักษร)!",
+    "เลือกรายการที่ต้องการลบในรายการ",
+    "ทุกโครงการ",
 ]
 _ID_LIST = [
     "🚢 EMERALD SHIP - MANAJEMEN PEKERJAAN KAPAL",
@@ -4235,6 +4270,13 @@ _ID_LIST = [
     "Lihat detail & tangani",
     "Tampilkan lagi",
     "Masih kurang di Secrets: ",
+    "Proyek",
+    "Tambah proyek",
+    "Proyek baru (mis. H2405 – Kapal kargo 5000T):",
+    "Masukkan nama proyek!",
+    "Nama terlalu panjang (maks. 60 karakter)!",
+    "Pilih item yang akan dihapus di daftar.",
+    "Semua proyek",
 ]
 _MS_LIST = [
     "🚢 EMERALD SHIP - PENGURUSAN KERJA KAPAL",
@@ -4706,6 +4748,13 @@ _MS_LIST = [
     "Lihat butiran & tindakan",
     "Tunjuk lagi",
     "Masih tiada dalam Secrets: ",
+    "Projek",
+    "Tambah projek",
+    "Projek baharu (cth. H2405 – Kapal kargo 5000T):",
+    "Sila masukkan nama projek!",
+    "Nama terlalu panjang (maks. 60 aksara)!",
+    "Pilih item untuk dibuang dalam senarai.",
+    "Semua projek",
 ]
 _TL_LIST = [
     "🚢 EMERALD SHIP - PAMAMAHALA NG TRABAHO SA BARKO",
@@ -5177,6 +5226,13 @@ _TL_LIST = [
     "Tingnan ang detalye at aksyon",
     "Ipakita pa",
     "Kulang pa sa Secrets: ",
+    "Proyekto",
+    "Magdagdag ng proyekto",
+    "Bagong proyekto (hal. H2405 – 5000T cargo ship):",
+    "Ilagay ang pangalan ng proyekto!",
+    "Masyadong mahaba ang pangalan (hanggang 60 titik)!",
+    "Piliin sa listahan ang aalisin.",
+    "Lahat ng proyekto",
 ]
 _HI_LIST = [
     "🚢 EMERALD SHIP - जहाज़ कार्य प्रबंधन",
@@ -5648,6 +5704,13 @@ _HI_LIST = [
     "विवरण देखें और कार्रवाई करें",
     "और दिखाएँ",
     "Secrets में अभी भी नहीं है: ",
+    "परियोजना",
+    "परियोजना जोड़ें",
+    "नई परियोजना (जैसे H2405 – 5000T मालवाहक जहाज़):",
+    "कृपया परियोजना का नाम लिखें!",
+    "नाम बहुत लंबा है (अधिकतम 60 अक्षर)!",
+    "सूची में हटाने वाली चीज़ चुनें।",
+    "सभी परियोजनाएँ",
 ]
 _ES_LIST = [
     "🚢 EMERALD SHIP - GESTIÓN DE TRABAJOS NAVALES",
@@ -6119,6 +6182,13 @@ _ES_LIST = [
     "Ver detalles y actuar",
     "Ver más",
     "Aún falta en Secrets: ",
+    "Proyecto",
+    "Añadir proyecto",
+    "Nuevo proyecto (p. ej. H2405 – Buque de carga 5000T):",
+    "¡Escribe el nombre del proyecto!",
+    "¡Nombre demasiado largo (máx. 60 caracteres)!",
+    "Elige en la lista lo que quieres quitar.",
+    "Todos los proyectos",
 ]
 _FR_LIST = [
     "🚢 EMERALD SHIP - GESTION DES TRAVAUX NAVALS",
@@ -6590,6 +6660,13 @@ _FR_LIST = [
     "Voir le détail et agir",
     "Afficher plus",
     "Il manque encore dans Secrets : ",
+    "Projet",
+    "Ajouter un projet",
+    "Nouveau projet (ex. H2405 – Cargo 5000T) :",
+    "Saisissez le nom du projet !",
+    "Nom trop long (60 caractères max.) !",
+    "Choisissez l’élément à retirer dans la liste.",
+    "Tous les projets",
 ]
 _DE_LIST = [
     "🚢 EMERALD SHIP - SCHIFFBAU-ARBEITSVERWALTUNG",
@@ -7061,6 +7138,13 @@ _DE_LIST = [
     "Details ansehen & bearbeiten",
     "Mehr anzeigen",
     "In Secrets fehlt noch: ",
+    "Projekt",
+    "Projekt hinzufügen",
+    "Neues Projekt (z. B. H2405 – 5000T-Frachter):",
+    "Bitte einen Projektnamen eingeben!",
+    "Name zu lang (max. 60 Zeichen)!",
+    "Wähle in der Liste aus, was entfernt werden soll.",
+    "Alle Projekte",
 ]
 _RU_LIST = [
     "🚢 EMERALD SHIP - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
@@ -7532,6 +7616,13 @@ _RU_LIST = [
     "Подробнее и действия",
     "Показать ещё",
     "В Secrets ещё не хватает: ",
+    "Проект",
+    "Добавить проект",
+    "Новый проект (напр. H2405 – сухогруз 5000 т):",
+    "Введите название проекта!",
+    "Слишком длинное название (макс. 60 символов)!",
+    "Выберите в списке, что удалить.",
+    "Все проекты",
 ]
 _PT_LIST = [
     "🚢 EMERALD SHIP - GESTÃO DE TRABALHOS NAVAIS",
@@ -8003,6 +8094,13 @@ _PT_LIST = [
     "Ver detalhes e agir",
     "Ver mais",
     "Ainda falta em Secrets: ",
+    "Projeto",
+    "Adicionar projeto",
+    "Novo projeto (ex.: H2405 – Navio de carga 5000T):",
+    "Digite o nome do projeto!",
+    "Nome longo demais (máx. 60 caracteres)!",
+    "Escolha na lista o item a remover.",
+    "Todos os projetos",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -9535,8 +9633,13 @@ LEADER_ROLES = ["Team Leader", "Foreman"]
 #    Mỗi lần cập nhật app: tăng APP_VERSION và thêm 1 mục MỚI LÊN ĐẦU danh sách CHANGELOG.
 #    Ai mở app (máy tính, điện thoại, icon đã cài) sẽ thấy thông báo "vừa cập nhật" 1 lần.
 # ==========================================
-APP_VERSION = "3.0"
+APP_VERSION = "3.1"
 CHANGELOG = [
+    {"v": "3.1", "date": "22/11/2026",
+     "vi": ["Lỗi hiện trường: chọn Dự án (thêm dự án mới bằng nút ➕), lọc danh sách lỗi theo dự án",
+            "Thêm Block mới ngay trong form ghi lỗi"],
+     "en": ["Site defects: pick a Project (add new ones with ➕) and filter defects by project",
+            "Add a new Block right inside the defect form"]},
     {"v": "3.0", "date": "22/11/2026",
      "vi": ["Mục mới “Lỗi hiện trường”: chụp một hoặc nhiều ảnh lỗi khi kiểm tra, ghi mô tả, vị trí và mức độ",
             "Ảnh lỗi tự lưu vào Google Photos (khi quản lý đã kết nối)",
@@ -10367,6 +10470,12 @@ cursor.execute('''
 ''')
 cursor.execute("CREATE INDEX IF NOT EXISTS idx_defect_updates ON defect_updates (defect_id)")
 cursor.execute("CREATE TABLE IF NOT EXISTS app_settings (key TEXT PRIMARY KEY, value TEXT)")
+# 📁 DỰ ÁN (tàu / công trình) để phân loại lỗi hiện trường
+cursor.execute("CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, is_deleted INTEGER DEFAULT 0)")
+try:
+    cursor.execute("ALTER TABLE defects ADD COLUMN project TEXT")
+except sqlite3.OperationalError:
+    pass
 conn.commit()
 
 
@@ -10772,6 +10881,52 @@ def _df_gphotos_panel(user_data):
                 st.rerun()
 
 
+_DF_LIST_TABLES = {"blocks": "blocks", "projects": "projects"}
+
+
+def _df_list_picker(key, table, label, options, role, add_label, add_ph, empty_msg, upper=False):
+    """Ô chọn có ➕ (ai cũng thêm được) và ➖ (chỉ Foreman / Manager / Admin) ngay bên cạnh."""
+    tbl = _DF_LIST_TABLES[table]
+    acts = [("add", "➕", "Thêm")]
+    if role in ("Foreman", "WOS Manager", "Admin"):
+        acts.append(("del", "➖", "Xóa"))
+    val, m = mini_select(key, label, ["—"] + options, acts)
+    if m == "add":
+        with mini_panel(key):
+            nv = st.text_input(add_ph, key=f"{key}_new", placeholder=tr(add_ph), label_visibility="collapsed")
+            if st.button(add_label, key=f"btn_{key}_add", type="primary", use_container_width=True):
+                nvc = " ".join(nv.split())
+                nvc = nvc.upper() if upper else nvc
+                if not nvc:
+                    st.error(empty_msg)
+                elif len(nvc) > 60:
+                    st.error("Tên quá dài (tối đa 60 ký tự)!")
+                else:
+                    ex = cursor.execute(f"SELECT is_deleted FROM {tbl} WHERE name = ?", (nvc,)).fetchone()
+                    if ex and ex[0] == 1:
+                        cursor.execute(f"UPDATE {tbl} SET is_deleted = 0 WHERE name = ?", (nvc,))
+                    elif not ex:
+                        cursor.execute(f"INSERT INTO {tbl} (name, is_deleted) VALUES (?, 0)", (nvc,))
+                    conn.commit()
+                    st.toast(f"✅ {nvc}")
+                    st.session_state[f"_pending_sel_{key}"] = nvc
+                    st.session_state.pop(f"{key}_new", None)
+                    mini_close(key)
+                    st.rerun()
+    elif m == "del":
+        with mini_panel(key):
+            if val == "—":
+                st.caption("Chọn mục cần xóa trong danh sách.")
+            elif st.button(f"🗑️ {tr('Xóa')} {val}", key=f"btn_{key}_del", use_container_width=True):
+                cursor.execute(f"UPDATE {tbl} SET is_deleted = 1 WHERE name = ?", (val,))
+                conn.commit()
+                st.toast(f"🗑️ {val}")
+                st.session_state[f"_pending_sel_{key}"] = "—"
+                mini_close(key)
+                st.rerun()
+    return None if val == "—" else val
+
+
 def _df_new_form(user_data, role, people, blocks):
     me = user_data["id"]
     nonce = st.session_state.setdefault("df_nonce", 0)
@@ -10806,55 +10961,23 @@ def _df_new_form(user_data, role, people, blocks):
 
         desc = st.text_area("Mô tả lỗi *", key=f"df_desc_{nonce}", max_chars=1000, height=90,
                             placeholder="Ví dụ: Mối hàn bị rỗ ở chân giá đỡ, cần mài và hàn lại")
-        c1, c2, c3, c4 = st.columns([1.4, 1, 1, 1])
-        with c1:
-            # ➕ thêm Block mới ngay tại hiện trường (➖ xóa: chỉ Foreman / Manager / Admin)
-            _acts = [("add", "➕", "Thêm")]
-            if role in ("Foreman", "WOS Manager", "Admin"):
-                _acts.append(("del", "➖", "Xóa"))
-            blk, _m = mini_select("dfblock", "Block", ["—"] + blocks, _acts)
-            if _m == "add":
-                with mini_panel("dfblock"):
-                    _nb = st.text_input("Block mới (Ví dụ: 170150):", key="df_new_block",
-                                        placeholder="Block mới (Ví dụ: 170150):", label_visibility="collapsed")
-                    if st.button("➕ THÊM BLOCK", key="btn_df_add_block", type="primary", use_container_width=True):
-                        _nbc = _nb.strip().upper()
-                        if not _nbc:
-                            st.error("Vui lòng nhập tên Block!")
-                        elif len(_nbc) > 40:
-                            st.error("Tên Block quá dài!")
-                        else:
-                            _ex = cursor.execute("SELECT is_deleted FROM blocks WHERE name = ?", (_nbc,)).fetchone()
-                            if _ex and _ex[0] == 1:
-                                cursor.execute("UPDATE blocks SET is_deleted = 0 WHERE name = ?", (_nbc,))
-                            elif not _ex:
-                                cursor.execute("INSERT INTO blocks (name, is_deleted) VALUES (?, 0)", (_nbc,))
-                            conn.commit()
-                            st.toast(f"✅ Block {_nbc}")
-                            st.session_state["_pending_sel_dfblock"] = _nbc
-                            st.session_state.pop("df_new_block", None)
-                            mini_close("dfblock")
-                            st.rerun()
-            elif _m == "del":
-                with mini_panel("dfblock"):
-                    if blk == "—":
-                        st.caption("Chọn Block để xóa:")
-                    elif st.button(f"🗑️ {tr('Xóa')} {blk}", key="btn_df_del_block", use_container_width=True):
-                        cursor.execute("UPDATE blocks SET is_deleted = 1 WHERE name = ?", (blk,))
-                        conn.commit()
-                        st.toast(f"🗑️ Block {blk}")
-                        st.session_state["_pending_sel_dfblock"] = "—"
-                        mini_close("dfblock")
-                        st.rerun()
-        deck = c2.text_input("Deck", key=f"df_deck_{nonce}", max_chars=40)
-        frame = c3.text_input("Frame", key=f"df_frame_{nonce}", max_chars=40)
-        area = c4.text_input("Khu vực", key=f"df_area_{nonce}", max_chars=60)
-        c5, c6, c7 = st.columns(3)
+        projects = [r[0] for r in cursor.execute("SELECT name FROM projects WHERE is_deleted = 0 ORDER BY name").fetchall()]
+        c0, c5, c6, c7 = st.columns([1.4, 1, 1, 1])
+        with c0:
+            proj = _df_list_picker("dfproj", "projects", "Dự án", projects, role, "➕ Thêm dự án",
+                                   "Dự án mới (Ví dụ: H2405 – Tàu hàng 5000T):", "Vui lòng nhập tên dự án!")
         sev = c5.selectbox("Mức độ", DF_SEVERITIES, index=1, key=f"df_sev_{nonce}")
         pname = {p[0]: p[1] for p in people}
         assign = c6.selectbox("Giao cho", [None] + [p[0] for p in people], key=f"df_assign_{nonce}",
                               format_func=lambda x: tr("Chưa giao") if x is None else pname.get(x, "?"))
         due = c7.date_input("Hạn xử lý (không bắt buộc)", value=None, key=f"df_due_{nonce}", format="DD/MM/YYYY")
+        c1, c2, c3, c4 = st.columns([1.4, 1, 1, 1])
+        with c1:
+            blk = _df_list_picker("dfblock", "blocks", "Block", blocks, role, "➕ THÊM BLOCK",
+                                  "Block mới (Ví dụ: 170150):", "Vui lòng nhập tên Block!", upper=True) or "—"
+        deck = c2.text_input("Deck", key=f"df_deck_{nonce}", max_chars=40)
+        frame = c3.text_input("Frame", key=f"df_frame_{nonce}", max_chars=40)
+        area = c4.text_input("Khu vực", key=f"df_area_{nonce}", max_chars=60)
 
         b1, b2 = st.columns([1, 1])
         save = b1.button("💾 Lưu lỗi", key=f"df_save_{nonce}", type="primary", use_container_width=True)
@@ -10876,17 +10999,17 @@ def _df_new_form(user_data, role, people, blocks):
             ws, team = _df_scope(user_data, role)
             status = DF_OPEN
             cursor.execute("""INSERT INTO defects (description, block, area, deck, frame, severity, status,
-                                  reported_by, reported_at, assigned_to, due_date, workshop, team_leader, updated_at)
-                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                                  reported_by, reported_at, assigned_to, due_date, workshop, team_leader, updated_at, project)
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                            (desc.strip(), None if blk == "—" else blk, area.strip() or None, deck.strip() or None,
                             frame.strip() or None, sev, status, me, when, assign,
-                            due.isoformat() if due else None, ws, team, when))
+                            due.isoformat() if due else None, ws, team, when, proj))
             did = cursor.lastrowid
             conn.commit()
             with st.spinner(tr("Đang lưu ảnh…")):
                 saved, bad2 = _df_save_photos(did, None, entries, "defect", me, when)
             code = df_code(did)
-            gp_desc = _df_gp_description(code, sev, _df_location(None if blk == "—" else blk, area, deck, frame),
+            gp_desc = _df_gp_description(code, sev, " · ".join(x for x in (proj, _df_location(None if blk == "—" else blk, area, deck, frame)) if x),
                                          desc.strip(), user_data.get("fullname"), when)
             ok, err = 0, None
             if gp_connected() and saved:
@@ -10911,7 +11034,7 @@ def _df_photo_grid(images, ncol=4):
 
 
 def _df_detail(d, user_data, role, people, names):
-    (did, desc, blk, area, deck, frame, sev, status, rep_by, rep_at, assigned, due, _ws, _team, upd_at) = d
+    (did, desc, blk, area, deck, frame, sev, status, rep_by, rep_at, assigned, due, _ws, _team, upd_at, proj) = d
     me = user_data["id"]
     code = df_code(did)
     photos = cursor.execute("SELECT id, image, kind, gphoto_url, update_id FROM defect_photos WHERE defect_id = ? ORDER BY id",
@@ -10983,7 +11106,7 @@ def _df_detail(d, user_data, role, people, names):
             saved, bad2 = _df_save_photos(did, uid, entries, kind, me, when)
             ok, err = 0, None
             if gp_connected() and saved:
-                gp_desc = _df_gp_description(code, new_status, _df_location(blk, area, deck, frame),
+                gp_desc = _df_gp_description(code, new_status, " · ".join(x for x in (proj, _df_location(blk, area, deck, frame)) if x),
                                              note.strip(), user_data.get("fullname"), when)
                 with st.spinner(tr("Đang lưu ảnh lên Google Photos…")):
                     ok, err = _df_push_to_gphotos([(pid, big, f"{code}_{kind}_{pid}.jpg", gp_desc) for pid, big in saved])
@@ -11057,9 +11180,16 @@ def render_defects(user_data, role):
                        format_func=tr, key="df_filter", label_visibility="collapsed") or DF_NOT_DONE
     only_mine = f2.toggle("Chỉ lỗi giao cho tôi", key="df_only_mine")
     q = f3.text_input("Tìm", key="df_q", placeholder="Tìm mã, mô tả, block…", label_visibility="collapsed")
+    _used_proj = [r[0] for r in cursor.execute(
+        f"SELECT DISTINCT d.project FROM defects d WHERE d.is_deleted = 0 AND d.project IS NOT NULL AND {where} ORDER BY d.project",
+        params).fetchall()]
+    proj_f = None
+    if _used_proj:
+        proj_f = st.selectbox("Dự án", [None] + _used_proj, key="df_proj_filter",
+                              format_func=lambda x: tr("Tất cả dự án") if x is None else x)
 
     sql = f"""SELECT d.id, d.description, d.block, d.area, d.deck, d.frame, d.severity, d.status, d.reported_by,
-                     d.reported_at, d.assigned_to, d.due_date, d.workshop, d.team_leader, d.updated_at
+                     d.reported_at, d.assigned_to, d.due_date, d.workshop, d.team_leader, d.updated_at, d.project
               FROM defects d WHERE d.is_deleted = 0 AND {where}"""
     p2 = list(params)
     if flt == DF_NOT_DONE:
@@ -11068,13 +11198,15 @@ def render_defects(user_data, role):
         sql += " AND d.status = ?"; p2.append(flt)
     if only_mine:
         sql += " AND d.assigned_to = ?"; p2.append(me)
+    if proj_f:
+        sql += " AND d.project = ?"; p2.append(proj_f)
     if q.strip():
         qq = q.strip()
         num = qq.upper().replace("D-", "").lstrip("0")
         sql += """ AND (d.description LIKE ? OR d.block LIKE ? OR d.deck LIKE ? OR d.frame LIKE ? OR d.area LIKE ?
-                       OR CAST(d.id AS TEXT) = ?)"""
+                       OR d.project LIKE ? OR CAST(d.id AS TEXT) = ?)"""
         like = f"%{qq}%"
-        p2 += [like, like, like, like, like, num or "-1"]
+        p2 += [like, like, like, like, like, like, num or "-1"]
     limit = st.session_state.get("df_limit", DF_PAGE)
     rows = cursor.execute(sql + " ORDER BY CASE d.severity WHEN 'Nghiêm trọng' THEN 0 ELSE 1 END, d.updated_at DESC LIMIT ?",
                           p2 + [limit + 1]).fetchall()
@@ -11087,7 +11219,7 @@ def render_defects(user_data, role):
 
     today = (datetime.utcnow() + timedelta(hours=7)).date().isoformat()
     for d in rows:
-        (did, desc, blk, area, deck, frame, sev, status, rep_by, rep_at, assigned, due, _ws, _team, upd_at) = d
+        (did, desc, blk, area, deck, frame, sev, status, rep_by, rep_at, assigned, due, _ws, _team, upd_at, proj) = d
         is_open = st.session_state.get("df_open") == did
         with st.container(border=True, key=f"sc_df_{did}"):
             thumb = cursor.execute("SELECT image FROM defect_photos WHERE defect_id = ? ORDER BY kind = 'defect' DESC, id LIMIT 1",
@@ -11107,7 +11239,7 @@ def render_defects(user_data, role):
                 _DG._sc_orig_markdown(st._main, head, unsafe_allow_html=True)
                 _df_user_md(desc if is_open or len(desc or "") <= 220 else (desc[:220] + "…"))
                 meta = []
-                loc = _df_location(blk, area, deck, frame)
+                loc = " · ".join(x for x in (proj, _df_location(blk, area, deck, frame)) if x)
                 if loc:
                     meta.append(html.escape(loc))
                 meta.append(f"{html.escape(tr('Người ghi'))}: {html.escape(names.get(rep_by, '?'))} · {rep_at or ''}")
