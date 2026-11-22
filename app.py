@@ -10806,8 +10806,46 @@ def _df_new_form(user_data, role, people, blocks):
 
         desc = st.text_area("Mô tả lỗi *", key=f"df_desc_{nonce}", max_chars=1000, height=90,
                             placeholder="Ví dụ: Mối hàn bị rỗ ở chân giá đỡ, cần mài và hàn lại")
-        c1, c2, c3, c4 = st.columns(4)
-        blk = c1.selectbox("Block", ["—"] + blocks, key=f"df_block_{nonce}")
+        c1, c2, c3, c4 = st.columns([1.4, 1, 1, 1])
+        with c1:
+            # ➕ thêm Block mới ngay tại hiện trường (➖ xóa: chỉ Foreman / Manager / Admin)
+            _acts = [("add", "➕", "Thêm")]
+            if role in ("Foreman", "WOS Manager", "Admin"):
+                _acts.append(("del", "➖", "Xóa"))
+            blk, _m = mini_select("dfblock", "Block", ["—"] + blocks, _acts)
+            if _m == "add":
+                with mini_panel("dfblock"):
+                    _nb = st.text_input("Block mới (Ví dụ: 170150):", key="df_new_block",
+                                        placeholder="Block mới (Ví dụ: 170150):", label_visibility="collapsed")
+                    if st.button("➕ THÊM BLOCK", key="btn_df_add_block", type="primary", use_container_width=True):
+                        _nbc = _nb.strip().upper()
+                        if not _nbc:
+                            st.error("Vui lòng nhập tên Block!")
+                        elif len(_nbc) > 40:
+                            st.error("Tên Block quá dài!")
+                        else:
+                            _ex = cursor.execute("SELECT is_deleted FROM blocks WHERE name = ?", (_nbc,)).fetchone()
+                            if _ex and _ex[0] == 1:
+                                cursor.execute("UPDATE blocks SET is_deleted = 0 WHERE name = ?", (_nbc,))
+                            elif not _ex:
+                                cursor.execute("INSERT INTO blocks (name, is_deleted) VALUES (?, 0)", (_nbc,))
+                            conn.commit()
+                            st.toast(f"✅ Block {_nbc}")
+                            st.session_state["_pending_sel_dfblock"] = _nbc
+                            st.session_state.pop("df_new_block", None)
+                            mini_close("dfblock")
+                            st.rerun()
+            elif _m == "del":
+                with mini_panel("dfblock"):
+                    if blk == "—":
+                        st.caption("Chọn Block để xóa:")
+                    elif st.button(f"🗑️ {tr('Xóa')} {blk}", key="btn_df_del_block", use_container_width=True):
+                        cursor.execute("UPDATE blocks SET is_deleted = 1 WHERE name = ?", (blk,))
+                        conn.commit()
+                        st.toast(f"🗑️ Block {blk}")
+                        st.session_state["_pending_sel_dfblock"] = "—"
+                        mini_close("dfblock")
+                        st.rerun()
         deck = c2.text_input("Deck", key=f"df_deck_{nonce}", max_chars=40)
         frame = c3.text_input("Frame", key=f"df_frame_{nonce}", max_chars=40)
         area = c4.text_input("Khu vực", key=f"df_area_{nonce}", max_chars=60)
@@ -10824,6 +10862,8 @@ def _df_new_form(user_data, role, people, blocks):
             st.session_state["df_new_open"] = False
             st.session_state["df_cam_shots"] = []
             st.session_state["df_nonce"] = nonce + 1
+            st.session_state["_pending_sel_dfblock"] = "—"
+            mini_close("dfblock")
             st.rerun()
         if save:
             if not desc.strip():
@@ -10858,6 +10898,8 @@ def _df_new_form(user_data, role, people, blocks):
             st.session_state["df_cam_shots"] = []
             st.session_state["df_nonce"] = nonce + 1
             st.session_state["df_open"] = did
+            st.session_state["_pending_sel_dfblock"] = "—"
+            mini_close("dfblock")
             st.rerun()
 
 
