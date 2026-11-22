@@ -1819,7 +1819,7 @@ VI_EN = {
     "Khu vực": "Area",
     "🖼️ Lưu ảnh vào Google Photos": "🖼️ Save photos to Google Photos",
     "đã kết nối": "connected",
-    "Chưa cài đặt Google Photos. Thêm client_id và client_secret vào Secrets (mục [gphotos]) theo hướng dẫn, rồi quay lại đây bấm Kết nối.": "Google Photos is not set up yet. Add client_id and client_secret to Secrets (the [gphotos] section) as described, then come back here and press Connect.",
+    "App chưa được nối với Google Photos (tài khoản Google Photos của bạn vẫn bình thường). Cần làm 1 lần: tạo mã kết nối miễn phí trên Google Cloud, rồi dán client_id và client_secret vào Secrets của app, mục [gphotos]. Sau đó quay lại đây bấm Kết nối.": "The app isn't linked to Google Photos yet (your Google Photos account is fine). One-time setup: create a free connection key in Google Cloud, then paste client_id and client_secret into the app's Secrets under [gphotos]. Then come back here and press Connect.",
     "Ảnh lỗi sẽ được lưu vào một album riêng trong Google Photos của tài khoản bạn kết nối.": "Defect photos will be saved to their own album in the Google Photos of the account you connect.",
     "🔐 Kết nối Google Photos": "🔐 Connect Google Photos",
     "Google sẽ hỏi bạn đồng ý, sau đó tự đưa bạn quay lại app.": "Google will ask you to agree, then bring you back to the app.",
@@ -1875,6 +1875,7 @@ VI_EN = {
     "Thu gọn": "Collapse",
     "Xem chi tiết & xử lý": "View details & action",
     "Xem thêm": "Show more",
+    "Trong Secrets còn thiếu: ": "Still missing in Secrets: ",
 }
 
 # 🌏 Bản dịch Trung / Nhật / Hàn: cùng thứ tự với VI_EN (mỗi dòng khớp một câu tiếng Việt)
@@ -2291,7 +2292,7 @@ _ZH_LIST = [
     "区域",
     "🖼️ 保存照片到 Google 相册",
     "已连接",
-    "尚未设置 Google 相册。请按说明在 Secrets（[gphotos] 部分）中添加 client_id 和 client_secret，然后回到这里点击连接。",
+    "应用尚未连接 Google 相册（您的 Google 相册账号没有问题）。只需设置一次：在 Google Cloud 免费创建连接密钥，然后把 client_id 和 client_secret 粘贴到应用 Secrets 的 [gphotos] 下。之后回到这里点击连接。",
     "缺陷照片将保存到所连接账号的 Google 相册中的专用相册。",
     "🔐 连接 Google 相册",
     "Google 会请您同意，然后自动带您回到应用。",
@@ -2347,6 +2348,7 @@ _ZH_LIST = [
     "收起",
     "查看详情并处理",
     "显示更多",
+    "Secrets 中仍缺少：",
 ]
 _JA_LIST = [
     "🚢 EMERALD SHIP - 船舶作業管理",
@@ -2761,7 +2763,7 @@ _JA_LIST = [
     "エリア",
     "🖼️ 写真を Google フォトに保存",
     "接続済み",
-    "Google フォトはまだ設定されていません。手順に従って Secrets（[gphotos] セクション）に client_id と client_secret を追加し、ここに戻って接続を押してください。",
+    "アプリはまだ Google フォトとつながっていません（Google フォトのアカウントは問題ありません）。最初に一度だけ：Google Cloud で無料の接続キーを作り、client_id と client_secret をアプリの Secrets の [gphotos] に貼り付けます。その後ここに戻って接続を押してください。",
     "不具合の写真は、接続したアカウントの Google フォト内の専用アルバムに保存されます。",
     "🔐 Google フォトに接続",
     "Google が同意を求め、その後アプリに戻ります。",
@@ -2817,6 +2819,7 @@ _JA_LIST = [
     "閉じる",
     "詳細を見て対応",
     "もっと見る",
+    "Secrets にまだ足りないもの：",
 ]
 _KO_LIST = [
     "🚢 EMERALD SHIP - 선박 작업 관리",
@@ -3231,7 +3234,7 @@ _KO_LIST = [
     "구역",
     "🖼️ Google 포토에 사진 저장",
     "연결됨",
-    "Google 포토가 아직 설정되지 않았습니다. 안내에 따라 Secrets([gphotos] 항목)에 client_id와 client_secret을 추가한 뒤 여기로 돌아와 연결을 누르세요.",
+    "앱이 아직 Google 포토와 연결되지 않았습니다(Google 포토 계정은 정상입니다). 한 번만 설정: Google Cloud에서 무료 연결 키를 만들고 client_id와 client_secret을 앱 Secrets의 [gphotos] 아래에 붙여넣으세요. 그런 다음 여기로 돌아와 연결을 누르세요.",
     "결함 사진은 연결한 계정의 Google 포토 전용 앨범에 저장됩니다.",
     "🔐 Google 포토 연결",
     "Google이 동의를 요청한 뒤 앱으로 돌아옵니다.",
@@ -3287,6 +3290,7 @@ _KO_LIST = [
     "접기",
     "상세 보기 및 처리",
     "더 보기",
+    "Secrets에 아직 없는 항목: ",
 ]
 
 # 🌏 10 ngôn ngữ thêm (cùng thứ tự với VI_EN)
@@ -3703,7 +3707,7 @@ _TH_LIST = [
     "พื้นที่",
     "🖼️ บันทึกรูปไปที่ Google Photos",
     "เชื่อมต่อแล้ว",
-    "ยังไม่ได้ตั้งค่า Google Photos ให้เพิ่ม client_id และ client_secret ใน Secrets (หัวข้อ [gphotos]) ตามคำแนะนำ แล้วกลับมากดเชื่อมต่อที่นี่",
+    "แอปยังไม่ได้เชื่อมกับ Google Photos (บัญชี Google Photos ของคุณปกติดี) ตั้งค่าครั้งเดียว: สร้างคีย์เชื่อมต่อฟรีใน Google Cloud แล้ววาง client_id และ client_secret ใน Secrets ของแอป ใต้ [gphotos] จากนั้นกลับมากดเชื่อมต่อที่นี่",
     "รูปข้อบกพร่องจะถูกบันทึกในอัลบั้มแยกใน Google Photos ของบัญชีที่คุณเชื่อมต่อ",
     "🔐 เชื่อมต่อ Google Photos",
     "Google จะขอความยินยอม แล้วพาคุณกลับมาที่แอป",
@@ -3759,6 +3763,7 @@ _TH_LIST = [
     "ย่อ",
     "ดูรายละเอียดและดำเนินการ",
     "ดูเพิ่มเติม",
+    "ใน Secrets ยังขาด: ",
 ]
 _ID_LIST = [
     "🚢 EMERALD SHIP - MANAJEMEN PEKERJAAN KAPAL",
@@ -4173,7 +4178,7 @@ _ID_LIST = [
     "Area",
     "🖼️ Simpan foto ke Google Foto",
     "terhubung",
-    "Google Foto belum diatur. Tambahkan client_id dan client_secret ke Secrets (bagian [gphotos]) sesuai petunjuk, lalu kembali ke sini dan tekan Hubungkan.",
+    "Aplikasi belum terhubung ke Google Foto (akun Google Foto Anda baik-baik saja). Pengaturan sekali saja: buat kunci koneksi gratis di Google Cloud, lalu tempel client_id dan client_secret ke Secrets aplikasi di bawah [gphotos]. Lalu kembali ke sini dan tekan Hubungkan.",
     "Foto cacat akan disimpan ke album khusus di Google Foto akun yang Anda hubungkan.",
     "🔐 Hubungkan Google Foto",
     "Google akan meminta persetujuan Anda, lalu membawa Anda kembali ke aplikasi.",
@@ -4229,6 +4234,7 @@ _ID_LIST = [
     "Tutup",
     "Lihat detail & tangani",
     "Tampilkan lagi",
+    "Masih kurang di Secrets: ",
 ]
 _MS_LIST = [
     "🚢 EMERALD SHIP - PENGURUSAN KERJA KAPAL",
@@ -4643,7 +4649,7 @@ _MS_LIST = [
     "Kawasan",
     "🖼️ Simpan foto ke Google Photos",
     "disambung",
-    "Google Photos belum disediakan. Tambah client_id dan client_secret ke Secrets (bahagian [gphotos]) mengikut panduan, kemudian kembali ke sini dan tekan Sambung.",
+    "Aplikasi belum dipautkan ke Google Photos (akaun Google Photos anda tiada masalah). Persediaan sekali sahaja: cipta kunci sambungan percuma di Google Cloud, kemudian tampal client_id dan client_secret ke Secrets aplikasi di bawah [gphotos]. Kemudian kembali ke sini dan tekan Sambung.",
     "Foto kecacatan akan disimpan ke album khas dalam Google Photos akaun yang anda sambung.",
     "🔐 Sambung Google Photos",
     "Google akan meminta persetujuan anda, kemudian membawa anda kembali ke aplikasi.",
@@ -4699,6 +4705,7 @@ _MS_LIST = [
     "Tutup",
     "Lihat butiran & tindakan",
     "Tunjuk lagi",
+    "Masih tiada dalam Secrets: ",
 ]
 _TL_LIST = [
     "🚢 EMERALD SHIP - PAMAMAHALA NG TRABAHO SA BARKO",
@@ -5113,7 +5120,7 @@ _TL_LIST = [
     "Lugar",
     "🖼️ I-save ang mga larawan sa Google Photos",
     "nakakonekta",
-    "Hindi pa naka-set up ang Google Photos. Idagdag ang client_id at client_secret sa Secrets (seksiyong [gphotos]) ayon sa gabay, saka bumalik dito at pindutin ang Ikonekta.",
+    "Hindi pa nakakabit ang app sa Google Photos (ayos lang ang Google Photos account mo). Isang beses lang: gumawa ng libreng connection key sa Google Cloud, saka idikit ang client_id at client_secret sa Secrets ng app sa ilalim ng [gphotos]. Pagkatapos ay bumalik dito at pindutin ang Ikonekta.",
     "Ise-save ang mga larawan ng depekto sa sariling album sa Google Photos ng account na ikinonekta mo.",
     "🔐 Ikonekta ang Google Photos",
     "Hihingi ng pahintulot ang Google, saka ka ibabalik sa app.",
@@ -5169,6 +5176,7 @@ _TL_LIST = [
     "Isara",
     "Tingnan ang detalye at aksyon",
     "Ipakita pa",
+    "Kulang pa sa Secrets: ",
 ]
 _HI_LIST = [
     "🚢 EMERALD SHIP - जहाज़ कार्य प्रबंधन",
@@ -5583,7 +5591,7 @@ _HI_LIST = [
     "क्षेत्र",
     "🖼️ फ़ोटो Google Photos में सहेजें",
     "जुड़ा हुआ",
-    "Google Photos अभी सेट नहीं है। निर्देश के अनुसार Secrets ([gphotos] भाग) में client_id और client_secret जोड़ें, फिर यहाँ लौटकर जोड़ें दबाएँ।",
+    "ऐप अभी Google Photos से नहीं जुड़ा है (आपका Google Photos खाता ठीक है)। एक बार की सेटिंग: Google Cloud में मुफ़्त कनेक्शन कुंजी बनाएँ, फिर client_id और client_secret को ऐप के Secrets में [gphotos] के नीचे चिपकाएँ। फिर यहाँ लौटकर जोड़ें दबाएँ।",
     "दोष की फ़ोटो जुड़े हुए खाते के Google Photos में एक अलग एल्बम में सहेजी जाएँगी।",
     "🔐 Google Photos जोड़ें",
     "Google आपकी सहमति माँगेगा, फिर आपको ऐप पर वापस लाएगा।",
@@ -5639,6 +5647,7 @@ _HI_LIST = [
     "समेटें",
     "विवरण देखें और कार्रवाई करें",
     "और दिखाएँ",
+    "Secrets में अभी भी नहीं है: ",
 ]
 _ES_LIST = [
     "🚢 EMERALD SHIP - GESTIÓN DE TRABAJOS NAVALES",
@@ -6053,7 +6062,7 @@ _ES_LIST = [
     "Zona",
     "🖼️ Guardar fotos en Google Fotos",
     "conectado",
-    "Google Fotos aún no está configurado. Añade client_id y client_secret en Secrets (sección [gphotos]) según la guía, luego vuelve aquí y pulsa Conectar.",
+    "La app aún no está enlazada con Google Fotos (tu cuenta de Google Fotos está bien). Se hace una sola vez: crea una clave de conexión gratuita en Google Cloud y pega client_id y client_secret en los Secrets de la app, bajo [gphotos]. Luego vuelve aquí y pulsa Conectar.",
     "Las fotos de defectos se guardarán en un álbum propio en el Google Fotos de la cuenta que conectes.",
     "🔐 Conectar Google Fotos",
     "Google te pedirá permiso y luego te devolverá a la app.",
@@ -6109,6 +6118,7 @@ _ES_LIST = [
     "Contraer",
     "Ver detalles y actuar",
     "Ver más",
+    "Aún falta en Secrets: ",
 ]
 _FR_LIST = [
     "🚢 EMERALD SHIP - GESTION DES TRAVAUX NAVALS",
@@ -6523,7 +6533,7 @@ _FR_LIST = [
     "Zone",
     "🖼️ Enregistrer les photos dans Google Photos",
     "connecté",
-    "Google Photos n’est pas encore configuré. Ajoutez client_id et client_secret dans Secrets (section [gphotos]) selon le guide, puis revenez ici et appuyez sur Connecter.",
+    "L’app n’est pas encore reliée à Google Photos (votre compte Google Photos va bien). À faire une seule fois : créez une clé de connexion gratuite dans Google Cloud, puis collez client_id et client_secret dans les Secrets de l’app, sous [gphotos]. Revenez ensuite ici et appuyez sur Connecter.",
     "Les photos de défauts seront enregistrées dans un album dédié du Google Photos du compte connecté.",
     "🔐 Connecter Google Photos",
     "Google vous demandera votre accord, puis vous ramènera dans l’app.",
@@ -6579,6 +6589,7 @@ _FR_LIST = [
     "Réduire",
     "Voir le détail et agir",
     "Afficher plus",
+    "Il manque encore dans Secrets : ",
 ]
 _DE_LIST = [
     "🚢 EMERALD SHIP - SCHIFFBAU-ARBEITSVERWALTUNG",
@@ -6993,7 +7004,7 @@ _DE_LIST = [
     "Bereich",
     "🖼️ Fotos in Google Fotos speichern",
     "verbunden",
-    "Google Fotos ist noch nicht eingerichtet. Füge client_id und client_secret laut Anleitung in Secrets (Abschnitt [gphotos]) ein, komm dann hierher zurück und tippe auf Verbinden.",
+    "Die App ist noch nicht mit Google Fotos verknüpft (dein Google-Fotos-Konto ist in Ordnung). Einmalig: Erstelle in Google Cloud einen kostenlosen Verbindungsschlüssel und füge client_id und client_secret in die Secrets der App unter [gphotos] ein. Komm dann hierher zurück und tippe auf Verbinden.",
     "Mängelfotos werden in einem eigenen Album in Google Fotos des verbundenen Kontos gespeichert.",
     "🔐 Google Fotos verbinden",
     "Google fragt nach deiner Zustimmung und bringt dich dann zur App zurück.",
@@ -7049,6 +7060,7 @@ _DE_LIST = [
     "Einklappen",
     "Details ansehen & bearbeiten",
     "Mehr anzeigen",
+    "In Secrets fehlt noch: ",
 ]
 _RU_LIST = [
     "🚢 EMERALD SHIP - УПРАВЛЕНИЕ СУДОСТРОИТЕЛЬНЫМИ РАБОТАМИ",
@@ -7463,7 +7475,7 @@ _RU_LIST = [
     "Зона",
     "🖼️ Сохранять фото в Google Фото",
     "подключено",
-    "Google Фото ещё не настроено. Добавьте client_id и client_secret в Secrets (раздел [gphotos]) по инструкции, затем вернитесь сюда и нажмите «Подключить».",
+    "Приложение ещё не связано с Google Фото (ваш аккаунт Google Фото в порядке). Настройка один раз: создайте бесплатный ключ подключения в Google Cloud и вставьте client_id и client_secret в Secrets приложения под [gphotos]. Затем вернитесь сюда и нажмите «Подключить».",
     "Фото дефектов будут сохраняться в отдельный альбом в Google Фото подключённого аккаунта.",
     "🔐 Подключить Google Фото",
     "Google попросит согласие, затем вернёт вас в приложение.",
@@ -7519,6 +7531,7 @@ _RU_LIST = [
     "Свернуть",
     "Подробнее и действия",
     "Показать ещё",
+    "В Secrets ещё не хватает: ",
 ]
 _PT_LIST = [
     "🚢 EMERALD SHIP - GESTÃO DE TRABALHOS NAVAIS",
@@ -7933,7 +7946,7 @@ _PT_LIST = [
     "Área",
     "🖼️ Salvar fotos no Google Fotos",
     "conectado",
-    "O Google Fotos ainda não está configurado. Adicione client_id e client_secret em Secrets (seção [gphotos]) conforme o guia, depois volte aqui e toque em Conectar.",
+    "O app ainda não está ligado ao Google Fotos (sua conta do Google Fotos está normal). Só uma vez: crie uma chave de conexão gratuita no Google Cloud e cole client_id e client_secret nos Secrets do app, em [gphotos]. Depois volte aqui e toque em Conectar.",
     "As fotos de defeitos serão salvas em um álbum próprio no Google Fotos da conta conectada.",
     "🔐 Conectar Google Fotos",
     "O Google vai pedir sua permissão e depois trazer você de volta ao app.",
@@ -7989,6 +8002,7 @@ _PT_LIST = [
     "Recolher",
     "Ver detalhes e agir",
     "Ver mais",
+    "Ainda falta em Secrets: ",
 ]
 
 _VI_KEYS = list(VI_EN.keys())
@@ -10398,10 +10412,21 @@ class GPhotosError(Exception):
 
 
 def _gp_conf():
-    try:
-        return dict(st.secrets["gphotos"])
-    except Exception:
-        return {}
+    """Đọc mục [gphotos] trong Secrets. Cũng chấp nhận khi dán thẳng client_id / client_secret
+    (hoặc GPHOTOS_CLIENT_ID / GPHOTOS_CLIENT_SECRET) mà quên dòng [gphotos]."""
+    conf = {}
+    for sect in ("gphotos", "GPHOTOS", "google_photos"):
+        try:
+            conf = {str(k).lower(): v for k, v in dict(st.secrets[sect]).items()}
+            break
+        except Exception:
+            pass
+    for k in ("client_id", "client_secret", "refresh_token", "redirect_uri", "album_title"):
+        if not conf.get(k):
+            v = get_secret("GPHOTOS_" + k.upper()) or get_secret(k)
+            if isinstance(v, str) and v.strip():
+                conf[k] = v.strip()
+    return {k: (v.strip() if isinstance(v, str) else v) for k, v in conf.items()}
 
 
 def gp_redirect_uri():
@@ -10697,8 +10722,10 @@ def _df_gphotos_panel(user_data):
     with st.expander("🖼️ Lưu ảnh vào Google Photos" + (" · " + tr("đã kết nối") if connected else ""),
                      expanded=bool(st.session_state.get("_gp_new_rt"))):
         if not gp_has_client():
-            st.info("Chưa cài đặt Google Photos. Thêm client_id và client_secret vào Secrets (mục [gphotos]) "
-                    "theo hướng dẫn, rồi quay lại đây bấm Kết nối.")
+            st.info("App chưa được nối với Google Photos (tài khoản Google Photos của bạn vẫn bình thường). Cần làm 1 lần: tạo mã kết nối miễn phí trên Google Cloud, rồi dán client_id và client_secret vào Secrets của app, mục [gphotos]. Sau đó quay lại đây bấm Kết nối.")
+            _miss = [k for k in ("client_id", "client_secret") if not _gp_conf().get(k)]
+            if _gp_conf() or _miss != ["client_id", "client_secret"]:
+                st.warning(tr("Trong Secrets còn thiếu: ") + ", ".join(_miss))
             return
         if not connected:
             st.markdown("Ảnh lỗi sẽ được lưu vào một album riêng trong Google Photos của tài khoản bạn kết nối.")
